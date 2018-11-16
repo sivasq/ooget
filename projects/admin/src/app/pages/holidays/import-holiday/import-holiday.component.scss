@@ -1,0 +1,29 @@
+@import "../../../../variables.scss";
+.inner-sidenav-content {
+    position: absolute;
+    top: 56px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px;
+    min-height: calc(100% - 80px);
+    overflow: auto;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td {
+    position: relative;
+    padding: 5px 10px;
+}
+
+tr.strikeout td:before {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    border-bottom: 1px solid #fd7272;
+    width: 100%;
+}

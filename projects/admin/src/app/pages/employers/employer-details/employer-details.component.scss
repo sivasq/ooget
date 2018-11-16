@@ -1,0 +1,65 @@
+@import "../../../../variables.scss";
+.inner-sidenav-content {
+    position: absolute;
+    top: 56px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px;
+    min-height: calc(100% - 80px);
+    overflow: auto;
+}
+
+.p-10 {
+    padding: 10px !important;
+}
+
+.title {
+    font-weight: 600;
+    padding-right: 15px;
+}
+
+.fill-remaining-space {
+    /* This fills the remaining space, by using flexbox. Every toolbar row uses a flexbox row layout. */
+    flex: 1 1 auto;
+}
+
+.mt-1 {
+    margin-top: 1px !important;
+}
+
+::ng-deep .employer-details .mat-button-toggle-label-content {
+    padding: 10px 16px !important;
+}
+
+.td-file-upload {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.td-file-upload-cancel {
+    height: 24px;
+    width: 24px;
+    position: relative;
+    top: 24px;
+    left: -14px;
+}
+
+.td-file-upload-cancel mat-icon {
+    background-color: #fafafa;
+}
+
+.td-file-upload-cancel mat-icon {
+    border-radius: 12px;
+    vertical-align: baseline;
+}
+
+// :host ::ng-deep .ng-busy-default-wrapper {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     height: 100%;
+// }
+// :host ::ng-deep .ng-busy-default-sign {
+//     border: none;
+// }

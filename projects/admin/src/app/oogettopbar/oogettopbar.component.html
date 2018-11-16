@@ -1,0 +1,24 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button class="toolbar-menu-button" (click)="togglemainNav()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <button mat-icon-button class="toolbar-link" (click)="toggleuserprofile()">
+    <mat-icon>person</mat-icon>
+  </button>
+
+  <!-- This fills the remaining space of the current row -->
+  <span class="fill-remaining-space"></span>
+
+  <!-- <button mat-icon-button class="toolbar-link" (click)="openTopApplicationDialog()">
+		<mat-icon>apps</mat-icon>
+	</button> -->
+
+  <!-- <button mat-icon-button class="toolbar-link" (click)="openTopProfileDialog()">
+    <mat-icon>account_circle</mat-icon>
+  </button> -->
+
+  <a mat-icon-button matTooltip="Logout" matTooltipPosition="below" (click)="onLogout()">
+    <mat-icon>power_settings_new</mat-icon>
+  </a>
+</mat-toolbar>

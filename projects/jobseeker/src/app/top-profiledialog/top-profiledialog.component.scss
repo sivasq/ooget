@@ -1,0 +1,104 @@
+::ng-deep .top-profile-dialog{ 
+    right: 8px;
+    top: 56px;
+}
+::ng-deep .top-profile-dialog.cdk-overlay-pane{
+    position: absolute!important;
+}
+
+::ng-deep .cdk-overlay-dark-backdrop {
+    background: transparent!important;
+}
+
+::ng-deep .top-profile-dialog .mat-dialog-container{
+    margin-top: 9px!important;
+}
+
+::ng-deep .top-profile-dialog .mat-dialog-container {
+    padding: 0!important;
+    border-radius: 0;
+    background: #fff;
+    color: rgba(0,0,0,.87);
+}
+
+::ng-deep .top-profile-dialog .mat-menu-panel {
+    min-width: 112px;
+    max-width: 280px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    max-height: calc(100vh - 48px);
+    border-radius: 2px;
+    outline: 0;
+    background: #fff;
+}
+
+::ng-deep .top-profile-dialog .toolbar-dropdown-menu {    
+    border-radius: 0!important;
+}
+
+::ng-deep .top-profile-dialog .toolbar-dropdown-menu .mat-menu-content {
+    padding: 0;
+}
+
+::ng-deep .top-profile-dialog .user-menu .mat-toolbar {
+    height: 100px!important;
+}
+
+::ng-deep .top-profile-dialog .user-menu .user-info {
+    width: 230px;
+}
+
+::ng-deep .top-profile-dialog .user-info .rounded {
+    border-radius: 50%!important;
+}
+
+::ng-deep .top-profile-dialog .user-menu .user-info p {
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+}
+
+::ng-deep .top-profile-dialog .user-menu .mat-menu-item {
+    height: 36px;
+    line-height: 36px;
+}
+
+::ng-deep .top-profile-dialog .mat-menu-item {
+    user-select: none;
+    cursor: pointer;
+    outline: 0;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    line-height: 48px;
+    height: 48px;
+    padding: 0 16px;
+    text-align: left;
+    text-decoration: none;
+    position: relative;
+}
+
+::ng-deep .top-profile-dialog .mat-menu-item {
+    font-family: Roboto,Helvetica Neue,sans-serif;
+    font-size: 14px!important;
+    font-weight: 400;
+}
+
+::ng-deep .top-profile-dialog .mat-menu-item .mat-icon {
+    vertical-align: middle;
+    margin-right: 16px;    
+}
+
+::ng-deep .top-profile-dialog .divider {
+    width: 100%;
+    height: 1px;
+    background: #ccc;
+}
+
+::ng-deep .top-profile-dialog a:hover {
+    color: currentColor;
+    text-decoration: none;
+}  

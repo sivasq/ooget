@@ -1,0 +1,149 @@
+<div class="inner-sidenav-content transition-2">
+    <!-- Http Progress Bar -->
+    <ng-progress></ng-progress>
+
+    <!-- Breadcrumb Start -->
+    <div fxLayout="row wrap">
+        <div class="flex-p" fxFlex="1 1 100%">
+            <mat-card class="mat-breadcrumb" fxLayout="row">
+                <a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon>home</mat-icon>
+                    <span class="breadcrumb-title">Home</span>
+                </a>
+
+                <div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+                    <span class="breadcrumb-title active">Employers List</span>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <div [ngBusy]="{busy:busy}"></div>
+
+    <div *ngIf="isEmployerAvailable">
+        <!-- Search Data and More.. Start -->
+        <div class="flex-p" fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row">
+                <mat-button-toggle matTooltip="Search" matTooltipPosition="right" (click)="tab1search=!tab1search" (click)="tab1search ? tab1FilterRef.focus() : false">
+                    <mat-icon>search</mat-icon>
+                </mat-button-toggle>
+            </div>
+
+            <form class="user-search" [ngClass]="tab1search ? 'show' : ''">
+                <mat-form-field>
+                    <input matInput #tab1FilterRef name="tab1Filter" [(ngModel)]="tab1Filter" placeholder="Search Employers...">
+                </mat-form-field>
+            </form>
+
+            <div fxLayout="row">
+                <mat-button-toggle matTooltip="Add New Employer" matTooltipPosition="left" routerLink="/admin/employers/add">
+                    <mat-icon>person_add</mat-icon>
+                </mat-button-toggle>
+            </div>
+        </div>
+        <!-- Search Data and More.. End -->
+
+        <!-- Data Lists Start -->
+        <div fxLayout="row wrap">
+            <div class="flex-p" fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50" *ngFor="let employer of employers_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
+                <mat-card class="p-0">
+                    <div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
+                        <div style="line-height: 40px; width: 100%;">
+                            <h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below" routerLink="/admin/employers/{{employer._id}}/view">{{employer.companyname
+                                | uppercase}}</h3>
+                        </div>
+                        <button mat-icon-button [matMenuTriggerFor]=i>
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </div>
+                    <mat-menu #i="matMenu" xPosition="before" overlapTrigger=true>
+                        <button mat-menu-item routerLink="/admin/employers/{{employer._id}}/jobs/add">
+                            <mat-icon>work</mat-icon>
+                            <span>Add New Job</span>
+                        </button>
+                        <button mat-menu-item routerLink="/admin/employers/{{employer._id}}/jobs/list">
+                            <mat-icon>work</mat-icon>
+                            <span>Jobs List</span>
+                        </button>
+                        <button mat-menu-item routerLink="/admin/employers/{{employer._id}}/view">
+                            <mat-icon>visibility</mat-icon>
+                            <span>Employer Details</span>
+                        </button>
+                    </mat-menu>
+
+                    <div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
+                        <div fxFlex="30" fxLayout="column" fxLayoutAlign="center center">
+                            <div class="user-img" *ngIf="employer.companylogo">
+                                <img class="transition-2 ng-star-inserted" src="{{imgBaseUrl}}/company/{{employer.companylogo}}">
+                            </div>
+                            <div class="user-img" *ngIf="!employer.companylogo">
+                                <img class="transition-2 ng-star-inserted" src="assets/img/avatars/logo-placeholder.png">
+                            </div>
+                            <div class="user-social">
+                                <mat-slide-toggle color="primary" (change)="changeEmployerStatus($event,employer._id)" [checked]=employer.activestatus></mat-slide-toggle>
+                            </div>
+                        </div>
+
+                        <div class="user-details transition-2" fxFlex="70" fxLayout="column">
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">payment</mat-icon>
+                                <span matTooltip="UEN Number" matTooltipPosition="right">{{employer.uennumber}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">business</mat-icon>
+                                <span matTooltip="Industry" matTooltipPosition="right">{{employer.industry}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">location_on</mat-icon>
+                                <span matTooltip="Country" matTooltipPosition="right">{{employer.country}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">code</mat-icon>
+                                <span matTooltip="Company Code" matTooltipPosition="right">{{employer.companycode}}</span>
+                            </p>
+                            <p *ngIf="employer.termsaccepted=='false'" fxLayout="row" fxLayoutAlign="end center" style="font-size: xx-small; color:red;">
+                                *Terms &amp; Conditions not Accepted
+                            </p>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+        <!-- Data Lists End -->
+
+        <!-- Pagination Start -->
+        <div fxLayout="row wrap">
+            <div class="flex-p" fxFlex="100">
+                <mat-card class="p-0 mat-paginator">
+                    <div class="mat-paginator-container">
+                        <div class="mat-paginator-page-size">
+                            <div class="mat-paginator-page-size-label">
+                                Items per page:
+                            </div>
+                            <mat-form-field class="mat-paginator-page-size-select mat-form-field-hide-placeholder">
+                                <mat-select placeholder="" [(ngModel)]="tab1PaginateConfig.itemsPerPage" name="itemsPerPage">
+                                    <mat-option *ngFor="let pageSizeOption of pageSizeOptions" [value]="pageSizeOption">
+                                        {{pageSizeOption}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="mat-paginator-range-actions">
+                            <pagination-controls class="ooget-pagination" [id]="tab1PaginateConfig.id" [maxSize]="tab1PaginateControlMaxSize" [autoHide]="tab1PaginateControlAutoHide"
+                                (pageChange)="tab1PaginateConfig.currentPage = $event"></pagination-controls>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+        <!-- Pagination End -->
+    </div>
+
+    <div *ngIf="!isEmployerAvailable" fxLayout="column" fxLayoutAlign="center center" class="no-data" fxLayoutGap="10px">
+        <p>Currently No Employers Found. Please Add New One..</p>
+        <button mat-raised-button color="primary" routerLink="/admin/employers/add">
+            Add New Employer
+        </button>
+    </div>
+</div>

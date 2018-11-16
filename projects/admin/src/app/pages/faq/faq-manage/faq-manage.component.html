@@ -1,0 +1,30 @@
+<div class="inner-sidenav-content transition-2">
+	<ng-progress></ng-progress>
+	<!-- Breadcrumb Start -->
+	<div fxLayout="row wrap">
+		<div class="flex-p" fxFlex="1 1 100%">
+			<mat-card class="mat-breadcrumb" fxLayout="row">
+				<a class="breadcrumb-item" routerLink="/main/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+					<mat-icon>home</mat-icon>
+					<span class="breadcrumb-title">Home</span>
+				</a>
+
+				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+					<span class="breadcrumb-title active">FAQ</span>
+				</div>
+			</mat-card>
+		</div>
+	</div>
+	<!-- Breadcrumb End -->
+
+	<div [ngBusy]="{busy: busy}"></div>
+
+	<div class="flex-p" fxLayout="column" fxLayoutGap="10px">
+		<div *ngIf="process=='demo'"></div>
+		<app-faq-add *ngIf="process=='add'" [title]="faqAddTitle" (onFAQItemAdded)="onNewFaqItem($event)"></app-faq-add>
+
+		<app-faq-edit *ngIf="process=='edit'" [title]="faqEditTitle" [faqDetails]="faqDetails" (onFAQItemUpdated)="onUpdateFaqItem($event)" (onFAQUpdateCancel)="onFAQUpdateCancel($event)"></app-faq-edit>
+
+		<app-faq-list *ngIf="faqList.length > 0" [title]="faqListTitle" [faqList]="faqList" [displayMode]="displayMode" (onFAQItemEdit)="onChangeEditMode($event)" (onFAQItemDelete)="onDeleteFaqItem($event)"></app-faq-list>
+	</div>
+</div>

@@ -1,0 +1,164 @@
+// Layout Styles Start
+$primary: #1c3f8e;
+.main-container {
+    position: absolute;
+    top: 56px; // bottom: 56px;
+    left: 0;
+    right: 0;
+}
+
+.main-container {
+    // background-image: url('./assets/img/sgmap.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: calc(100% - 100px);
+}
+
+.main-sidenav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    max-width: 300px;
+    width: 50%;
+    background: #fff;
+}
+
+.main-header {
+    // position: fixed;
+    // top: 0;
+    // left: 0;
+    // right: 0;
+}
+
+.mat-drawer-container {
+    background-color: transparent;
+}
+
+.main-content {
+    padding: 0 2% 2%;
+}
+
+.mat-toolbar.mat-primary {
+    background: $primary;
+}
+
+.mat-toolbar {
+    background: #f9f9f9;
+}
+
+.mat-fab.mat-primary,
+.mat-mini-fab.mat-primary,
+.mat-raised-button.mat-primary {
+    background-color: $primary;
+}
+
+.pl-10 {
+    padding-left: 10px !important;
+}
+
+.mat-button,
+.mat-raised-button,
+.mat-icon-button,
+.mat-stroked-button,
+.mat-flat-button,
+.mat-fab,
+.mat-mini-fab {
+    font-weight: 600;
+}
+
+// ::ng-deep .ngucarousel-items .item{
+//     padding: 0!important;
+// }
+.main-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 56px !important;
+    min-height: 56px !important;
+    font-size: 12px;
+    z-index: 1;
+    color: #525151 !important;
+    font-weight: 600;
+}
+
+// Layout Styles End
+.flex-p-x {
+    padding: 0 8px !important;
+}
+
+.title {
+    font-size: 36px;
+    font-weight: 600;
+    color: $primary;
+    text-align: center;
+}
+
+.sub-title {
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.notes {
+    margin: 25px 0;
+    color: #1a1a1a;
+}
+
+.notes p,
+.notes {
+    font-size: 12px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.notes p{
+    margin: 10px 0;
+}
+
+@media (min-width:600px) {
+    .title {
+        font-size: 50px;
+    }
+    .sub-title {
+        font-size: 22px;
+    }
+    .notes {
+        margin-top: 25px;
+    }
+    .notes p,
+    .notes {
+        font-size: 16px;
+    }
+}
+
+@media (min-width:960px) {
+    .title {
+        font-size: 50px;
+    }
+    .sub-title {
+        font-size: 24px;
+    }
+    .notes {
+        margin-top: 25px;
+    }
+    .notes p,
+    .notes {
+        font-size: 16px;
+    }
+}
+
+::ng-deep .ngucarousel .ngucarousel-inner .ngucarousel-items {
+    // align-items: center;
+    height: 120px;
+}
+
+::ng-deep .tile {
+    width: 100%;
+    height: 100%;
+    background-color: #fafafa;
+    text-align: center;
+    border: 8px solid #ccc;
+    border-radius: 5px;
+}

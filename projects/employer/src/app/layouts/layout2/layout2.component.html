@@ -1,0 +1,15 @@
+<mat-sidenav-container>
+    <mat-sidenav #mainNav [mode]="navMode" [opened]="navOpen" class="sidenav mat-elevation-z6" (click)="navMode!=='side' ? mainNav.toggle() : false">
+        <app-oogetsidenav #mainSidebar></app-oogetsidenav>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <app-oogettopbar (navToggle)="mainNav.toggle()" (navOpen)="mainNav.open()" (toggleProfile)="mainSidebar.toggleshowprofile()"
+            (showProfile)="mainSidebar.showprofile()"></app-oogettopbar>
+        <!-- Main Content Start -->
+
+        <router-outlet></router-outlet>
+
+        <!-- Main Content End -->
+    </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,98 @@
+@import "../../../../variables.scss";
+.inner-sidenav-content {
+    position: absolute;
+    top: 56px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px;
+    min-height: calc(100% - 80px);
+    overflow: auto;
+}
+
+.section_container {
+    min-height: 15vh; // margin: 8px;
+}
+
+.user-name {
+    padding: 10px 12px;
+    font-weight: 400;
+    font-size: 1.17em;
+    margin: 0px;
+    font-weight: 600;
+}
+
+.user-content .user-details span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+    padding-left: 10px;
+}
+
+.user-content .user-details span.key {
+    color: rgba(8, 8, 8, 0.7);
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.user-content .user-details span.value {
+    color: rgba(58, 51, 51, 0.7);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.p-10 {
+    padding: 10px !important;
+}
+
+.bg-lightgray {
+    background: #eee;
+}
+
+.user-details span {
+    overflow: hidden;
+    text-overflow: ellipsis; // white-space: nowrap;
+    font-size: 14px;
+}
+
+.user-details span.key {
+    color: rgba(8, 8, 8, 0.7);
+    font-weight: 700;
+    font-size: 14px;
+    padding-left: 10px;
+}
+
+.user-details span.value {
+    color: rgba(58, 51, 51, 0.7);
+    font-weight: 600; // font-size: 14px;
+    padding-left: 10px;
+    white-space: normal;
+}
+
+.small .user-details span.value {
+    // text-indent: 25px;
+}
+
+.user-details {
+    padding: 5px;
+}
+
+.user-details p {
+    padding: 5px 0;
+    margin: 0px;
+}
+
+.user-details p .mat-icon {
+    color: #1c408e
+}
+
+/* Mat Menu Start */
+
+.mat-menu-item {
+    line-height: 34px;
+    height: 34px;
+    font-size: 14px;
+}
+
+/* Mat Menu End */

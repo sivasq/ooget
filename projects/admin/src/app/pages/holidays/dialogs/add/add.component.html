@@ -1,0 +1,27 @@
+<div class="container">
+	<h3 mat-dialog-title>Add New Holiday</h3>
+
+	<form class="mat-dialog-content" (ngSubmit)="submit()" #formControl="ngForm">
+
+		<div class="form">
+			<mat-form-field>
+				<input matInput [min]="tomorrow" [matDatepicker]="picker" placeholder="Choose a Holiday Date" [(ngModel)]="data.holidaydate" name="holidaydate" (click)="picker.open()" required readonly>
+				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+				<mat-datepicker #picker touchUi="true"></mat-datepicker>
+				<mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+			</mat-form-field>
+		</div>
+
+		<div class="form">
+			<mat-form-field>
+				<input matInput #input class="form-control" placeholder="Holiday Name" [(ngModel)]="data.holidayname" name="holidayname" required autocomplete="off">
+				<mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+			</mat-form-field>
+		</div>
+
+		<div mat-dialog-actions>
+			<button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="confirmAdd()">Save</button>
+			<button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+		</div>
+	</form>
+</div>

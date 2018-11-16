@@ -1,0 +1,20 @@
+@import "../../../../variables.scss";
+.inner-sidenav-content {
+    position: absolute;
+    top: 56px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px;
+    min-height: calc(100% - 80px);
+    overflow: auto;
+}
+
+.mat-card {
+    background: #fff;
+    color: rgba(0, 0, 0, .87);
+}
+
+.title h3 {
+    font-weight: 600;
+}

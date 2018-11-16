@@ -1,0 +1,82 @@
+<div class="inner-sidenav-content transition-2">
+	<ng-progress></ng-progress>
+	<!-- Breadcrumb Start -->
+	<div fxLayout="row wrap">
+		<div class="flex-p" fxFlex="1 1 100%">
+			<mat-card class="mat-breadcrumb" fxLayout="row">
+				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+					<mat-icon>home</mat-icon>
+					<span class="breadcrumb-title">Home</span>
+				</a>
+
+				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+					<span class="breadcrumb-title active">Holidays</span>
+				</div>
+			</mat-card>
+		</div>
+	</div>
+
+	<div class="flex-p" fxLayout="row wrap" fxLayoutAlign="center stretch">
+		<mat-toolbar color="primary">
+			<span>Public holidays</span>
+			<span class="spacer"></span>
+			<!-- Reload data: -->
+			<button mat-icon-button (click)="refresh()">
+				<mat-icon>refresh</mat-icon>
+			</button>
+		</mat-toolbar>
+
+		<div fxFlex="100" class="container mat-elevation-z8">
+			<div class="form">
+				<mat-form-field floatPlaceholder="never">
+					<input matInput #filter placeholder="Filter Holidays" autocomplete="off">
+				</mat-form-field>
+			</div>
+
+			<mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+
+				<ng-container matColumnDef="holiday_date">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Holiday Date</mat-header-cell>
+					<mat-cell *matCellDef="let row"> {{row.holidaydate}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="holiday_name">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Holiday Name</mat-header-cell>
+					<mat-cell *matCellDef="let row"> {{row.holidayname}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>
+						<button mat-mini-fab color="primary" (click)="addNew()">
+							<mat-icon>add</mat-icon>
+						</button>
+						&nbsp;
+						<button mat-raised-button color="primary" routerLink="/admin/holidays/import">
+							Import From File
+						</button>
+					</mat-header-cell>
+
+					<mat-cell *matCellDef="let row; let i=index;">
+						<button mat-icon-button color="accent" (click)="startEdit(i, row._id, row.holidaydate, row.holidayname)">
+							<mat-icon aria-label="Edit">edit</mat-icon>
+						</button>
+
+						<button mat-icon-button color="warn" (click)="deleteItem(i, row._id, row.holidaydate, row.holidayname)">
+							<mat-icon aria-label="Delete">delete</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+			</mat-table>
+
+			<div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+				No Holidays
+			</div>
+
+			<mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+			</mat-paginator>
+		</div>
+	</div>
+</div>

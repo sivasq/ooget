@@ -1,0 +1,126 @@
+@import "../../variables.scss";
+
+/* Set sidenav width */
+::ng-deep .sidenav {
+    width: 250px;
+    overflow: hidden;
+}
+
+/* Toolbar height */
+
+.mat-toolbar {
+    padding: 0 8px;
+    min-height: 56px;
+}
+
+.mat-toolbar.mat-toolbar-single-row {
+    // height: 56px;
+}
+
+/* Side Nav User Profile Section Start */
+
+.user-block {
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+}
+
+.user-block {
+    height: 0;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.user-block.show {
+    height: 156px;
+}
+
+.transition-2 {
+    -webkit-transition: .2s;
+    transition: .2s;
+}
+
+.user-block .user-info-wrapper {
+    padding: 0 6px;
+    margin: 6px 0;
+    width: 100%;
+}
+
+.user-block img {
+    width: 80px;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 50%;
+}
+
+.user-block .user-info-wrapper .user-info {
+    text-align: center;
+}
+
+.user-block .user-info-wrapper .user-info .name {
+    font-size: 15px;
+    margin: 0;
+}
+
+.user-block .user-info-wrapper .user-info .position {
+    font-size: 13px;
+    margin: 0;
+}
+
+.app.indigo-light .muted-text {
+    color: rgba(0, 0, 0, .54);
+}
+
+/* Side Nav User Profile Section End */
+
+/* Side Nav Navigation List Start */
+
+.sidenav-menu-outer {
+    height: calc(100% - 71px);
+}
+
+.active-link {
+    border-radius: 0;
+    background-color: $primary;
+    color: #fff;
+}
+
+.menu-item .mat-button {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    width: 100%;
+    font-weight: 400;
+    padding: 3px 0;
+}
+
+.menu-expand-icon {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.menu-item .mat-button.expanded .menu-expand-icon {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.sub-menu {
+    max-height: 0;
+    overflow: hidden;
+    -webkit-transition: max-height .25s ease-out;
+    transition: max-height .25s ease-out;
+}
+
+.sub-menu.show {
+    max-height: 500px;
+    -webkit-transition: max-height .25s ease-in;
+    transition: max-height .25s ease-in;
+}
+
+::ng-deep .menu-item .mat-button-wrapper {
+    padding-left: 16px !important;
+}
+
+.sub-menu .mat-button {
+    padding-left: 20px;
+}
+
+/* Side Nav Navigation List End */

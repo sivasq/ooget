@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">{{title}}</mat-toolbar>
+<mat-accordion [displayMode]="displayMode" [multi]="multi" class="faq-container">
+	<mat-expansion-panel *ngFor="let faqItem of faqList">
+		<mat-expansion-panel-header>
+			<span style="font-weight: bold">{{faqItem.faqquestion}}</span>
+		</mat-expansion-panel-header>
+
+		<div fxLayout="row" fxLayoutAlign="end">
+			<button mat-icon-button color="accent" (click)="changeEditMode(faqItem)"><mat-icon>edit</mat-icon></button>
+
+			<button mat-icon-button color="warn" (click)="deleteFaq(faqItem._id)"><mat-icon>delete_forever</mat-icon></button>
+		</div>
+
+		<p>{{faqItem.faqanswer}}</p>
+
+	</mat-expansion-panel>
+</mat-accordion>

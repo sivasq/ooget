@@ -1,0 +1,338 @@
+<div class="inner-sidenav-content transition-2">
+    <ng-progress></ng-progress>
+    <!-- Breadcrumb Start -->
+    <div fxLayout="row wrap">
+        <div class="flex-p" fxFlex="1 1 100%">
+            <mat-card class="mat-breadcrumb" fxLayout="row">
+                <a class="breadcrumb-item" routerLink="/main/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+                    <mat-icon>home</mat-icon>
+                    <span class="breadcrumb-title">Home</span>
+                </a>
+
+                <div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+                    <span class="breadcrumb-title active">Profile</span>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- <div [ngBusy]="{busy:busy}"></div> -->
+    <div [ngBusy]="{busy: busy}"></div>
+
+    <div fxLayout="row wrap" fxLayoutAlign="center stretch">
+        <div class="flex-p" fxFlex="100" fxFlex.gt-sm="70" fxFlex.sm="90">
+            <mat-card class="list">
+                <mat-card fxLayout="row" fxLayoutAlign="center stretch" class="title">
+                    <h3>Profile Details</h3>
+                </mat-card>
+
+                <mat-card-content>
+                    <form (ngSubmit)="jobSeekerProfileUpdate(jobSeekerProfileForm.value, jobSeekerProfileForm)" #jobSeekerProfileForm="ngForm">
+                        <mat-tab-group class="vertical-tabs" (selectedTabChange)="tabChanged($event)" [selectedIndex]="selectedIndex" #tabGroup>
+                            <mat-tab label="Personal">
+                                <mat-form-field class="w-100">
+                                    <input matInput type="text" placeholder="Name" name="username" [ngModel]="username" required>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-100">
+                                    <input matInput type="email" placeholder="Email" name="email" [ngModel]="email" [pattern]="emailPattern" required>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-100">
+                                    <input matInput placeholder="Country" name="country" [ngModel]="country" required readonly>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-100">
+                                    <input matInput placeholder="Mobile Number" name="mobileno" autocomplete="off" [ngModel]="mobileno" pattern="[0-9]{1,}$" required>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-100">
+                                    <textarea matInput placeholder="Address" name="address" autocomplete="off" [ngModel]="address" required></textarea>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-100">
+                                    <input matInput placeholder="NRIC/FIN ( S1234567A )" name="nricfinno" autocomplete="off" [ngModel]="nricfinno" pattern="[F,T,S,G,f,t,s,g]{1}[0-9]{7}[A-Za-z]{1}$">
+                                </mat-form-field>
+
+                                <mat-form-field class="w-100">
+                                    <input matInput placeholder="Age" name="age" autocomplete="off" [ngModel]="age" maxlength="2" pattern="[0-9]{2}$" required>
+                                </mat-form-field>
+
+                                <b>Gender : </b>
+                                <mat-radio-group name="gender" [ngModel]="gender" required>
+                                    <mat-radio-button value="Male">Male</mat-radio-button>
+                                    <mat-radio-button value="Female">Female</mat-radio-button>
+                                </mat-radio-group>
+
+                                <mat-toolbar class="next_action" color="primary">
+                                    <span class="fill-remaining-space"></span>
+                                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab+1">
+                                        <mat-icon>chevron_right</mat-icon>
+                                    </a>
+                                </mat-toolbar>
+                            </mat-tab>
+
+                            <mat-tab label="Bank Details">
+                                <!-- <span>Are You Registered on PayNow ?</span>
+													 <mat-radio-group name="ispaynowreg" ngModel (change)="payNowChange($event)">
+														  <mat-radio-button value="Yes">Yes</mat-radio-button>
+														  <mat-radio-button value="No">No</mat-radio-button>
+													 </mat-radio-group> -->
+
+                                <input type="hidden" name="ispaynowreg" value="No">
+
+                                <div *ngIf="isPayNow == 'No'">
+                                    <mat-form-field class="w-100">
+                                        <mat-select placeholder="Choose Bank" name="bankname" [ngModel]="bankname" (ngModelChange)="bankChange($event,'customchange')">
+                                            <mat-option>--Select Bank--</mat-option>
+                                            <mat-option *ngFor="let BankDetail of BankDetails;" [value]="BankDetail.shortName">{{ BankDetail.shortName == BankDetail.fullName ? BankDetail.shortName : BankDetail.fullName
+                                                }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-100">
+                                        <input matInput type="text" placeholder="Bank Code" name="bankcode" [ngModel]="bankcode" [required]="reqBankDetails">
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-100">
+                                        <input matInput type="text" placeholder="Branch Code" name="branchcode" [ngModel]="branchcode" [required]="reqBankDetails">
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-100">
+                                        <input matInput type="text" placeholder="Account Number" name="accountno" [ngModel]="accountno" [required]="reqBankDetails">
+                                    </mat-form-field>
+                                </div>
+
+                                <div *ngIf="isPayNow == 'Yes'">
+                                    <p>Your Mobile number/ NRIC will be sufficient for payment transfer from Ooget bank account
+                                        into your bank account.</p>
+                                </div>
+
+                                <div *ngIf="bankHint" style="background-color: aliceblue; padding:15px;">
+                                    <h5 style="margin-bottom: 5px;">Guide:</h5>
+                                    <div [innerHTML]="bankHint | safeHtml"></div>
+                                </div>
+
+                                <mat-toolbar class="next_action" color="primary">
+                                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab-1">
+                                        <mat-icon>chevron_left</mat-icon>
+                                    </a>
+                                    <span class="fill-remaining-space"></span>
+                                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab+1">
+                                        <mat-icon>chevron_right</mat-icon>
+                                    </a>
+                                </mat-toolbar>
+                            </mat-tab>
+
+                            <mat-tab label="Job Preferences">
+                                <mat-form-field class="w-100">
+                                    <mat-select placeholder="Employment Type" name="employmenttype" multiple [ngModel]="employmenttype" (ngModelChange)="employmenttypeChange($event)">
+                                        <mat-option *ngFor="let EmploymentType of EmploymentTypes" [value]="EmploymentType.EmploymentType">{{ EmploymentType.EmploymentType }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-100">
+                                    <mat-select multiple placeholder="Region" name="preferredregion" [(ngModel)]="preferredregion" (ngModelChange)="mainlocationChange()">
+                                        <mat-option *ngFor="let Location of Locations | uniquemainlocation" [value]="Location.mainlocation">{{ Location.mainlocation }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-100">
+                                    <mat-select placeholder="Location" name="preferredlocation" [ngModel]="preferredlocation" multiple>
+                                        <div style="padding:10px 20px;font-weight: 500;">
+                                            <span style="cursor:pointer; color:#021def;" (click)="selectAllSubLocation()"> Select All </span>,
+                                            <span style="cursor:pointer; color:#f71900; padding-left: 15px;" (click)="unSelectAllSubLocation()"> Unselect All </span>
+                                        </div>
+                                        <mat-option *ngFor="let Location of Locations | multiplesublocationfilter:preferredregion" [value]="Location.sublocation">{{ Location.sublocation }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-100">
+                                    <mat-select placeholder="Specialization" name="preferredspecialization" [ngModel]="preferredspecialization" multiple>
+                                        <div style="padding:10px 20px;font-weight: 500;">
+                                            <span style="cursor:pointer; color:#021def;" (click)="selectAllSpecialization()"> Select All </span>,
+
+                                            <span style="cursor:pointer; color:#f71900; padding-left: 15px;" (click)="unSelectAllSpecialization()"> Unselect All </span>
+                                        </div>
+                                        <div *ngIf="showfulltimespeccilization">
+                                            <p style="padding:10px 20px;font-weight: 500; background: #eee;">FULL TIME</p>
+                                            <mat-option *ngFor="let Specialization of FullTimeSpecializations" [value]="Specialization.specialization">{{ Specialization.specialization }}</mat-option>
+                                        </div>
+                                        <div *ngIf="showparttimespeccilization">
+                                            <p style="padding:10px 20px;font-weight: 500; background: #eee;">PART TIME</p>
+                                            <mat-option *ngFor="let Specialization of PartTimeSpecializations" [value]="Specialization.specialization">{{ Specialization.specialization }}</mat-option>
+                                        </div>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-100">
+                                    <mat-select placeholder="Working Environment" name="workingenvironment" [ngModel]="workingenvironment" multiple>
+                                        <div style="padding:10px 20px;font-weight: 500;">
+                                            <span style="cursor:pointer; color:#021def;" (click)="selectAllWorkEnvironment()"> Select All </span>,
+                                            <span style="cursor:pointer; color:#f71900; padding-left: 15px;" (click)="unSelectWorkEnvironment()"> Unselect All </span>
+                                        </div>
+                                        <mat-option *ngFor="let WorkingEnvironment of WorkingEnvironments" [value]="WorkingEnvironment.Environment">{{ WorkingEnvironment.Environment }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-toolbar class="next_action" color="primary">
+                                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab-1">
+                                        <mat-icon>chevron_left</mat-icon>
+                                    </a>
+                                    <span class="fill-remaining-space"></span>
+                                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab+1">
+                                        <mat-icon>chevron_right</mat-icon>
+                                    </a>
+                                </mat-toolbar>
+                            </mat-tab>
+
+                            <mat-tab label="Past Experiences" *ngIf="!isPartTimeJob">
+                                <mat-form-field class="w-100">
+                                    <mat-select placeholder="Experience In" name="experiencein" [ngModel]="experiencein" multiple>
+                                        <mat-option *ngFor="let Specialization of FullTimeSpecializations" [value]="Specialization.specialization">{{ Specialization.specialization }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-100">
+                                    <input matInput type="number" placeholder="Years of Experience (in total)" name="totalexperienceinyears" autocomplete="off"
+                                        [ngModel]="totalexperienceinyears">
+                                </mat-form-field>
+
+                                <h4 style="margin-top:20px; margin-bottom: 5px;">Job History</h4>
+
+                                <div fxLayout="row" *ngFor="let pastExp of pastExpDetails.pastExp; let expIndex = index; trackBy: trackByIndex">
+                                    <div fxFlex="93" style="border: 2px solid #eee; padding: 10px; margin: 10px 0; ">
+                                        <mat-form-field class="w-49">
+                                            <input matInput placeholder="Company Name" name="previouscompanyname" autocomplete="off" [(ngModel)]="pastExpDetails.pastExp[expIndex].previouscompanyname"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </mat-form-field>
+
+                                        <mat-form-field class="w-49">
+                                            <input matInput placeholder="Position" name="previouscompanyposition" autocomplete="off" [(ngModel)]="pastExpDetails.pastExp[expIndex].previouscompanyposition"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </mat-form-field>
+
+                                        <mat-form-field class="w-100">
+                                            <textarea matInput placeholder="Responsibility" name="previousjobresponsibility" autocomplete="off" [(ngModel)]="pastExpDetails.pastExp[expIndex].previousjobresponsibility"
+                                                [ngModelOptions]="{standalone: true}"></textarea>
+                                        </mat-form-field>
+
+                                        <mat-form-field class="w-49">
+                                            <input matInput [matDatepicker]="frompicker" placeholder="Job Period From" name="previousjobfrom" autocomplete="off" [(ngModel)]="pastExpDetails.pastExp[expIndex].previousjobfrom"
+                                                [ngModelOptions]="{standalone: true}" (ngModelChange)="pastExpDetails.pastExp[expIndex].previousjobfrom = $event">
+                                            <mat-datepicker-toggle matSuffix [for]="frompicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #frompicker></mat-datepicker>
+                                        </mat-form-field>
+
+                                        <mat-form-field class="w-49">
+                                            <input matInput [min]="pastExpDetails.pastExp[expIndex].previousjobfrom" [matDatepicker]="topicker" placeholder="Job Period To"
+                                                name="previousjobto" autocomplete="off" [(ngModel)]="pastExpDetails.pastExp[expIndex].previousjobto"
+                                                [ngModelOptions]="{standalone: true}">
+                                            <mat-datepicker-toggle matSuffix [for]="topicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #topicker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div fxFlex fxLayoutAlign="center center">
+                                        <div *ngIf="expIndex == 0" (click)="addExp()">
+                                            <mat-icon>add_circle</mat-icon>
+                                        </div>
+                                        <div *ngIf="expIndex !== 0" (click)="removeExp(expIndex)">
+                                            <mat-icon>remove_circle</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <mat-toolbar class="next_action" color="primary">
+                                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab-1">
+                                        <mat-icon>chevron_left</mat-icon>
+                                    </a>
+                                    <span class="fill-remaining-space"></span>
+                                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab+1">
+                                        <mat-icon>chevron_right</mat-icon>
+                                    </a>
+                                </mat-toolbar>
+                            </mat-tab>
+
+                            <mat-tab label="Notifications">
+                                <h4 style="margin-bottom: 10px;">Frequency of Notification</h4>
+
+                                <mat-radio-group name="notificationalerttype" [ngModel]="notificationalerttype" (change)="notificationAlertTypeChange($event)">
+                                    <mat-radio-button value="anytime"> Always </mat-radio-button>
+                                    <mat-radio-button value="off"> Switched Off Notification </mat-radio-button>
+                                </mat-radio-group>
+
+                                <div *ngIf="notify_sub == 'off'" style="margin: 25px 0 0;">
+                                    <mat-radio-group name="alertswitchedoffdays" [ngModel]="alertswitchedoffdays" (change)="notificationAlertSWOffChange($event)">
+                                        <mat-radio-button value="1">1 Day</mat-radio-button>
+                                        <mat-radio-button value="7">1 Week</mat-radio-button>
+                                        <mat-radio-button value="30">1 Month</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+
+                                <div *ngIf="notify_sub == 'off'" style="margin: 15px 0 25px; padding-left: 15px; color: #797676; font-weight: 600;">(Notification Off untill : {{this.alertoffto}})</div>
+
+                                <mat-toolbar class="next_action" color="primary" style="margin-top:25px;">
+                                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab-1">
+                                        <mat-icon>chevron_left</mat-icon>
+                                    </a>
+                                    <span class="fill-remaining-space"></span>
+                                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab+1">
+                                        <mat-icon>chevron_right</mat-icon>
+                                    </a>
+                                </mat-toolbar>
+                            </mat-tab>
+
+                            <mat-tab label="Documents">
+                                <h4>Profile image &amp; Identification Card</h4>
+
+                                <div fxFlex="100" fxLayout="row wrap" style="margin-top: 25px;">
+                                    <div fxFlex="30" fxLayoutAlign="start center">
+                                        Profile Picture
+                                    </div>
+                                    <div fxLayout="row" fxLayoutAlign="start center">
+                                        <div class="drop-zone content" (change)="logochange($event)" (click)="imgFileInput.click() " style="cursor: pointer; ">
+                                            <input hidden type="file" #imgFileInput>
+                                            <img style="height:100%; width:100%; border-radius: 50px;" alt="" [src]="profileImage">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div fxFlex="100" fxLayout="row wrap" style="margin-top: 25px;">
+                                    <div fxFlex="30" fxLayoutAlign="start center">
+                                        Identification Card
+                                    </div>
+                                    <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="15px">
+                                        <div class="drop-zone content" (change)="idfrontchange($event)" (click)="idFrontFileInput.click()" style="cursor: pointer;">
+                                            <input hidden type="file" #idFrontFileInput>
+                                            <img style="height:100%; width:100%; border-radius: 50px;" alt="" [src]="idProofFront">
+                                        </div>
+
+                                        <div class="drop-zone content" (change)="idbackchange($event)" (click)="idBackFileInput.click()" style="cursor: pointer;">
+                                            <input hidden type="file" #idBackFileInput>
+                                            <img style="height:100%; width:100%; border-radius: 50px;" alt="" [src]="idProofBack">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <mat-toolbar class="next_action">
+                                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab-1">
+                                        <mat-icon>chevron_left</mat-icon>
+                                    </a>
+                                    <span class="fill-remaining-space"></span>
+                                </mat-toolbar>
+                            </mat-tab>
+                        </mat-tab-group>
+
+                        <mat-card fxLayout="row" fxLayoutAlign="center stretch" class="action">
+                            <button mat-raised-button color="primary" type="submit" [disabled]="!jobSeekerProfileForm.form.valid">Submit</button>
+                        </mat-card>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

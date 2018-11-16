@@ -1,0 +1,25 @@
+<div *ngIf="isEmployerLoading" fxFlex fxLayoutAlign="center center">
+	<mat-spinner [diameter]="40"></mat-spinner>
+</div>
+<div *ngIf="!isEmployerLoading" fxFlex fxLayout="column" fxLayoutAlign="center center">
+	<h2 mat-dialog-title>Job Duplicate Confirmation</h2>
+	<mat-dialog-content fxLayout="column" fxLayoutAlign="center center">
+		<h4>Do you want Dublicate This Job ? </h4>
+		<p>Please Choose which Employer this job copy to be.</p>		
+
+		<form (ngSubmit)="submit()" #chooseEmployerForm="ngForm" class="w-100" style="margin: 15px 0">
+			<mat-form-field class="w-100">
+				<mat-select placeholder="Choose Employer" name="selectedEmployer" [(ngModel)]="selectedEmployer" required>
+					<mat-option *ngFor="let employer of employers_list" [value]="employer._id">
+						{{employer.companyname | titlecase}} ({{employer.companycode}})
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</form>
+	</mat-dialog-content>
+
+	<mat-dialog-actions>
+		<button mat-button mat-dialog-close>Cancel</button>
+		<button mat-button cdkFocusInitial (click)="makeDuplicate()" [disabled]="!chooseEmployerForm.valid" [mat-dialog-close]="true">Duplicate</button>
+	</mat-dialog-actions>
+</div>

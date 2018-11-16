@@ -1,0 +1,8 @@
+<h2 mat-dialog-title align="center" *ngIf="data.boxTitle" [innerHTML]="data.boxTitle"></h2>
+<mat-dialog-content align="center" *ngIf="data.confirmMsg" [innerHTML]="data.confirmMsg">
+    <!-- {{data.confirmMsg}} -->
+</mat-dialog-content>
+<mat-dialog-actions [attr.align]="data.actionalign">
+    <button mat-button *ngIf="data.okButtonText" (click)="dialogClose('yes')" color="primary">{{data.okButtonText}}</button>
+    <button mat-button *ngIf="data.noButtonText" (click)="dialogClose('no')" color="primary">{{data.noButtonText}}</button>
+</mat-dialog-actions>

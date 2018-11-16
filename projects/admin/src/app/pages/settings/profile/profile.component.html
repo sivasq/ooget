@@ -1,0 +1,187 @@
+<div class="inner-sidenav-content transition-2">
+	<!-- Http Progress Bar -->
+	<ng-progress></ng-progress>
+	
+	<!-- Breadcrumb Start -->
+	<div fxLayout="row wrap">
+		<div class="flex-p" fxFlex="1 1 100%">
+			<mat-card class="mat-breadcrumb" fxLayout="row">
+				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+					<mat-icon>home</mat-icon>
+					<span class="breadcrumb-title">Home</span>
+				</a>
+
+				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+					<span class="breadcrumb-title active">Settings</span>
+				</div>
+			</mat-card>
+		</div>
+	</div>
+	<!-- Breadcrumb End -->
+
+	<div [ngBusy]="{busy: busy}"></div>
+
+	<div fxLayout="row wrap" fxLayoutAlign="center stretch">
+		<div class="flex-p" fxFlex="100" fxFlex.gt-sm="70" fxFlex.sm="90">
+			<mat-card class="list">
+				<mat-card fxLayout="row" fxLayoutAlign="center stretch" class="title">
+					<h3>Settings</h3>
+				</mat-card>
+				<mat-card-content>
+					<mat-tab-group class="vertical-tabs" (selectedTabChange)="tabChanged($event)" [selectedIndex]="selectedIndex" #tabGroup>
+						<mat-tab label="My Profile">
+							<div style="padding:25px;">
+								<!-- <div class="view"> </div> -->
+								<div class="edit">
+									<form fxLayout="row wrap" [formGroup]="adminProfileForm" (ngSubmit)="adminProfileUpdate()">
+										<div fxFlex="100" fxLayout="row" fxLayoutAlign="center center" style="margin-top: 25px;">
+											<div class="drop-zone content" (change)="logochange($event)" (click)="imgFileInput.click() " style="cursor: pointer; ">
+												<input hidden type="file" #imgFileInput>
+												<img style="height:100%; width:100%; border-radius: 50px;" alt="" [src]="profileImage">
+											</div>
+										</div>
+
+										<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" style="margin-top:25px;">
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="75">
+												<input matInput type="text" placeholder="Name" name="username" formControlName="username" required>
+												<mat-error *ngIf="adminProfileForm.get('username').hasError('required')" align="start">
+													Your Name Required
+												</mat-error>
+											</mat-form-field>
+
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="75">
+												<input matInput type="email" placeholder="Email" name="email" formControlName="email" required>
+												<mat-error *ngIf="adminProfileForm.get('email').hasError('required')" align="start">
+													Email Required
+												</mat-error>
+												<mat-error *ngIf="adminProfileForm.get('email').hasError('pattern')" align="start">
+													Invalid Email Format
+												</mat-error>
+												<mat-error *ngIf="adminProfileForm.get('email').hasError('isEmailUnique')" align="start">
+													This Email Already Registered
+												</mat-error>
+											</mat-form-field>
+
+											<!--- Password -->
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="75">
+												<input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" name="password" autocomplete="off" formControlName="password"
+												 advs-compare="verify" parent='true' required>
+												<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+												<mat-error *ngIf="adminProfileForm.get('password').hasError('required')" align="start">
+													Password is Required
+												</mat-error>
+												<mat-error *ngIf="adminProfileForm.get('password').hasError('minlength')" align="start">
+													Min 8 chars Required
+												</mat-error>
+												<mat-error *ngIf="adminProfileForm.get('password').hasError('isPatternMatch')" align="start">
+													{{passwordPatternError}}
+												</mat-error>
+											</mat-form-field>
+
+											<!-- Verify Password -->
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="75" appearance="standard">
+												<mat-label>Confirm Password</mat-label>
+												<input matInput [type]="rehide ? 'password' : 'text'" placeholder="Confirm Password" name="verify" autocomplete="off" formControlName="verify"
+												 advs-compare="password" parent='false' required>
+												<mat-icon matSuffix (click)="rehide = !rehide">{{rehide ? 'visibility_off' : 'visibility'}}</mat-icon>
+												<mat-error *ngIf="adminProfileForm.get('verify').hasError('required')" align="start">
+													Verify Password is required
+												</mat-error>
+												<mat-error *ngIf="adminProfileForm.get('verify').hasError('compare')" align="start">
+													Password Mismatch
+												</mat-error>
+											</mat-form-field>
+										</div>
+
+										<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
+											<button mat-raised-button color="primary" type="submit">Submit</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</mat-tab>
+
+						<mat-tab label="Home Page">
+							<div style="padding:25px;">
+								<!-- <div class="view"> </div> -->
+								<div class="edit">
+									<form [formGroup]="homePageContentForm" (ngSubmit)="homePageContentUpdate()">
+										<div fxLayout="row wrap" fxLayoutAlign="center center" style="margin-top:25px;">
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="90">
+												<input matInput type="text" placeholder="Main Title" name="title" formControlName="title" required>
+												<mat-error *ngIf="homePageContentForm.get('title').hasError('required')" align="start">
+													Main Title Required
+												</mat-error>
+											</mat-form-field>
+
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="90">
+												<textarea matInput placeholder="Sub Title" name="subtitle" formControlName="subtitle" required></textarea>
+												<mat-error *ngIf="homePageContentForm.get('subtitle').hasError('required')" align="start">
+													Sub Title Required
+												</mat-error>
+											</mat-form-field>
+
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="90">
+												<textarea matInput placeholder="Content1" name="list1" formControlName="list1"></textarea>
+												<mat-error *ngIf="homePageContentForm.get('list1').hasError('required')" align="start">
+													Content1 Required
+												</mat-error>
+											</mat-form-field>
+
+											<!-- <mat-form-field fxFlex="100" fxFlex.gt-sm="90">
+												<textarea matInput placeholder="Content2" name="list2" formControlName="list2"></textarea>
+												<mat-error *ngIf="homePageContentForm.get('list2').hasError('required')" align="start">
+													Content2 Required
+												</mat-error>
+											</mat-form-field> -->
+
+											<!-- <mat-form-field fxFlex="100" fxFlex.gt-sm="90">
+												<textarea matInput placeholder="Content3" name="list3" formControlName="list3"></textarea>
+												<mat-error *ngIf="homePageContentForm.get('list3').hasError('required')" align="start">
+													Content3 Required
+												</mat-error>
+											</mat-form-field> -->
+
+											<!-- <mat-form-field fxFlex="100" fxFlex.gt-sm="90">
+												<textarea matInput placeholder="Content4" name="list4" formControlName="list4"></textarea>
+												<mat-error *ngIf="homePageContentForm.get('list4').hasError('required')" align="start">
+													Content4 Required
+												</mat-error>
+											</mat-form-field> -->
+										</div>
+
+										<div fxLayoutAlign="center center">
+											<button mat-raised-button color="primary" type="submit">Submit</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</mat-tab>
+
+						<mat-tab label="Featured Employers">
+							<div style="padding:25px;">
+								<!-- <div class="view"> </div> -->
+								<div class="edit">
+									<div style="text-align:center">
+										<div *ngIf="this.featuredEmployers" style="margin-bottom: 25px;">
+											<div *ngFor="let featuredEmployer of featuredEmployers; let itemindex=index;">
+												<div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+													<img style="width:100px;height: 100px;" src="{{imgBaseUrl}}/featured/{{featuredEmployer.featuredimage}}">
+													<button mat-raised-button color="warn" (click)="removeFeaturedEmployer(featuredEmployer._id, itemindex)">Remove</button>
+												</div>
+												<mat-divider></mat-divider>
+											</div>
+										</div>
+
+										<app-featured-employers (complete)="onFileComplete($event)"></app-featured-employers>
+									</div>
+								</div>
+							</div>
+						</mat-tab>
+
+					</mat-tab-group>
+				</mat-card-content>
+			</mat-card>
+		</div>
+	</div>
+</div>

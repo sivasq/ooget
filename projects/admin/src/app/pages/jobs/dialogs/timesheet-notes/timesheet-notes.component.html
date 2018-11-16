@@ -1,0 +1,28 @@
+<div class="container">
+	<div fxLayout="row" fxLayoutAlign="space-between center">
+		<span mat-dialog-title style="font-size: 18px;">Notes for Timesheet {{data.date | date:'dd/MM/yyyy'}}</span>
+		<div>
+			<button *ngIf="haveNotes" mat-stroked-button color="accent" (click)="toggleShowEditor()">{{editText}}</button>
+			&nbsp;
+			<a mat-mini-fab color="warn" (click)="onNoClick()" tabindex="-1">
+				<mat-icon>close</mat-icon>
+			</a>
+		</div>
+	</div>
+
+	<div style="padding:25px 0 5px 0;" *ngIf="!showNotesEditor">
+		<b>Notes : </b> {{data.notes}}
+	</div>
+
+	<form *ngIf="showNotesEditor" class="mat-dialog-content" style="padding-top:15px;" (ngSubmit)="submit()" #timesheetNotesForm="ngForm">
+		<div class="form">
+			<mat-form-field fxFlex>
+				<textarea matInput placeholder="Notes" name="notes" [(ngModel)]="TimesheetNotes" required></textarea>
+			</mat-form-field>
+		</div>
+
+		<div mat-dialog-actions>
+			<button mat-button [type]="submit" [disabled]="!timesheetNotesForm.valid" (click)="stopEdit()">Save</button>
+		</div>
+	</form>
+</div>

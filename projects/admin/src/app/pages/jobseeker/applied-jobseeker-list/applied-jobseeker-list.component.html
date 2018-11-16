@@ -1,0 +1,212 @@
+<div class="inner-sidenav-content transition-2">
+    <!-- Http Progress Bar -->
+    <ng-progress></ng-progress>
+
+    <!-- Breadcrumb Start -->
+    <div fxLayout="row wrap">
+        <div [ngBusy]="busy"></div>
+        <!-- <div [ngBusy]="{busy: busyB, template:'loading', minDuration: 800000}"></div> -->
+        <div class="flex-p" fxFlex="1 1 100%">
+            <mat-card class="mat-breadcrumb" fxLayout="row">
+                <a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+                    <mat-icon>home</mat-icon>
+                    <span class="breadcrumb-title">Home</span>
+                </a>
+
+                <a class="breadcrumb-item" routerLink="/admin/employers/list" fxLayout="row" fxLayoutAlign="center center">
+                    <span class="breadcrumb-title">Employers</span>
+                </a>
+
+                <a class="breadcrumb-item" routerLink="/admin/employers/{{employerId}}/jobs/list" fxLayout="row" fxLayoutAlign="center center">
+                    <span class="breadcrumb-title">Jobs</span>
+                </a>
+
+                <a class="breadcrumb-item" routerLink="/admin/employers/{{employerId}}/jobs/{{empJobId}}/view" fxLayout="row" fxLayoutAlign="center center">
+                    <span class="breadcrumb-title">Job Details</span>
+                </a>
+
+                <div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+                    <span class="breadcrumb-title active">Applied Candidates</span>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <div fxLayout="row wrap" *ngIf="companyDetails">
+        <div class="flex-p" fxFlex="1 1 100%">
+            <mat-card class="p-10" fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <div style="font-size:16px;">
+                    <span style="font-weight:600;">Company Name</span> :
+                    <span style="font-style:italic;">{{companyDetails.companyname}}</span>
+                </div>
+
+                <div style="font-size:16px;">
+                    <span style="font-weight:600;">Company Code</span> :
+                    <span style="font-style:italic;">{{companyDetails.companycode}}</span>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+
+    <div fxLayout="row wrap">
+        <div class="flex-p" fxFlex="100">
+            <mat-card class="p-10" fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <div style="font-size:16px;">
+                    <span style="font-weight:600;">Job No</span> :
+                    <span style="font-style:italic;">{{jobDetails?.jobnumber}}</span>
+                </div>
+
+                <div style="font-size:16px;">
+                    <span style="font-weight:600;">Job Period</span> :
+                    <span style="font-style:italic;">{{jobDetails?.jobperiodfrom | date:'dd/MM/yyyy'}} - {{jobDetails?.jobperiodto | date:'dd/MM/yyyy'}}</span>
+                </div>
+
+                <div style="font-size:16px;">
+                    <span style="font-weight:600;">Vacancies / Pax Required</span> :
+                    <span style="font-style:italic;">{{jobDetails?.numberofpax - jobDetails?.numberofcontracts }}/{{jobDetails?.numberofpax}}</span>
+                </div>
+
+                <div style="font-size:16px;">
+                    <span style="font-weight:600;">Job Status</span> :
+                    <span style="font-style:italic;">{{jobDetails?.jobstatus | titlecase}}</span>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+
+    <!-- Search Data and More.. Start -->
+    <!-- <div class="flex-p" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="isCandidatesAvailable">
+        <div fxLayout="row">
+            <mat-button-toggle (click)="tab1search=!tab1search">
+                <mat-icon>search</mat-icon>
+            </mat-button-toggle>
+        </div>
+
+        <form class="user-search" [ngClass]="tab1search ? 'show' : ''">
+            <mat-form-field>
+                <input matInput name="tab1Filter" [(ngModel)]="tab1Filter" placeholder="Search Candidates...">
+            </mat-form-field>
+        </form>
+    </div> -->
+    <!-- Search Data and More.. End -->
+
+    <!-- Data Lists Start -->
+    <div class="flex-p" *ngIf="isCandidatesAvailable">
+        <mat-card class="table" fxLayout="row wrap">
+            <div class="flex-p" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <div fxFlex>
+                    <h4>Applied Candidates</h4>
+                </div>
+                <!-- Search Data and More.. Start -->
+                <div fxFlex fxLayout="row" fxLayoutAlign="end center">
+                    <form class="user-search" [ngClass]="tab1search ? 'show' : ''">
+                        <mat-form-field fxFlex>
+                            <input matInput name="tab1Filter" [(ngModel)]="tab1Filter" placeholder="Search Candidates...">
+                        </mat-form-field>
+                    </form>
+
+                    <button style="color: darkgray;" mat-icon-button fxLayoutAlign="center end" (click)="tab1search=!tab1search">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </div>
+                <!-- Search Data and More.. End -->
+            </div>
+
+            <table fxFlex="100">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Applied</th>
+                        <th>Offered</th>
+                        <th>Offer Rejected</th>
+                        <th>Offer Accepted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="pointer" *ngFor="let candidates of candidates_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;"
+                        routerLink="/admin/employers/{{employerId}}/jobs/{{empJobId}}/candidates/{{candidates.jobseekerid}}/view">
+                        <td>{{candidates.jobseeker[0].username}}</td>
+                        <td>{{candidates.jobseeker[0].email}}</td>
+                        <td>
+                            <mat-icon style="color: green;" *ngIf="candidates.applied">check</mat-icon>
+                        </td>
+                        <td>
+                            <mat-icon style="color: green;" *ngIf="candidates.offered">check</mat-icon>
+                        </td>
+                        <td>
+                            <mat-icon style="color: red;" *ngIf="candidates.rejected">check</mat-icon>
+                        </td>
+                        <td>
+                            <mat-icon style="color: green;" *ngIf="candidates.accepted">check</mat-icon>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </mat-card>
+    </div>
+
+    <!-- <div fxLayout="row wrap" *ngIf="isCandidatesAvailable">
+        <div class="flex-p candidate-list" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50" *ngFor="let candidates of candidates_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
+            <mat-card class="p-0">
+                <div class="" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div>
+                        <h3 class="user-name">Candidate Name : {{candidates.username}}</h3>
+                        <h3 class="user-name">Candidate Email : {{candidates.email}}</h3>
+                        <div *ngIf="(candidates.jobsselected | search: empJobId)">
+                            *Note: This Candidate Already Selected for this Job.
+                        </div>
+                        <div *ngIf="(candidates.rejectedjobs | search: empJobId)">
+                            *Note: This Candidate Rejected this Job Offer.
+                        </div>
+                    </div>
+                    <button mat-icon-button [matMenuTriggerFor]=i>
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </div>
+
+                <mat-menu #i="matMenu">
+                    <button mat-menu-item routerLink="/admin/employers/{{employerId}}/jobs/{{empJobId}}/candidates/{{candidates._id}}/view">
+                        <mat-icon>visibility</mat-icon>
+                        <span>Candidate Details</span>
+                    </button>
+                </mat-menu>
+            </mat-card>
+        </div>
+    </div> -->
+
+    <!-- Data Lists End -->
+
+    <!-- Pagination Start -->
+    <div fxLayout="row wrap" *ngIf="isCandidatesAvailable">
+        <div class="flex-p" fxFlex="100">
+            <mat-card class="p-0 mat-paginator">
+                <div class="mat-paginator-container">
+                    <div class="mat-paginator-page-size">
+                        <div class="mat-paginator-page-size-label">
+                            Items per page:
+                        </div>
+                        <mat-form-field class="mat-paginator-page-size-select mat-form-field-hide-placeholder">
+                            <mat-select placeholder="" [(ngModel)]="tab1PaginateConfig.itemsPerPage" name="itemsPerPage">
+                                <mat-option *ngFor="let pageSizeOption of pageSizeOptions" [value]="pageSizeOption">
+                                    {{pageSizeOption}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="mat-paginator-range-actions">
+                        <pagination-controls class="ooget-pagination" [id]="tab1PaginateConfig.id" [maxSize]="tab1PaginateControlMaxSize" [autoHide]="tab1PaginateControlAutoHide"
+                            (pageChange)="tab1PaginateConfig.currentPage = $event"></pagination-controls>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+    <!-- Pagination End -->
+
+    <div *ngIf="!isCandidatesAvailable" fxLayout="column" fxLayoutAlign="center center" style="height:50%;">
+        <p>No Candidates Applied for this Job.</p>
+    </div>
+
+</div>

@@ -1,0 +1,140 @@
+<mat-sidenav-container class="main-container">
+    <mat-sidenav-content>
+        <div class="h-100" fxLayout="row" fxLayoutAlign="center center">
+            <mat-card class="p-0 box" fxFlex="100" fxFlex.gt-sm="40" fxFlex.sm="60" ngStyle.xs="box-shadow:none">
+                <div class="bg-primary box-header" fxLayout="column" fxLayoutAlign="center center">
+                    <!-- <a routerLink="/" mat-mini-fab color="accent" style="position: absolute; right:0; top:0;">
+                        <mat-icon>home</mat-icon>
+                    </a> -->
+                    <a mat-button>
+                        <img style="height:auto; width: 50%;" alt="Logo" src="assets/img/logo/ooget.png">
+                    </a>
+                </div>
+
+                <div [ngBusy]="{busy:busy}"></div>
+
+                <form [formGroup]="jobSeekerRegForm" (ngSubmit)="onSubmitReg()">
+                    <mat-card-content ngClass="box-content-mobile" ngClass.gt-xs="box-content" class="mat-card-content" fxLayout="column" fxLayoutAlign="end center">
+                        <mat-card ngClass="box-content-inner-mobile" ngClass.gt-xs="box-content-inner" fxLayout="row wrap" fxLayoutAlign="center center"
+                            ngStyle.xs="box-shadow:none" [style.fontSize.px]="13">
+                            <span class="box-content-header f-w-600" style="font-size: 16px; margin-bottom: 10px;">JobSeeker Registration</span>
+
+                            <!-- JobSeeker Name -->
+                            <mat-form-field fxFlex="100">
+                                <input matInput placeholder="Name" name="username" autocomplete="off" formControlName="username" required>
+                                <mat-error *ngIf="jobSeekerRegForm.get('username').hasError('required')" align="start">
+                                    JobSeeker Name Required
+                                </mat-error>
+                            </mat-form-field>
+
+                            <!-- JobSeeker Email -->
+                            <mat-form-field class="w-100">
+                                <input matInput type="email" placeholder="Login Email" name="email" autocomplete="off" formControlName="email" required>
+                                <mat-error *ngIf="jobSeekerRegForm.get('email').hasError('required')" align="start">
+                                    Email Required
+                                </mat-error>
+                                <mat-error *ngIf="jobSeekerRegForm.get('email').hasError('pattern')" align="start">
+                                    Invalid Email Format
+                                </mat-error>
+                                <mat-error *ngIf="jobSeekerRegForm.get('email').hasError('isEmailUnique')" align="start">
+                                    This Email Already Registered
+                                </mat-error>
+                            </mat-form-field>
+
+                            <!--- Password -->
+                            <mat-form-field class="w-100">
+                                <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" name="password" autocomplete="off" formControlName="password"
+                                    advs-compare="verify" parent='true' required>
+                                <mat-icon matSuffix style="cursor: pointer;" (click)="hide = !hide">{{hide ? 'visibility_off'
+                                    : 'visibility'}}</mat-icon>
+                                <mat-hint>Minimum 8 characters with Alphanumeric &amp; special characters</mat-hint>
+                                <mat-error *ngIf="jobSeekerRegForm.get('password').hasError('required')" align="start">
+                                    Password is Required
+                                </mat-error>
+                                <mat-error *ngIf="jobSeekerRegForm.get('password').hasError('minlength')" align="start">
+                                    Min 8 chars Required
+                                </mat-error>
+                                <mat-error *ngIf="jobSeekerRegForm.get('password').hasError('isPatternMatch')" align="start">
+                                    {{passwordPatternError}}
+                                </mat-error>
+                            </mat-form-field>
+
+                            <!-- Verify Password -->
+                            <mat-form-field class="w-100">
+                                <input matInput [type]="rehide ? 'password' : 'text'" placeholder="Confirm Password" name="verify" autocomplete="off" formControlName="verify"
+                                    advs-compare="password" parent='false' required>
+                                <mat-icon matSuffix style="cursor: pointer;" (click)="rehide = !rehide">{{rehide ? 'visibility_off'
+                                    : 'visibility'}}</mat-icon>
+                                <mat-error *ngIf="jobSeekerRegForm.get('verify').hasError('required')" align="start">
+                                    Verify Password is required
+                                </mat-error>
+                                <mat-error *ngIf="jobSeekerRegForm.get('verify').hasError('compare')" align="start">
+                                    Password Mismatch
+                                </mat-error>
+                            </mat-form-field>
+
+                            <!-- Country -->
+                            <mat-form-field class="w-100">
+                                <input matInput placeholder="JobSeeker Country" name="country" autocomplete="off" formControlName="country" readonly required>
+                                <mat-error *ngIf="jobSeekerRegForm.get('country').hasError('required')" align="start">
+                                    JobSeeker Country Required
+                                </mat-error>
+                            </mat-form-field>
+
+                            <!-- Doc Upload -->
+                            <!-- <div style="width:100%; " fxLayout="row" fxLayoutAlign="center">
+                                <input type="hidden" placeholder="ID Proof" name="docName" formControlName="docName" required readonly>
+
+                                <input hidden type="file" #docFileInput name="idProof" (change)="getDoc($event)" required/>
+
+                                <div *ngIf="showUpload" fxFlex fxLayoutAlign="center">
+                                    <button type="button" style="width:90%; overflow: hidden;" class="td-file-upload" mat-raised-button color="primary" (click)="docFileInput.click()">
+                                        <mat-icon>attach_file</mat-icon>Upload ID Proof</button>
+                                </div>
+
+                                <div *ngIf="uploaded" fxFlex fxLayoutAlign="center">
+                                    <button type="button" style="width:90%; overflow: hidden;" class="td-file-upload" mat-raised-button color="accent">
+                                        <mat-icon>file_upload</mat-icon>{{docName}}
+                                    </button>
+
+                                    <button type="button" class="td-file-upload-cancel" mat-icon-button color="warn" (click)="removeDoc()">
+                                        <mat-icon>cancel</mat-icon>
+                                    </button>
+                                </div>
+                            </div> -->
+
+                            <a fxFlex="100" mat-button style="color: blue;" (click)="openTermsConditionsDialog()">Click to
+                                read Terms and Conditions</a>
+
+                            <mat-radio-group name="accept_terms" formControlName="accept_terms" (change)="radioChange($event)" fxLayoutGap="10px" required>
+                                <mat-radio-button value="true">Accept</mat-radio-button>
+                                <mat-radio-button value="false">Do not accept</mat-radio-button>
+                            </mat-radio-group>
+                            <mat-error *ngIf="jobSeekerRegForm.get('accept_terms').hasError('required')" align="start">
+                                Please Accept Terms
+                            </mat-error>
+
+                            <div class="successmsg" *ngIf="isSuccessMsg" style="padding-top:25px">{{isSuccessMsg}}</div>
+
+                            <div class="errormsg" *ngIf="isErrorMsg" style="padding-top:25px">{{isErrorMsg}}</div>
+                        </mat-card>
+
+                        <button type="submit" mat-raised-button color="primary" ngClass="box-button-mobile" ngClass.gt-xs="box-button" style="margin-top: 16px;">
+                            REGISTER
+                        </button>
+
+                        <div fxLayout="row wrap" fxLayoutAlign="space-between center" style="margin-bottom: 10px; width: 100%;">
+                            <div>
+                                <a style="color: #696666;" class="f-w-600" mat-button routerLink="/">Home Page</a>
+                            </div>
+                            <div fxFlex></div>
+                            <div>
+                                <a style="color: #696666;" class="f-w-600" mat-button routerLink="/auth/login">Click to Login</a>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </form>
+            </mat-card>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

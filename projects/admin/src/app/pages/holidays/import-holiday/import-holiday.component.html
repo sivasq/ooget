@@ -1,0 +1,105 @@
+<div class="inner-sidenav-content transition-2">
+	<!-- Http Progress Bar -->
+	<ng-progress></ng-progress>
+	
+	<!-- Breadcrumb Start -->
+	<div fxLayout="row wrap">
+		<div class="flex-p" fxFlex="1 1 100%">
+			<mat-card class="mat-breadcrumb" fxLayout="row">
+				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+					<mat-icon>home</mat-icon>
+					<span class="breadcrumb-title">Home</span>
+				</a>
+				<a class="breadcrumb-item" routerLink="/admin/holidays" fxLayout="row" fxLayoutAlign="flex-start center">
+					<span class="breadcrumb-title">Holidays</span>
+				</a>
+				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+					<span class="breadcrumb-title active">Import Holidays</span>
+				</div>
+			</mat-card>
+		</div>
+	</div>
+	<!-- Breadcrumb End -->
+
+	<div fxLayout="row wrap" fxLayoutAlign="center stretch">
+		<div class="flex-p" fxFlex="100" fxFlex.gt-sm="70" fxFlex.sm="90">
+			<mat-card fxLayoutAlign="row wrap">
+				<div>
+					<button mat-raised-button color="primary" (click)="chooseCsvFile.click()">Choose CSV File</button>
+					<input hidden type="file" #chooseCsvFile (change)="handleFileSelect($event)" />
+				</div>
+				<div style="margin-left: 10px">
+					<button mat-raised-button color="primary" (click)="chooseXlFile.click()">Choose XL File</button>
+					<input hidden type="file" #chooseXlFile (change)="handleFileSelectXl($event)" />
+				</div>
+
+				<div style="margin-left: 10px">
+					<button mat-raised-button color="primary">Upload Data To Server</button>
+				</div>
+
+				<div style="margin-left: 10px">
+					<a mat-raised-button (click)="downloadSampleCSV()">Generate Sample CSV File</a>
+				</div>
+			</mat-card>
+		</div>
+
+		<div *ngIf="this.importedHolidays.length > 0" class="flex-p" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+			<!-- <mat-form-field fxFlex="100">
+				<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+			</mat-form-field> -->
+
+			<table mat-table fxFlex="100" [dataSource]="importedHolidaysDataSource" class="mat-elevation-z8">
+				<ng-container matColumnDef="holiday_date">
+					<th mat-header-cell *matHeaderCellDef> Holiday Date </th>
+					<td mat-cell *matCellDef="let element"> {{element.holiday_date}} </td>
+				</ng-container>
+
+				<ng-container matColumnDef="holiday_name">
+					<th mat-header-cell *matHeaderCellDef> Holiday Name </th>
+					<td mat-cell *matCellDef="let element"> {{element.holiday_name}} </td>
+				</ng-container>
+
+				<!-- <ng-container matColumnDef="holiday_group_code">
+					<th mat-header-cell *matHeaderCellDef> Holiday Group Code </th>
+					<td mat-cell *matCellDef="let element"> {{element.holiday_group_code}} </td>
+				</ng-container> -->
+
+				<!-- <ng-container matColumnDef="holiday_group_name">
+					<th mat-header-cell *matHeaderCellDef> Holiday Group Name </th>
+					<td mat-cell *matCellDef="let element"> {{element.holiday_group_name}} </td>
+				</ng-container> -->
+
+				<!-- <ng-container matColumnDef="leave_type_code">
+					<th mat-header-cell *matHeaderCellDef> Leave Type Code </th>
+					<td mat-cell *matCellDef="let element"> {{element.leave_type_code}} </td>
+				</ng-container> -->
+
+				<!-- <ng-container matColumnDef="leave_type">
+					<th mat-header-cell *matHeaderCellDef> Leave Type </th>
+					<td mat-cell *matCellDef="let element"> {{element.leave_type}} </td>
+				</ng-container> -->
+
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row)"></tr>
+			</table>
+		</div>
+
+		<div *ngIf="this.dublicateHolidays.length > 0" class="flex-p" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+			<p>Note*: These Below Listed Holidays are Already In Server.</p>
+			<table mat-table fxFlex="100" [dataSource]="dublicateHolidaysDataSource" class="mat-elevation-z8">
+				<ng-container matColumnDef="holiday_date">
+					<th mat-header-cell *matHeaderCellDef> Holiday Date </th>
+					<td mat-cell *matCellDef="let element"> {{element.holiday_date}} </td>
+				</ng-container>
+
+				<ng-container matColumnDef="holiday_name">
+					<th mat-header-cell *matHeaderCellDef> Holiday Name </th>
+					<td mat-cell *matCellDef="let element"> {{element.holiday_name}} </td>
+				</ng-container>
+
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr class="strikeout" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</table>
+		</div>
+	</div>
+</div>

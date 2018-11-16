@@ -1,0 +1,350 @@
+<div class="inner-sidenav-content transition-2" perfectScrollbar>
+    <!-- Http Progress Bar -->
+    <ng-progress></ng-progress>
+    
+    <!-- Breadcrumb Start -->
+    <div fxLayout="row wrap">
+        <div class="flex-p" fxFlex="1 1 100%">
+            <mat-card class="mat-breadcrumb" fxLayout="row">
+                <a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+                    <mat-icon>home</mat-icon>
+                    <span class="breadcrumb-title">Home</span>
+                </a>
+
+                <a class="breadcrumb-item" routerLink="/admin/employers/list" fxLayout="row" fxLayoutAlign="center center">
+                    <span class="breadcrumb-title">Employers</span>
+                </a>
+
+                <a class="breadcrumb-item" routerLink="/admin/employers/{{companyDetails?._id}}/view" fxLayout="row" fxLayoutAlign="center center">
+                    <span class="breadcrumb-title">{{companyDetails?.companyname | titlecase}}</span>
+                </a>
+
+                <a class="breadcrumb-item" routerLink="/admin/employers/{{companyid}}/jobs/list" fxLayout="row" fxLayoutAlign="center center">
+                    <span class="breadcrumb-title">Jobs</span>
+                </a>
+
+                <div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+                    <span class="breadcrumb-title active">Details</span>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <div [ngBusy]="{busy:busy}"></div>
+
+    <!-- Company Details -->
+    <div fxLayout="row wrap" *ngIf="companyDetails">
+        <div class="flex-p" fxFlex="100">
+            <mat-card class="p-10" fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <div style="font-size:16px;">
+                    <span style="font-weight:600;">Company Name</span> :
+                    <span style="font-style:italic; text-decoration: underline; color: blue; cursor: pointer;" routerLink="/admin/employers/{{companyDetails?._id}}/view">{{companyDetails.companyname | titlecase}}</span>
+                </div>
+
+                <div style="font-size:16px;">
+                    <span style="font-weight:600;">Company Code</span> :
+                    <span style="font-style:italic; text-decoration: underline; color: blue; cursor: pointer;" routerLink="/admin/employers/{{companyDetails?._id}}/view">{{companyDetails.companycode | titlecase}}</span>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+
+    <!-- Job Details -->
+    <div fxLayout="row wrap">
+        <div class="flex-p" fxFlex="100">
+            <mat-card>
+                <mat-card-header>
+                    <img *ngIf="!companyDetails?.companylogo" mat-card-avatar src="assets/img/avatars/logo-placeholder.png" alt="">
+                    <img *ngIf="companyDetails?.companylogo" mat-card-avatar src="{{imgBaseUrl}}/company/{{companyDetails?.companylogo}}" alt="">
+                    <mat-card-title>{{jobDetails.jobnumber}}</mat-card-title>
+                    <mat-card-subtitle style="text-transform: capitalize;">Job Status: {{jobDetails.jobstatus}}</mat-card-subtitle>
+                    <div fxFlex></div>
+                    <div *ngIf="jobDetails != ''">
+                        <button mat-raised-button color="primary" (click)="duplicateJobConfirm(jobDetails.companyid._id, jobDetails._id)">Copy </button>
+                        &nbsp;
+                    </div>
+                    <div *ngIf="jobDetails != ''">
+                        <button mat-raised-button color="primary" routerLink="/admin/employers/{{jobDetails.companyid._id}}/jobs/{{jobDetails._id}}/edit">Edit </button>
+                    </div>
+                    <div *ngIf="jobDetails.jobstatus == 'pending'">
+                        <button mat-raised-button color="primary" (click)="activateJob(jobDetails.companyid._id, jobDetails._id)">Activate This Job</button>
+                    </div>
+                    <div *ngIf="jobDetails.jobstatus == 'closed'">
+                         &nbsp;
+                        <button mat-raised-button color="primary" (click)="rePostJob(jobDetails.companyid._id, jobDetails._id)" disabled=true>Repost Job</button>
+                    </div>
+                    <!-- <div>
+                        <button mat-raised-button color="primary" (click)="processPayrollGenerate()">Activate This Job</button>
+                    </div> -->
+                </mat-card-header>
+
+                <mat-divider></mat-divider>
+
+                <mat-card-content>
+                    <!-- Job Basic Details -->
+                    <div>
+                        <div class="user-details transition-2" fxFlex="100" fxLayout="column">
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Job Number : </span>
+                                <span class="value">{{jobDetails.jobnumber}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Project Name : </span>
+                                <span class="value">{{jobDetails.project}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Job Title : </span>
+                                <span class="value">{{jobDetails.jobtitle}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Employment Type : </span>
+                                <span class="value">{{jobDetails.employmenttype}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Department : </span>
+                                <span class="value">{{jobDetails.department}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Description : </span>
+                                <span class="value">{{jobDetails.jobdescription}}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <!-- Job Specialization Details -->
+                    <div>
+                        <div class="user-details transition-2" fxFlex="100" fxLayout="column">
+                            <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobDetails.jobspecialization !== 'others'">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Job Specialization : </span>
+                                <span class="value">{{jobDetails.project}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobDetails.jobspecialization == 'others'">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Job Specialization : </span>
+                                <span class="value">{{jobDetails.otherjobspecialization}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobDetails.workingenvironment">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Working Environment : </span>
+                                <span class="value">{{jobDetails.workingenvironment}}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <!-- Work Details -->
+                    <div>
+                        <div class="user-details transition-2" fxFlex="100" fxLayout="column">
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Vacancies / Pax Required : </span>
+                                <span class="value">{{jobDetails.numberofpax - jobDetails.numberofcontracts}} / {{jobDetails.numberofpax}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Job period : </span>
+                                <span class="value">{{jobDetails.jobperiodfrom}} to {{jobDetails.jobperiodto}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Grace Period : </span>
+                                <span class="value">{{jobDetails.graceperiod}} Mins</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Work Time : </span>
+                                <span class="value">{{jobDetails.starttime}} to {{jobDetails.endtime}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Work Days Type : </span>
+                                <span class="value">{{jobDetails.workdaystype}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobDetails.workdays">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Work Days are : </span>
+                                <span class="value" *ngIf="jobDetails.workdays?.sunday"> {{jobDetails.workdays?.sunday ? 'Sunday ,' : ''}} </span>
+                                <span class="value" *ngIf="jobDetails.workdays?.monday"> {{jobDetails.workdays?.monday ? 'Monday ,' : ''}} </span>
+                                <span class="value" *ngIf="jobDetails.workdays?.tuesday"> {{jobDetails.workdays?.tuesday ? 'Tuesday ,' : ''}} </span>
+                                <span class="value" *ngIf="jobDetails.workdays?.wednesday"> {{jobDetails.workdays?.wednesday ? 'Wednesday ,' : ''}} </span>
+                                <span class="value" *ngIf="jobDetails.workdays?.thursday"> {{jobDetails.workdays?.thursday ? 'Thursday ,' : ''}} </span>
+                                <span class="value" *ngIf="jobDetails.workdays?.friday"> {{jobDetails.workdays?.friday ? 'Friday ,' : ''}} </span>
+                                <span class="value" *ngIf="jobDetails.workdays?.saturday"> {{jobDetails.workdays?.saturday ? 'Saturday' : ''}} </span>
+                            </p>
+                            <!-- Break Details -->
+                            <p fxLayout="row" fxLayoutAlign="start center" *ngFor="let break of jobDetails.breaktime">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">{{break.breakname}} : </span>
+                                <span class="value">{{break.breakstart}} to {{break.breakend}}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <!-- Address Details -->
+                    <div>
+                        <div class="user-details transition-2" fxFlex="100" fxLayout="column">
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Postal Code : </span>
+                                <span class="value">{{jobDetails.addresspostalcode}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Block : </span>
+                                <span class="value">{{jobDetails.addressblock}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Street : </span>
+                                <span class="value">{{jobDetails.addressstreet}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Unit : </span>
+                                <span class="value">{{jobDetails.addressunit}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Region : </span>
+                                <span class="value">{{jobDetails.addressregion}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Location : </span>
+                                <span class="value">{{jobDetails.addresslocation}}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <!-- Salary Details -->
+                    <div>
+                        <div class="user-details transition-2" fxFlex="100" fxLayout="column">
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Charge Rate : </span>
+                                <span class="value">&#x24;&nbsp;{{jobDetails.chargerate}}</span>
+                            </p>
+
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Markup Rate : </span>
+                                <span class="value">{{jobDetails.markupratetype == "sgdollar" ? '&#x24;&nbsp;':''}}{{jobDetails.markuprate}}{{jobDetails.markupratetype
+                                    == "percentage" ? '%':''}}</span>
+                            </p>
+
+                            <p fxLayout="row" fxLayoutAlign="start center">
+                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                                <span class="key">Jobseeker Salary : </span>
+                                <span class="value">&#x24;&nbsp;{{jobDetails.salary}}</span>
+                            </p>
+                        </div>
+                    </div>
+                </mat-card-content>
+
+                <!-- <mat-card-actions>
+                    <button mat-button>LIKE</button>
+                    <button mat-button>SHARE</button>
+                </mat-card-actions> -->
+            </mat-card>
+        </div>
+
+        <div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
+            <mat-card class="p-0">
+                <div class="bg-lightgray" fxLayout="row" fxLayoutAlign="start center" style="height: 40px;">
+                    <h3 class="user-name">Candidates Applied</h3>
+                </div>
+
+                <div class="user-content" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="candidatesApplied?.length > 0">
+                    <div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
+                        <p *ngFor="let candidate of candidatesApplied; let i=index;">
+                            <span>{{i+1}}.&nbsp;{{candidate.username}}</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="user-content" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="candidatesApplied?.length == 0">
+                    <div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
+                        No Candidates Applied
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+
+        <div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
+            <mat-card class="p-0">
+                <div class="bg-lightgray" fxLayout="row" fxLayoutAlign="start center" style="height: 40px;">
+                    <h3 class="user-name">Candidates Offered</h3>
+                </div>
+
+                <div class="user-content" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="candidatesOffered?.length > 0">
+                    <div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
+                        <p *ngFor="let candidate of candidatesOffered; let i=index;">
+                            <span>{{i+1}}.&nbsp;{{candidate.username}}</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="user-content" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="candidatesOffered?.length == 0">
+                    <div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
+                        No Candidates offered
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+
+        <div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
+            <mat-card class="p-0">
+                <div class="bg-lightgray" fxLayout="row" fxLayoutAlign="start center" style="height: 40px;">
+                    <h3 class="user-name">Offers Accepted</h3>
+                </div>
+
+                <div class="user-content" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="offersAccepted?.length > 0">
+                    <div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
+                        <p *ngFor="let candidate of offersAccepted; let i=index;">
+                            <span>{{i+1}}.&nbsp;{{candidate.username}}</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="user-content" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="offersAccepted?.length == 0">
+                    <div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
+                        No one Accepting Offers
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+
+        <div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
+            <mat-card class="p-0">
+                <div class="bg-lightgray" fxLayout="row" fxLayoutAlign="start center" style="height: 40px;">
+                    <h3 class="user-name">Job Contractors</h3>
+                </div>
+
+                <div class="user-content" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="jobContractors?.length > 0">
+                    <div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
+                        <p *ngFor="let contractor of jobContractors; let i=index;">
+                            <span>{{i+1}}.&nbsp;
+                                <a style="color:blue; font-weight: bold;" routerLink="/admin/employers/jobs/{{contractor._id}}/contract_details">
+                                    {{contractor.jobseekerid.username}}
+                                </a>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="user-content" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="jobContractors?.length == 0">
+                    <div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
+                        No Contractors
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

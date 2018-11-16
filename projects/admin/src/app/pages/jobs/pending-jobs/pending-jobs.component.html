@@ -1,0 +1,131 @@
+<div class="inner-sidenav-content transition-2">
+    <!-- Http Progress Bar -->
+    <ng-progress></ng-progress>
+    
+    <!-- Breadcrumb Start -->
+    <div fxLayout="row wrap">
+        <div class="flex-p" fxFlex="1 1 100%">
+            <mat-card class="mat-breadcrumb" fxLayout="row">
+                <a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+                    <mat-icon>home</mat-icon>
+                    <span class="breadcrumb-title">Home</span>
+                </a>
+
+                <a class="breadcrumb-item" routerLink="/admin/employers/list" fxLayout="row" fxLayoutAlign="center center">
+                    <span class="breadcrumb-title">Employers</span>
+                </a>
+
+                <!-- <a class="breadcrumb-item" routerLink="/admin/employers/jobs/pending" fxLayout="row" fxLayoutAlign="center center">
+              <span class="breadcrumb-title">Jobs</span>
+            </a> -->
+
+                <div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+                    <span class="breadcrumb-title active">Pending Jobs List</span>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <div [ngBusy]="{busy:busy}"></div>
+
+    <!-- Search Data and More.. Start -->
+    <div class="flex-p" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="isPendingJobAvailable">
+        <div fxLayout="row">
+            <mat-button-toggle (click)="tab1search=!tab1search">
+                <mat-icon>search</mat-icon>
+            </mat-button-toggle>
+        </div>
+
+        <form class="user-search" [ngClass]="tab1search ? 'show' : ''">
+            <mat-form-field>
+                <input matInput name="tab1Filter" [(ngModel)]="tab1Filter" placeholder="Search Pending Jobs...">
+            </mat-form-field>
+        </form>
+
+        <div fxLayout="row">
+            <mat-button-toggle>
+                <mat-icon>person_add</mat-icon>
+            </mat-button-toggle>
+        </div>
+    </div>
+    <!-- Search Data and More.. End -->
+
+    <!-- Data Lists Start -->
+    <div fxLayout="row wrap" *ngIf="isPendingJobAvailable">
+        <div class="flex-p" fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50" *ngFor="let job of pending_jobs_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
+            <mat-card class="p-0">
+                <div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
+                    <h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below" routerLink="/admin/employers/{{job.companyid._id}}/jobs/{{job._id}}/view">{{job.jobtitle}}</h3>
+                    <button mat-icon-button [matMenuTriggerFor]=i>
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </div>
+                <mat-menu #i="matMenu" xPosition="before">
+                    <!-- <button mat-menu-item routerLink="/admin/employers/{{job.companyid}}/jobs/{{job._id}}/edit">
+									<mat-icon>mode_edit</mat-icon>
+									<span>Edit</span>
+								</button> -->
+                    <button mat-menu-item routerLink="/admin/employers/{{job.companyid._id}}/jobs/{{job._id}}/view">
+                        <mat-icon>visibility</mat-icon>
+                        <span>details</span>
+                    </button>
+                </mat-menu>
+
+                <div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
+                    <div class="user-details transition-2" fxFlex="100" fxLayout="column">
+                        <p fxLayout="row" fxLayoutAlign="start center">
+                            <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">event_seat</mat-icon>
+                            <span matTooltip="Department" matTooltipPosition="right">Dept : {{job.department}}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center">
+                            <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">pan_tool</mat-icon>
+                            <span matTooltip="PAX" matTooltipPosition="right">PAX : {{job.numberofpax}}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center">
+                            <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">rowing</mat-icon>
+                            <span matTooltip="Work Days" matTooltipPosition="right">Work Days : {{job.workdays}}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center">
+                            <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">security</mat-icon>
+                            <span matTooltip="Job Status" matTooltipPosition="right">Status : {{job.jobstatus}}</span>
+                        </p>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+    <!-- Data Lists End -->
+
+    <!-- Pagination Start -->
+    <div fxLayout="row wrap" *ngIf="isPendingJobAvailable">
+        <div class="flex-p" fxFlex="100">
+            <mat-card class="p-0 mat-paginator">
+                <div class="mat-paginator-container">
+                    <div class="mat-paginator-page-size">
+                        <div class="mat-paginator-page-size-label">
+                            Items per page:
+                        </div>
+                        <mat-form-field class="mat-paginator-page-size-select mat-form-field-hide-placeholder">
+                            <mat-select placeholder="" [(ngModel)]="tab1PaginateConfig.itemsPerPage" name="itemsPerPage">
+                                <mat-option *ngFor="let pageSizeOption of pageSizeOptions" [value]="pageSizeOption">
+                                    {{pageSizeOption}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="mat-paginator-range-actions">
+                        <pagination-controls class="ooget-pagination" [id]="tab1PaginateConfig.id" [maxSize]="tab1PaginateControlMaxSize" [autoHide]="tab1PaginateControlAutoHide"
+                            (pageChange)="tab1PaginateConfig.currentPage = $event"></pagination-controls>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+    <!-- Pagination End -->
+
+    <div *ngIf="!isPendingJobAvailable" fxLayout="column" fxLayoutAlign="center center" class="no-data" style="border: 2px solid #eee; margin:8px;">
+        <p>Currently No Pending Jobs Found.</p>
+    </div>
+
+</div>

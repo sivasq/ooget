@@ -1,0 +1,575 @@
+<div class="inner-sidenav-content transition-2">
+	<ng-progress></ng-progress>
+	<!-- Breadcrumb Start -->
+	<div fxLayout="row wrap">
+		<div class="flex-p" fxFlex="1 1 100%">
+			<mat-card class="mat-breadcrumb" fxLayout="row">
+				<a class="breadcrumb-item" routerLink="/main/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+					<mat-icon>home</mat-icon>
+					<span class="breadcrumb-title">Home</span>
+				</a>
+
+				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+					<span class="breadcrumb-title active">Profile</span>
+				</div>
+			</mat-card>
+		</div>
+	</div>
+	<!-- Breadcrumb End -->
+
+	<div [ngBusy]="{busy: busy}"></div>
+
+	<div fxLayout="row wrap" fxLayoutAlign="center start">
+		<div class="flex-p" fxFlex="100" fxFlex.gt-sm="70" fxFlex.sm="90">
+			<mat-card class="list" [ngStyle.lt-md]="{'padding':0}">
+				<mat-card fxLayout="row" fxLayoutAlign="center stretch" class="title" [ngStyle.lt-md]="{'padding':'10px'}">
+					<h3>Profile Details
+						<small>
+							<span *ngIf="isActive" style="color: green">
+								(Live)
+							</span>
+							<span *ngIf="!isActive" style="color: red">
+								(Pending Admin Approval)
+							</span>
+						</small>
+					</h3>
+				</mat-card>
+
+				<mat-card-content [ngStyle.lt-md]="{'fontSize':'13px'}">
+					<form [formGroup]="jobSeekerProfileForm" (ngSubmit)="jobSeekerProfileUpdate()">
+						<mat-tab-group ngClass.gt-sm="vertical-tabs" ngClass.lt-md="horizontal-tabs" (selectedTabChange)="tabChanged($event)" [selectedIndex]="selectedIndex"
+						 #tabGroup dynamicHeight="true" (swipeleft)="tabGroup.selectedIndex = currentlyActiveIndexTab+1" (swiperight)="tabGroup.selectedIndex = currentlyActiveIndexTab-1">
+							<mat-tab label="Personal">
+								<div fxLayout="row wrap" fxLayoutAlign="space-between center">
+									<mat-form-field fxFlex="100" fxFlex>
+										<input matInput type="text" placeholder="Name (same as Identification Card)" name="username" formControlName="username" required>
+										<mat-error *ngIf="jobSeekerProfileForm.get('username').hasError('required')" align="start">
+											Your Name Required
+										</mat-error>
+									</mat-form-field>
+
+									<!-- <mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+										<input matInput type="text" placeholder="Name In Identification Card" name="nameinidcard" formControlName="nameinidcard"
+										 required>
+										<mat-error *ngIf="jobSeekerProfileForm.get('nameinidcard').hasError('required')" align="start">
+											Name Required
+										</mat-error>
+									</mat-form-field> -->
+
+									<mat-form-field fxFlex="100">
+										<input matInput type="email" placeholder="Email" name="email" formControlName="email" required>
+										<mat-error *ngIf="jobSeekerProfileForm.get('email').hasError('required')" align="start">
+											Email Required
+										</mat-error>
+										<mat-error *ngIf="jobSeekerProfileForm.get('email').hasError('pattern')" align="start">
+											Invalid Email Format
+										</mat-error>
+										<mat-error *ngIf="jobSeekerProfileForm.get('email').hasError('isEmailUnique')" align="start">
+											This Email Already Registered
+										</mat-error>
+									</mat-form-field>
+
+									<mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+										<input matInput placeholder="Country" name="country" formControlName="country" required readonly>
+									</mat-form-field>
+
+									<mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+										<input matInput placeholder="NRIC/FIN ( S1234567A )" name="nricfinno" autocomplete="off" formControlName="nricfinno" [readonly]="isNricFinNoReadonly"
+										 #nricfininput (input)="nricfininput.value=$event.target.value.toUpperCase()">
+										<!-- <mat-error *ngIf="jobSeekerProfileForm.get('nricfinno').hasError('required')" align="start">
+											NRIC / FIN No Required
+										</mat-error> -->
+										<mat-error *ngIf="jobSeekerProfileForm.get('nricfinno').hasError('pattern')" align="start">
+											Invalid NRIC / FIN No Format
+										</mat-error>
+										<mat-error *ngIf="jobSeekerProfileForm.get('nricfinno').hasError('isNricFinUnique')" align="start">
+											This NRIC/FIN No Already Registered
+										</mat-error>
+									</mat-form-field>
+
+									<mat-form-field fxFlex="100">
+										<input matInput placeholder="Mobile Number" name="mobileno" autocomplete="off" formControlName="mobileno" required>
+										<mat-error *ngIf="jobSeekerProfileForm.get('mobileno').hasError('required')" align="start">
+											Mobile No Required
+										</mat-error>
+										<mat-error *ngIf="jobSeekerProfileForm.get('mobileno').hasError('pattern')" align="start">
+											Numbers Only Allowed
+										</mat-error>
+										<mat-error *ngIf="jobSeekerProfileForm.get('mobileno').hasError('isMobileUnique')" align="start">
+											This Mobile No Already Registered
+										</mat-error>
+									</mat-form-field>
+
+									<!-- <mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+										<input matInput [max]="today" [matDatepicker]="dobpicker" placeholder="Date Of Birth (DD/MM/YYYY)" name="dob" autocomplete="off" formControlName="dob">
+										(click)="dobpicker.open()"
+										<mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
+										<mat-datepicker touchUi="true" #dobpicker></mat-datepicker>
+										<mat-error *ngIf="jobSeekerProfileForm.get('dob').hasError('required')" align="start">
+											DOB Required
+										</mat-error>
+									</mat-form-field> -->
+									<!-- <mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+										<input matInput placeholder="Date Of Birth (DD/MM/YYYY)" name="dob" autocomplete="off"
+										 formControlName="dob">
+										<mat-error *ngIf="jobSeekerProfileForm.get('dob').hasError('validDob')" align="start">
+											DOB invalid
+										</mat-error>
+									</mat-form-field> -->
+
+									<div fxFlex="100" style="color:#0000008a; font-size: 12px; font-weight: 500;">
+										Date of Birth (dd/mth/yyyy)
+									</div>
+
+									<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center">
+										<div formGroupName="dob_data" fxLayout="row wrap" fxLayoutAlign="space-between center" fxFlex="85" fxFlex.gt-sm="80">
+											<mat-form-field fxFlex="20" fxFlex.gt-sm="30">
+												<input matInput type="text" placeholder="Day" name="dob_day" formControlName="dob_day" required>
+											</mat-form-field>
+
+											<mat-form-field fxFlex="50" fxFlex.gt-sm="30">
+												<mat-select placeholder="Month" panelClass="dob-month-panel" name="dob_month" formControlName="dob_month" required>
+													<mat-option *ngFor="let month of months" [value]="month.monthValue">
+														{{ month.monthName }}
+													</mat-option>
+												</mat-select>
+											</mat-form-field>
+
+											<mat-form-field fxFlex="25" fxFlex.gt-sm="30">
+												<input matInput type="text" placeholder="Year" name="dob_year" formControlName="dob_year" required>
+											</mat-form-field>
+										</div>
+
+										<mat-form-field fxFlex="10" fxFlex.gt-sm="15">
+											<input matInput placeholder="Age" name="age" autocomplete="off" formControlName="age" maxlength="2" readonly>
+											<mat-error *ngIf="jobSeekerProfileForm.get('age').hasError('required')" align="start">
+												Age Required
+											</mat-error>
+											<mat-error *ngIf="jobSeekerProfileForm.get('age').hasError('pattern')" align="start">
+												Numbers Only Allowed
+											</mat-error>
+										</mat-form-field>
+
+										<mat-error *ngIf="jobSeekerProfileForm.get('dob').hasError('validDob')" align="start" [ngStyle.lt-md]="{'font-size.em': 0.8}"
+										 style="margin-top:-15px; margin-bottom: 15px;">
+											{{invalidDobErrorMsg}}
+										</mat-error>
+									</div>
+
+									<mat-form-field fxFlex="100">
+										<textarea matInput placeholder="Address" name="address" autocomplete="off" formControlName="address" required></textarea>
+										<mat-error *ngIf="jobSeekerProfileForm.get('address').hasError('required')" align="start">
+											Address Required
+										</mat-error>
+									</mat-form-field>
+
+									<div style="margin-top: 10px;">
+										<b style="font-size: small;">Gender
+											<span style="color: #767676">*</span> : </b>
+										<mat-radio-group name="gender" formControlName="gender" required>
+											<mat-radio-button value="Male">Male</mat-radio-button>
+											<mat-radio-button value="Female">Female</mat-radio-button>
+											<!-- <mat-error *ngIf="jobSeekerProfileForm.get('gender').hasError('required')" align="start">
+												Gender Required
+											</mat-error> -->
+										</mat-radio-group>
+									</div>
+
+									<mat-toolbar class="next_action" color="primary" style="margin-top:15px;">
+										<span class="fill-remaining-space"></span>
+										<a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab+1">
+											<mat-icon>chevron_right</mat-icon>
+										</a>
+									</mat-toolbar>
+								</div>
+							</mat-tab>
+
+							<mat-tab label="Bank Details">
+								<div fxLayout="row wrap" fxLayoutAlign="space-between center">
+									<!-- <div style="margin-bottom:15px;">
+										<span>Are You Registered on PayNow ?</span>
+										<mat-radio-group name="ispaynowreg" formControlName="ispaynowreg">
+											<mat-radio-button value="Yes">Yes</mat-radio-button>
+											<mat-radio-button value="No">No</mat-radio-button>
+										</mat-radio-group>
+									</div> -->
+
+									<div *ngIf="jobSeekerProfileForm.get('ispaynowreg').value == 'No'" fxLayout="row wrap" fxLayoutAlign="center center">
+										<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center">
+											<mat-form-field fxFlex="100">
+												<mat-select placeholder="Choose Bank" name="bankname" formControlName="bankname" (ngModelChange)="bankChange($event,'customchange')"
+												 [required]="reqBankDetails">
+													<mat-option>--Select Bank--</mat-option>
+													<mat-option *ngFor="let BankDetail of BankDetails;" [value]="BankDetail.shortName">{{ BankDetail.shortName ==
+														BankDetail.fullName ? BankDetail.shortName : BankDetail.fullName }}
+													</mat-option>
+												</mat-select>
+											</mat-form-field>
+
+											<mat-form-field fxFlex="100">
+												<input matInput type="text" placeholder="Bank Code" name="bankcode" formControlName="bankcode" [required]="reqBankDetails"
+												 readonly>
+												<mat-error *ngIf="jobSeekerProfileForm.get('bankcode').hasError('required')" align="start">
+													Bank Code Required
+												</mat-error>
+											</mat-form-field>
+
+											<mat-form-field fxFlex="100">
+												<input matInput type="text" placeholder="Branch Code" name="branchcode" formControlName="branchcode" [required]="reqBankDetails">
+												<mat-error *ngIf="jobSeekerProfileForm.get('branchcode').hasError('required')" align="start">
+													Branch Code Required
+												</mat-error>
+											</mat-form-field>
+
+											<mat-form-field fxFlex="100">
+												<input matInput type="text" placeholder="Account Number" name="accountno" formControlName="accountno" [required]="reqBankDetails">
+												<mat-error *ngIf="jobSeekerProfileForm.get('accountno').hasError('required')" align="start">
+													Account Number Required
+												</mat-error>
+											</mat-form-field>
+										</div>
+
+										<div *ngIf="bankHint" style="background-color: aliceblue; margin-top:10px; padding:15px;" fxFlex="100">
+											<h5 style="margin-bottom: 5px;">Guide:</h5>
+											<div [innerHTML]="bankHint | safeHtml"></div>
+										</div>
+									</div>
+
+									<div style="margin-top:15px;" *ngIf="jobSeekerProfileForm.get('ispaynowreg').value == 'Yes'">
+										<p>Your Mobile number/ NRIC will be sufficient for payment transfer from Ooget bank account into your bank account.</p>
+									</div>
+
+									<mat-toolbar style="margin-top: 15px;" class="next_action" color="primary">
+										<a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab-1">
+											<mat-icon>chevron_left</mat-icon>
+										</a>
+										<span class="fill-remaining-space"></span>
+										<a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab+1">
+											<mat-icon>chevron_right</mat-icon>
+										</a>
+									</mat-toolbar>
+								</div>
+							</mat-tab>
+
+							<mat-tab label="Job Preferences">
+								<div fxLayout="row wrap">
+									<mat-form-field class="w-100">
+										<mat-select placeholder="Employment Type" name="employmenttype" multiple formControlName="employmenttype" (ngModelChange)="employmenttypeChange($event)">
+											<mat-option *ngFor="let EmploymentType of EmploymentTypes" [value]="EmploymentType.EmploymentType">{{ EmploymentType.EmploymentType
+												}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+
+									<mat-form-field class="w-100">
+										<mat-select multiple placeholder="Region" name="preferredregion" formControlName="preferredregion" (ngModelChange)="mainlocationChange()">
+											<mat-option *ngFor="let Location of Locations | uniquemainlocation" [value]="Location.mainlocation">{{ Location.mainlocation
+												}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+
+									<mat-form-field class="w-100">
+										<mat-select placeholder="Location" name="preferredlocation" formControlName="preferredlocation" multiple>
+											<div style="padding:10px 20px;font-weight: 500;">
+												<span style="cursor:pointer; color:#021def;" (click)="selectAllSubLocation()"> Select All </span>,
+												<span style="cursor:pointer; color:#f71900; padding-left: 15px;" (click)="unSelectAllSubLocation()"> Unselect
+													All </span>
+											</div>
+											<mat-option *ngFor="let Location of Locations | multiplesublocationfilter:jobSeekerProfileForm.get('preferredregion').value"
+											 [value]="Location.sublocation">{{ Location.sublocation }}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+
+									<mat-form-field class="w-100">
+										<mat-select placeholder="Specialization" name="preferredspecialization" formControlName="preferredspecialization" multiple>
+											<div style="padding:10px 20px;font-weight: 500;">
+												<span style="cursor:pointer; color:#021def;" (click)="selectAllSpecialization()"> Select All </span>,
+
+												<span style="cursor:pointer; color:#f71900; padding-left: 15px;" (click)="unSelectAllSpecialization()"> Unselect
+													All </span>
+											</div>
+											<div *ngIf="showfulltimespeccilization">
+												<p style="padding:10px 20px;font-weight: 500; background: #eee;">FULL TIME</p>
+												<mat-option *ngFor="let Specialization of FullTimeSpecializations" [value]="Specialization.specialization">{{
+													Specialization.specialization }}</mat-option>
+											</div>
+											<div *ngIf="showparttimespeccilization">
+												<p style="padding:10px 20px;font-weight: 500; background: #eee;">PART TIME</p>
+												<mat-option *ngFor="let Specialization of PartTimeSpecializations" [value]="Specialization.specialization">{{
+													Specialization.specialization }}</mat-option>
+											</div>
+										</mat-select>
+									</mat-form-field>
+
+									<mat-form-field class="w-100">
+										<mat-select placeholder="Working Environment" name="workingenvironment" formControlName="workingenvironment" multiple>
+											<div style="padding:10px 20px;font-weight: 500;">
+												<span style="cursor:pointer; color:#021def;" (click)="selectAllWorkEnvironment()"> Select All </span>,
+												<span style="cursor:pointer; color:#f71900; padding-left: 15px;" (click)="unSelectWorkEnvironment()"> Unselect
+													All </span>
+											</div>
+											<mat-option *ngFor="let WorkingEnvironment of WorkingEnvironments" [value]="WorkingEnvironment.Environment">{{
+												WorkingEnvironment.Environment }}</mat-option>
+										</mat-select>
+									</mat-form-field>
+
+									<mat-toolbar style="margin-top:15px;" class="next_action" color="primary">
+										<a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab-1">
+											<mat-icon>chevron_left</mat-icon>
+										</a>
+										<span class="fill-remaining-space"></span>
+										<a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab+1">
+											<mat-icon>chevron_right</mat-icon>
+										</a>
+									</mat-toolbar>
+								</div>
+							</mat-tab>
+
+							<mat-tab label="Past Experiences" *ngIf="!isPartTimeJob">
+								<div fxLayout="row wrap">
+									<mat-form-field fxFlex="100">
+										<mat-select placeholder="Experience In" name="experiencein" formControlName="experiencein" multiple>
+											<mat-option *ngFor="let Specialization of FullTimeSpecializations" [value]="Specialization.specialization">{{Specialization.specialization}}</mat-option>
+										</mat-select>
+									</mat-form-field>
+
+									<mat-form-field fxFlex="100">
+										<input matInput type="number" placeholder="Years of Experience (in total)" name="totalexperienceinyears" autocomplete="off"
+										 formControlName="totalexperienceinyears">
+									</mat-form-field>
+								</div>
+
+								<!-- <h4 style="margin-top:20px; margin-bottom: 5px;">Job History</h4> -->
+								<div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+									<h4>Previous Experience</h4>
+									<div fxHide fxShow.gt-sm="true" (click)="addExp()">
+										<a mat-raised-button color="primary">Add Exp</a>
+									</div>
+									<div fxShow fxHide.gt-sm="true" (click)="addExp()" class="pointer" matTooltip="Add Experience" matTooltipPosition="before">
+										<mat-icon mat-list-icon color="primary">add_circle</mat-icon>
+									</div>
+								</div>
+
+								<div formArrayName="previousexperince">
+									<div fxLayout="row" *ngFor="let Exp of jobSeekerProfileForm.controls['previousexperince']['controls']; let expIndex = index;"
+									 [formGroupName]="expIndex">
+										<div fxFlex="95" fxLayout="row wrap" fxLayoutAlign="space-between center" style="border: 2px solid #eee; padding: 10px; margin: 10px 0;">
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+												<input matInput placeholder="Company Name" name="previouscompanyname" autocomplete="off" formControlName="previouscompanyname">
+												<mat-error *ngIf="Exp.get('previouscompanyname').hasError('required')" align="start">
+													Company Name Required
+												</mat-error>
+											</mat-form-field>
+
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+												<input matInput placeholder="Position" name="previouscompanyposition" autocomplete="off" formControlName="previouscompanyposition">
+												<mat-error *ngIf="Exp.get('previouscompanyposition').hasError('required')" align="start">
+													Position Required
+												</mat-error>
+											</mat-form-field>
+
+											<mat-form-field fxFlex="100">
+												<textarea matInput placeholder="Responsibility" name="previousjobresponsibility" autocomplete="off" formControlName="previousjobresponsibility"></textarea>
+												<mat-error *ngIf="Exp.get('previousjobresponsibility').hasError('required')" align="start">
+													Responsibility Required
+												</mat-error>
+											</mat-form-field>
+
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+												<input matInput [max]="today" [matDatepicker]="frompicker" placeholder="Job Period From" name="previousjobfrom" autocomplete="off"
+												 formControlName="previousjobfrom" (ngModelChange)="jobSeekerProfileForm.controls.previousexperince.controls[expIndex].controls.previousjobfrom.value = $event"
+												 (click)="frompicker.open()" readonly>
+												<mat-datepicker-toggle matSuffix [for]="frompicker"></mat-datepicker-toggle>
+												<mat-datepicker touchUi="true" #frompicker></mat-datepicker>
+												<mat-error *ngIf="Exp.get('previousjobfrom').hasError('required')" align="start">
+													Job Period From Required
+												</mat-error>
+												<mat-error *ngIf="Exp.get('previousjobfrom').hasError('matDatepickerMax')" align="start">
+													This date should be Grater Then From Date
+												</mat-error>
+											</mat-form-field>
+
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+												<input matInput [min]="jobSeekerProfileForm.controls.previousexperince.controls[expIndex].controls.previousjobfrom.value"
+												 [max]="today" [matDatepicker]="topicker" placeholder="Job Period To" name="previousjobto" autocomplete="off"
+												 formControlName="previousjobto" (click)="topicker.open()" readonly>
+												<mat-datepicker-toggle matSuffix [for]="topicker"></mat-datepicker-toggle>
+												<mat-datepicker touchUi="true" #topicker></mat-datepicker>
+												<mat-error *ngIf="Exp.get('previousjobto').hasError('required')" align="start">
+													Job Period To Required
+												</mat-error>
+												<mat-error *ngIf="Exp.get('previousjobto').hasError('matDatepickerMax')" align="start">
+													Invalid Max Date
+												</mat-error>
+												<mat-error *ngIf="Exp.get('previousjobto').hasError('validEndDate')" align="start">
+													This date should be Grater Then From Date
+												</mat-error>
+											</mat-form-field>
+										</div>
+
+										<div fxFlex fxLayoutAlign="end center">
+											<!-- <div *ngIf="expIndex == 0" (click)="addExp()">
+												<mat-icon>add_circle</mat-icon>
+											</div> -->
+											<div (click)="removeExp(expIndex)">
+												<mat-icon color="warn">remove_circle</mat-icon>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<mat-toolbar style="margin-top:15px;" class="next_action" color="primary">
+									<a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab-1">
+										<mat-icon>chevron_left</mat-icon>
+									</a>
+									<span class="fill-remaining-space"></span>
+									<a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab+1">
+										<mat-icon>chevron_right</mat-icon>
+									</a>
+								</mat-toolbar>
+							</mat-tab>
+
+							<mat-tab label="Notifications">
+								<div fxLayout="row wrap">
+									<h4 style="margin-bottom: 10px;">Frequency of Notification</h4>
+
+									<mat-radio-group name="notificationalerttype" formControlName="notificationalerttype" (ngModelChange)="notificationAlertTypeChange($event)"
+									 fxLayout.lt-sm='column'>
+										<mat-radio-button [ngStyle.lt-sm]="{'margin':'5px 0'}" value="anytime"> Always </mat-radio-button>
+										<mat-radio-button [ngStyle.lt-sm]="{'margin':'5px 0'}" value="off"> Switched Off Notification </mat-radio-button>
+									</mat-radio-group>
+
+									<div *ngIf="jobSeekerProfileForm.get('notificationalerttype').value == 'off'" style="margin: 25px 0 0;">
+										<mat-radio-group name="alertswitchedoffdays" formControlName="alertswitchedoffdays" (ngModelChange)="notificationAlertSWOffChange($event)">
+											<mat-radio-button value="1">1 Day</mat-radio-button>
+											<mat-radio-button value="7">1 Week</mat-radio-button>
+											<mat-radio-button value="30">1 Month</mat-radio-button>
+										</mat-radio-group>
+									</div>
+
+									<div *ngIf="jobSeekerProfileForm.get('notificationalerttype').value == 'off'" style="margin: 15px 0 25px; padding-left: 15px; color: #797676; font-weight: 600;">(Notification
+										Off until : {{jobSeekerProfileForm.get('alertoffto').value | date:'dd/MM/yyyy'}})</div>
+
+									<mat-toolbar class="next_action" color="primary" style="margin-top:25px;">
+										<a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab-1">
+											<mat-icon>chevron_left</mat-icon>
+										</a>
+										<span class="fill-remaining-space"></span>
+										<a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab+1">
+											<mat-icon>chevron_right</mat-icon>
+										</a>
+									</mat-toolbar>
+								</div>
+							</mat-tab>
+
+							<mat-tab label="Documents">
+								<div fxLayout="row wrap">
+									<h4>Profile image &amp; Identification Card (IC)</h4>
+
+									<div fxFlex="100" fxLayout.gt-xs="row wrap" fxLayout.lt-sm="column" style="margin-top: 25px;" fxLayoutAlign.lt-sm="center center">
+										<div fxFlex="30" fxLayoutAlign.gt-xs="start center" fxLayoutAlign.lt-sm="center center" style="font-size: 14px; font-weight: 600; text-decoration: underline;">
+											Profile Picture
+										</div>
+										<div fxLayout="row" fxLayoutAlign="start center">
+											<div class="drop-zone content" (change)="logochange($event)" (click)="imgFileInput.click() " style="cursor: pointer; ">
+												<input hidden type="file" #imgFileInput>
+												<img style="height:100%; width:100%; border-radius: 50px;" alt="" [src]="profileImage">
+											</div>
+										</div>
+									</div>
+
+									<div fxFlex="100" fxLayout.gt-xs="row wrap" fxLayout.lt-sm="column" style="margin-top: 25px;" fxLayoutAlign.lt-sm="center center">
+										<div fxFlex="30" fxLayoutAlign.gt-xs="start center" fxLayoutAlign.lt-sm="center center" style="font-size: 14px; font-weight: 600; text-decoration: underline;">
+											Identification Card (IC)
+										</div>
+										<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="15px">
+											<div class="drop-zone content" (change)="idfrontchange($event)" (click)="idFrontFileInput.click()" style="cursor: pointer;">
+												<input hidden type="file" #idFrontFileInput [disabled]="isIdProofEditable">
+												<img style="height:100%; width:100%; border-radius: 50px;" alt="" [src]="idProofFront">
+											</div>
+
+											<div class="drop-zone content" (change)="idbackchange($event)" (click)="idBackFileInput.click()" style="cursor: pointer;">
+												<input hidden type="file" #idBackFileInput [disabled]="isIdProofEditable">
+												<img style="height:100%; width:100%; border-radius: 50px;" alt="" [src]="idProofBack">
+											</div>
+										</div>
+									</div>
+
+									<mat-toolbar style="margin-top:15px;" class="next_action">
+										<a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = currentlyActiveIndexTab-1">
+											<mat-icon>chevron_left</mat-icon>
+										</a>
+										<span class="fill-remaining-space"></span>
+									</mat-toolbar>
+								</div>
+							</mat-tab>
+
+							<mat-tab label="Change Password">
+								<div fxLayout="row wrap">
+									<form [formGroup]="passwordUpdateForm" (ngSubmit)="passwordUpdate()">
+										<div fxLayout="row wrap" fxLayoutAlign="center center">
+											<!--- Old Password -->
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="75">
+												<input matInput [type]="oldhide ? 'password' : 'text'" placeholder="Current Password" name="oldpassword" autocomplete="off"
+												 formControlName="oldpassword" required>
+												<mat-icon matSuffix (click)="oldhide = !oldhide">{{oldhide ? 'visibility_off' : 'visibility'}}</mat-icon>
+												<mat-error *ngIf="passwordUpdateForm.get('oldpassword').hasError('required')" align="start">
+													Old Password is Required
+												</mat-error>
+											</mat-form-field>
+
+											<!--- Password -->
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="75">
+												<input matInput [type]="hide ? 'password' : 'text'" placeholder="New Password" name="password" autocomplete="off" formControlName="password"
+												 advs-compare="verify" parent='true' required>
+												<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+												<mat-error *ngIf="passwordUpdateForm.get('password').hasError('required')" align="start">
+													Password is Required
+												</mat-error>
+												<mat-error *ngIf="passwordUpdateForm.get('password').hasError('minlength')" align="start">
+													Min 8 chars Required
+												</mat-error>
+												<mat-error *ngIf="passwordUpdateForm.get('password').hasError('isPatternMatch')" align="start">
+													{{passwordPatternError}}
+												</mat-error>
+											</mat-form-field>
+
+											<!-- Verify Password -->
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="75">
+												<input matInput [type]="rehide ? 'password' : 'text'" placeholder="Confirm New Password" name="verify" autocomplete="off"
+												 formControlName="verify" advs-compare="password" parent='false' required>
+												<mat-icon matSuffix (click)="rehide = !rehide">{{rehide ? 'visibility_off' : 'visibility'}}</mat-icon>
+												<mat-error *ngIf="passwordUpdateForm.get('verify').hasError('required')" align="start">
+													Verify Password is required
+												</mat-error>
+												<mat-error *ngIf="passwordUpdateForm.get('verify').hasError('compare')" align="start">
+													Password Mismatch
+												</mat-error>
+											</mat-form-field>
+
+											<div *ngIf="passwordErrorMsg" fxFlex="100" fxFlex.gt-sm="75" fxLayoutAlign="center center" style="color:red; margin-top:25px;">
+												{{passwordErrorMsg}}
+											</div>
+
+											<div fxFlex="100" fxFlex.gt-sm="75" fxLayoutAlign="center center" style="margin-top:25px;">
+												<button mat-raised-button color="primary">Change Password</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</mat-tab>
+						</mat-tab-group>
+
+						<mat-card *ngIf="currentlyActiveIndexTab != 6" fxLayout="row wrap" fxLayoutAlign="center stretch" class="action" [ngStyle.lt-md]="{'padding':'10px'}">
+							<mat-error fxFlex="100" fxLayoutAlign="center center" style="margin-bottom: 10px;" *ngIf="!isJobSeekerProfileFormValid">You
+								have Entered Invalid Inputs, Kindly check Once Again.. </mat-error>
+							<button mat-raised-button color="primary" type="submit">Submit</button>
+						</mat-card>
+					</form>
+				</mat-card-content>
+			</mat-card>
+		</div>
+	</div>
+</div>

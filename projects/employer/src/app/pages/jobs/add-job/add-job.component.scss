@@ -1,0 +1,136 @@
+@import "../../../../variables.scss";
+.inner-sidenav-content {
+    position: absolute;
+    top: 56px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px;
+    min-height: calc(100% - 80px);
+    overflow: auto;
+}
+
+.mat-card {
+    background: #fff;
+    color: rgba(0, 0, 0, .87);
+}
+
+::ng-deep .title.mat-card {
+    padding: 15px;
+}
+
+::ng-deep .list.mat-card {
+    padding: 15px;
+}
+
+::ng-deep .action.mat-card {
+    margin-top: 7px;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+.title h3 {
+    font-weight: 600;
+}
+
+::ng-deep .mat-card-content {
+    margin-top: 7px;
+}
+
+.vertical-tabs.mat-tab-group {
+    flex-direction: row; // height: 460px;
+}
+
+::ng-deep .vertical-tabs.mat-tab-group .mat-tab-body-wrapper {
+    padding: 25px !important;
+    width: 100%;
+}
+
+::ng-deep .horizontal-tabs.mat-tab-group .mat-tab-body-wrapper {
+    padding: 25px;
+    width: 100%;
+}
+
+::ng-deep .vertical-tabs .mat-tab-header {
+    margin-right: 7px;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+::ng-deep .vertical-tabs .mat-tab-body-wrapper {
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+::ng-deep .horizontal-tabs .mat-tab-body-wrapper {
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+::ng-deep .vertical-tabs .mat-tab-labels {
+    flex-direction: column;
+}
+
+::ng-deep .vertical-tabs .mat-tab-header {
+    border: none !important;
+}
+
+::ng-deep .vertical-tabs .mat-tab-group.mat-primary .mat-ink-bar,
+.vertical-tabs .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: #ffffff;
+}
+
+::ng-deep .vertical-tabs .mat-tab-label {
+    height: 70px !important;
+    padding: 0 10px !important;
+    opacity: 1 !important;
+}
+
+::ng-deep .vertical-tabs .mat-tab-label-active {
+    background-color: $primary;
+    color: #fff !important;
+}
+
+::ng-deep .vertical-tabs .mat-tab-label:not(.mat-tab-disabled):focus {
+    background-color: $primary !important;
+}
+
+::ng-deep .vertical-tabs .mat-tab-body h4 {
+    margin-top: 0px;
+}
+
+.next_action.mat-toolbar {
+    background: transparent !important;
+}
+
+// @for $i from 1 through 300{
+//     .iconsize-#{$i}{
+//       font-size: $i+unquote('px') !important;
+//       height: $i+unquote('px') !important;
+//       width: $i+unquote('px') !important;
+//     };
+// }
+.fill-remaining-space {
+    flex: 1 1 auto;
+}
+
+// .next_action{
+// position: absolute;
+// bottom: 0;
+// }
+.next_action.mat-toolbar {
+    background: transparent;
+}
+
+.p-10 {
+    padding: 10px !important;
+}
+
+.trigger.mat-icon {
+    font-size: 18px !important;
+}
+
+.mat-radio-button {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.mat-checkbox {
+    padding-right: 20px;
+}

@@ -1,0 +1,73 @@
+<mat-toolbar class="main-header flex-p-x" color="primary" style="height: 56px;">
+	<div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+		<button mat-icon-button style="width: auto!important; height: 56px;">
+			<img style="height:100%;" alt="oogetLogo" src="assets/img/logo/ooget.png">
+		</button>
+
+		<div fxShow="true" fxHide.lt-md="true">
+			<a mat-button routerLink="/auth/login">Login</a>
+			<a mat-button routerLink="/auth/reg">SignUp</a>
+		</div>
+
+		<div fxShow="true" fxHide.gt-sm="true">
+			<button mat-icon-button (click)="sidenav.toggle()">
+				<mat-icon>menu</mat-icon>
+			</button>
+		</div>
+	</div>
+</mat-toolbar>
+
+<mat-sidenav-container class="main-container" style="background-image: url('assets/img/sgmap.png');">
+	<mat-sidenav #sidenav fxLayout="column" class="main-sidenav">
+		<div fxLayout="column">
+			<a mat-button routerLink="/auth/login">Login</a>
+			<a mat-button routerLink="/auth/reg">SignUp</a>
+		</div>
+	</mat-sidenav>
+
+	<mat-sidenav-content fxFlex="100" fxLayout="row wrap" class="main-content">
+		<div [ngBusy]="{busy: busy}"></div>
+		<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
+			<div fxFlex="100" fxFlex.gt-sm="75" class="title" [innerHTML]="homePageContent.title | safeHtml"></div>
+			<div fxFlex="100" fxFlex.gt-sm="75" class="sub-title" [innerHTML]="homePageContent.subtitle | safeHtml"></div>
+
+			<div fxFlex="100" fxFlex.gt-sm="75" class="notes">
+				<div [innerHTML]="homePageContent.list1 | safeHtml"></div>
+				<!-- <p [innerHTML]="homePageContent.list2 | safeHtml"></p>
+				<p [innerHTML]="homePageContent.list3 | safeHtml"></p>
+				<p [innerHTML]="homePageContent.list4 | safeHtml"></p> -->
+			</div>
+		</div>
+
+		<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
+			<a mat-raised-button color="primary" style="border-radius: 50px; padding: 5px 25px; font-size: 16px;" routerLink="/auth/reg">
+				Jobseekers Signup Free
+			</a>
+		</div>
+
+		<!-- <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" *ngIf="featuredEmployersAvailable">
+			<div fxFlex="70" fxLayout="column" fxFlex.md="60" fxFlex.gt-md="50" style="margin: 0 auto;">
+				<h4 class="pl-10">Featured Employers</h4>
+				<ngu-carousel #carousel [inputs]="carouselTile" (carouselLoad)="carouselTileLoad($event)" fxLayoutGap="10px">
+					<ngu-tile NguCarouselItem *ngFor="let featuredEmployer of featuredEmployers">
+						<img style="height: 100%; width: 100%;" src="{{imgBaseUrl}}/featured/{{featuredEmployer.featuredimage}}" />
+					</ngu-tile>
+					<a NguCarouselPrev style="display: none;"></a>
+					<a NguCarouselNext style="display: none;"></a>
+				</ngu-carousel>
+			</div>
+		</div> -->
+	</mat-sidenav-content>
+</mat-sidenav-container>
+
+<mat-toolbar fxFlex fxLayout="row" fxLayoutAlign="center center" class="main-footer">
+	<div fxFlex="100" fxLayout="column" fxLayoutAlign="center center">
+		<span style="line-height: 22px;">2018&copy; Copyright Reserverd Ooget.com.sg</span>
+		<span fxHide.lt-sm="true" style="color: red; line-height: 22px; font-size: 10px;">*For Best User Experience Use
+			Latest Version of Chrome, Firefox, Microsoft Edge</span>
+	</div>
+	<div fxFlex>
+		<div fxFlex></div>
+		<img style="height:100%;width:75px;" alt="TrustLogo" src="assets/img/comodo_secure_seal_100x85_transp.png">
+	</div>
+</mat-toolbar>

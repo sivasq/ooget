@@ -1,0 +1,387 @@
+<div class="inner-sidenav-content transition-2">
+  <!-- Breadcrumb Start -->
+  <div fxLayout="row wrap">
+    <div class="flex-p" fxFlex="1 1 100%">
+      <mat-card class="mat-breadcrumb" fxLayout="row">
+        <a class="breadcrumb-item" routerLink="/employer/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+          <mat-icon>home</mat-icon>
+          <span class="breadcrumb-title">Home</span>
+        </a>
+
+        <a class="breadcrumb-item" routerLink="/employer/jobs/list" fxLayout="row" fxLayoutAlign="center center">
+          <span class="breadcrumb-title">Jobs</span>
+        </a>
+
+        <div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+          <span class="breadcrumb-title active">Add</span>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <!-- Breadcrumb End -->
+
+  <div [ngBusy]="{busy:busy}"></div>
+
+  <!-- Job Details Start -->
+  <div fxLayout="row wrap" fxLayoutAlign="center stretch">
+    <div class="flex-p" fxFlex="100" fxFlex.gt-sm="70" fxFlex.sm="90">
+      <mat-card class="list">
+        <mat-card fxLayout="row" fxLayoutAlign="center stretch" class="title">
+          <h3>Job Details</h3>
+        </mat-card>
+
+        <mat-card-content>
+          <form (ngSubmit)="jobAddToEmployer(employerJobForm.value, employerJobForm)" #employerJobForm="ngForm">
+            <mat-tab-group ngClass.gt-sm="vertical-tabs" ngClass.lt-md="horizontal-tabs" #tabGroup dynamicHeight="true">
+              <mat-tab label="Basic">
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                  <mat-form-field fxFlex="100">
+                    <input matInput placeholder="Project" name="project" autocomplete="off" [(ngModel)]="jobDetails.project" required>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="100">
+                    <input matInput placeholder="Department" name="department" autocomplete="off" [(ngModel)]="jobDetails.department" required>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <mat-select placeholder="Employment Type" name="employmenttype" (ngModelChange)="employmenttypeChange($event)" [(ngModel)]="jobDetails.employmenttype">
+                      <mat-option *ngFor="let EmploymentType of EmploymentTypes" [value]="EmploymentType.EmploymentType">{{ EmploymentType.EmploymentType }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="100">
+                    <input matInput placeholder="Job Title" name="jobtitle" autocomplete="off" [(ngModel)]="jobDetails.jobtitle" required>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="100">
+                    <textarea matInput placeholder="Job Descriptions and Requirements" name="jobdescription" autocomplete="off" [(ngModel)]="jobDetails.jobdescription"
+                      required></textarea>
+                  </mat-form-field>
+
+                  <mat-toolbar class="next_action" color="primary">
+                    <span class="fill-remaining-space"></span>
+                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = 1">
+                      <mat-icon>chevron_right</mat-icon>
+                    </a>
+                  </mat-toolbar>
+                </div>
+              </mat-tab>
+
+              <mat-tab label="Specialization">
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                  <mat-form-field fxFlex="100">
+                    <mat-select placeholder="Job Specialization" name="jobspecialization" [(ngModel)]="jobDetails.jobspecialization" required>
+                      <mat-option *ngFor="let Specialization of Specializations" [value]="Specialization.specialization">{{ Specialization.specialization }}</mat-option>
+                      <mat-option value="Others">Others</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="100" *ngIf="jobDetails.jobspecialization =='Others'">
+                    <input matInput placeholder="If others, please specify" name="otherjobspecialization" autocomplete="off" [(ngModel)]="jobDetails.otherjobspecialization"
+                      required>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="100">
+                    <mat-select placeholder="Working Environment" name="workingenvironment" multiple [(ngModel)]="jobDetails.workingenvironment">
+                      <!-- <mat-option></mat-option> -->
+                      <mat-option *ngFor="let WorkingEnvironment of WorkingEnvironments" [value]="WorkingEnvironment.Environment">{{ WorkingEnvironment.Environment }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-toolbar class="next_action" color="primary">
+                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = 0">
+                      <mat-icon>chevron_left</mat-icon>
+                    </a>
+                    <span class="fill-remaining-space"></span>
+                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = 2">
+                      <mat-icon>chevron_right</mat-icon>
+                    </a>
+                  </mat-toolbar>
+                </div>
+              </mat-tab>
+
+              <mat-tab label="Duration">
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                  <mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+                    <mat-select placeholder="No of Pax Required" name="numberofpax" [(ngModel)]="jobDetails.numberofpax" required>
+                      <mat-option *ngFor="let pax of maxpax" [value]="pax+1">{{ pax+1 }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+                    <mat-select placeholder="Grace Period" name="graceperiod" [(ngModel)]="jobDetails.graceperiod" required>
+                      <mat-option *ngFor="let graceperiod of graceperiods" [value]="graceperiod">{{graceperiod}} Min</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+                    <input matInput [matDatepicker]="frompicker" placeholder="Job Period From" name="jobperiodfrom" autocomplete="off" [(ngModel)]="jobDetails.jobperiodfrom"
+                      (ngModelChange)="jobperiodfrom = $event" (click)="frompicker.open()" required>
+                    <mat-datepicker-toggle matSuffix [for]="frompicker"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi="true" #frompicker></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+                    <input matInput [min]="jobDetails.jobperiodfrom" [matDatepicker]="topicker" placeholder="Job Period To" name="jobperiodto"
+                      autocomplete="off" [(ngModel)]="jobDetails.jobperiodto" (ngModelChange)="jobperiodto = $event" (click)="topicker.open()"
+                      required>
+                    <mat-datepicker-toggle matSuffix [for]="topicker"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi="true" #topicker></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+                    <input matInput (dateTimeChange)="startTimeChange()" [owlDateTime]="triggerstarttime" [owlDateTimeTrigger]="triggerstarttime"
+                      placeholder="Start Time" name="starttime" autocomplete="off" [(ngModel)]="jobDetails.starttime" readonly
+                      required>
+                    <a mat-icon-button matSuffix>
+                      <mat-icon class="trigger" [owlDateTimeTrigger]="triggerstarttime">access_time</mat-icon>
+                    </a>
+                    <owl-date-time [hour12Timer]="false" [pickerType]="'timer'" [pickerMode]="'dialog'" #triggerstarttime></owl-date-time>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+                    <input matInput [min]="workMinEndTime" (dateTimeChange)="endTimeChange()" [owlDateTime]="triggerendtime" [owlDateTimeTrigger]="triggerendtime"
+                      placeholder="End Time" name="endtime" autocomplete="off" [(ngModel)]="jobDetails.endtime" readonly required>
+                    <a mat-icon-button matSuffix>
+                      <mat-icon class="trigger" [owlDateTimeTrigger]="triggerendtime">access_time</mat-icon>
+                    </a>
+                    <owl-date-time [pickerType]="'timer'" [hour12Timer]="false" [pickerMode]="'dialog'" #triggerendtime></owl-date-time>
+                  </mat-form-field>
+
+                  <div style="margin-top:15px;" fxFlex="100" fxLayout="row wrap">
+                    <b>WorkDays Type
+                      <span style="color: #767676">*</span> :</b>
+                    <mat-radio-group name="workdaystype" [(ngModel)]="jobDetails.workdaystype" required>
+                      <mat-radio-button value="normal">Normal</mat-radio-button>
+                      <mat-radio-button value="flexi">Flexible</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+
+                  <div *ngIf="jobDetails.workdaystype=='normal'" style="margin-top:15px;" fxFlex="100" fxLayout="row wrap">
+                    <!-- <p fxFlex="100" style="padding-bottom: 10px; font-weight: 600;">Note : Please Select WorkDays</p> -->
+                    <mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary" [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.sunday"
+                      disabled>
+                      Sunday
+                    </mat-checkbox>
+                    <input type="hidden" name="sunday" [(ngModel)]="jobDetails.sunday">
+                    <mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary" [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.monday"
+                      disabled>
+                      Monday
+                    </mat-checkbox>
+                    <input type="hidden" name="monday" [(ngModel)]="jobDetails.monday">
+                    <mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary" [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.tuesday"
+                      disabled>
+                      Tuesday
+                    </mat-checkbox>
+                    <input type="hidden" name="tuesday" [(ngModel)]="jobDetails.tuesday">
+                    <mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary" [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.wednesday"
+                      disabled>
+                      Wednesday
+                    </mat-checkbox>
+                    <input type="hidden" name="wednesday" [(ngModel)]="jobDetails.wednesday">
+                    <mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary" [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.thursday"
+                      disabled>
+                      Thursday
+                    </mat-checkbox>
+                    <input type="hidden" name="thursday" [(ngModel)]="jobDetails.thursday">
+                    <mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary" [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.friday"
+                      disabled>
+                      Friday
+                    </mat-checkbox>
+                    <input type="hidden" name="friday" [(ngModel)]="jobDetails.friday">
+                    <mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary" [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.saturday"
+                      disabled>
+                      Saturday
+                    </mat-checkbox>
+                    <input type="hidden" name="saturday" [(ngModel)]="jobDetails.saturday">
+                  </div>
+
+                  <mat-toolbar style="margin-top:25px;" class="next_action" color="primary">
+                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = 1">
+                      <mat-icon>chevron_left</mat-icon>
+                    </a>
+                    <span class="fill-remaining-space"></span>
+                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = 3">
+                      <mat-icon>chevron_right</mat-icon>
+                    </a>
+                  </mat-toolbar>
+                </div>
+              </mat-tab>
+
+              <mat-tab label="Break Hrs">
+                <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+                  <h4>Break Hrs &amp; Mins</h4>
+                  <div fxHide fxShow.gt-sm="true" (click)="addBreak()">
+                    <a mat-raised-button color="primary">Add Break</a>
+                  </div>
+                  <div fxShow fxHide.gt-sm="true" (click)="addBreak()" class="pointer" matTooltip="Add Break" matTooltipPosition="before">
+                    <mat-icon mat-list-icon color="primary">add_circle</mat-icon>
+                  </div>
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let break of jobDetails.breaks; let breakIndex = index; trackBy: trackByIndex">
+                  <mat-form-field fxFlex="30">
+                    <input matInput placeholder="Break Name" name="breakname{{breakIndex}}" #breakname{{breakIndex}}="ngModel" [(ngModel)]="break.breakname"
+                      autocomplete="off" required>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="25">
+                    <input matInput [min]="breakMinStartTime" (dateTimeChange)="breakStartTimeChange($event,breakIndex)" [owlDateTime]="breakfrompicker"
+                      [owlDateTimeTrigger]="breakfrompicker" placeholder="From Time" name="break{{breakIndex}}starttime" autocomplete="off"
+                      [(ngModel)]="break.starttime" readonly required>
+                    <a mat-icon-button matSuffix>
+                      <mat-icon class="trigger" [owlDateTimeTrigger]="breakfrompicker">access_time</mat-icon>
+                    </a>
+                    <owl-date-time [pickerType]="'timer'" [hour12Timer]="false" [pickerMode]="'dialog'" #breakfrompicker></owl-date-time>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="25">
+                    <input matInput [min]="break.starttime" [max]="breakMaxEndTime" [owlDateTime]="breaktopicker" [owlDateTimeTrigger]="breaktopicker"
+                      placeholder="End Time" name="break{{breakIndex}}endtime" autocomplete="off" [(ngModel)]="break.endtime"
+                      readonly required>
+                    <a mat-icon-button matSuffix>
+                      <mat-icon class="trigger" [owlDateTimeTrigger]="breaktopicker">access_time</mat-icon>
+                    </a>
+                    <owl-date-time [pickerType]="'timer'" [hour12Timer]="false" [pickerMode]="'dialog'" #breaktopicker></owl-date-time>
+                  </mat-form-field>
+
+                  <div fxFlex="10" fxLayoutAlign="end center">
+                    <div class="pointer" (click)="removeBreak(breakIndex)">
+                      <mat-icon mat-list-icon color="warn">remove_circle</mat-icon>
+                    </div>
+                  </div>
+                </div>
+
+                <mat-toolbar class="next_action" color="primary" style="margin-top: 25px;">
+                  <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = 2">
+                    <mat-icon>chevron_left</mat-icon>
+                  </a>
+                  <span class="fill-remaining-space"></span>
+                  <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = 4">
+                    <mat-icon>chevron_right</mat-icon>
+                  </a>
+                </mat-toolbar>
+              </mat-tab>
+
+              <mat-tab label="Location">
+                <h4>Address</h4>
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                  <mat-form-field fxFlex="100">
+                    <input matInput placeholder="Postal Code" name="addresspostalcode" autocomplete="off" [(ngModel)]="jobDetails.addresspostalcode"
+                      pattern="([0-9]{6})?" required>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="100">
+                    <input matInput placeholder="Block" name="addressblock" autocomplete="off" [(ngModel)]="jobDetails.addressblock" required>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="100">
+                    <input matInput placeholder="Street" name="addressstreet" autocomplete="off" [(ngModel)]="jobDetails.addressstreet" required>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="100">
+                    <input matInput placeholder="Unit No." name="addressunit" autocomplete="off" [(ngModel)]="jobDetails.addressunit" required>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="100">
+                    <mat-select placeholder="Region" name="addressregion" [(ngModel)]="jobDetails.locationmain" required>
+                      <mat-option *ngFor="let Location of Locations | uniquemainlocation" [value]="Location.mainlocation">{{ Location.mainlocation }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="100">
+                    <mat-select placeholder="Location" name="addresslocation" [(ngModel)]="jobDetails.addresslocation" required>
+                      <mat-option *ngFor="let Location of Locations | sublocationfilter:jobDetails.locationmain" [value]="Location.sublocation">{{ Location.sublocation }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-toolbar class="next_action" color="primary">
+                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = 3">
+                      <mat-icon>chevron_left</mat-icon>
+                    </a>
+                    <span class="fill-remaining-space"></span>
+                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = 5">
+                      <mat-icon>chevron_right</mat-icon>
+                    </a>
+                  </mat-toolbar>
+                </div>
+              </mat-tab>
+
+              <mat-tab label="Pay">
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                  <mat-form-field fxFlex="100">
+                    <span matPrefix>&#x24; &nbsp;</span>
+                    <input matInput placeholder="Charge Rate (S$)" name="chargerate" autocomplete="off" [(ngModel)]="jobDetails.chargerate" pattern="([0-9]*[.])?[0-9]+"
+                      (ngModelChange)="vlidateChargingRate()" required>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+                    <input matInput placeholder="Markup Rate" name="markuprate" autocomplete="off" [(ngModel)]="jobDetails.markuprate" pattern="([0-9]*[.])?[0-9]+"
+                      (ngModelChange)="vlidateChargingRate()" required>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+                    <mat-select placeholder="Markup Rate In" name="markupratetype" [(ngModel)]="jobDetails.markupratetype" (selectionChange)="vlidateChargingRate()"
+                      required>
+                      <mat-option value="sgdollar">SG Dollar(S$)</mat-option>
+                      <mat-option value="percentage">Percentage(%)</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+                    <input matInput placeholder="JobSeeker Salary/hr" name="salary" autocomplete="off" [(ngModel)]="jobDetails.salary" pattern="([0-9]*[.])?[0-9]+"
+                      readonly required>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+                    <input matInput placeholder="Markup Rate In Currency(S$)" name="markuprateincurrency" autocomplete="off" [(ngModel)]="jobDetails.markuprateincurrency"
+                      pattern="([0-9]*[.])?[0-9]+" readonly required>
+                  </mat-form-field>
+
+                  <mat-toolbar class="next_action" style="margin-top:25px;">
+                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = 4">
+                      <mat-icon>chevron_left</mat-icon>
+                    </a>
+                    <span class="fill-remaining-space"></span>
+                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = 6">
+                      <mat-icon>chevron_right</mat-icon>
+                    </a>
+                  </mat-toolbar>
+                </div>
+              </mat-tab>
+
+              <mat-tab label="Others">
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                  <div fxFlex="100" style="margin-top:15px;">
+                    <mat-checkbox color="primary" name="autooffer" [(ngModel)]="jobDetails.autooffer">
+                      Employer can Auto Select Applied JobSeekers.
+                    </mat-checkbox>
+                  </div>
+
+                  <div fxFlex="100" style="margin-top:15px;">
+                    <mat-checkbox color="primary" name="autoofferaccept" [(ngModel)]="jobDetails.autoofferaccept">
+                      Jobseekers Auto Accepted for Job Applied.
+                    </mat-checkbox>
+                  </div>
+
+                  <mat-toolbar class="next_action" style="margin-top:25px;">
+                    <a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = 5">
+                      <mat-icon>chevron_left</mat-icon>
+                    </a>
+                    <span class="fill-remaining-space"></span>
+                  </mat-toolbar>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+
+            <mat-card fxLayout="row wrap" fxLayoutAlign="center stretch" class="action">
+              <button mat-raised-button color="primary" type="submit" [disabled]="!employerJobForm.form.valid">Add Job</button>
+              <mat-error fxFlex="100" fxLayoutAlign="center center" style="margin-bottom: 10px;"></mat-error>
+            </mat-card>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <!-- Job Details End -->
+</div>

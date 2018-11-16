@@ -1,0 +1,127 @@
+<div class="inner-sidenav-content transition-2">
+    <!-- Breadcrumb Start -->
+    <div fxLayout="row wrap">
+        <div class="flex-p" fxFlex="1 1 100%">
+            <mat-card class="mat-breadcrumb" fxLayout="row">
+                <a class="breadcrumb-item" routerLink="/employer/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+                    <mat-icon>home</mat-icon>
+                    <span class="breadcrumb-title">Home</span>
+                </a>
+
+                <a class="breadcrumb-item" routerLink="/employer/jobs/list" fxLayout="row" fxLayoutAlign="center center">
+                    <span class="breadcrumb-title">Jobs</span>
+                </a>
+
+                <a class="breadcrumb-item" routerLink="/employer/jobs/{{empJobId}}/view" fxLayout="row" fxLayoutAlign="center center">
+                    <span class="breadcrumb-title">Job Details</span>
+                </a>
+
+                <a class="breadcrumb-item" routerLink="/employer/jobs/{{empJobId}}/candidates/applied" fxLayout="row" fxLayoutAlign="center center">
+                    <span class="breadcrumb-title">Candidates</span>
+                </a>
+
+                <div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+                    <span class="breadcrumb-title active">Candidate Details</span>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <div fxLayout="row wrap">
+        <div [ngBusy]="{busy:busy}"></div>
+        <div class="flex-p" fxFlex="100" fxFlex.gt-md="100" fxFlex.md="100">
+            <mat-card class="p-0">
+                <div class="bg-lightgray" fxLayout="row" fxLayoutAlign="space-between center">
+                    <h3 class="user-name">JobSeeker Details</h3>
+                    <button mat-icon-button [matMenuTriggerFor]=i>
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </div>
+                <mat-menu #i="matMenu" xPosition="before">
+                    <!-- <button mat-menu-item (click)="selectApplication()" >
+                                <mat-icon style="color:#057d0f">check_circle</mat-icon>
+                                <span>Select Application</span>
+                            </button> -->
+                    <button mat-menu-item (click)="selectApplication()" [disabled]="isAlreadySelected">
+                        <mat-icon style="color:#057d0f">check_circle</mat-icon>
+                        <span>Select Application</span>
+                    </button>
+                </mat-menu>
+
+                <div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
+                    <div class="user-details transition-2" fxFlex="100" fxLayout="column">
+                        <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.username">
+                            <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                            <span class="key">Candidate Name : </span>
+                            <span class="value">{{jobSeekerDetails.username}}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.email">
+                            <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                            <span class="key">E-Mail : </span>
+                            <span class="value">{{jobSeekerDetails.email}}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.country">
+                            <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                            <span class="key">Country : </span>
+                            <span class="value">{{jobSeekerDetails.country}}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.totalexperienceinyears">
+                            <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                            <span class="key">Total Experience : </span>
+                            <span class="value">{{jobSeekerDetails.totalexperienceinyears}}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.preferredspecialization">
+                            <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                            <span class="key">Preferred Specialization : </span>
+                            <span class="value">{{jobSeekerDetails.preferredspecialization}}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.preferredregion">
+                            <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                            <span class="key">Preferred Region : </span>
+                            <span class="value">{{jobSeekerDetails.preferredregion}}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.preferredlocation">
+                            <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                            <span class="key">Preferred Location : </span>
+                            <span class="value">{{jobSeekerDetails.preferredlocation}}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.experiencein">
+                            <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                            <span class="key">Experience In : </span>
+                            <span class="value">{{jobSeekerDetails.experiencein}}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.address">
+                            <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                            <span class="key">Address : </span>
+                            <span class="value">{{jobSeekerDetails.address}}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.age">
+                            <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                            <span class="key">Age : </span>
+                            <span class="value">{{jobSeekerDetails.age}}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.gender">
+                            <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                            <span class="key">Gender : </span>
+                            <span class="value">{{jobSeekerDetails.gender}}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.mobileno">
+                            <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
+                            <span class="key">Mobile No : </span>
+                            <span class="value">{{jobSeekerDetails.mobileno}}</span>
+                        </p>
+                        <div *ngIf="isAlreadySelected">
+                            <p style="color:#057d0f">*Note: This Candidate Already Selected for this Job.</p>
+                        </div>
+                        <!-- <div *ngIf="candidateSelectedForJob">
+                                    <div *ngIf="(candidateSelectedForJob | search: empJobId)">
+                                        *Note: This Candidate Already Selected for this Job.
+                                    </div>
+                                </div> -->
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>
