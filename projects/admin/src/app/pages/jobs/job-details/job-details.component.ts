@@ -108,8 +108,8 @@ export class JobDetailsComponent implements OnInit {
         two-thirds the density of air.`
     },
   ];
-
-  displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
+  displayedColumns1: string[] = ['select1', 'jan', 'feb', 'mar', 'apr', 'may', 'june', 'july', 'aug', 'sep', 'oct', 'nov', 'dec'];
+  displayedColumns: string[] = ['select', 'jan 1st Half', 'jan 2nd Half', 'feb 1st Half', 'feb 2nd Half', 'mar 1st Half', 'mar 2nd Half', 'apr 1st Half', 'apr 2nd Half', 'may 1st Half', 'may 2nd Half', 'jun 1st Half', 'jun 2nd Half', 'jul 1st Half', 'jul 2nd Half', 'aug 1st Half', 'aug 2nd Half', 'sep 1st Half', 'sep 2nd Half', 'oct 1st Half', 'oct 2nd Half', 'nov 1st Half', 'nov 2nd Half', 'dec 1st Half', 'dec 2nd Half'];
   dataSource = new MatTableDataSource<any>(this.ELEMENT_DATA);
   selection = new SelectionModel<any>(true, []);
   expandedElement: any;
