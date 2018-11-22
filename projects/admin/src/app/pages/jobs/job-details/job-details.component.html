@@ -365,9 +365,9 @@
 			</mat-card>
 		</div> -->
 
-    <div class="flex-p" fxFlex="100">
+    <div class="flex-p" style="overflow: overlay; overflow-y: hidden;">
 
-      <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+      <table mat-table fxFlex="100" [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
         <!-- Checkbox Column -->
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef>
@@ -381,148 +381,153 @@
           </td>
         </ng-container>
 
-        <!-- Position Column -->
-        <ng-container matColumnDef="jan 1st Half">
-          <th mat-header-cell *matHeaderCellDef> 1st Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-        </ng-container>
-
-        <!-- Name Column -->
-        <ng-container matColumnDef="jan 2nd Half">
-          <th mat-header-cell *matHeaderCellDef> 2nd Half </th>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
           <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
 
-        <!-- Weight Column -->
-        <ng-container matColumnDef="feb 1st Half">
-          <th mat-header-cell *matHeaderCellDef> 1st Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-        </ng-container>
-
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="feb 2nd Half">
-          <th mat-header-cell *matHeaderCellDef> 2nd Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-        </ng-container>
-
         <!-- Position Column -->
-        <ng-container matColumnDef="mar 1st Half">
+        <ng-container matColumnDef="jan1stHalf">
           <th mat-header-cell *matHeaderCellDef> 1st Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.jan1stHalf.unVerified}} </td>
         </ng-container>
 
         <!-- Name Column -->
-        <ng-container matColumnDef="mar 2nd Half">
+        <ng-container matColumnDef="jan2ndHalf">
           <th mat-header-cell *matHeaderCellDef> 2nd Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.jan2ndHalf}} </td>
         </ng-container>
 
         <!-- Weight Column -->
-        <ng-container matColumnDef="apr 1st Half">
+        <ng-container matColumnDef="feb1stHalf">
           <th mat-header-cell *matHeaderCellDef> 1st Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.feb1stHalf}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
-        <ng-container matColumnDef="apr 2nd Half">
+        <ng-container matColumnDef="feb2ndHalf">
           <th mat-header-cell *matHeaderCellDef> 2nd Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.feb2ndHalf}} </td>
         </ng-container>
 
         <!-- Position Column -->
-        <ng-container matColumnDef="may 1st Half">
+        <ng-container matColumnDef="mar1stHalf">
           <th mat-header-cell *matHeaderCellDef> 1st Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.mar1stHalf}} </td>
         </ng-container>
 
         <!-- Name Column -->
-        <ng-container matColumnDef="may 2nd Half">
+        <ng-container matColumnDef="mar2ndHalf">
           <th mat-header-cell *matHeaderCellDef> 2nd Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.mar2ndHalf}} </td>
         </ng-container>
 
         <!-- Weight Column -->
-        <ng-container matColumnDef="jun 1st Half">
+        <ng-container matColumnDef="apr1stHalf">
           <th mat-header-cell *matHeaderCellDef> 1st Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.apr1stHalf}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
-        <ng-container matColumnDef="jun 2nd Half">
+        <ng-container matColumnDef="apr2ndHalf">
           <th mat-header-cell *matHeaderCellDef> 2nd Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.apr2ndHalf}} </td>
         </ng-container>
 
         <!-- Position Column -->
-        <ng-container matColumnDef="jul 1st Half">
+        <ng-container matColumnDef="may1stHalf">
           <th mat-header-cell *matHeaderCellDef> 1st Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.may1stHalf}} </td>
         </ng-container>
 
         <!-- Name Column -->
-        <ng-container matColumnDef="jul 2nd Half">
+        <ng-container matColumnDef="may2ndHalf">
           <th mat-header-cell *matHeaderCellDef> 2nd Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.may2ndHalf}} </td>
         </ng-container>
 
         <!-- Weight Column -->
-        <ng-container matColumnDef="aug 1st Half">
+        <ng-container matColumnDef="jun1stHalf">
           <th mat-header-cell *matHeaderCellDef> 1st Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.jun1stHalf}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
-        <ng-container matColumnDef="aug 2nd Half">
+        <ng-container matColumnDef="jun2ndHalf">
           <th mat-header-cell *matHeaderCellDef> 2nd Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.jun2ndHalf}} </td>
         </ng-container>
 
         <!-- Position Column -->
-        <ng-container matColumnDef="sep 1st Half">
+        <ng-container matColumnDef="jul1stHalf">
           <th mat-header-cell *matHeaderCellDef> 1st Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.jul1stHalf}} </td>
         </ng-container>
 
         <!-- Name Column -->
-        <ng-container matColumnDef="sep 2nd Half">
+        <ng-container matColumnDef="jul2ndHalf">
           <th mat-header-cell *matHeaderCellDef> 2nd Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.jul2ndHalf}} </td>
         </ng-container>
 
         <!-- Weight Column -->
-        <ng-container matColumnDef="oct 1st Half">
+        <ng-container matColumnDef="aug1stHalf">
           <th mat-header-cell *matHeaderCellDef> 1st Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.aug1stHalf}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
-        <ng-container matColumnDef="oct 2nd Half">
+        <ng-container matColumnDef="aug2ndHalf">
           <th mat-header-cell *matHeaderCellDef> 2nd Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.aug2ndHalf}} </td>
         </ng-container>
 
         <!-- Position Column -->
-        <ng-container matColumnDef="nov 1st Half">
+        <ng-container matColumnDef="sep1stHalf">
           <th mat-header-cell *matHeaderCellDef> 1st Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.sep1stHalf}} </td>
         </ng-container>
 
         <!-- Name Column -->
-        <ng-container matColumnDef="nov 2nd Half">
+        <ng-container matColumnDef="sep2ndHalf">
           <th mat-header-cell *matHeaderCellDef> 2nd Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.sep2ndHalf}} </td>
         </ng-container>
 
         <!-- Weight Column -->
-        <ng-container matColumnDef="dec 1st Half">
+        <ng-container matColumnDef="oct1stHalf">
           <th mat-header-cell *matHeaderCellDef> 1st Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.oct1stHalf}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
-        <ng-container matColumnDef="dec 2nd Half">
+        <ng-container matColumnDef="oct2ndHalf">
           <th mat-header-cell *matHeaderCellDef> 2nd Half </th>
-          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.oct2ndHalf}} </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="nov1stHalf">
+          <th mat-header-cell *matHeaderCellDef> 1st Half </th>
+          <td mat-cell *matCellDef="let element"> {{element.nov1stHalf}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="nov2ndHalf">
+          <th mat-header-cell *matHeaderCellDef> 2nd Half </th>
+          <td mat-cell *matCellDef="let element"> {{element.nov2ndHalf}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="dec1stHalf">
+          <th mat-header-cell *matHeaderCellDef> 1st Half </th>
+          <td mat-cell *matCellDef="let element"> {{element.dec1stHalf}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="dec2ndHalf">
+          <th mat-header-cell *matHeaderCellDef> 2nd Half </th>
+          <td mat-cell *matCellDef="let element"> {{element.dec2ndHalf}} </td>
         </ng-container>
 
         <!-- <ng-container matColumnDef="apr">
@@ -549,6 +554,9 @@
 
         <!-- Group1 Column -->
         <ng-container matColumnDef="select1">
+          <th mat-header-cell *matHeaderCellDef> </th>
+        </ng-container>
+        <ng-container matColumnDef="name1">
           <th mat-header-cell *matHeaderCellDef> </th>
         </ng-container>
 
@@ -600,7 +608,7 @@
           <th colspan="2" mat-header-cell *matHeaderCellDef> Dec </th>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row matRipple class="element-row" [class.expanded]="expandedElement == row" *matRowDef="let row; columns: displayedColumns;"  (click)="expandedElement === row? expandedElement = null : expandedElement = row"></tr>
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
