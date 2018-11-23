@@ -40,6 +40,10 @@ import { NgProgressRouterModule } from '@ngx-progressbar/router';
 import { JsonToCsvService } from '../services/json-to-csv.service';
 import { JsonToTextService } from '../services/json-to-text.service';
 
+// Calendar
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true,
 	wheelPropagation: true,
@@ -79,7 +83,11 @@ export const MY_NATIVE_FORMATS = {
 		}),
     NgProgressHttpModule.forRoot(),
     NgProgressRouterModule.forRoot(),
-		NgxMaskModule.forRoot(),
+    NgxMaskModule.forRoot(),
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
 	],
 	declarations: [
 		OogetsidenavComponent,
@@ -113,7 +121,8 @@ export const MY_NATIVE_FORMATS = {
 		OwlDateTimeModule,
 		OwlNativeDateTimeModule,
 		NgBusyModule,
-		NgProgressModule,
+    NgProgressModule,
+    CalendarModule,
 		NgProgressHttpModule,
 		NgProgressRouterModule,
 		MultipleDatePickerModule,

@@ -15,6 +15,9 @@ import { DateRangeHelper } from '../../multiple-date-picker/date-range-helper';
 })
 export class DashboardComponent implements OnInit {
 
+  // viewDate: Date = new Date();
+  // events = []
+
   highlightDays: any[];
   initialCount: Array<any>; // this is the [(ngModel)] property
   datesArray: Array<any>;

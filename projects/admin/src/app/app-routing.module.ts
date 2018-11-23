@@ -50,7 +50,11 @@ const routes: Routes = [
 			{
 				path: 'faq',
         loadChildren: './pages/faq/faq.module#FaqModule'
-			}
+      },
+      {
+        path: 'reports',
+        loadChildren: './pages/reports/reports.module#ReportsModule'
+      }
 		]
 	},
 	{
