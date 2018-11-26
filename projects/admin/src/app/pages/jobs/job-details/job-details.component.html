@@ -364,10 +364,10 @@
 				</div>
 			</mat-card>
 		</div> -->
+    <button mat-raised-button color="primary" (click)="exportAsExcel()">Export as Excel</button>
+    <div class="flex-p" style="overflow: overlay; overflow-y: hidden;" #TABLE>
 
-    <div class="flex-p" style="overflow: overlay; overflow-y: hidden;">
-
-      <table mat-table fxFlex="100" [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+      <table mat-table #table fxFlex="100" [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
         <!-- Checkbox Column -->
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef>

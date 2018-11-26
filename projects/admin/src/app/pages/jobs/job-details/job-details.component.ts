@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { ApiCallService } from '../../../services/api-call.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatTableDataSource, MatSort } from '@angular/material';
@@ -11,6 +11,7 @@ import * as moment from 'moment';
 import { DublicateJobConfirmComponent } from '../dialogs/dublicate-job-confirm/dublicate-job-confirm.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-job-details',
@@ -26,7 +27,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 })
 export class JobDetailsComponent implements OnInit {
   // ========================
-
+  @ViewChild('TABLE') table: ElementRef;
   public ELEMENT_DATA: any[] = [
     {
       name: 'name',
@@ -81,6 +82,14 @@ export class JobDetailsComponent implements OnInit {
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
+  exportAsExcel() {
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.ELEMENT_DATA);//converts a DOM TABLE element to a worksheet
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, 'SheetJS.xlsx');
+  }
   // ========================
   public imgBaseUrl;
 

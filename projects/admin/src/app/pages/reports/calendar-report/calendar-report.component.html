@@ -1,57 +1,54 @@
 <div fxFlex="100" class="inner-sidenav-content transition-2">
 	<!-- <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="fetchEvents()" (viewChange)="fetchEvents()">
   </mwl-demo-utils-calendar-header> -->
-<div fxFlex fxLayout="column">
-	<div fxFlex fxLayout="row">
-		<div class="col-md-4">
-			<div class="btn-group">
-				<div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="fetchEvents()">
-					Previous
-				</div>
-				<div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate" (viewDateChange)="fetchEvents()">
-					Today
-				</div>
-				<div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="fetchEvents()">
-					Next
-				</div>
+	<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+		<div fxFlex="100" fxLayout="row" fxLayoutAlign="space-around center">
+			<mat-button-toggle-group #group="matButtonToggleGroup">
+				<mat-button-toggle value="previous" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="fetchEvents()">
+					<!-- <mat-icon>format_align_left</mat-icon> -->Previous
+				</mat-button-toggle>
+				<mat-button-toggle value="today" mwlCalendarToday [(viewDate)]="viewDate" (viewDateChange)="fetchEvents()">
+					<!-- <mat-icon>format_align_center</mat-icon> -->Today
+				</mat-button-toggle>
+				<mat-button-toggle value="next" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="fetchEvents()">
+					<!-- <mat-icon>format_align_right</mat-icon> -->Next
+				</mat-button-toggle>
+			</mat-button-toggle-group>
+
+			<div>
+				<h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
 			</div>
+
+			<mat-button-toggle-group #group="matButtonToggleGroup" [value]="view">
+				<mat-button-toggle value="month" (click)="view = CalendarView.Month" [class.active]="view === CalendarView.Month">
+					<!-- <mat-icon>format_align_left</mat-icon> -->Month
+				</mat-button-toggle>
+				<mat-button-toggle value="week" (click)="view = CalendarView.Week" [class.active]="view === CalendarView.Week">
+					<!-- <mat-icon>format_align_center</mat-icon> -->Week
+				</mat-button-toggle>
+				<mat-button-toggle value="day" (click)="view = CalendarView.Day" [class.active]="view === CalendarView.Day">
+					<!-- <mat-icon>format_align_right</mat-icon> -->Day
+				</mat-button-toggle>
+			</mat-button-toggle-group>
 		</div>
-		<div class="col-md-4">
-			<h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
-		</div>
-		<div class="col-md-4">
-			<div class="btn-group">
-				<div class="btn btn-primary" (click)="view = CalendarView.Month" [class.active]="view === CalendarView.Month">
-					Month
-				</div>
-				<div class="btn btn-primary" (click)="view = CalendarView.Week" [class.active]="view === CalendarView.Week">
-					Week
-				</div>
-				<div class="btn btn-primary" (click)="view = CalendarView.Day" [class.active]="view === CalendarView.Day">
-					Day
-				</div>
+
+		<ng-template #loading>
+			<div style="height: 200px;" fxFlex="100" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+				<mat-spinner diameter="40"></mat-spinner>
+				<div>Loading...</div>
+			</div>
+		</ng-template>
+
+		<div fxFlex="100" style="margin-top: 25px;" *ngIf="events$ | async; else loading; let events">
+			<div [ngSwitch]="view">
+				<mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [activeDayIsOpen]="activeDayIsOpen"
+				 (dayClicked)="dayClicked($event.day)" (eventClicked)="eventClicked($event.event)">
+				</mwl-calendar-month-view>
+				<mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" (eventClicked)="eventClicked($event.event)">
+				</mwl-calendar-week-view>
+				<mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" (eventClicked)="eventClicked($event.event)">
+				</mwl-calendar-day-view>
 			</div>
 		</div>
 	</div>
-
-	<ng-template #loading>
-		<div class="text-center">
-			<i class="fa fa-spin fa-spinner fa-5x"></i>
-			<br>
-			Loading events...
-		</div>
-	</ng-template>
-
-	<div fxFlex *ngIf="events$ | async; else loading; let events">
-		<div [ngSwitch]="view">
-			<mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [activeDayIsOpen]="activeDayIsOpen"
-			 (dayClicked)="dayClicked($event.day)" (eventClicked)="eventClicked($event.event)">
-			</mwl-calendar-month-view>
-			<mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" (eventClicked)="eventClicked($event.event)">
-			</mwl-calendar-week-view>
-			<mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" (eventClicked)="eventClicked($event.event)">
-			</mwl-calendar-day-view>
-		</div>
-	</div>
-</div>
 </div>

@@ -114,13 +114,7 @@ export class CalendarReportComponent implements OnInit {
 			);
 	}
 
-	dayClicked({
-		date,
-		events
-	}: {
-			date: Date;
-			events: Array<CalendarEvent<{ film: Film }>>;
-		}): void {
+	dayClicked({ date, events }: { date: Date; events: Array<CalendarEvent<{ film: Film }>>; }): void {
 		if (isSameMonth(date, this.viewDate)) {
 			if (
 				(isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
