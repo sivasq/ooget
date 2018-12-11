@@ -34,7 +34,7 @@ import { Layout2Component } from './layouts/layout2/layout2.component';
     SharedModule
   ],
   providers: [
-    { provide: APP_BASE_HREF, useValue: window['_app_base'] || '/' },
+    // { provide: APP_BASE_HREF, useValue: window['_app_base'] || '/' },
   ],
   bootstrap: [AppComponent]
 })

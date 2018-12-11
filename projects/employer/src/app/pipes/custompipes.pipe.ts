@@ -11,7 +11,7 @@ import * as moment from 'moment';
 //   }
 // }
 
-// Filter Main Location by Unique 
+// Filter Main Location by Unique
 @Pipe({
 	name: 'uniquemainlocation',
 	pure: false
@@ -66,6 +66,21 @@ export class SearchPipe implements PipeTransform {
 		// searchText = searchText.toLowerCase();
 		return items.includes(searchText);
 	}
+}
+
+@Pipe({
+  name: 'age'
+})
+export class AgePipe implements PipeTransform {
+  transform(value: string): string {
+    let newvalue = new Date(value);
+    let today = moment();
+    let birthdate = moment(newvalue);
+    let years = today.diff(birthdate, 'years');
+    let html: string = years + " yr ";
+    html += today.subtract(years, 'years').diff(birthdate, 'months') + " mo";
+    return html;
+  }
 }
 
 // @Pipe({

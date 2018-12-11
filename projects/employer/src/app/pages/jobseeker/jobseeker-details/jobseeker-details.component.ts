@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 export class JobseekerDetailsComponent implements OnInit {
 
   busy: Subscription;
-  
+
   @Input() xPosition: MenuPositionX
 
   public jobSeekerDetails: any = [];
@@ -23,6 +23,11 @@ export class JobseekerDetailsComponent implements OnInit {
   candidateSelectedForJob: any = [];
 
   isAlreadySelected: boolean;
+
+  public isUnderOffered: boolean;
+  public isOfferRejected: boolean;
+  public isUnderContract: boolean;
+  public helpTxt;
 
   constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar, public dialog: MatDialog) {
     this.employerId = this.route.snapshot.params['emp_id'];
@@ -50,13 +55,34 @@ export class JobseekerDetailsComponent implements OnInit {
         response => {
           if (response.success) {
             this.jobSeekerDetails = response.jobseeker;
-            this.candidateSelectedForJob = response.jobseeker.jobsselected;
-            console.log(this.jobSeekerDetails);
 
-            if (this.isInArray(this.candidateSelectedForJob, this.empJobId)) {
-              this.isAlreadySelected = true;
-            } else {
-              this.isAlreadySelected = false;
+            // this.candidateSelectedForJob = response.jobseeker.jobsselected;
+            // console.log(this.jobSeekerDetails);
+
+            // if (this.isInArray(this.candidateSelectedForJob, this.empJobId)) {
+            //   this.isAlreadySelected = true;
+            // } else {
+            //   this.isAlreadySelected = false;
+            // }
+            let isUnderContract = this.jobSeekerDetails.jobs.filter(e => e.jobid === this.empJobId && e.accepted).length > 0;
+            let isOfferRejected = this.jobSeekerDetails.jobs.filter(e => e.jobid === this.empJobId && e.rejected).length > 0;
+            let isUnderOffered = this.jobSeekerDetails.jobs.filter(e => e.jobid === this.empJobId && e.offered).length > 0;
+
+            if (isUnderContract) {
+              this.isUnderContract = true;
+              this.isOfferRejected = false;
+              this.isUnderOffered = false;
+              this.helpTxt = 'He/She is Contract Signed In for this Job';
+            } else if (isOfferRejected) {
+              this.isUnderContract = false;
+              this.isOfferRejected = true;
+              this.isUnderOffered = false;
+              this.helpTxt = 'He/she Rejected this Job Offer';
+            } else if (isUnderOffered) {
+              this.isUnderContract = false;
+              this.isOfferRejected = false;
+              this.isUnderOffered = true;
+              this.helpTxt = 'Offer Sent for this Job';
             }
 
           } else if (!response.success) {
@@ -101,7 +127,12 @@ export class JobseekerDetailsComponent implements OnInit {
       .subscribe(
         response => {
           if (response.success) {
-            this.isAlreadySelected = true;
+            this.isUnderContract = false;
+            this.isOfferRejected = false;
+            this.isUnderOffered = true;
+
+            this.helpTxt = 'Offer Sent for this Job';
+
             let snackBarRef = this.snackBar.open('The Candidate Selected For This Job.', 'Close', {
               duration: 5000,
             });

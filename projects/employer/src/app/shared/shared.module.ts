@@ -18,7 +18,7 @@ import { ConfigService } from '../services/config.service';
 import { ApiCallService } from '../services/api-call.service';
 import { HttpClientModule } from '@angular/common/http';
 
-import { UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe } from '../pipes/custompipes.pipe';
+import { UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, AgePipe } from '../pipes/custompipes.pipe';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { NgBusyModule } from 'ng-busy';
@@ -68,7 +68,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TopShortcutdialogComponent,
     TermsConditionsDialogComponent,
     ConfirmDialogComponent,
-    UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, EqualValidator, CompareDirective
+    UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, AgePipe, EqualValidator, CompareDirective
   ],
   entryComponents: [
     TopProfiledialogComponent,
@@ -99,12 +99,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgProgressRouterModule,
     NgPipesModule,
     EqualValidator, CompareDirective,
-    UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe
+    UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, AgePipe
   ],
   providers: [
     ConfigService,
     ApiCallService,
     DatePipe,
+    AgePipe,
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
     AuthGuardService

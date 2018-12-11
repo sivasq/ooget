@@ -1,0 +1,46 @@
+@import "../../../../variables.scss";
+.inner-sidenav-content {
+    position: absolute;
+    top: 64px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px;
+    min-height: calc(100% - 80px);
+    overflow: auto;
+}
+
+/* Breadcrump Start */
+
+.mat-breadcrumb {
+    padding: 8px;
+}
+
+.mat-breadcrumb a {
+    color: $primary;
+}
+
+.mat-breadcrumb .mat-icon {
+    font-size: 20px;
+    height: 100%;
+    width: 100%;
+    padding: 0 6px;
+}
+
+.mat-breadcrumb .breadcrumb-item+.breadcrumb-item:before {
+    display: inline-block;
+    padding-right: .5rem;
+    padding-left: .5rem;
+    content: "/";
+}
+
+.mat-breadcrumb .breadcrumb-item+.breadcrumb-item:before {
+    color: rgba(0, 0, 0, .87);
+}
+
+.mat-breadcrumb .breadcrumb-title.active {
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+/* Breadcrump End */

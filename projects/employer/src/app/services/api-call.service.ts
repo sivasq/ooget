@@ -122,7 +122,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/job/viewparticularjobappliedcandidates', jobId, { headers: headers })
+    return this.http.post(this.baseUrl + '/job/fetchparticularjobappliedjobseekers', jobId, { headers: headers })
 	}
 
 	getJobSeekerDetails(jobseekerId): Observable<any> {

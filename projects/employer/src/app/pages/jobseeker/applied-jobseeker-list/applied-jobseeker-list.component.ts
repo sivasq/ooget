@@ -21,7 +21,7 @@ export class AppliedJobseekerListComponent implements OnInit {
   @Input() overlapTrigger: boolean
 
   public pageSizeOptions = [3, 6, 12, 24, 48, 96];
-  
+
   // Tab1 Pagination config
   public tab1PaginateConfig: PaginationInstance = {
     id: 'tab1',
@@ -35,6 +35,7 @@ export class AppliedJobseekerListComponent implements OnInit {
 
   //set Company Details
   public companyDetails: any;
+  public jobDetails: any;
 
   constructor(private _httpService: ApiCallService, private route: ActivatedRoute) {
     this.employerId = this.route.snapshot.params['emp_id'];
@@ -51,7 +52,7 @@ export class AppliedJobseekerListComponent implements OnInit {
 
   public candidates_list: any[];
 
-  getAppliedCandidates(jobId) {
+  getAppliedCandidates1(jobId) {
     this.busy = this._httpService.getAppliedCandidates(jobId)
       .subscribe(
         response => {
@@ -69,6 +70,33 @@ export class AppliedJobseekerListComponent implements OnInit {
 
           } else if (!response.success) {
 
+            console.log(response);
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
+  }
+
+  getAppliedCandidates(jobId) {
+    this.busy = this._httpService.getAppliedCandidates(jobId)
+      .subscribe(
+        response => {
+          if (response.success) {
+            if ((response.appliedjobseekers).length > 0) {
+              this.isCandidatesAvailable = true;
+            } else {
+              this.isCandidatesAvailable = false;
+            }
+
+            // console.log(response.job.candidatesapplied);
+            this.candidates_list = response.appliedjobseekers;
+            this.companyDetails = response.companydetails[0];
+            this.jobDetails = response.jobdetails;
+            // console.log(this.companyDetails);
+
+          } else if (!response.success) {
             console.log(response);
           }
         },

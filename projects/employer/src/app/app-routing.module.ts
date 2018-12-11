@@ -39,7 +39,11 @@ const routes: Routes = [
 			{
 				path: 'jobs',
 				loadChildren: './pages/jobs/jobs.module#JobsModule',
-			}
+      },
+      {
+        path: 'details',
+        loadChildren: './pages/employer/employer.module#EmployerModule',
+      },
 		]
 	},
 	{
