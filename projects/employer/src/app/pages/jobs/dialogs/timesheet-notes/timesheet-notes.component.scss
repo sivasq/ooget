@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    min-width: 450px;
+}
+
+.container>* {
+    width: 100%;
+}
+
+::ng-deep .mat-bottom-sheet-container {
+    padding: 24px !important;
+}

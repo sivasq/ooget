@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, UpperCasePipe } from '@angular/common';
 import { MaterialModule } from '../material.module';
 import { RouterModule } from '@angular/router';
 
@@ -35,6 +35,14 @@ import { NgPipesModule } from 'ngx-pipes';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpModule } from '@ngx-progressbar/http';
 import { NgProgressRouterModule } from '@ngx-progressbar/router';
+import { NgxMaskModule } from 'ngx-mask';
+
+// Calendar
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { DataService } from '../services/data.service';
+import { JsonToCsvService } from '../services/json-to-csv.service';
+import { JsonToTextService } from '../services/json-to-text.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -57,9 +65,18 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     OwlNativeDateTimeModule,
     NgBusyModule,
     NgPipesModule,
-    NgProgressModule.forRoot(),
-    NgProgressHttpModule,
-    NgProgressRouterModule
+    NgProgressModule.forRoot({
+      thick: true,
+      spinner: false,
+      color: '#1abc9c'
+    }),
+    NgProgressHttpModule.forRoot(),
+    NgProgressRouterModule.forRoot(),
+    NgxMaskModule.forRoot(),
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
   ],
   declarations: [
     OogetsidenavComponent,
@@ -98,14 +115,15 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgProgressHttpModule,
     NgProgressRouterModule,
     NgPipesModule,
+    NgxMaskModule,
     EqualValidator, CompareDirective,
     UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, AgePipe
   ],
   providers: [
     ConfigService,
     ApiCallService,
-    DatePipe,
-    AgePipe,
+    DataService, JsonToCsvService, JsonToTextService,
+    DatePipe, UpperCasePipe, AgePipe,
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
     AuthGuardService

@@ -1,0 +1,398 @@
+<div class="inner-sidenav-content transition-2" perfectScrollbar>
+  <!-- Http Progress Bar -->
+  <ng-progress></ng-progress>
+
+  <!-- Breadcrumb Start -->
+  <div fxLayout="row wrap">
+    <div class="flex-p" fxFlex="1 1 100%">
+      <mat-card class="mat-breadcrumb" fxLayout="row">
+        <a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+          <mat-icon>home</mat-icon>
+          <span class="breadcrumb-title">Home</span>
+        </a>
+
+        <a class="breadcrumb-item" routerLink="/employer/{{contractJobDetails?.companyid?._id}}/jobs/list"
+          fxLayout="row" fxLayoutAlign="center center">
+          <span class="breadcrumb-title">Jobs</span>
+        </a>
+
+        <a class="breadcrumb-item" routerLink="/employer/{{contractJobDetails?.companyid?._id}}/jobs/{{contractJobDetails?._id}}/view"
+          fxLayout="row" fxLayoutAlign="center center">
+          <span class="breadcrumb-title">{{contractJobDetails?.jobtitle | trim }}</span>
+        </a>
+
+        <div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+          <span class="breadcrumb-title active">{{contractorDetails?.username | trim }} (Contractor)</span>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <!-- Breadcrumb End -->
+
+  <div [ngBusy]="{busy:busy}"></div>
+
+  <div fxLayout="row wrap">
+
+    <!-- Contract Details -->
+    <div class="flex-p" fxFlex="100">
+      <mat-card class="p-10" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="user-details transition-2" style="padding: 0" fxFlex fxLayout="column">
+          <p fxLayout="row" fxLayoutAlign="start center">
+            <!-- <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon> -->
+            <span class="key">Contractor Name : </span>
+            <span class="value">{{contractorDetails?.username}}</span>
+          </p>
+          <p fxLayout="row" fxLayoutAlign="start center">
+            <!-- <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon> -->
+            <span class="key">Contractor EMail : </span>
+            <span class="value">{{contractorDetails?.email}}</span>
+          </p>
+          <p fxLayout="row" fxLayoutAlign="start center">
+            <!-- <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon> -->
+            <span class="key">Contractor Mobile : </span>
+            <span class="value">{{contractorDetails?.mobileno}}</span>
+          </p>
+
+          <p fxLayout="row" fxLayoutAlign="start center">
+            <!-- <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon> -->
+            <span class="key">Job Period : </span>
+            <span class="value">{{contractJobDetails?.jobperiodfrom | date:'dd/MM/yyyy'}} -
+              {{contractJobDetails?.jobperiodto |
+              date:'dd/MM/yyyy'}}
+            </span>
+          </p>
+
+          <p fxLayout="row" fxLayoutAlign="start center">
+            <!-- <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon> -->
+            <span class="key">Working Time : </span>
+            <span class="value">{{contractJobDetails?.starttime}} - {{contractJobDetails?.endtime}}</span>
+          </p>
+
+          <p fxLayout="row" fxLayoutAlign="start center">
+            <!-- <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon> -->
+            <span class="key">Grace Period : </span>
+            <span class="value">{{contractJobDetails?.graceperiod}} Mins</span>
+          </p>
+
+          <p fxLayout="row" fxLayoutAlign="start center">
+            <!-- <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon> -->
+            <span class="key">Jobseeker Salary : </span>
+            <span class="value">S$ {{contractJobDetails?.salary}}</span>
+          </p>
+        </div>
+
+        <div class="user-details transition-2" style="padding: 0" fxFlexAlign="start">
+          <h4 style="padding: 5px;">
+            Break Details
+          </h4>
+
+          <p fxLayout="row" fxLayoutAlign="start center" *ngFor="let break of contractJobDetails?.breaktime">
+            <span class="key">{{break.breakname}} : </span>
+            <span class="value">{{break.breakstart}} to {{break.breakend}}</span>
+          </p>
+
+          <p fxLayout="row" fxLayoutAlign="start center" style="border: 1px solid #ccc;">
+            <span class="key">Contract Status : </span>
+            <span class="value">{{contractDetails?.contractstatus | titlecase}}</span>
+          </p>
+        </div>
+      </mat-card>
+    </div>
+
+    <!-- Timesheet Details -->
+    <div *ngIf="timesheets.length > 0" class="flex-p" fxFlex="100">
+      <div fxLayout="row wrap">
+        <!-- Timesheet Data's Table(Payroll not generated list) Actions -->
+        <div fxFlex="100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="m-b-10">
+          <button mat-raised-button color="primary" (click)="verifyTimeSheets()" [disabled]="selection.selected.length == 0">Verify</button>
+
+          <div *ngIf="contractorDetails?.accountno">
+            <button mat-raised-button color="primary" (click)="generatePayroll()" [disabled]="verifiedTimeSheets?.length == 0">Generate
+              Payroll
+            </button>
+          </div>
+
+          <div *ngIf="!contractorDetails?.accountno">
+            <span style="color:orangered; font-size: small;">Contractor didn't update Account Details for Payment</span>
+          </div>
+        </div>
+
+        <!-- TimeSheet Data's Table(Payroll not generated list) -->
+        <div style="overflow: overlay; overflow-y: hidden;">
+          <table mat-table fxFlex="100" [dataSource]="dailyTimeSheetDataSource" class="mat-elevation-z8">
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="select">
+              <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox color="primary" (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+                  [indeterminate]="selection.hasValue() && !isAllSelected()">
+                </mat-checkbox>
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <mat-checkbox color="primary" (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                  [checked]="selection.isSelected(row)" [disabled]="row.verified">
+                </mat-checkbox>
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <!-- Date -->
+            <ng-container matColumnDef="work_date">
+              <th mat-header-cell *matHeaderCellDef> Date </th>
+              <td mat-cell *matCellDef="let row"> {{row.date | date:'dd/MM/yyyy'}} </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <!-- Actual In Time -->
+            <ng-container matColumnDef="in_time">
+              <th mat-header-cell *matHeaderCellDef> Actual ClockIn </th>
+              <td mat-cell *matCellDef="let row"> {{row.punchintime | date:'HH:mm'}} </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <!-- Actual Out Time -->
+            <ng-container matColumnDef="out_time">
+              <th mat-header-cell *matHeaderCellDef> Actual ClockOut </th>
+              <td mat-cell *matCellDef="let row"> {{row.punchouttime | date:'HH:mm'}} </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <!-- DisAgree Action -->
+            <!-- <ng-container matColumnDef="disagree">
+							<th mat-header-cell *matHeaderCellDef> Agree </th>
+							<td mat-cell *matCellDef="let row">
+								<mat-checkbox [(ngModel)]="checked" class="green" (change)="disagreePuchTime(row,$event)" [disabled]="row.verified"></mat-checkbox>
+							</td>
+							<td mat-footer-cell *matFooterCellDef></td>
+						</ng-container> -->
+
+            <!-- Verified PunchIn Time -->
+            <ng-container matColumnDef="verifiedpunchintime">
+              <th mat-header-cell *matHeaderCellDef> Verified ClockIn </th>
+              <td mat-cell *matCellDef="let row" [ngStyle]="((row._id !== editRowId || (row._id == editRowId && editField!='field1')) && row.verifiedpunchinedited) ?{'background-color': 'aquamarine'} : null">
+                <mat-form-field *ngIf="row._id == editRowId && editField=='field1'" style="width:45px;" floatLabel="never">
+                  <input matInput #fieldName1 type="text" [(ngModel)]="editableRow.verifiedpunchintime" (ngModelChange)="changeVerifiedTime($event)"
+                    name="verifiedpunchintime" (keyup.esc)="rowEditableOff()" (blur)="rowEditableOff()" (keyup.enter)="rowEditableSubmit(editableRow,'field1')"
+                    autocomplete="off" style="text-align: center;" [pattern]="verifiedTimePattern"
+                    [dropSpecialCharacters]="false" mask="00:00" required>
+                </mat-form-field>
+
+                <span *ngIf="row._id !== editRowId || (row._id == editRowId && editField!='field1')" (click)="!row.verified && field1Editable(row, row._id)"
+                  style="cursor: pointer;">{{row.verifiedpunchintime | date:'HH:mm'}}</span>
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <!-- Verified PunchOut Time -->
+            <ng-container matColumnDef="verifiedpunchouttime">
+              <th mat-header-cell *matHeaderCellDef> Verified ClockOut </th>
+              <td mat-cell *matCellDef="let row" [ngStyle]="((row._id !== editRowId || (row._id == editRowId && editField!='field2')) && row.verifiedpunchoutedited) ?{'background-color':
+							'aquamarine'} : null">
+                <mat-form-field *ngIf="row._id == editRowId && editField=='field2'" style="width:45px;">
+                  <input matInput #fieldName2 type="text" [(ngModel)]="editableRow.verifiedpunchouttime"
+                    (ngModelChange)="changeVerifiedTime($event)" name="verifiedpunchouttime" (keyup.esc)="rowEditableOff()"
+                    (blur)="rowEditableOff()" (keyup.enter)="rowEditableSubmit(editableRow,'field2')" autocomplete="off"
+                    style="text-align: center;" [pattern]="verifiedTimePattern" [dropSpecialCharacters]="false" mask="00:00"
+                    required>
+                </mat-form-field>
+                <span *ngIf="row._id !== editRowId || (row._id == editRowId && editField!='field2')" (click)="!row.verified && field2Editable(row, row._id)">{{row.verifiedpunchouttime
+                  | date:'HH:mm'}}</span>
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <!-- Normal Work hr -->
+            <ng-container matColumnDef="normalworkhour">
+              <th mat-header-cell *matHeaderCellDef> Normal Work Hr (Hr:Min) </th>
+              <td mat-cell *matCellDef="let row"> {{row.normalworkhour}} </td>
+              <td mat-footer-cell *matFooterCellDef>{{getSumOfNormalWorkHrs()}}</td>
+            </ng-container>
+
+            <!-- OT Work hr -->
+            <ng-container matColumnDef="otworkhour">
+              <th mat-header-cell *matHeaderCellDef> OT Hr (Hr:Min) </th>
+              <td mat-cell *matCellDef="let row"> {{row.otworkhour}} </td>
+              <td mat-footer-cell *matFooterCellDef>{{getSumOfOTWorkHrs()}}</td>
+            </ng-container>
+
+            <!-- Total Work hr -->
+            <ng-container matColumnDef="totalworkhour">
+              <th mat-header-cell *matHeaderCellDef> Total Work Hr (Hr:Min) </th>
+              <td mat-cell *matCellDef="let row"> {{row.totalworkhour}} </td>
+              <td mat-footer-cell *matFooterCellDef>{{getSumOfTotalWorkHrs()}}</td>
+            </ng-container>
+
+            <!-- Normal Work hr Salary -->
+            <ng-container matColumnDef="normalsalary">
+              <th mat-header-cell *matHeaderCellDef> Normal Work Hr Salary (S$) </th>
+              <td mat-cell *matCellDef="let row"> {{row.normalsalary}} </td>
+              <td mat-footer-cell *matFooterCellDef>{{getSumOfNormalWorkHrSalary() | number}}</td>
+            </ng-container>
+
+            <!-- OT Work hr Salary -->
+            <ng-container matColumnDef="otsalary">
+              <th mat-header-cell *matHeaderCellDef> OT Hr Salary (S$)</th>
+              <td mat-cell *matCellDef="let row"> {{row.otsalary}} </td>
+              <td mat-footer-cell *matFooterCellDef>{{getSumOfOTWorkHrSalary() | number}}</td>
+            </ng-container>
+
+            <!-- Total Salary -->
+            <ng-container matColumnDef="totalsalary">
+              <th mat-header-cell *matHeaderCellDef> Total Salary (S$) </th>
+              <td mat-cell *matCellDef="let row"> {{row.totalsalary}} </td>
+              <td mat-footer-cell *matFooterCellDef>{{getSumOfTotalWorkHrSalary() | number}}</td>
+            </ng-container>
+
+            <!-- Ooget Commision -->
+            <ng-container matColumnDef="oogetscommission">
+              <th mat-header-cell *matHeaderCellDef> Ooget Commision (S$) </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.oogetscommission}}
+              </td>
+              <td mat-footer-cell *matFooterCellDef>{{getSumOfTotalOogetCommision() | number}}</td>
+            </ng-container>
+
+            <!-- Late Reason Dialog Trigger -->
+            <ng-container matColumnDef="lateinitimation">
+              <th mat-header-cell *matHeaderCellDef> Late Info </th>
+              <td mat-cell *matCellDef="let row">
+                <button mat-icon-button *ngIf="row.lateintimation" (click)="LateReason(row)">
+                  <mat-icon style="color:orange;">info</mat-icon>
+                </button>
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <!-- Note Action Dialog Trigger -->
+            <ng-container matColumnDef="notedialogtrigger">
+              <th mat-header-cell *matHeaderCellDef> Note </th>
+              <td mat-cell *matCellDef="let row">
+                <button mat-icon-button (click)="NoteAction(row)">
+                  <mat-icon style="color:blue;">note</mat-icon>
+                </button>
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PayRolls List -->
+    <div *ngIf="payrollsList.length > 0" class="flex-p" fxFlex="100">
+      <mat-card style="padding: 24px 12px;">
+        <mat-card-header fxLayoutAlign="center">
+          <div class="mat-card-header-text">
+            <mat-card-subtitle>
+              <h2>PayRolls</h2>
+            </mat-card-subtitle>
+          </div>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div fxLayout="row wrap">
+            <mat-accordion fxFlex="100">
+              <mat-expansion-panel *ngFor="let payroll of payrollsList">
+                <mat-expansion-panel-header>
+                  <mat-panel-title fxLayout="row wrap">
+                    Payroll for&nbsp;&nbsp;
+                    <span style="font-weight: bold">{{payroll.fromdate | date:'dd/MM/yyyy'}}</span> &nbsp;to&nbsp;
+                    <span style="font-weight: bold">{{payroll.todate | date:'dd/MM/yyyy'}}</span>
+                  </mat-panel-title>
+                  <mat-panel-description fxFlex="50">
+                    Amount : S$ {{payroll.payrollbody[0].amount}}
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div fxFlex fxLayout="row" fxLayoutAlign="space-between start">
+                  <div>
+                    <mat-list role="list">
+                      <mat-list-item>Benificary Acc No : {{payroll.payrollbody[0].receivingaccountnumber}}</mat-list-item>
+                      <mat-list-item>Benificary Name : {{payroll.payrollbody[0].receivingaccountname}}</mat-list-item>
+                    </mat-list>
+                  </div>
+                  <div fxFlexAlign="end">
+                    <button mat-stroked-button color="primary" (click)="processPayrollGenerate(payroll)">
+                      <mat-icon>cloud_download</mat-icon> Download as CSV Data
+                    </button>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Off Days -->
+    <div *ngIf="contractJobDetails?.workdaystype != 'normal'" class="flex-p" fxFlex="50">
+      <mat-card style="padding: 24px 12px;">
+        <mat-card-header fxLayoutAlign="center">
+          <div class="mat-card-header-text">
+            <mat-card-subtitle>
+              <h2>Roster (Off Days)</h2>
+            </mat-card-subtitle>
+          </div>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div fxLayoutAlign="space-between" style="padding:0 16px;">
+            <mat-form-field fxFlex="100">
+              <input matInput name="dayOffFilter" [(ngModel)]="dayOffFilter" placeholder="Search By Dates">
+            </mat-form-field>
+
+            <mat-form-field style="display: none">
+              <input matInput [min]="today" [matDatepicker]="dayoffpicker" placeholder="Choose a date" (dateChange)="addNewOffDay($event.value)">
+              <mat-datepicker #dayoffpicker touchUi></mat-datepicker>
+            </mat-form-field>
+
+            <button color="primary" mat-mini-fab (click)="dayoffpicker.open()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+          <div class="todo-list">
+            <mat-list>
+              <mat-list-item *ngFor="let day of OffDays | filter:dayOffFilter | paginate: dayOffPaginateConfig; let i=index;">
+                <div class="mat-list-text" style="padding-left:0;">
+                  {{day.date | date:'dd/MM/yyyy EEEE'}}
+                </div>
+                <button mat-icon-button color="warn" [disabled]="checkPastDay(day.date)" (click)="removeDate(day._id, i)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+              </mat-list-item>
+            </mat-list>
+
+            <div fxLayout="row wrap">
+              <div class="flex-p" fxFlex="100">
+                <div class="p-0 mat-paginator">
+                  <div class="mat-paginator-container">
+                    <div class="mat-paginator-page-size">
+                      <div class="mat-paginator-page-size-label">
+                        Items per page:
+                      </div>
+                      <mat-form-field class="mat-paginator-page-size-select mat-form-field-hide-placeholder">
+                        <mat-select placeholder="" [(ngModel)]="dayOffPaginateConfig.itemsPerPage" name="itemsPerPage">
+                          <mat-option *ngFor="let pageSizeOption of pageSizeOptions" [value]="pageSizeOption">
+                            {{pageSizeOption}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="mat-paginator-range-actions">
+                      <pagination-controls class="ooget-pagination" [id]="dayOffPaginateConfig.id" [maxSize]="dayOffPaginateControlMaxSize"
+                        [autoHide]="dayOffPaginateControlAutoHide" (pageChange)="dayOffPaginateConfig.currentPage = $event"></pagination-controls>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

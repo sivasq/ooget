@@ -32,8 +32,10 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
+  MatBottomSheetModule,
 } from '@angular/material';
 
+// import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
@@ -46,6 +48,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatChipsModule,
     MatDatepickerModule,
     MatDialogModule,
+    MatBottomSheetModule,
     MatDividerModule,
     MatExpansionModule,
     MatGridListModule,
@@ -54,6 +57,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatListModule,
     MatMenuModule,
     MatNativeDateModule,
+    // MatMomentDateModule,
     MatPaginatorModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
@@ -81,6 +85,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatChipsModule,
     MatDatepickerModule,
     MatDialogModule,
+    MatBottomSheetModule,
     MatDividerModule,
     MatExpansionModule,
     MatGridListModule,
@@ -89,6 +94,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatListModule,
     MatMenuModule,
     MatNativeDateModule,
+    // MatMomentDateModule,
     MatPaginatorModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,

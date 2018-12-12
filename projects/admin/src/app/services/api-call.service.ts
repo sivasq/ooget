@@ -337,7 +337,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/job/viewparticularjobseeker', jobseekerId, { headers: headers })
+		return this.http.post(this.baseUrl + '/job/fetchparticularjobseeker', jobseekerId, { headers: headers })
 	}
 
 	toggleIdProofEditable(data): Observable<any> {
@@ -371,7 +371,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/job/viewpendingjobs', employerIds, { headers: headers })
+		return this.http.post(this.baseUrl + '/job/fetchpendingjobs', employerIds, { headers: headers })
 	}
 
 	jobAddToEmployer(employerJobData): Observable<any> {

@@ -1,0 +1,41 @@
+<div class="container">
+  <div mat-dialog-title>
+    Adjust Time
+    <p style="font-size: 12px; line-height: 1.25;">Note* : Please use 24 hr Time Format</p>
+  </div>
+  <form class="mat-dialog-content" (ngSubmit)="submit()" #adjustTimeForm="ngForm">
+    <div style="margin-bottom: 15px;">
+      <p>Date - {{data.date | date:'dd/MM/yyyy'}}</p>
+      <p>Actual InTime - {{data.punchintime | date:'dd/MM/yyyy HH : mm'}}</p>
+      <p>Actual OutTime - {{data.punchouttime | date:'dd/MM/yyyy HH : mm'}}</p>
+    </div>
+
+    <div class="form">
+      <mat-form-field>
+        <input matInput [owlDateTime]="fromtime" [owlDateTimeTrigger]="fromtime" placeholder="In Time" name="fromtime"
+          autocomplete="off" [(ngModel)]="data.verifiedpunchintime" readonly required>
+        <a mat-icon-button matSuffix>
+          <mat-icon class="trigger" [owlDateTimeTrigger]="fromtime">access_time</mat-icon>
+        </a>
+        <owl-date-time [pickerType]="'both'" [pickerMode]="'dialog'" #fromtime></owl-date-time>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field>
+        <input matInput [min]="minVerifiedTime(data.verifiedpunchintime)" [owlDateTime]="endtime" [owlDateTimeTrigger]="endtime"
+          placeholder="Out Time" name="endtime" autocomplete="off" [(ngModel)]="data.verifiedpunchouttime" readonly
+          required>
+        <a mat-icon-button matSuffix>
+          <mat-icon class="trigger" [owlDateTimeTrigger]="endtime">access_time</mat-icon>
+        </a>
+        <owl-date-time [pickerType]="'both'" [pickerMode]="'dialog'" #endtime></owl-date-time>
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions>
+      <button mat-button [type]="submit" [disabled]="!adjustTimeForm.valid" (click)="stopEdit()">Save</button>
+      <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+    </div>
+  </form>
+</div>
