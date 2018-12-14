@@ -30,6 +30,10 @@ export class OogetsidenavComponent implements OnInit {
 		this.userprofile = !this.userprofile;
 	}
 
+	showprofile() {
+		this.userprofile = true;
+	}
+
 	onLogout() {
 		localStorage.clear();
 		this.router.navigate(['logout']);
