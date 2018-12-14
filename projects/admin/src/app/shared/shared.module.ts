@@ -81,13 +81,13 @@ export const MY_NATIVE_FORMATS = {
 			spinner: false,
 			color: '#1abc9c'
 		}),
-    NgProgressHttpModule.forRoot(),
-    NgProgressRouterModule.forRoot(),
-    NgxMaskModule.forRoot(),
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory
-    }),
+		NgProgressHttpModule.forRoot(),
+		NgProgressRouterModule.forRoot(),
+		NgxMaskModule.forRoot(),
+		CalendarModule.forRoot({
+			provide: DateAdapter,
+			useFactory: adapterFactory
+		}),
 	],
 	declarations: [
 		OogetsidenavComponent,
@@ -121,8 +121,8 @@ export const MY_NATIVE_FORMATS = {
 		OwlDateTimeModule,
 		OwlNativeDateTimeModule,
 		NgBusyModule,
-    NgProgressModule,
-    CalendarModule,
+		NgProgressModule,
+		CalendarModule,
 		NgProgressHttpModule,
 		NgProgressRouterModule,
 		MultipleDatePickerModule,

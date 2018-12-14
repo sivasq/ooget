@@ -35,7 +35,7 @@ const routes: Routes = [
 		canActivate: [AuthGuardService]
   },
   {
-    path: ':job_id/contract_details',
+    path: ':contract_id/contract_details',
     component: ContractDetailsComponent,
     canActivate: [AuthGuardService]
   },

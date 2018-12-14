@@ -116,7 +116,7 @@
 					</h4>
 
 					<p fxLayout="row" fxLayoutAlign="start center" *ngFor="let break of contractJobDetails?.breaktime">
-						<span class="key">{{break.breakname}} : </span>
+						<span class="key text-capitalize">{{break.breakname}} : </span>
 						<span class="value">{{break.breakstart}} to {{break.breakend}}</span>
 					</p>
 
@@ -206,7 +206,7 @@
 								</mat-form-field>
 
 								<span *ngIf="row._id !== editRowId || (row._id == editRowId && editField!='field1')" (click)="!row.verified && field1Editable(row, row._id)"
-								 style="cursor: pointer;">{{row.verifiedpunchintime | date:'HH:mm'}}</span>
+								 style="cursor: pointer; text-decoration-line: underline; text-decoration-style: dashed; text-underline-position: under;">{{row.verifiedpunchintime | date:'HH:mm'}}</span>
 							</td>
 							<td mat-footer-cell *matFooterCellDef></td>
 						</ng-container>
@@ -222,7 +222,7 @@
 									 autocomplete="off" style="text-align: center;" [pattern]="verifiedTimePattern" [dropSpecialCharacters]="false" mask="00:00"
 									 required>
 								</mat-form-field>
-								<span *ngIf="row._id !== editRowId || (row._id == editRowId && editField!='field2')" (click)="!row.verified && field2Editable(row, row._id)">{{row.verifiedpunchouttime
+								<span *ngIf="row._id !== editRowId || (row._id == editRowId && editField!='field2')" (click)="!row.verified && field2Editable(row, row._id)" style="cursor: pointer; text-decoration-line: underline; text-decoration-style: dashed; text-underline-position: under;">{{row.verifiedpunchouttime
 									| date:'HH:mm'}}</span>
 							</td>
 							<td mat-footer-cell *matFooterCellDef></td>

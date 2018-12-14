@@ -12049,3 +12049,11 @@ input.mat-input-element {
 [dir=rtl] .mat-paginator-icon {
     transform: rotate(180deg)
 }
+
+.text-capitalize {
+    text-transform: capitalize
+}
+
+.text-uppercase {
+    text-transform: uppercase
+}

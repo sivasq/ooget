@@ -299,15 +299,4 @@ export class ApiCallService {
     return this.http.post(this.baseUrl + '/contract/updatenotes', notesData, { headers: headers })
       .map(res => res)
   }
-
-  getAllPayrollsInContract(contractId): Observable<any> {
-    let userToken = localStorage.getItem('ogToken');
-    let headers = new HttpHeaders(
-      {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'token': userToken
-      })
-    return this.http.post(this.baseUrl + '/contract/fetchpayrollforparticularcontract', contractId, { headers: headers })
-  }
 }

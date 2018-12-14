@@ -227,7 +227,7 @@
             </mat-card>
         </div>
 
-        <div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
+        <!-- <div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
             <mat-card class="p-0">
                 <div class="bg-lightgray" fxLayout="row" fxLayoutAlign="start center" style="height: 40px;">
                     <h3 class="user-name">Candidates Applied</h3>
@@ -247,9 +247,9 @@
                     </div>
                 </div>
             </mat-card>
-        </div>
+        </div> -->
 
-        <div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
+        <!-- <div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
             <mat-card class="p-0">
                 <div class="bg-lightgray" fxLayout="row" fxLayoutAlign="start center" style="height: 40px;">
                     <h3 class="user-name">Candidates Offered</h3>
@@ -269,9 +269,9 @@
                     </div>
                 </div>
             </mat-card>
-        </div>
+        </div> -->
 
-        <div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
+        <!-- <div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
             <mat-card class="p-0">
                 <div class="bg-lightgray" fxLayout="row" fxLayoutAlign="start center" style="height: 40px;">
                     <h3 class="user-name">Offers Accepted</h3>
@@ -291,9 +291,9 @@
                     </div>
                 </div>
             </mat-card>
-        </div>
+        </div> -->
 
-        <div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
+        <!-- <div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
             <mat-card class="p-0">
                 <div class="bg-lightgray" fxLayout="row" fxLayoutAlign="start center" style="height: 40px;">
                     <h3 class="user-name">Job Contractors</h3>
@@ -317,6 +317,33 @@
                     </div>
                 </div>
             </mat-card>
-        </div>
-    </div>
+        </div> -->
+
+		<div class="flex-p" fxFlex="100">
+			<mat-card>
+				<mat-card-header>
+					<mat-card-title>Job Contractors</mat-card-title>
+				</mat-card-header>
+
+				<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="jobContractors?.length > 0">
+					<div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
+						<p *ngFor="let contractor of jobContractors; let i=index;">
+							<span>{{i+1}}.&nbsp;
+								<a style="color:blue; font-weight: bold;" routerLink="/employer/jobs/{{contractor._id}}/contract_details">
+									{{contractor.jobseekerid.username}}
+								</a>
+							</span>
+						</p>
+					</div>
+				</div>
+
+				<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="jobContractors?.length == 0">
+					<div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
+						No Contractors
+					</div>
+				</div>
+			</mat-card>
+		</div>
+
+	</div>
 </div>

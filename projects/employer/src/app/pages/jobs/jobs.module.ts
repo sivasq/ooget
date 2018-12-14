@@ -15,11 +15,26 @@ import { LatereasonComponent } from './dialogs/latereason/latereason.component';
 import { TimesheetNotesComponent } from './dialogs/timesheet-notes/timesheet-notes.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    JobsRoutingModule,
-    SharedModule
-  ],
-  declarations: [AddJobComponent, JobsListComponent, JobDetailsComponent, EditJobComponent, MakeDuplicateJobComponent, ContractDetailsComponent, EditClockInOutComponent, LatereasonComponent, TimesheetNotesComponent]
+	imports: [
+		CommonModule,
+		JobsRoutingModule,
+		SharedModule
+	],
+	declarations: [
+		AddJobComponent,
+		JobsListComponent,
+		JobDetailsComponent,
+		EditJobComponent,
+		MakeDuplicateJobComponent,
+		ContractDetailsComponent,
+		EditClockInOutComponent,
+		LatereasonComponent,
+		TimesheetNotesComponent
+	],
+	entryComponents: [
+		EditClockInOutComponent,
+		TimesheetNotesComponent,
+		LatereasonComponent
+	]
 })
 export class JobsModule { }
