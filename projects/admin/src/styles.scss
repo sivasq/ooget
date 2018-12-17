@@ -12082,10 +12082,68 @@ input.mat-input-element {
     align-self: center;
 }
 
-.text-capitalize{
-	text-transform: capitalize
+.text-capitalize {
+    text-transform: capitalize
 }
 
-.text-uppercase{
-	text-transform: uppercase
+.text-uppercase {
+    text-transform: uppercase
 }
+
+/* Form Field Outline Styles Start */
+
+//input outline color
+.mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #000000 !important;
+    opacity: 0.12;
+}
+
+//mat-input focused color
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: $primary !important;
+}
+
+//mat-input Hovered color
+.mat-form-field-appearance-outline:not(.mat-form-field-disabled) .mat-form-field-flex:hover .mat-form-field-outline {
+    color: $primary !important;
+}
+
+// mat-input hover not focused
+.mat-form-field-appearance-outline:not(.mat-focused) .mat-form-field-flex:hover .mat-form-field-outline {
+    opacity: 0.75 !important;
+}
+
+// mat-input error outline color
+.mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+    color: #f44336 !important;
+    opacity: 0.8 !important;
+}
+
+/*
+// mat-input carent color
+.mat-input-element {
+    caret-color: $primary !important;
+}
+
+// mat-input error carent color
+.mat-form-field-invalid .mat-input-element,
+.mat-warn .mat-input-element {
+    caret-color: #f44336 !important;
+}
+
+// mat-label normal state style
+.mat-form-field-label {
+    color: $primary !important; // color: $mainColor!important;
+}
+
+// mat-label focused style
+.mat-form-field.mat-focused .mat-form-field-label {
+    color: $primary !important;
+}
+
+// mat-label error style
+.mat-form-field.mat-form-field-invalid .mat-form-field-label {
+    color: #f44336 !important;
+} */
+
+/* Form Field Outline Styles End */

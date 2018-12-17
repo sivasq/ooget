@@ -4,7 +4,8 @@ import { MatSnackBar } from '@angular/material';
 import { ApiCallService } from '../../../services/api-call.service';
 import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, config } from 'rxjs';
+import { ConfigService, Subscriber } from '../../../services/config.service';
 
 @Component({
 	selector: 'app-edit-employer',
@@ -12,6 +13,8 @@ import { Subscription } from 'rxjs';
 	styleUrls: ['./edit-employer.component.scss']
 })
 export class EditEmployerComponent implements OnInit {
+
+	public appearance;
 
 	public hide = true;
 	public rehide = true;
@@ -30,13 +33,27 @@ export class EditEmployerComponent implements OnInit {
 	@ViewChild(FormGroupDirective) resetEmployerUpdateForm;
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private route: ActivatedRoute, public router: Router) {
+	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private route: ActivatedRoute, public router: Router, private config: ConfigService, protected subscriber: Subscriber<Partial<any>>) {
+
+		config.appearance.subscribe(data => {
+			this.appearance = data;
+		});
+
+		subscriber.getAuthUserSubscribe(
+			options => {
+				this.appearance = options.appearance;
+			})
+
 		this.buildEmployerUpdateForm();
 		this.companyid = this.route.snapshot.params['emp_id'];
 		let employerId = {
 			companyid: this.route.snapshot.params['emp_id'],
 		}
 		this.getEmployerDetails(employerId);
+	}
+
+	setAuthUserNext() {
+		this.subscriber.setAuthUserNext({ appearance: 'standard' });
 	}
 
 	public Industries: any = [
