@@ -4,6 +4,8 @@ import { DataService } from '../../../../services/data.service';
 import { FormControl, Validators } from '@angular/forms';
 import { Issue } from '../../models/issue';
 import { DatePipe } from '@angular/common';
+import { AsyncSubscriber } from '../../../../services/async.service';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-add',
@@ -11,13 +13,16 @@ import { DatePipe } from '@angular/common';
 	styleUrls: ['./add.component.scss']
 })
 export class AddComponent {
-	
+
+	appearance$: Observable<any>;
 	// public today = new Date();
 	public tomorrow = new Date().addDays(1);
 
 	constructor(public dialogRef: MatDialogRef<AddComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: Issue,
-		public dataService: DataService, private datePipe: DatePipe) { }
+		public dataService: DataService, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber) {
+		this.appearance$ = asyncSubscriber.getAppearance.pipe();
+		}
 
 	formControl = new FormControl('', [
 		Validators.required

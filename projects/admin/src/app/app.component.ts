@@ -19,8 +19,10 @@ export class AppComponent implements AfterViewInit, OnInit {
   // }
 
   ngOnInit() {
-    this.permissionsService.loadPermissions(['ADMIN']);
-    this.rolesService.addRole('GUEST', ['ADMIN']);
+	//   this.permissionsService.loadPermissions(['per1', 'per2', 'per3', 'per4']);
+	//   this.rolesService.addRole('role1', ['per1']);
+	//   this.permissionsService.flushPermissions();
+	//   this.rolesService.flushRoles();
   }
 
   ngAfterViewInit() {

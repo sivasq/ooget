@@ -1,11 +1,13 @@
 <div class="container">
 	<h3 mat-dialog-title>Add New Holiday</h3>
 
-	<form class="mat-dialog-content" (ngSubmit)="submit()" #formControl="ngForm">
+	<form fxFlex="100" class="mat-dialog-content" (ngSubmit)="submit()" #formControl="ngForm">
 
 		<div class="form">
-			<mat-form-field>
-				<input matInput [min]="tomorrow" [matDatepicker]="picker" placeholder="Choose a Holiday Date" [(ngModel)]="data.holidaydate" name="holidaydate" (click)="picker.open()" required readonly>
+			<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
+				<mat-label>Holiday Date</mat-label>
+				<input matInput [min]="tomorrow" [matDatepicker]="picker" placeholder="Choose a Holiday Date" [(ngModel)]="data.holidaydate"
+				 name="holidaydate" (click)="picker.open()" required readonly>
 				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 				<mat-datepicker #picker touchUi="true"></mat-datepicker>
 				<mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
@@ -13,8 +15,10 @@
 		</div>
 
 		<div class="form">
-			<mat-form-field>
-				<input matInput #input class="form-control" placeholder="Holiday Name" [(ngModel)]="data.holidayname" name="holidayname" required autocomplete="off">
+			<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
+				<mat-label>Holiday Name</mat-label>
+				<input matInput #input class="form-control" placeholder="Holiday Name" [(ngModel)]="data.holidayname" name="holidayname"
+				 required autocomplete="off">
 				<mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
 			</mat-form-field>
 		</div>

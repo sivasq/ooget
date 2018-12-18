@@ -5,6 +5,7 @@ import { ConfigService } from '../../../services/config.service';
 import { MatSnackBar, MatTabChangeEvent } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AsyncSubscriber } from '../../../services/async.service';
 
 @Component({
 	selector: 'app-profile',
@@ -17,7 +18,7 @@ export class ProfileComponent implements OnInit {
 	public hide = true;
 	public rehide = true;
 	public passwordPatternError;
-	
+
 	@Input() selectedIndex: number | null;
 	currentlyActiveIndexTab: number | null = 0;
 
@@ -47,7 +48,7 @@ export class ProfileComponent implements OnInit {
 
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	constructor(private fb: FormBuilder, private _httpService: ApiCallService, private urlconfig: ConfigService, public snackBar: MatSnackBar, private route: ActivatedRoute) {
+	constructor(private fb: FormBuilder, private _httpService: ApiCallService, private urlconfig: ConfigService, public snackBar: MatSnackBar, private route: ActivatedRoute, private asyncSubscriber: AsyncSubscriber) {
 
 		this.imgBaseUrl = urlconfig.img_base_url;
 
@@ -161,9 +162,11 @@ export class ProfileComponent implements OnInit {
 			reader.onload = (event: any) => { // called once readAsDataURL is completed
 				this.profileImage = event.target.result;
 				// console.log(event.target.result);
+				this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage})
 			}
 		}
 	}
+
 
 	// Get Admin Profile Details
 	getProfileDetails() {
@@ -209,11 +212,15 @@ export class ProfileComponent implements OnInit {
 						let profileImage = this.myProfileImageInputVariable.nativeElement;
 
 						if (profileImage.files[0]) {
+							localStorage.setItem('ogUserName', this.adminProfileForm.get('username').value);
+							localStorage.setItem('ogUserEmail', this.adminProfileForm.get('email').value);
 							this.uploadProfileDocs();
 						} else {
 							localStorage.setItem('ogUserName', this.adminProfileForm.get('username').value);
 							localStorage.setItem('ogUserEmail', this.adminProfileForm.get('email').value);
-							location.reload();
+							// location.reload();
+							this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
+
 							let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
 								duration: 5000,
 							});
@@ -247,7 +254,8 @@ export class ProfileComponent implements OnInit {
 					response => {
 						if (response.success) {
 							localStorage.setItem('ogProfileimage', response.adminimage);
-							location.reload();
+							// location.reload();
+							this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
 
 							let snackBarRef = this.snackBar.open('Profile and Documents Updated Successfully.', 'Close', {
 								duration: 5000,
@@ -350,7 +358,7 @@ export class ProfileComponent implements OnInit {
 
 	// Remove Featured Employer
 	removeFeaturedEmployer(featuredEmployerId, itemindex) {
-		// console.log(featuredEmployerId);		
+		// console.log(featuredEmployerId);
 		this.busy = this._httpService.removeFeaturedEmployer({ "featuredimageid": featuredEmployerId })
 			.subscribe(
 				response => {

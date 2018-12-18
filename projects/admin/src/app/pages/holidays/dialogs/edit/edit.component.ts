@@ -3,6 +3,8 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { DataService } from '../../../../services/data.service';
+import { AsyncSubscriber } from '../../../../services/async.service';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-edit',
@@ -11,8 +13,12 @@ import { DataService } from '../../../../services/data.service';
 })
 export class EditComponent {
 
+	appearance$: Observable<any>;
+
 	constructor(public dialogRef: MatDialogRef<EditComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: any, public dataService: DataService, private datePipe: DatePipe) { }
+		@Inject(MAT_DIALOG_DATA) public data: any, public dataService: DataService, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber) {
+		this.appearance$ = asyncSubscriber.getAppearance.pipe();
+		}
 
 	formControl = new FormControl('', [
 		Validators.required

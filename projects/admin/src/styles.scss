@@ -12147,3 +12147,7 @@ input.mat-input-element {
 } */
 
 /* Form Field Outline Styles End */
+
+form.mat-dialog-content{
+	box-sizing: content-box!important;
+}

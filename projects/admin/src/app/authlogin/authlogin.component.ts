@@ -4,6 +4,7 @@ import { ApiCallService } from '../services/api-call.service';
 import { FormGroup, FormGroupDirective, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ConfigService } from '../services/config.service';
+import { NgxRolesService, NgxPermissionsService } from 'ngx-permissions';
 
 @Component({
 	selector: 'app-authlogin',
@@ -25,7 +26,7 @@ export class AuthloginComponent implements OnInit {
 	@ViewChild(FormGroupDirective) resetAdminAuthForm;
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	constructor(public router: Router, private _httpService: ApiCallService, private config: ConfigService, private fb: FormBuilder) {
+	constructor(public router: Router, private _httpService: ApiCallService, private config: ConfigService, private fb: FormBuilder, private permissionsService: NgxPermissionsService, private rolesService: NgxRolesService) {
 		this.homePageUrl = config.homePageUrl;
 		this.buildAdminAuthForm();
 	}
@@ -43,7 +44,7 @@ export class AuthloginComponent implements OnInit {
 		this.busy = this._httpService.postLoginData(this.adminAuthForm.value)
 			.subscribe(
 				async response => {
-					if (response.success) {						
+					if (response.success) {
 						// Set local storages
 						localStorage.setItem('isLoggedIn', "true");
 						localStorage.setItem('ogToken', response.token);
@@ -56,7 +57,10 @@ export class AuthloginComponent implements OnInit {
 						// If Successfull Validation redirect to dashboard
 						await this.router.navigate(['admin/employers']);
 						// Reset form
-						this.resetAdminAuthForm.resetForm();						
+						this.resetAdminAuthForm.resetForm();
+
+						this.permissionsService.loadPermissions(['per1', 'per2', 'per3', 'per4']);
+						this.rolesService.addRole('role1', ['per1']);
 
 					} else if (!response.success) {
 

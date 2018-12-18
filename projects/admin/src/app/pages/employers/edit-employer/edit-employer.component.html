@@ -31,9 +31,6 @@
 
 	<!-- Employer Add Form Start -->
 	<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
-
-		<button mat-raised-button color="primary" (click)=setAuthUserNext()>Update Employer</button>
-
 		<div class="flex-p" fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="70">
 			<mat-card class="list mat-card">
 				<div fxLayout="row" fxLayoutAlign="center center" class="title" style="margin-bottom : 15px;">
@@ -43,7 +40,7 @@
 					<form [formGroup]="employerUpdateForm" (ngSubmit)="employerUpdateSubmit()" fxLayout="row wrap" fxLayoutAlign="space-between center">
 
 						<!-- Comapny Name -->
-						<mat-form-field fxFlex="100" [appearance]="appearance">
+						<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 							<mat-label>Company Name</mat-label>
 							<input matInput placeholder="Company Name" name="companyname" autocomplete="off" formControlName="companyname" required>
 							<mat-error *ngIf="employerUpdateForm.get('companyname').hasError('required')" align="start">
@@ -52,7 +49,7 @@
 						</mat-form-field>
 
 						<!-- Company profile -->
-						<mat-form-field fxFlex="100" [appearance]="appearance">
+						<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 							<mat-label>Company Profile</mat-label>
 							<textarea matInput placeholder="Company Profile" name="profile" autocomplete="off" formControlName="profile" required></textarea>
 							<mat-error *ngIf="employerUpdateForm.get('profile').hasError('required')" align="start">
@@ -61,7 +58,7 @@
 						</mat-form-field>
 
 						<!-- UEN Number -->
-						<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance">
+						<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 							<mat-label>UEN Number</mat-label>
 							<input matInput placeholder="UEN Number" name="uennumber" autocomplete="off" formControlName="uennumber" required>
 							<mat-error *ngIf="employerUpdateForm.get('uennumber').hasError('required')" align="start">
@@ -76,7 +73,7 @@
 						</mat-form-field>
 
 						<!-- Company Code -->
-						<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance">
+						<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 							<mat-label>Employer Company Code</mat-label>
 							<input matInput placeholder="Employer Company Code" name="companycode" autocomplete="off" formControlName="companycode" required>
 							<mat-error *ngIf="employerUpdateForm.get('companycode').hasError('required')" align="start">
@@ -85,10 +82,10 @@
 						</mat-form-field>
 
 						<!-- Industry Type -->
-						<mat-form-field fxFlex="100" [appearance]="appearance">
+						<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 							<mat-label>Industry</mat-label>
-							<mat-select placeholder="Industry" name="industry" formControlName="industry" required>
-								<mat-option>--Select--</mat-option>
+							<mat-select matNativeControl placeholder="Industry" name="industry" formControlName="industry" required>
+								<mat-option>--Select Industry--</mat-option>
 								<mat-option *ngFor="let Industry of Industries" [value]="Industry.IndustryName">{{ Industry.IndustryName }}</mat-option>
 								<mat-option value="Others">Others</mat-option>
 							</mat-select>
@@ -98,56 +95,13 @@
 						</mat-form-field>
 
 						<!-- Country -->
-						<mat-form-field fxFlex="100" [appearance]="appearance">
+						<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 							<mat-label>Country</mat-label>
 							<input matInput placeholder="Country" name="country" autocomplete="off" formControlName="country" required>
 							<mat-error *ngIf="employerUpdateForm.get('country').hasError('required')" align="start">
 								Country Required
 							</mat-error>
 						</mat-form-field>
-
-						<!-- Login Mail -->
-						<!-- <mat-form-field fxFlex="100">
-							<input matInput type="email" placeholder="Login Email" name="email" autocomplete="off" formControlName="email" required>
-							<mat-error *ngIf="employerUpdateForm.get('email').hasError('required')" align="start">
-								Email Required
-							</mat-error>
-							<mat-error *ngIf="employerUpdateForm.get('email').hasError('pattern')" align="start">
-								Invalid Email Format
-							</mat-error>
-							<mat-error *ngIf="employerUpdateForm.get('email').hasError('isEmailUnique')" align="start">
-								This Email Already Registered
-							</mat-error>
-						</mat-form-field> -->
-
-						<!--- Password -->
-						<!-- <mat-form-field fxFlex="100" fxFlex.gt-sm="47">
-							<input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" name="password" autocomplete="off" formControlName="password"
-							 advs-compare="verify" parent='true' required>
-							<mat-icon class="pointer" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-							<mat-error *ngIf="employerUpdateForm.get('password').hasError('required')" align="start">
-								Password is Required
-							</mat-error>
-							<mat-error *ngIf="employerUpdateForm.get('password').hasError('minlength')" align="start">
-								Min 8 chars Required
-							</mat-error>
-							<mat-error *ngIf="employerUpdateForm.get('password').hasError('isPatternMatch')" align="start">
-								{{passwordPatternError}}
-							</mat-error>
-						</mat-form-field> -->
-
-						<!-- Verify Password -->
-						<!-- <mat-form-field fxFlex="100" fxFlex.gt-sm="47">
-							<input matInput [type]="rehide ? 'password' : 'text'" placeholder="Confirm Password" name="verify" autocomplete="off" formControlName="verify"
-							 advs-compare="password" parent='false' required>
-							<mat-icon class="pointer" matSuffix (click)="rehide = !rehide">{{rehide ? 'visibility_off' : 'visibility'}}</mat-icon>
-							<mat-error *ngIf="employerUpdateForm.get('verify').hasError('required')" align="start">
-								Verify Password is required
-							</mat-error>
-							<mat-error *ngIf="employerUpdateForm.get('verify').hasError('compare')" align="start">
-								Password Mismatch
-							</mat-error>
-						</mat-form-field> -->
 
 						<!--- Buttons Block -->
 						<div fxFlex="100" fxLayout="row" fxLayoutAlign="center stretch" style="margin-top:25px;">

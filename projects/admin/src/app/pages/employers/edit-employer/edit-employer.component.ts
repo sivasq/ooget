@@ -1,11 +1,12 @@
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 
-import { ApiCallService } from '../../../services/api-call.service';
 import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, Observable, config } from 'rxjs';
-import { ConfigService, Subscriber } from '../../../services/config.service';
+import { ApiCallService } from '../../../services/api-call.service';
+import { ConfigService } from '../../../services/config.service';
+import { AsyncSubscriber } from '../../../services/async.service';
 
 @Component({
 	selector: 'app-edit-employer',
@@ -14,7 +15,8 @@ import { ConfigService, Subscriber } from '../../../services/config.service';
 })
 export class EditEmployerComponent implements OnInit {
 
-	public appearance;
+	// public appearance;
+	appearance$: Observable<any>;
 
 	public hide = true;
 	public rehide = true;
@@ -33,16 +35,25 @@ export class EditEmployerComponent implements OnInit {
 	@ViewChild(FormGroupDirective) resetEmployerUpdateForm;
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private route: ActivatedRoute, public router: Router, private config: ConfigService, protected subscriber: Subscriber<Partial<any>>) {
+	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private route: ActivatedRoute, public router: Router, private config: ConfigService, private asyncSubscriber: AsyncSubscriber) {
 
-		config.appearance.subscribe(data => {
+		this.appearance$ = asyncSubscriber.getAppearance.pipe();
+
+		/* // asyncSubscriber.getAppearance.asObservable().subscribe((data) => {
+		asyncSubscriber.getAppearance.subscribe((value) => {
+			this.appearance = value;
+			console.log("First subscriber got data >>>>> " + value);
+		}); */
+
+		/* // Get Default value by service
+		asyncService.getAppearance.subscribe(data => {
 			this.appearance = data;
-		});
+		}); */
 
-		subscriber.getAuthUserSubscribe(
-			options => {
-				this.appearance = options.appearance;
-			})
+		/* // Get Default value by service
+		subscriber.getAppearance(options => {
+			this.appearance = options.appearance;
+		}); */
 
 		this.buildEmployerUpdateForm();
 		this.companyid = this.route.snapshot.params['emp_id'];
@@ -52,9 +63,15 @@ export class EditEmployerComponent implements OnInit {
 		this.getEmployerDetails(employerId);
 	}
 
-	setAuthUserNext() {
-		this.subscriber.setAuthUserNext({ appearance: 'standard' });
-	}
+	/* setAppearanceNext1() {
+		this.subscriber.setAppearance({ appearance: 'standard' });
+	} */
+	/* setAppearanceNext() {
+		this.asyncSubscriber.setAppearance();
+	} */
+	/* getAppearanceNext() {
+		console.log(this.asyncSubscriber.appearance.getValue());
+	} */
 
 	public Industries: any = [
 		{
