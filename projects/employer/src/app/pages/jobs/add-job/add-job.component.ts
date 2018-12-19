@@ -6,7 +6,8 @@ import * as _ from 'lodash';
 import { DatePipe } from '@angular/common';
 import { TermsConditionsDialogComponent } from '../../../terms-conditions-dialog/terms-conditions-dialog.component';
 import { ConfirmDialogComponent } from '../../../confirm-dialog/confirm-dialog.component';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { AsyncSubscriber } from '../../../services/async.service';
 
 @Component({
 	selector: 'app-add-job',
@@ -14,6 +15,8 @@ import { Subscription } from 'rxjs';
 	styleUrls: ['./add-job.component.scss']
 })
 export class AddJobComponent implements OnInit {
+
+	appearance$: Observable<any>;
 
 	public jobDetails: any = {
 		project: '',
@@ -81,6 +84,7 @@ export class AddJobComponent implements OnInit {
 
 	public maxpax = _.range(50);
 	public graceperiods = [0, 5, 10, 15];
+	public overtimeroundings = [0, 5, 10, 15];
 
 	//busy Config
 	busy: Subscription;
@@ -756,7 +760,10 @@ export class AddJobComponent implements OnInit {
 		}
 	]
 
-	constructor(private _httpService: ApiCallService, public dialog: MatDialog, public snackBar: MatSnackBar, private route: ActivatedRoute, public router: Router, private datePipe: DatePipe) {
+	constructor(private _httpService: ApiCallService, public dialog: MatDialog, public snackBar: MatSnackBar, private route: ActivatedRoute, public router: Router, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber) {
+
+		this.appearance$ = asyncSubscriber.getAppearance.pipe();
+
 		this.companyid = localStorage.getItem('ogCompanyObjID');
 
 		// this.openTermsConditionsDialog('fileName');

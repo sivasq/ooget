@@ -84,7 +84,7 @@
 						<!-- Industry Type -->
 						<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 							<mat-label>Industry</mat-label>
-							<mat-select matNativeControl placeholder="Industry" name="industry" formControlName="industry" required>
+							<mat-select placeholder="Industry" name="industry" formControlName="industry" required>
 								<mat-option>--Select Industry--</mat-option>
 								<mat-option *ngFor="let Industry of Industries" [value]="Industry.IndustryName">{{ Industry.IndustryName }}</mat-option>
 								<mat-option value="Others">Others</mat-option>

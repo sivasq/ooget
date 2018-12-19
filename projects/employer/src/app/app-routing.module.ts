@@ -42,7 +42,7 @@ const routes: Routes = [
       },
       {
         path: 'details',
-        loadChildren: './pages/employer/employer.module#EmployerModule',
+		  loadChildren: './pages/settings/settings.module#SettingsModule',
       },
 		]
 	},

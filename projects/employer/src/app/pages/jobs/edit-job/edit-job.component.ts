@@ -4,7 +4,8 @@ import { ApiCallService } from '../../../services/api-call.service';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import { DatePipe } from '@angular/common';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { AsyncSubscriber } from '../../../services/async.service';
 
 @Component({
 	selector: 'app-edit-job',
@@ -12,6 +13,8 @@ import { Subscription } from 'rxjs';
 	styleUrls: ['./edit-job.component.scss']
 })
 export class EditJobComponent implements OnInit {
+
+	appearance$: Observable<any>;
 
 	public jobDetails: any = {
 		project: '',
@@ -26,6 +29,7 @@ export class EditJobComponent implements OnInit {
 
 		numberofpax: '',
 		graceperiod: '',
+		overtimerounding:'',
 		jobperiodfrom: '',
 		jobperiodto: '',
 		starttime: '',
@@ -40,7 +44,7 @@ export class EditJobComponent implements OnInit {
 		saturday: '',
 
 		addresspostalcode: '',
-		addressblock: '',
+		// addressblock: '',
 		addressstreet: '',
 		addressunit: '',
 		locationmain: '',
@@ -99,6 +103,7 @@ export class EditJobComponent implements OnInit {
 
 	public maxpax = _.range(50);
 	public graceperiods = [0, 5, 10, 15];
+	public overtimeroundings = [0, 5, 10, 15];
 
 	// public jobDetails: any = [];
 
@@ -712,7 +717,10 @@ export class EditJobComponent implements OnInit {
 		}
 	]
 
-	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe) {
+	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber) {
+
+		this.appearance$ = asyncSubscriber.getAppearance.pipe();
+
 		this.companyid = this.route.snapshot.params['emp_id'];
 		// this.otherspecialization = false;
 
@@ -845,6 +853,7 @@ export class EditJobComponent implements OnInit {
 
 						this.jobDetails.numberofpax = response.job.numberofpax;
 						this.jobDetails.graceperiod = response.job.graceperiod;
+						this.jobDetails.overtimerounding = response.job.overtimerounding;
 						this.jobDetails.jobperiodfrom = new Date(response.job.jobperiodfrom);
 						this.jobDetails.jobperiodto = new Date(response.job.jobperiodto);
 
@@ -868,7 +877,7 @@ export class EditJobComponent implements OnInit {
 						}
 
 						this.jobDetails.addresspostalcode = response.job.addresspostalcode;
-						this.jobDetails.addressblock = response.job.addressblock;
+						// this.jobDetails.addressblock = response.job.addressblock;
 						this.jobDetails.addressstreet = response.job.addressstreet;
 						this.jobDetails.addressunit = response.job.addressunit;
 						this.jobDetails.locationmain = response.job.addressregion;

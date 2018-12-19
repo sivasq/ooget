@@ -6,7 +6,8 @@ import * as _ from 'lodash';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { DatePipe } from '@angular/common';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { AsyncSubscriber } from '../../../services/async.service';
 
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
@@ -32,6 +33,8 @@ export const MY_FORMATS = {
 	],
 })
 export class MakeDuplicateJobComponent implements OnInit {
+
+	appearance$: Observable<any>;
 
 	public jobDetails: any = {
 		project: '',
@@ -734,7 +737,10 @@ export class MakeDuplicateJobComponent implements OnInit {
 		}
 	]
 
-	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe) {
+	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber) {
+
+		this.appearance$ = asyncSubscriber.getAppearance.pipe();
+
 		this.companyid = this.route.snapshot.params['emp_id'];
 		// this.otherspecialization = false;
 
@@ -955,7 +961,7 @@ export class MakeDuplicateJobComponent implements OnInit {
 			);
 	}
 
-	jobUpdateToEmployer(employerJobData: any, employerJobForm) {
+	jobAddToEmployer(employerJobData: any, employerJobForm) {
 		let companyid = { "companyid": this.companyid };
 		employerJobData = Object.assign(employerJobData, companyid);
 

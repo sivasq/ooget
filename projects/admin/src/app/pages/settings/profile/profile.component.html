@@ -1,7 +1,7 @@
 <div class="inner-sidenav-content transition-2">
 	<!-- Http Progress Bar -->
 	<ng-progress></ng-progress>
-	
+
 	<!-- Breadcrumb Start -->
 	<div fxLayout="row wrap">
 		<div class="flex-p" fxFlex="1 1 100%">
@@ -28,7 +28,8 @@
 					<h3>Settings</h3>
 				</mat-card>
 				<mat-card-content>
-					<mat-tab-group class="vertical-tabs" (selectedTabChange)="tabChanged($event)" [selectedIndex]="selectedIndex" #tabGroup>
+					<mat-tab-group class="vertical-tabs" (selectedTabChange)="tabChanged($event)" [selectedIndex]="selectedIndex"
+					 #tabGroup>
 						<mat-tab label="My Profile">
 							<div style="padding:25px;">
 								<!-- <div class="view"> </div> -->
@@ -42,14 +43,16 @@
 										</div>
 
 										<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" style="margin-top:25px;">
-											<mat-form-field fxFlex="100" fxFlex.gt-sm="75">
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="75" [appearance]="appearance$ | async">
+												<mat-label>Name</mat-label>
 												<input matInput type="text" placeholder="Name" name="username" formControlName="username" required>
 												<mat-error *ngIf="adminProfileForm.get('username').hasError('required')" align="start">
 													Your Name Required
 												</mat-error>
 											</mat-form-field>
 
-											<mat-form-field fxFlex="100" fxFlex.gt-sm="75">
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="75" [appearance]="appearance$ | async">
+												<mat-label>Email</mat-label>
 												<input matInput type="email" placeholder="Email" name="email" formControlName="email" required>
 												<mat-error *ngIf="adminProfileForm.get('email').hasError('required')" align="start">
 													Email Required
@@ -63,9 +66,10 @@
 											</mat-form-field>
 
 											<!--- Password -->
-											<mat-form-field fxFlex="100" fxFlex.gt-sm="75">
-												<input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" name="password" autocomplete="off" formControlName="password"
-												 advs-compare="verify" parent='true' required>
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="75" [appearance]="appearance$ | async">
+												<mat-label>Password</mat-label>
+												<input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" name="password" autocomplete="off"
+												 formControlName="password" advs-compare="verify" parent='true' required>
 												<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
 												<mat-error *ngIf="adminProfileForm.get('password').hasError('required')" align="start">
 													Password is Required
@@ -79,10 +83,10 @@
 											</mat-form-field>
 
 											<!-- Verify Password -->
-											<mat-form-field fxFlex="100" fxFlex.gt-sm="75" appearance="standard">
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="75" [appearance]="appearance$ | async">
 												<mat-label>Confirm Password</mat-label>
-												<input matInput [type]="rehide ? 'password' : 'text'" placeholder="Confirm Password" name="verify" autocomplete="off" formControlName="verify"
-												 advs-compare="password" parent='false' required>
+												<input matInput [type]="rehide ? 'password' : 'text'" placeholder="Confirm Password" name="verify"
+												 autocomplete="off" formControlName="verify" advs-compare="password" parent='false' required>
 												<mat-icon matSuffix (click)="rehide = !rehide">{{rehide ? 'visibility_off' : 'visibility'}}</mat-icon>
 												<mat-error *ngIf="adminProfileForm.get('verify').hasError('required')" align="start">
 													Verify Password is required
@@ -107,24 +111,27 @@
 								<div class="edit">
 									<form [formGroup]="homePageContentForm" (ngSubmit)="homePageContentUpdate()">
 										<div fxLayout="row wrap" fxLayoutAlign="center center" style="margin-top:25px;">
-											<mat-form-field fxFlex="100" fxFlex.gt-sm="90">
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="90" [appearance]="appearance$ | async">
+												<mat-label>Main Title</mat-label>
 												<input matInput type="text" placeholder="Main Title" name="title" formControlName="title" required>
 												<mat-error *ngIf="homePageContentForm.get('title').hasError('required')" align="start">
 													Main Title Required
 												</mat-error>
 											</mat-form-field>
 
-											<mat-form-field fxFlex="100" fxFlex.gt-sm="90">
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="90" [appearance]="appearance$ | async">
+												<mat-label>Sub Title</mat-label>
 												<textarea matInput placeholder="Sub Title" name="subtitle" formControlName="subtitle" required></textarea>
 												<mat-error *ngIf="homePageContentForm.get('subtitle').hasError('required')" align="start">
 													Sub Title Required
 												</mat-error>
 											</mat-form-field>
 
-											<mat-form-field fxFlex="100" fxFlex.gt-sm="90">
-												<textarea matInput placeholder="Content1" name="list1" formControlName="list1"></textarea>
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="90" [appearance]="appearance$ | async">
+												<mat-label>Content</mat-label>
+												<textarea matInput placeholder="Content" name="list1" formControlName="list1" matTextareaAutosize ></textarea>
 												<mat-error *ngIf="homePageContentForm.get('list1').hasError('required')" align="start">
-													Content1 Required
+													Content Required
 												</mat-error>
 											</mat-form-field>
 

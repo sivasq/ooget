@@ -3,6 +3,8 @@ import { MatSnackBar } from '@angular/material';
 
 import { ApiCallService } from '../../../services/api-call.service';
 import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { AsyncSubscriber } from '../../../services/async.service';
 
 @Component({
 	selector: 'app-add-employer',
@@ -10,6 +12,8 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } f
 	styleUrls: ['./add-employer.component.scss']
 })
 export class AddEmployerComponent implements OnInit {
+
+	appearance$: Observable<any>;
 
 	public hide = true;
 	public rehide = true;
@@ -19,8 +23,10 @@ export class AddEmployerComponent implements OnInit {
 	@ViewChild(FormGroupDirective) resetEmployerAddForm;
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder) {
+	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber) {
+
 		this.buildEmployerAddForm();
+		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 	}
 
 	public Industries: any = [

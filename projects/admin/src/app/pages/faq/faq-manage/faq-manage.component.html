@@ -20,7 +20,6 @@
 	<div [ngBusy]="{busy: busy}"></div>
 
 	<div class="flex-p" fxLayout="column" fxLayoutGap="10px">
-		<div *ngIf="process=='demo'"></div>
 		<app-faq-add *ngIf="process=='add'" [title]="faqAddTitle" (onFAQItemAdded)="onNewFaqItem($event)"></app-faq-add>
 
 		<app-faq-edit *ngIf="process=='edit'" [title]="faqEditTitle" [faqDetails]="faqDetails" (onFAQItemUpdated)="onUpdateFaqItem($event)" (onFAQUpdateCancel)="onFAQUpdateCancel($event)"></app-faq-edit>

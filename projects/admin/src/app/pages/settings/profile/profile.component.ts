@@ -4,7 +4,7 @@ import { ApiCallService } from '../../../services/api-call.service';
 import { ConfigService } from '../../../services/config.service';
 import { MatSnackBar, MatTabChangeEvent } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { AsyncSubscriber } from '../../../services/async.service';
 
 @Component({
@@ -13,6 +13,8 @@ import { AsyncSubscriber } from '../../../services/async.service';
 	styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+
+	appearance$: Observable<any>;
 
 	busy: Subscription; //busy Config
 	public hide = true;
@@ -49,6 +51,8 @@ export class ProfileComponent implements OnInit {
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 	constructor(private fb: FormBuilder, private _httpService: ApiCallService, private urlconfig: ConfigService, public snackBar: MatSnackBar, private route: ActivatedRoute, private asyncSubscriber: AsyncSubscriber) {
+
+		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
 		this.imgBaseUrl = urlconfig.img_base_url;
 
