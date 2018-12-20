@@ -41,7 +41,7 @@ const routes: Routes = [
 				loadChildren: './pages/jobs/jobs.module#JobsModule',
       },
       {
-        path: 'details',
+        path: 'settings',
 		  loadChildren: './pages/settings/settings.module#SettingsModule',
       },
 		]

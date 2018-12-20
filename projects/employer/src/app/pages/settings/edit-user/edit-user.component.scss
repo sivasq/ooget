@@ -1,0 +1,39 @@
+@import "../../../../variables.scss";
+.inner-sidenav-content {
+    position: absolute;
+    top: 56px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px;
+    min-height: calc(100% - 80px);
+    overflow: auto;
+}
+
+.mat-card {
+    background: #fff;
+    color: rgba(0, 0, 0, .87);
+}
+
+.title h3 {
+    font-weight: 600;
+}
+
+::ng-deep .drop-zone {
+    margin: auto;
+    height: 100px;
+    width: 100px;
+    border: 2px solid #ffffff !important;
+    border-radius: 50px !important;
+    text-align: center;
+    background-color: #eee;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12)
+}
+
+::ng-deep .drop-zone .content {
+    color: #777 !important;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

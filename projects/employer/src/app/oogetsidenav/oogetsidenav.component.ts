@@ -2,6 +2,7 @@ import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { ConfigService } from '../services/config.service';
 import { Router } from '@angular/router';
+import { AsyncSubscriber } from '../services/async.service';
 
 @Component({
 	selector: 'app-oogetsidenav',
@@ -22,8 +23,23 @@ export class OogetsidenavComponent implements OnInit {
 
 	userprofile: boolean = true;
 
-	constructor(private urlconfig: ConfigService, public router: Router) {
+	constructor(private urlconfig: ConfigService, public router: Router, private asyncSubscriber: AsyncSubscriber) {
 		this.baseUrl = urlconfig.base_url;
+
+		asyncSubscriber.getProfileDetails.subscribe(value => {
+			this.companyName = localStorage.getItem('ogCompanyName');
+			this.companyCode = localStorage.getItem('ogCompanyCode');
+			this.userEmail = localStorage.getItem('ogUserEmail');
+			// this.UserRole = localStorage.getItem('ogUserRole');
+			this.UserRole = "Employer";
+			let companyLogo = localStorage.getItem('ogCompanyLogo');
+
+			if (companyLogo == null) {
+				this.profileImage = "assets/img/avatars/profile-placeholder.png";
+			} else {
+				this.profileImage = this.baseUrl + "/ooget/user/" + companyLogo;
+			}
+		});
 	}
 
 	toggleshowprofile() {
@@ -46,6 +62,7 @@ export class OogetsidenavComponent implements OnInit {
 		this.companyName = localStorage.getItem('ogCompanyName');
 		this.companyCode = localStorage.getItem('ogCompanyCode');
 		this.userEmail = localStorage.getItem('ogUserEmail');
+		// this.UserRole = localStorage.getItem('ogUserRole');
 		this.UserRole = "Employer";
 		let companyLogo = localStorage.getItem('ogCompanyLogo');
 

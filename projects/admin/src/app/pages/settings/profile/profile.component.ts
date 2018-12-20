@@ -166,11 +166,10 @@ export class ProfileComponent implements OnInit {
 			reader.onload = (event: any) => { // called once readAsDataURL is completed
 				this.profileImage = event.target.result;
 				// console.log(event.target.result);
-				this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage})
+				this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage })
 			}
 		}
 	}
-
 
 	// Get Admin Profile Details
 	getProfileDetails() {

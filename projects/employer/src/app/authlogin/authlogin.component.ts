@@ -20,7 +20,7 @@ export class AuthloginComponent implements OnInit {
 
 	//busy Config
 	busy: Subscription;
-	
+
 	employerAuthForm: FormGroup;
 	@ViewChild(FormGroupDirective) resetEmployerAuthForm;
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -43,11 +43,12 @@ export class AuthloginComponent implements OnInit {
 		this.busy = this._httpService.postLoginData(this.employerAuthForm.value)
 			.subscribe(
 				response => {
-					if (response.success) {						
-						// Set local storages						
+					if (response.success) {
+						// Set local storages
 						localStorage.setItem('isLoggedIn', "true");
 						localStorage.setItem('ogToken', response.token);
 						localStorage.setItem('ogUserEmail', response.employer.email);
+						// localStorage.setItem('ogUserEmail', response.employer.role);
 						localStorage.setItem('ogUserObjID', response.employer._id);
 						localStorage.setItem('ogCompanyObjID', response.employer.companyid._id);
 						localStorage.setItem('ogCompanyName', response.employer.companyid.companyname);

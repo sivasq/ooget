@@ -10,37 +10,46 @@
     overflow: auto;
 }
 
-/* Breadcrump Start */
-
-.mat-breadcrumb {
-    padding: 8px;
+.p-10 {
+    padding: 10px !important;
 }
 
-.mat-breadcrumb a {
-    color: $primary;
+.title {
+    font-weight: 600;
+    padding-right: 15px;
 }
 
-.mat-breadcrumb .mat-icon {
-    font-size: 20px;
-    height: 100%;
-    width: 100%;
-    padding: 0 6px;
+.fill-remaining-space {
+    /* This fills the remaining space, by using flexbox. Every toolbar row uses a flexbox row layout. */
+    flex: 1 1 auto;
 }
 
-.mat-breadcrumb .breadcrumb-item+.breadcrumb-item:before {
-    display: inline-block;
-    padding-right: .5rem;
-    padding-left: .5rem;
-    content: "/";
+.mt-1 {
+    margin-top: 1px !important;
 }
 
-.mat-breadcrumb .breadcrumb-item+.breadcrumb-item:before {
-    color: rgba(0, 0, 0, .87);
+::ng-deep .employer-details .mat-button-toggle-label-content {
+    padding: 10px 16px !important;
 }
 
-.mat-breadcrumb .breadcrumb-title.active {
-    text-transform: uppercase;
-    font-weight: 500;
+.td-file-upload {
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
-/* Breadcrump End */
+.td-file-upload-cancel {
+    height: 24px;
+    width: 24px;
+    position: relative;
+    top: 24px;
+    left: -14px;
+}
+
+.td-file-upload-cancel mat-icon {
+    background-color: #fafafa;
+}
+
+.td-file-upload-cancel mat-icon {
+    border-radius: 12px;
+    vertical-align: baseline;
+}
