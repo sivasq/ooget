@@ -1,6 +1,6 @@
 <div class="inner-sidenav-content transition-2" perfectScrollbar>
 	<!-- Breadcrumb Start -->
-	<div fxLayout="row wrap">
+	<!-- <div fxLayout="row wrap">
 		<div class="flex-p" fxFlex="1 1 100%">
 			<mat-card class="mat-breadcrumb" fxLayout="row">
 				<a class="breadcrumb-item" routerLink="/employer/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
@@ -13,10 +13,10 @@
 				</div>
 			</mat-card>
 		</div>
-	</div>
+	</div> -->
 	<!-- Breadcrumb End -->
 
-	<div fxLayout="row wrap" class="employer-details">
+	<!-- <div fxLayout="row wrap" class="employer-details">
 		<div [ngBusy]="{busy:busy}"></div>
 		<div class="flex-p" fxFlex="1 1 100%">
 			<mat-card class="p-0" fxLayout="row" fxLayoutAlign="space-between center">
@@ -41,9 +41,6 @@
 			</mat-card>
 
 			<mat-card class="p-10 mt-1" fxLayout="row wrap">
-				<!-- <div fxFlex="100" fxLayout="row" fxLayoutAlign="end center">
-	                    <button mat-raised-button color="accent" (click)="processPayrollGenerate()">Generate Payroll</button>
-	                </div> -->
 				<mat-list>
 					<mat-list-item>
 						<span class="title">Company Name : </span>{{employerDetails.companyname}}
@@ -95,11 +92,11 @@
 				</mat-list>
 			</mat-card>
 		</div>
-	</div>
-
-	<!-- <div fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
-		<h1 style="color: #bbbbbb">
-			Working here
-		</h1>
 	</div> -->
+
+	<!--  -->
+	<mat-nav-list>
+		<app-sidemenu *ngFor="let item of navItems" [item]="item"></app-sidemenu>
+	</mat-nav-list>
+	<!--  -->
 </div>
