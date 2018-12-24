@@ -58,7 +58,7 @@ export class AsyncSubscriber {
 	providedIn: 'root'
 })
 export class NavService {
-	public appDrawer: any;
+	// public  : any;
 	public currentUrl = new BehaviorSubject<string>(undefined);
 
 	constructor(private router: Router) {
@@ -70,10 +70,10 @@ export class NavService {
 	}
 
 	public closeNav() {
-		this.appDrawer.close();
+		// this.appDrawer.close();
 	}
 
 	public openNav() {
-		this.appDrawer.open();
+		// this.appDrawer.open();
 	}
 }

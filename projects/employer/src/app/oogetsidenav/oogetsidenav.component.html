@@ -1,65 +1,65 @@
 <!-- Side Nav Logo Start -->
 <mat-toolbar color="primary" class="sidenav-header" fxLayout="row" fxLayoutAlign="center center">
-    <img style="height:100%;" alt="oogetLogo" src="assets/img/logo/ooget.png">
+	<img style="height:100%;" alt="oogetLogo" src="assets/img/logo/ooget.png">
 </mat-toolbar>
 <!-- Side Nav Logo End -->
 
 <!-- Side Nav User Profile Section Start -->
 <div class="user-block transition-2" [ngClass]="userprofile ? 'show' : ''" fxLayout="column" fxLayoutAlign="center center">
-    <div class="user-info-wrapper" fxLayout="row" fxLayoutAlign="space-around center">
-        <img alt="user-image" src="{{profileImage}}">
-        <div class="user-info">
-            <p class="name" style="text-transform: capitalize;">{{companyName}}</p>
-            <p class="position">{{UserRole}}
-                <br>
-                <small class="muted-text"></small>
-            </p>
-        </div>
-    </div>
+	<div class="user-info-wrapper" fxLayout="row" fxLayoutAlign="space-around center">
+		<img alt="user-image" src="{{profileImage}}">
+		<div class="user-info">
+			<p class="name" style="text-transform: capitalize;">{{companyName}}</p>
+			<p class="position">{{UserRole}}
+				<br>
+				<small class="muted-text"></small>
+			</p>
+		</div>
+	</div>
 
-    <div class="w-100 muted-text" fxLayout="row" fxLayoutAlign="space-between center" style="padding:0 10px;">
-        <a mat-icon-button matTooltip="Profile" matTooltipPosition="right" routerLink="/employer/settings/edituser">
-            <mat-icon>person_outline</mat-icon>
-        </a>
-        <!-- <a mat-icon-button routerLink=".">
+	<div class="w-100 muted-text" fxLayout="row" fxLayoutAlign="space-between center" style="padding:0 10px;">
+		<a mat-icon-button matTooltip="Profile" matTooltipPosition="right" routerLink="/employer/settings/edituser">
+			<mat-icon>person_outline</mat-icon>
+		</a>
+		<!-- <a mat-icon-button routerLink=".">
                 <mat-icon>mail_outline</mat-icon>
             </a> -->
-        <a mat-icon-button matTooltip="Logout" matTooltipPosition="left" (click)="onLogout()">
-            <mat-icon>power_settings_new</mat-icon>
-        </a>
-    </div>
+		<a mat-icon-button matTooltip="Logout" matTooltipPosition="left" (click)="onLogout()">
+			<mat-icon>power_settings_new</mat-icon>
+		</a>
+	</div>
 </div>
 <!-- Side Nav User Profile Section End -->
 
 <!-- Side Nav Navigation List Start  -->
 <div class="sidenav-menu-outer" id="sidenav-menu-outer" perfectScrollbar>
-    <!-- <div class="menu-item">
+	<!-- <div class="menu-item">
         <a mat-button routerLink="/dashboard" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
             <mat-icon>dashboard</mat-icon>
             <span class="menu-title">Dashboard</span>
         </a>
     </div> -->
 
-    <div class="menu-item">
-      <a mat-button routerLink="/employer/settings/viewcompany" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
-        <mat-icon>supervisor_account</mat-icon>
-        <span class="menu-title"> Company Details</span>
-      </a>
-    </div>
+	<div class="menu-item">
+		<a mat-button routerLink="/employer/settings/viewcompany" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
+			<mat-icon>supervisor_account</mat-icon>
+			<span class="menu-title"> Company Details</span>
+		</a>
+	</div>
 
-    <div class="menu-item">
-        <a mat-button routerLink="/employer/jobs/list" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
-            <mat-icon>supervisor_account</mat-icon>
-            <span class="menu-title"> Jobs List</span>
-        </a>
-    </div>
+	<div class="menu-item">
+		<a mat-button routerLink="/employer/jobs/list" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
+			<mat-icon>supervisor_account</mat-icon>
+			<span class="menu-title"> Jobs List</span>
+		</a>
+	</div>
 
-    <div class="menu-item">
-        <a mat-button routerLink="/employer/jobs/add" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
-            <mat-icon>supervisor_account</mat-icon>
-            <span class="menu-title"> Add Job</span>
-        </a>
-    </div>
+	<div class="menu-item">
+		<a mat-button routerLink="/employer/jobs/add" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
+			<mat-icon>supervisor_account</mat-icon>
+			<span class="menu-title"> Add Job</span>
+		</a>
+	</div>
 
 	<div class="menu-item">
 		<a mat-button routerLink="/employer/settings/adduser" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
@@ -75,62 +75,8 @@
 		</a>
 	</div>
 
-    <!-- <div class="menu-item" (click)="clickEvent()" >
-        <a mat-button routerLink="." [ngClass]="status ? 'expanded' : ''" fxLayout="row" fxLayoutAlign="flex-start center">
-            <mat-icon>computer</mat-icon>
-            <span class="menu-title">UI Features</span>
-            <mat-icon class="menu-expand-icon transition-2">arrow_drop_down</mat-icon>
-        </a>
-
-        <div class="sub-menu" [ngClass]="status ? 'show' : 'show'">
-            <div class="menu-item">
-                <a mat-button routerLink="." fxLayout="row" fxLayoutAlign="flex-start center">
-                    <mat-icon>keyboard</mat-icon>
-                    <span class="menu-title">Buttons</span>
-                </a>
-            </div>
-        </div>
-    </div> -->
-
-    <!-- <mat-expansion-panel>
-        <mat-expansion-panel-header>
-            <div class="menu-item">
-                <a mat-button style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
-                    <mat-icon>computer</mat-icon>
-                    <span class="menu-title">Employers</span>
-                </a>
-            </div>
-        </mat-expansion-panel-header>
-
-        <div class="menu-item">
-            <a mat-button routerLink="/employers/list" style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; place-content: center flex-start; align-items: center;">
-                <mat-icon>keyboard</mat-icon>
-                <span class="menu-title">Employers List</span>
-            </a>
-        </div>
-    </mat-expansion-panel> -->
-
-    <!-- <div>Scrollable content1</div>
-        <div>Scrollable content2</div>
-        <div>Scrollable content3</div>
-        <div>Scrollable content4</div>
-        <div>Scrollable content5</div>
-        <div>Scrollable content6</div>
-        <div>Scrollable content7</div>
-        <div>Scrollable content8</div>
-        <div>Scrollable content9</div>
-        <div>Scrollable content10</div>
-        <div>Scrollable content11</div>
-        <div>Scrollable content12</div>
-        <div>Scrollable content13</div>
-        <div>Scrollable content14</div>
-        <div>Scrollable content15</div>
-        <div>Scrollable content16</div>
-        <div>Scrollable content17</div>
-        <div>Scrollable content18</div>
-        <div>Scrollable content19</div>
-        <div>Scrollable content20</div>
-        <div>Scrollable content21</div>
-        <div>Scrollable content22</div> -->
+	<mat-nav-list>
+		<app-sidemenu *ngFor="let item of navItems" [item]="item"></app-sidemenu>
+	</mat-nav-list>
 
 </div>

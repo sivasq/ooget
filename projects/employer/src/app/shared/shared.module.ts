@@ -43,90 +43,93 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { DataService } from '../services/data.service';
 import { JsonToCsvService } from '../services/json-to-csv.service';
 import { JsonToTextService } from '../services/json-to-text.service';
+import { SidemenuComponent } from '../sidemenu/sidemenu.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  suppressScrollX: true,
-  wheelPropagation: true,
+	suppressScrollX: true,
+	wheelPropagation: true,
 };
 
 @NgModule({
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    RouterModule,
-    MaterialModule,
-    PerfectScrollbarModule,
-    FlexLayoutModule,
-    FormsModule,
-    ReactiveFormsModule,
-    Ng2SearchPipeModule,
-    NgxPaginationModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
-    NgBusyModule,
-    NgPipesModule,
-    NgProgressModule.forRoot({
-      thick: true,
-      spinner: false,
-      color: '#1abc9c'
-    }),
-    NgProgressHttpModule.forRoot(),
-    NgProgressRouterModule.forRoot(),
-    NgxMaskModule.forRoot(),
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory
-    }),
-  ],
-  declarations: [
-    OogetsidenavComponent,
-    OogettopbarComponent,
-    TopProfiledialogComponent,
-    TopShortcutdialogComponent,
-    TermsConditionsDialogComponent,
-    ConfirmDialogComponent,
-    UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, AgePipe, EqualValidator, CompareDirective
-  ],
-  entryComponents: [
-    TopProfiledialogComponent,
-    TopShortcutdialogComponent,
-    TermsConditionsDialogComponent,
-    ConfirmDialogComponent
-  ],
-  exports: [
-    MaterialModule,
-    HttpClientModule,
-    RouterModule,
-    OogetsidenavComponent,
-    OogettopbarComponent,
-    FlexLayoutModule,
-    PerfectScrollbarModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TopProfiledialogComponent,
-    TopShortcutdialogComponent,
-    Ng2SearchPipeModule,
-    NgxPaginationModule,
-    TermsConditionsDialogComponent,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
-    NgBusyModule,
-    NgProgressModule,
-    NgProgressHttpModule,
-    NgProgressRouterModule,
-    NgPipesModule,
-    NgxMaskModule,
-    EqualValidator, CompareDirective,
-    UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, AgePipe
-  ],
-  providers: [
-    ConfigService,
-    ApiCallService,
-    DataService, JsonToCsvService, JsonToTextService,
-    DatePipe, UpperCasePipe, AgePipe,
-    { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
-    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
-    AuthGuardService
-  ],
+	imports: [
+		CommonModule,
+		HttpClientModule,
+		RouterModule,
+		MaterialModule,
+		PerfectScrollbarModule,
+		FlexLayoutModule,
+		FormsModule,
+		ReactiveFormsModule,
+		Ng2SearchPipeModule,
+		NgxPaginationModule,
+		OwlDateTimeModule,
+		OwlNativeDateTimeModule,
+		NgBusyModule,
+		NgPipesModule,
+		NgProgressModule.forRoot({
+			thick: true,
+			spinner: false,
+			color: '#1abc9c'
+		}),
+		NgProgressHttpModule.forRoot(),
+		NgProgressRouterModule.forRoot(),
+		NgxMaskModule.forRoot(),
+		CalendarModule.forRoot({
+			provide: DateAdapter,
+			useFactory: adapterFactory
+		}),
+	],
+	declarations: [
+		OogetsidenavComponent,
+		SidemenuComponent,
+		OogettopbarComponent,
+		TopProfiledialogComponent,
+		TopShortcutdialogComponent,
+		TermsConditionsDialogComponent,
+		ConfirmDialogComponent,
+		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, AgePipe, EqualValidator, CompareDirective
+	],
+	entryComponents: [
+		TopProfiledialogComponent,
+		TopShortcutdialogComponent,
+		TermsConditionsDialogComponent,
+		ConfirmDialogComponent
+	],
+	exports: [
+		MaterialModule,
+		HttpClientModule,
+		RouterModule,
+		OogetsidenavComponent,
+		SidemenuComponent,
+		OogettopbarComponent,
+		FlexLayoutModule,
+		PerfectScrollbarModule,
+		FormsModule,
+		ReactiveFormsModule,
+		TopProfiledialogComponent,
+		TopShortcutdialogComponent,
+		Ng2SearchPipeModule,
+		NgxPaginationModule,
+		TermsConditionsDialogComponent,
+		OwlDateTimeModule,
+		OwlNativeDateTimeModule,
+		NgBusyModule,
+		NgProgressModule,
+		NgProgressHttpModule,
+		NgProgressRouterModule,
+		NgPipesModule,
+		NgxMaskModule,
+		EqualValidator, CompareDirective,
+		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, AgePipe
+	],
+	providers: [
+		ConfigService,
+		ApiCallService,
+		DataService, JsonToCsvService, JsonToTextService,
+		DatePipe, UpperCasePipe, AgePipe,
+		{ provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
+		{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
+		AuthGuardService
+	],
 })
 export class SharedModule { }

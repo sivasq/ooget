@@ -4,6 +4,14 @@ import { ConfigService } from '../services/config.service';
 import { Router } from '@angular/router';
 import { AsyncSubscriber } from '../services/async.service';
 
+export interface NavItem {
+	displayName: string;
+	disabled?: boolean;
+	iconName: string;
+	route?: string;
+	children?: NavItem[];
+}
+
 @Component({
 	selector: 'app-oogetsidenav',
 	templateUrl: './oogetsidenav.component.html',
@@ -22,6 +30,114 @@ export class OogetsidenavComponent implements OnInit {
 	public companyCode: String;
 
 	userprofile: boolean = true;
+
+	navItems: NavItem[] = [
+		{
+			displayName: 'DevFestFL',
+			iconName: 'recent_actors',
+			route: 'employer/settings/viewcompany',
+			children: [
+				{
+					displayName: 'Speakers',
+					iconName: 'group',
+					route: 'employer/settings/viewcompany',
+				},
+				{
+					displayName: 'Sessions',
+					iconName: 'speaker_notes',
+					route: 'devfestfl/sessions',
+				},
+				{
+					displayName: 'Feedback',
+					iconName: 'feedback',
+					route: 'devfestfl/feedback'
+				}
+			]
+		},
+		{
+			displayName: 'Disney',
+			iconName: 'videocam',
+			children: [
+				{
+					displayName: 'Create Enterprise UIs',
+					iconName: 'star_rate',
+					route: 'material-design'
+				},
+				{
+					displayName: 'What\'s up with the Web?',
+					iconName: 'star_rate',
+					route: 'what-up-web'
+				},
+				{
+					displayName: 'My ally, the CLI',
+					iconName: 'star_rate',
+					route: 'my-ally-cli'
+				},
+				{
+					displayName: 'Become an Angular Tailor',
+					iconName: 'star_rate',
+					route: 'become-angular-tailer'
+				}
+			]
+		},
+		{
+			displayName: 'Orlando',
+			iconName: 'movie_filter',
+			children: [
+				{
+					displayName: 'Michael Prentice',
+					iconName: 'person',
+					route: 'michael-prentice',
+				},
+				{
+					displayName: 'Create Enterprise UIs',
+					iconName: 'star_rate',
+					route: 'material-design'
+				},
+				{
+					displayName: 'Stephen Fluin',
+					iconName: 'person',
+					route: 'stephen-fluin',
+				},
+				{
+					displayName: 'Mike Brocchi',
+					iconName: 'person',
+					route: 'mike-brocchi',
+				}
+			]
+		},
+		{
+			displayName: 'Sessions',
+			iconName: 'speaker_notes',
+			children: [
+				{
+					displayName: 'Create Enterprise UIs',
+					iconName: 'star_rate',
+					route: 'material-design'
+				},
+				{
+					displayName: 'What\'s up with the Web?',
+					iconName: 'star_rate',
+					route: 'what-up-web'
+				},
+				{
+					displayName: 'My ally, the CLI',
+					iconName: 'star_rate',
+					route: 'my-ally-cli'
+				},
+				{
+					displayName: 'Become an Angular Tailor',
+					iconName: 'star_rate',
+					route: 'become-angular-tailer'
+				}
+			]
+		},
+		{
+			displayName: 'Feedback',
+			iconName: 'feedback',
+			route: 'feedback'
+		}
+	]
 
 	constructor(private urlconfig: ConfigService, public router: Router, private asyncSubscriber: AsyncSubscriber) {
 		this.baseUrl = urlconfig.base_url;

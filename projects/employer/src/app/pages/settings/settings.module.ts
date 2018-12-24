@@ -9,10 +9,9 @@ import { ViewCompanyDetailsComponent } from './view-company-details/view-company
 import { EditCompanyDetailsComponent } from './edit-company-details/edit-company-details.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
-import { SidemenuComponent } from './sidemenu/sidemenu.component';
 
 @NgModule({
-  declarations: [ProfileComponent, ViewCompanyDetailsComponent, EditCompanyDetailsComponent, AddUserComponent, EditUserComponent, SidemenuComponent],
+  declarations: [ProfileComponent, ViewCompanyDetailsComponent, EditCompanyDetailsComponent, AddUserComponent, EditUserComponent],
   imports: [
     CommonModule,
 	  SettingsRoutingModule,

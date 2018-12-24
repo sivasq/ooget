@@ -1,7 +1,7 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnInit, QueryList, ContentChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { NavService } from '../../../services/async.service';
+import { NavService } from '../services/async.service';
 
 export interface NavItem {
 	displayName: string;
@@ -32,6 +32,9 @@ export class SidemenuComponent implements OnInit {
 	@Input() item: NavItem;
 	@Input() depth: number;
 
+	@ContentChildren(SidemenuComponent)
+	groups: QueryList<SidemenuComponent>;
+
 	constructor(public navService: NavService, public router: Router) {
 		if (this.depth === undefined) {
 			this.depth = 0;
@@ -57,7 +60,14 @@ export class SidemenuComponent implements OnInit {
 		}
 		if (item.children && item.children.length) {
 			this.expanded = !this.expanded;
+			// this.groups.toArray().forEach((t) => {
+			// 	console.log(t);
+			// 	t.expanded = false;
+			// 	// this.expanded = true;
+			// 	console.log(item);
+			// });
 		}
+		// console.log(this.groups);
 	}
 
 }
