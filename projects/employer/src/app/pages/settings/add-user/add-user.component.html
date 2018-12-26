@@ -41,11 +41,11 @@
 						<!-- Role Type -->
 						<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 							<mat-label>Role</mat-label>
-							<mat-select placeholder="Role" name="role" formControlName="role" required>
+							<mat-select placeholder="Role" name="employerrole" formControlName="employerrole" required>
 								<mat-option>--Select User Role--</mat-option>
 								<mat-option *ngFor="let Role of Roles" [value]="Role.RoleValue">{{ Role.RoleView }}</mat-option>
 							</mat-select>
-							<mat-error *ngIf="UserAddForm.get('role').hasError('required')" align="start">
+							<mat-error *ngIf="UserAddForm.get('employerrole').hasError('required')" align="start">
 								Role Required
 							</mat-error>
 						</mat-form-field>

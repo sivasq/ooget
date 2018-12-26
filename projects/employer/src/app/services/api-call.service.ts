@@ -300,6 +300,55 @@ export class ApiCallService {
 			.map(res => res)
 	}
 
+	updateProfile(employerData): Observable<any> {
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/updateownprofile', employerData, { headers: headers })
+			.map(res => res)
+	}
+
+	createsupervisor(employerData): Observable<any> {
+		//var authDatas = JSON.stringify(authData);
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/createsupervisor', employerData, { headers: headers })
+			.map(res => res)
+	}
+
+	updateUserProfile(employerData): Observable<any> {
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/updatesupervisor', employerData, { headers: headers })
+			.map(res => res)
+	}
+
+	deleteUserProfile(employerData): Observable<any> {
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/deletesupervisor', employerData, { headers: headers })
+			.map(res => res)
+	}
+
 	// Dummy
 	userAdd(employerData): Observable<any> {
 		//var authDatas = JSON.stringify(authData);
@@ -310,7 +359,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/employer/createemployer', employerData, { headers: headers })
+		return this.http.post(this.baseUrl + '/createemployer', employerData, { headers: headers })
 			.map(res => res)
 	}
 
@@ -323,7 +372,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/employer/updatecompanydetails', employerData, { headers: headers })
+		return this.http.post(this.baseUrl + '/updatecompanydetails', employerData, { headers: headers })
 			.map(res => res)
 	}
 
@@ -336,7 +385,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/fetchprofiledetails', dummyData, { headers: headers })
+		return this.http.post(this.baseUrl + '/fetchownprofile', dummyData, { headers: headers })
 			.map(res => res)
 	}
 
@@ -350,8 +399,8 @@ export class ApiCallService {
 		return this.http.post(this.baseUrl + '/updateprofileimage', formData, { headers: headers })
 	}
 
-	getCompanyDetails(employerId): Observable<any> {
-		let employerIds = employerId;
+	getCompanyDetails(): Observable<any> {
+		let employerIds = '';
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
 			{
@@ -359,6 +408,31 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/employer/viewparticularemployer', employerIds, { headers: headers })
+		return this.http.post(this.baseUrl + '/fetchcompany', employerIds, { headers: headers })
+	}
+
+	getExtraUserProfileDetails(userid): Observable<any> {
+		let dummyData = '';
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/fetchsupervisor', userid, { headers: headers })
+			.map(res => res)
+	}
+
+	getListOfUsers(): Observable<any> {
+		let dummyData = '';
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/listsupervisors', dummyData, { headers: headers })
 	}
 }

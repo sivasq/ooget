@@ -4,6 +4,7 @@ import { ApiCallService } from '../services/api-call.service';
 import { FormGroup, FormGroupDirective, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ConfigService } from '../services/config.service';
+import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
 
 @Component({
 	selector: 'app-authlogin',
@@ -25,7 +26,7 @@ export class AuthloginComponent implements OnInit {
 	@ViewChild(FormGroupDirective) resetEmployerAuthForm;
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	constructor(public router: Router, private _httpService: ApiCallService, private config: ConfigService, private fb: FormBuilder) {
+	constructor(public router: Router, private _httpService: ApiCallService, private config: ConfigService, private fb: FormBuilder, private permissionsService: NgxPermissionsService, private rolesService: NgxRolesService) {
 		this.homePageUrl = config.homePageUrl;
 		this.buildEmployerAuthForm();
 	}
@@ -42,23 +43,29 @@ export class AuthloginComponent implements OnInit {
 		if (!this.employerAuthForm.valid) return false;
 		this.busy = this._httpService.postLoginData(this.employerAuthForm.value)
 			.subscribe(
-				response => {
+				async response => {
 					if (response.success) {
 						// Set local storages
 						localStorage.setItem('isLoggedIn', "true");
 						localStorage.setItem('ogToken', response.token);
 						localStorage.setItem('ogUserEmail', response.employer.email);
-						// localStorage.setItem('ogUserEmail', response.employer.role);
+						localStorage.setItem('ogUserEmail', response.employer.username);
+						localStorage.setItem('ogDefaultEmployer', response.employer.defaultemployer);
+						localStorage.setItem('ogRole', response.employer.role.rolename);
 						localStorage.setItem('ogUserObjID', response.employer._id);
-						localStorage.setItem('ogCompanyObjID', response.employer.companyid._id);
-						localStorage.setItem('ogCompanyName', response.employer.companyid.companyname);
-						localStorage.setItem('ogCompanyCode', response.employer.companyid.companycode);
+						localStorage.setItem('ogCompanyObjID', response.employer.company._id);
+						localStorage.setItem('ogCompanyName', response.employer.company.companyname);
+						localStorage.setItem('ogCompanyCode', response.employer.company.companycode);
 
-						// If Successfull Validatio redirect to Main Page
-						this.router.navigate(['employer/jobs/list']);
+						// If Auth Success, redirect to Main Page
+						await this.router.navigate(['employer/jobs/list']);
 						// Reset form
 						this.resetEmployerAuthForm.resetForm();
 
+						this.permissionsService.loadPermissions(['all']);
+						this.rolesService.addRole(response.employer.role.rolename, response.employer.role.permissions);
+
+						console.log(this.rolesService.getRoles());
 					} else if (!response.success) {
 
 						this.isAuthMsg = "Sorry! Invalid Login Credentials";
@@ -71,10 +78,10 @@ export class AuthloginComponent implements OnInit {
 				error => {
 					console.log(error);
 					this.isAuthMsg = "Server Errors Occured! Please Try Again";
-						setTimeout(() => {
-							this.isAuthMsg = '';
-							// this.resetEmployerAuthForm.resetForm();
-						}, 3000);
+					setTimeout(() => {
+						this.isAuthMsg = '';
+						// this.resetEmployerAuthForm.resetForm();
+					}, 3000);
 				}
 			);
 	}

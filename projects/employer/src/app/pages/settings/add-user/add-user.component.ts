@@ -30,12 +30,8 @@ export class AddUserComponent implements OnInit {
 
 	public Roles: any = [
 		{
-			"RoleView": "Super Admin",
-			"RoleValue": "superadmin"
-		},
-		{
 			"RoleView": "Admin",
-			"RoleValue": "admin"
+			"RoleValue": "normalemployer"
 		},
 		{
 			"RoleView": "Verifier",
@@ -47,7 +43,7 @@ export class AddUserComponent implements OnInit {
 	buildUserAddForm(): void {
 		this.UserAddForm = this.fb.group({
 			username: ['', [Validators.required]],
-			role: ['', [Validators.required]],
+			employerrole: ['', [Validators.required]],
 			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(8)]), this.isPatternMatch.bind(this)],
 			verify: ['', [Validators.required]],
@@ -120,7 +116,7 @@ export class AddUserComponent implements OnInit {
 	public userAddSubmit() {
 		if (!this.UserAddForm.valid) return false;
 
-		this._httpService.userAdd(this.UserAddForm.value)
+		this._httpService.createsupervisor(this.UserAddForm.value)
 			.subscribe(
 				response => {
 					// Response is success

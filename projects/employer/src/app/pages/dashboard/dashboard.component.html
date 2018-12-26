@@ -1,4 +1,12 @@
 <div class="inner-sidenav-content transition-2">
+
+<ng-template [ngxPermissionsOnly]="['all']">
+    <div> I will see it only admin</div>
+</ng-template>
+  <ng-template [ngxPermissionsExcept]="['superemployer1']">
+    <div> I will see it only admin role</div>
+  </ng-template>
+
     <div fxLayout="row wrap">
         <div class="flex-p" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
             <mat-card>

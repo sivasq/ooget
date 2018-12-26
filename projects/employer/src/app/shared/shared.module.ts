@@ -45,6 +45,8 @@ import { JsonToCsvService } from '../services/json-to-csv.service';
 import { JsonToTextService } from '../services/json-to-text.service';
 import { SidemenuComponent } from '../sidemenu/sidemenu.component';
 
+import { NgxPermissionsModule } from 'ngx-permissions';
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true,
 	wheelPropagation: true,
@@ -78,6 +80,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 			provide: DateAdapter,
 			useFactory: adapterFactory
 		}),
+		NgxPermissionsModule
 	],
 	declarations: [
 		OogetsidenavComponent,
@@ -120,7 +123,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		NgPipesModule,
 		NgxMaskModule,
 		EqualValidator, CompareDirective,
-		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, AgePipe
+		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, AgePipe, NgxPermissionsModule
 	],
 	providers: [
 		ConfigService,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private permissionsService: NgxPermissionsService, private rolesService: NgxRolesService) {
+    						this.permissionsService.permissions$.subscribe((permissions) => {
+    console.log(permissions)
+})
+
+console.log(this.permissionsService.getPermissions());
+   }
 
   ngOnInit() { }
 

@@ -5,12 +5,14 @@ import { SharedModule } from '../../shared/shared.module';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    SharedModule
+    SharedModule,
+    NgxPermissionsModule.forChild()
   ],
   declarations: [
     DashboardComponent,

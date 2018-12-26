@@ -5,6 +5,8 @@ import { ViewCompanyDetailsComponent } from './view-company-details/view-company
 import { AddUserComponent } from './add-user/add-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { EditCompanyDetailsComponent } from './edit-company-details/edit-company-details.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ListUserComponent } from './list-user/list-user.component';
 
 const routes: Routes = [
 	{
@@ -23,8 +25,18 @@ const routes: Routes = [
 		canActivate: [AuthGuardService]
 	},
 	{
-		path: 'edituser',
+		path: 'edituser/:userId',
 		component: EditUserComponent,
+		canActivate: [AuthGuardService]
+	},
+	{
+		path: 'listusers',
+		component: ListUserComponent,
+		canActivate: [AuthGuardService]
+	},
+	{
+		path: 'profile',
+		component: ProfileComponent,
 		canActivate: [AuthGuardService]
 	}
 ];

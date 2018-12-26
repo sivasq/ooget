@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } f
 import { Observable, Subscription } from 'rxjs';
 import { AsyncSubscriber } from '../../../services/async.service';
 import { ConfigService } from '../../../services/config.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-edit-user',
@@ -24,6 +25,7 @@ export class EditUserComponent implements OnInit {
 	public userProfile: any = {
 		username: '',
 		email: '',
+		role: '',
 		password: ''
 	}
 
@@ -32,28 +34,10 @@ export class EditUserComponent implements OnInit {
 	public profileImage: any = 'assets/img/avatars/profile-placeholder.png';
 	@ViewChild('imgFileInput') myProfileImageInputVariable: ElementRef;
 
-	UserUpdateForm: FormGroup;
-	// @ViewChild(FormGroupDirective) resetUserUpdateForm;
-	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber, private urlconfig: ConfigService, ) {
-		this.appearance$ = asyncSubscriber.getAppearance.pipe();
-
-		this.imgBaseUrl = urlconfig.img_base_url;
-
-		this.buildUserUpdateForm();
-
-		this.getProfileDetails();
-	}
-
 	public Roles: any = [
 		{
-			"RoleView": "Super Admin",
-			"RoleValue": "superadmin"
-		},
-		{
 			"RoleView": "Admin",
-			"RoleValue": "admin"
+			"RoleValue": "normalemployer"
 		},
 		{
 			"RoleView": "Verifier",
@@ -61,16 +45,29 @@ export class EditUserComponent implements OnInit {
 		}
 	]
 
+	UserUpdateForm: FormGroup;
+	// @ViewChild(FormGroupDirective) resetUserUpdateForm;
+	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber, private urlconfig: ConfigService, private route: ActivatedRoute) {
+		this.appearance$ = asyncSubscriber.getAppearance.pipe();
+
+		this.imgBaseUrl = urlconfig.img_base_url;
+
+		this.buildUserUpdateForm();
+
+		this.getProfileDetails(this.route.snapshot.params['userId']);
+	}
+
 	// Build Employer Add Form
 	buildUserUpdateForm(): void {
 		this.UserUpdateForm = this.fb.group({
+			supervisorid: [this.route.snapshot.params['userId']],
 			username: ['', [Validators.required]],
 			role: ['', [Validators.required]],
 			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(8)]), this.isPatternMatch.bind(this)],
 			verify: ['', [Validators.required]],
-			activestatus: ['true'],
-			registeredby: ['Employer'],
 		})
 	}
 
@@ -154,23 +151,25 @@ export class EditUserComponent implements OnInit {
 	}
 
 	// Get Admin Profile Details
-	getProfileDetails() {
-		this.busy = this._httpService.getUserProfileDetails()
+	getProfileDetails(userid) {
+		this.busy = this._httpService.getExtraUserProfileDetails({ "supervisorid": userid })
 			.subscribe(
 				response => {
 					// console.log(response);
 					if (response.success) {
 						// Profile Tab
-						this.userProfile.username = response.message.username ? response.message.username : '';
-						this.userProfile.email = response.message.email ? response.message.email : '';
-						this.userProfile.password = response.message.password ? response.message.password : '';
+						this.userProfile.username = response.profile.username ? response.profile.username : '';
+						this.userProfile.role = response.profile.role.rolename ? response.profile.role.rolename : '';
+						this.userProfile.email = response.profile.email ? response.profile.email : '';
+						this.userProfile.password = response.profile.password ? response.profile.password : '';
 						// Documents
-						this.profileImage = response.message.adminimage ? this.imgBaseUrl + '/admin/' + response.message.adminimage : 'assets/img/avatars/profile-placeholder.png';
+						this.profileImage = response.profile.userimage ? this.imgBaseUrl + '/admin/' + response.profile.userimage : 'assets/img/avatars/profile-placeholder.png';
 
 						// Patch Form Value
 						this.UserUpdateForm.patchValue({
 							'username': this.userProfile.username,
 							'email': this.userProfile.email,
+							'role': this.userProfile.role,
 							'password': this.userProfile.password,
 							'verify': this.userProfile.password,
 						})
@@ -189,7 +188,7 @@ export class EditUserComponent implements OnInit {
 	UserUpdateSubmit() {
 		if (!this.UserUpdateForm.valid) return false;
 
-		this.busy = this._httpService.userAdd(this.UserUpdateForm.value)
+		this.busy = this._httpService.updateUserProfile(this.UserUpdateForm.value)
 			.subscribe(
 				response => {
 					// Response is success
@@ -197,14 +196,15 @@ export class EditUserComponent implements OnInit {
 						let profileImage = this.myProfileImageInputVariable.nativeElement;
 
 						if (profileImage.files[0]) {
-							localStorage.setItem('ogUserName', this.UserUpdateForm.get('username').value);
-							localStorage.setItem('ogUserEmail', this.UserUpdateForm.get('email').value);
+							// localStorage.setItem('ogUserName', this.UserUpdateForm.get('username').value);
+							// localStorage.setItem('ogUserEmail', this.UserUpdateForm.get('email').value);
+
 							this.uploadProfileDocs();
 						} else {
-							localStorage.setItem('ogUserName', this.UserUpdateForm.get('username').value);
-							localStorage.setItem('ogUserEmail', this.UserUpdateForm.get('email').value);
+							// localStorage.setItem('ogUserName', this.UserUpdateForm.get('username').value);
+							// localStorage.setItem('ogUserEmail', this.UserUpdateForm.get('email').value);
 							// location.reload();
-							this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
+							// this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
 
 							let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
 								duration: 5000,
@@ -232,7 +232,7 @@ export class EditUserComponent implements OnInit {
 		const formData: FormData = new FormData();
 
 		if (profileImage.files && profileImage.files[0]) {
-			formData.append('adminimage', profileImage.files[0]);
+			formData.append('userimage', profileImage.files[0]);
 		}
 
 		if (profileImage.files[0]) {
@@ -244,7 +244,7 @@ export class EditUserComponent implements OnInit {
 							// location.reload();
 							this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
 
-							let snackBarRef = this.snackBar.open('Profile and Documents Updated Successfully.', 'Close', {
+							let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
 								duration: 5000,
 							});
 							snackBarRef.onAction().subscribe(() => {

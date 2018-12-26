@@ -33,24 +33,19 @@ export class OogetsidenavComponent implements OnInit {
 
 	navItems: NavItem[] = [
 		{
-			displayName: 'DevFestFL',
+			displayName: 'Settings',
 			iconName: 'recent_actors',
-			route: 'employer/settings/viewcompany',
+			// route: 'employer/settings/viewcompany',
 			children: [
 				{
-					displayName: 'Speakers',
+					displayName: 'Users List',
 					iconName: 'group',
-					route: 'employer/settings/viewcompany',
+					route: 'employer/settings/listusers',
 				},
 				{
-					displayName: 'Sessions',
+					displayName: 'My Company',
 					iconName: 'speaker_notes',
-					route: 'devfestfl/sessions',
-				},
-				{
-					displayName: 'Feedback',
-					iconName: 'feedback',
-					route: 'devfestfl/feedback'
+					route: 'employer/settings/viewcompany',
 				}
 			]
 		},

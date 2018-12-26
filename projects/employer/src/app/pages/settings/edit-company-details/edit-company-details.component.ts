@@ -9,9 +9,9 @@ import { ConfigService } from '../../../services/config.service';
 import { AsyncSubscriber } from '../../../services/async.service';
 
 @Component({
-  selector: 'app-edit-company-details',
-  templateUrl: './edit-company-details.component.html',
-  styleUrls: ['./edit-company-details.component.scss']
+	selector: 'app-edit-company-details',
+	templateUrl: './edit-company-details.component.html',
+	styleUrls: ['./edit-company-details.component.scss']
 })
 export class EditCompanyDetailsComponent implements OnInit {
 
@@ -57,10 +57,7 @@ export class EditCompanyDetailsComponent implements OnInit {
 
 		this.buildEmployerUpdateForm();
 		this.companyid = this.route.snapshot.params['emp_id'];
-		let employerId = {
-			companyid: this.route.snapshot.params['emp_id'],
-		}
-		this.getCompanyDetails(employerId);
+		this.getCompanyDetails();
 	}
 
 	/* setAppearanceNext1() {
@@ -141,13 +138,7 @@ export class EditCompanyDetailsComponent implements OnInit {
 			uennumber: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]{7,9}[A-Za-z]{1}$')]), this.isUENUnique.bind(this)],
 			industry: ['', Validators.compose([Validators.required])],
 			country: ['', Validators.compose([Validators.required])],
-			companycode: ['', Validators.compose([Validators.required])],
-			// email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],
-			// password: ['', Validators.compose([Validators.required, Validators.minLength(8)]), this.isPatternMatch.bind(this)],
-			// verify: ['', [Validators.required]],
-			// activestatus: ['true'],
-			// registeredby: ['ooget-team'],
-			// termsaccepted: ['false'],
+			companycode: ['', Validators.compose([Validators.required])]
 		})
 	}
 
@@ -241,7 +232,7 @@ export class EditCompanyDetailsComponent implements OnInit {
 	}
 
 	// Submit handler for Employer Add
-	public employerUpdateSubmit() {
+	employerUpdateSubmit() {
 		if (!this.employerUpdateForm.valid) return false;
 
 		// let snackBarRef = this.snackBar.open('Backend Process Not Done, Please Wait...', 'Close', {
@@ -257,10 +248,8 @@ export class EditCompanyDetailsComponent implements OnInit {
 				response => {
 					// Response is success
 					if (response.success) {
-						// Reset form
-						// this.employerUpdateForm.resetForm();
 						// Show Success Snackbar
-						let snackBarRef = this.snackBar.open('Employer Info Updated Successfully.', 'Close', {
+						let snackBarRef = this.snackBar.open('Company Info Updated Successfully.', 'Close', {
 							duration: 5000,
 						});
 						// Snackbar action
@@ -269,7 +258,7 @@ export class EditCompanyDetailsComponent implements OnInit {
 							console.log('The snack-bar action was triggered!');
 						});
 
-						this.router.navigate(['admin/employers/' + this.companyid + '/view']);
+						this.router.navigate(['employers/' + this.companyid + '/view']);
 
 						// Response is failed
 					} else if (!response.success) {
@@ -282,26 +271,23 @@ export class EditCompanyDetailsComponent implements OnInit {
 			);
 	}
 
-	getCompanyDetails(employerId) {
-		this.busy = this._httpService.getCompanyDetails(employerId)
+	// Get Company Details
+	getCompanyDetails() {
+		this.busy = this._httpService.getCompanyDetails()
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.employerId = response.employer._id;
-						this.employerName = response.employer.companyname;
-						this.employerOldEmail = response.employer.adminid.email;
-						this.employerOldUen = response.employer.uennumber;
-						console.log(this.employerOldEmail);
+						this.employerId = response.company._id;
+						this.employerName = response.company.companyname;
+						this.employerOldUen = response.company.uennumber;
 
 						this.employerUpdateForm.patchValue({
-							companyname: response.employer.companyname,
-							profile: response.employer.profile,
-							uennumber: response.employer.uennumber,
-							industry: response.employer.industry,
-							country: response.employer.country,
-							companycode: response.employer.companycode,
-							email: response.employer.adminid.email,
-							// password: response.employer.companyname,
+							companyname: response.company.companyname,
+							profile: response.company.profile,
+							uennumber: response.company.uennumber,
+							industry: response.company.industry,
+							country: response.company.country,
+							companycode: response.company.companycode,
 						});
 					} else if (!response.success) {
 						console.log(response);

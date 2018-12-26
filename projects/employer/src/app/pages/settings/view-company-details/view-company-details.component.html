@@ -25,11 +25,11 @@
 					 routerLink="/employer/jobs/add">
 						<mat-icon>playlist_add</mat-icon>
 					</button>
-					&nbsp;
+					<!-- &nbsp;
 					<button mat-mini-fab color="primary" matTooltip="Edit" matTooltipPosition="right" style="border-radius: 0"
 					 routerLink="/employer/settings/editcompany">
 						<mat-icon>edit</mat-icon>
-					</button>
+					</button> -->
 				</div>
 
 				<h3>Company Details</h3>
@@ -43,37 +43,37 @@
 			<mat-card class="p-10 mt-1" fxLayout="row wrap">
 				<mat-list>
 					<mat-list-item>
-						<span class="title">Company Name : </span>{{employerDetails.companyname}}
+						<span class="title">Company Name : </span>{{companyDetails.companyname}}
 					</mat-list-item>
 
 					<mat-divider></mat-divider>
 
 					<mat-list-item>
-						<span class="title">Country : </span>{{employerDetails.country}}
+						<span class="title">Country : </span>{{companyDetails.country}}
 					</mat-list-item>
 
 					<mat-divider></mat-divider>
 
 					<mat-list-item>
-						<span class="title">Industry : </span>{{employerDetails.industry}}
+						<span class="title">Industry : </span>{{companyDetails.industry}}
 					</mat-list-item>
 
 					<mat-divider></mat-divider>
 
 					<mat-list-item>
-						<span class="title">Profile : </span>{{employerDetails.profile}}
+						<span class="title">Profile : </span>{{companyDetails.profile}}
 					</mat-list-item>
 
 					<mat-divider></mat-divider>
 
 					<mat-list-item>
-						<span class="title">UEN Number : </span>{{employerDetails.uennumber}}
+						<span class="title">UEN Number : </span>{{companyDetails.uennumber}}
 					</mat-list-item>
 
 					<mat-divider></mat-divider>
 
-					<mat-list-item *ngIf="employerDetails.companycode">
-						<span class="title">Company Code : </span>{{employerDetails.companycode}}
+					<mat-list-item *ngIf="companyDetails.companycode">
+						<span class="title">Company Code : </span>{{companyDetails.companycode}}
 					</mat-list-item>
 
 					<mat-divider></mat-divider>
@@ -82,11 +82,9 @@
 						<span class="title" style="white-space: nowrap;">Terms &amp; Conditions : </span>
 
 						<div fxFlex fxLayout="row wrap" fxLayoutAlign="start center">
-							<span *ngIf="employerDetails.termsandconditions" style="margin-right: 15px; text-align: center;">
-								<a class="text-wrap" href="{{imgBaseUrl}}/company/{{employerDetails.termsandconditions}}" target="_blank" style="color: blue; font-weight: bold; font-size: 16px;">Click
+							<span *ngIf="companyDetails.termsandconditions" style="margin-right: 15px; text-align: center;">
+								<a class="text-wrap" href="{{imgBaseUrl}}/company/{{companyDetails.termsandconditions}}" target="_blank" style="color: blue; font-weight: bold; font-size: 16px;">Click
 									here</a> to Download Terms and Conditions</span>
-
-							<input hidden type="file" #docFileInput name="termsDoc" (change)="getDoc($event)" />
 						</div>
 					</mat-list-item>
 				</mat-list>

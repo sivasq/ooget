@@ -18,7 +18,7 @@
 	</div>
 
 	<div class="w-100 muted-text" fxLayout="row" fxLayoutAlign="space-between center" style="padding:0 10px;">
-		<a mat-icon-button matTooltip="Profile" matTooltipPosition="right" routerLink="/employer/settings/edituser">
+		<a mat-icon-button matTooltip="Profile" matTooltipPosition="right" routerLink="/employer/settings/profile">
 			<mat-icon>person_outline</mat-icon>
 		</a>
 		<!-- <a mat-icon-button routerLink=".">
@@ -62,21 +62,21 @@
 	</div>
 
 	<div class="menu-item">
+		<a mat-button routerLink="/employer/settings/listusers" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
+			<mat-icon>supervisor_account</mat-icon>
+			<span class="menu-title"> Users List</span>
+		</a>
+	</div>
+
+	<div class="menu-item">
 		<a mat-button routerLink="/employer/settings/adduser" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
 			<mat-icon>supervisor_account</mat-icon>
 			<span class="menu-title"> Add User</span>
 		</a>
 	</div>
 
-	<div class="menu-item">
-		<a mat-button routerLink="/employer/settings/edituser" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
-			<mat-icon>supervisor_account</mat-icon>
-			<span class="menu-title"> Edit User</span>
-		</a>
-	</div>
-
-	<mat-nav-list>
+	<!-- <mat-nav-list>
 		<app-sidemenu *ngFor="let item of navItems" [item]="item"></app-sidemenu>
-	</mat-nav-list>
+	</mat-nav-list> -->
 
 </div>
