@@ -435,4 +435,16 @@ export class ApiCallService {
 			})
 		return this.http.post(this.baseUrl + '/listsupervisors', dummyData, { headers: headers })
 	}
+
+	getRolesAndPermissions(): Observable<any> {
+		let dummyData = '';
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/fetchownroles', dummyData, { headers: headers })
+	}
 }

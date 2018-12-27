@@ -7,42 +7,80 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { EditCompanyDetailsComponent } from './edit-company-details/edit-company-details.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ListUserComponent } from './list-user/list-user.component';
+import { NgxPermissionsGuard } from 'ngx-permissions';
 
 const routes: Routes = [
 	{
 		path: 'viewcompany',
 		component: ViewCompanyDetailsComponent,
-		canActivate: [AuthGuardService]
+		canActivate: [AuthGuardService, NgxPermissionsGuard],
+		data: {
+			permissions: {
+				only: 'superemployer',
+				except: 'verifier',
+				redirectTo: '/employer/401'
+			}
+		}
 	},
 	{
 		path: 'editcompany',
 		component: EditCompanyDetailsComponent,
-		canActivate: [AuthGuardService]
+		canActivate: [AuthGuardService],
+		// data: {
+		// 	permissions: {
+		// 		only: 'superemployer',
+		// 		redirectTo: '/employer/401'
+		// 	}
+		// }
 	},
 	{
 		path: 'adduser',
 		component: AddUserComponent,
-		canActivate: [AuthGuardService]
+		canActivate: [AuthGuardService],
+		// data: {
+		// 	permissions: {
+		// 		only: 'superemployer',
+		// 		redirectTo: '/employer/401'
+		// 	}
+		// }
 	},
 	{
 		path: 'edituser/:userId',
 		component: EditUserComponent,
-		canActivate: [AuthGuardService]
+		canActivate: [AuthGuardService],
+		// data: {
+		// 	permissions: {
+		// 		only: 'superemployer',
+		// 		redirectTo: '/employer/401'
+		// 	}
+		// }
 	},
 	{
 		path: 'listusers',
 		component: ListUserComponent,
-		canActivate: [AuthGuardService]
+		canActivate: [AuthGuardService],
+		// data: {
+		// 	permissions: {
+		// 		only: 'superemployer',
+		// 		redirectTo: '/employer/401'
+		// 	}
+		// }
 	},
 	{
 		path: 'profile',
 		component: ProfileComponent,
-		canActivate: [AuthGuardService]
+		canActivate: [AuthGuardService],
+		// data: {
+		// 	permissions: {
+		// 		only: ['superemployer','verifier'],
+		// 		redirectTo: '/employer/401'
+		// 	}
+		// }
 	}
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+	imports: [RouterModule.forChild(routes)],
+	exports: [RouterModule]
 })
 export class SettingsRoutingModule { }

@@ -62,7 +62,7 @@
 				</thead>
 				<tbody>
 					<tr *ngFor="let user of users_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
-						<td>{{user.username}}</td>
+						<td>{{user.username | ucfirst}}</td>
 						<td>{{user.email}}</td>
 						<td>
 							{{user.roleid.rolename == "superemployer" ? "Super Admin" : user.roleid.rolename == "normalemployer" ? "Admin" :

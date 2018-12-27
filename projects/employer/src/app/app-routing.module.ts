@@ -7,6 +7,8 @@ import { RegisterComponent } from './register/register.component';
 import { Layout1Component } from './layouts/layout1/layout1.component';
 import { Layout2Component } from './layouts/layout2/layout2.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
+import { NgxPermissionsGuard } from 'ngx-permissions';
 
 const routes: Routes = [
 	{
@@ -39,11 +41,16 @@ const routes: Routes = [
 			{
 				path: 'jobs',
 				loadChildren: './pages/jobs/jobs.module#JobsModule',
-      },
-      {
-        path: 'settings',
-		  loadChildren: './pages/settings/settings.module#SettingsModule',
-      },
+			},
+			{
+				path: 'settings',
+				loadChildren: './pages/settings/settings.module#SettingsModule',
+			},
+			{
+				path: '401',
+				component: NotAuthorizedComponent,
+				// canActivate: [AuthGuardService],
+			}
 		]
 	},
 	{

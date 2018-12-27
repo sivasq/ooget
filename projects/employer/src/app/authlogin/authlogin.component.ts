@@ -5,6 +5,7 @@ import { FormGroup, FormGroupDirective, FormBuilder, Validators } from '@angular
 import { Subscription } from 'rxjs';
 import { ConfigService } from '../services/config.service';
 import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
+import { AsyncSubscriber } from '../services/async.service';
 
 @Component({
 	selector: 'app-authlogin',
@@ -26,7 +27,7 @@ export class AuthloginComponent implements OnInit {
 	@ViewChild(FormGroupDirective) resetEmployerAuthForm;
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	constructor(public router: Router, private _httpService: ApiCallService, private config: ConfigService, private fb: FormBuilder, private permissionsService: NgxPermissionsService, private rolesService: NgxRolesService) {
+	constructor(public router: Router, private _httpService: ApiCallService, private config: ConfigService, private fb: FormBuilder, private permissionsService: NgxPermissionsService, private rolesService: NgxRolesService, private asyncSubscriber: AsyncSubscriber) {
 		this.homePageUrl = config.homePageUrl;
 		this.buildEmployerAuthForm();
 	}
@@ -62,7 +63,7 @@ export class AuthloginComponent implements OnInit {
 						// Reset form
 						this.resetEmployerAuthForm.resetForm();
 
-						this.permissionsService.loadPermissions(['all']);
+						this.permissionsService.loadPermissions(response.employer.role.permissions);
 						this.rolesService.addRole(response.employer.role.rolename, response.employer.role.permissions);
 
 						console.log(this.rolesService.getRoles());

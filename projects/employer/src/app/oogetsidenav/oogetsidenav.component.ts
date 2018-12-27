@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { ConfigService } from '../services/config.service';
 import { Router } from '@angular/router';
@@ -15,7 +15,8 @@ export interface NavItem {
 @Component({
 	selector: 'app-oogetsidenav',
 	templateUrl: './oogetsidenav.component.html',
-	styleUrls: ['./oogetsidenav.component.scss']
+	styleUrls: ['./oogetsidenav.component.scss'],
+	// encapsulation: ViewEncapsulation.None
 })
 export class OogetsidenavComponent implements OnInit {
 
@@ -35,7 +36,7 @@ export class OogetsidenavComponent implements OnInit {
 		{
 			displayName: 'Settings',
 			iconName: 'recent_actors',
-			// route: 'employer/settings/viewcompany',
+			route: 'employer/settings',
 			children: [
 				{
 					displayName: 'Users List',
@@ -62,68 +63,6 @@ export class OogetsidenavComponent implements OnInit {
 					displayName: 'What\'s up with the Web?',
 					iconName: 'star_rate',
 					route: 'what-up-web'
-				},
-				{
-					displayName: 'My ally, the CLI',
-					iconName: 'star_rate',
-					route: 'my-ally-cli'
-				},
-				{
-					displayName: 'Become an Angular Tailor',
-					iconName: 'star_rate',
-					route: 'become-angular-tailer'
-				}
-			]
-		},
-		{
-			displayName: 'Orlando',
-			iconName: 'movie_filter',
-			children: [
-				{
-					displayName: 'Michael Prentice',
-					iconName: 'person',
-					route: 'michael-prentice',
-				},
-				{
-					displayName: 'Create Enterprise UIs',
-					iconName: 'star_rate',
-					route: 'material-design'
-				},
-				{
-					displayName: 'Stephen Fluin',
-					iconName: 'person',
-					route: 'stephen-fluin',
-				},
-				{
-					displayName: 'Mike Brocchi',
-					iconName: 'person',
-					route: 'mike-brocchi',
-				}
-			]
-		},
-		{
-			displayName: 'Sessions',
-			iconName: 'speaker_notes',
-			children: [
-				{
-					displayName: 'Create Enterprise UIs',
-					iconName: 'star_rate',
-					route: 'material-design'
-				},
-				{
-					displayName: 'What\'s up with the Web?',
-					iconName: 'star_rate',
-					route: 'what-up-web'
-				},
-				{
-					displayName: 'My ally, the CLI',
-					iconName: 'star_rate',
-					route: 'my-ally-cli'
-				},
-				{
-					displayName: 'Become an Angular Tailor',
-					iconName: 'star_rate',
-					route: 'become-angular-tailer'
 				}
 			]
 		},

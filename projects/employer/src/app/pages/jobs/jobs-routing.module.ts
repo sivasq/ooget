@@ -7,38 +7,75 @@ import { AuthGuardService } from '../../services/auth-guard.service';
 import { EditJobComponent } from './edit-job/edit-job.component';
 import { MakeDuplicateJobComponent } from './make-duplicate-job/make-duplicate-job.component';
 import { ContractDetailsComponent } from './contract-details/contract-details.component';
+import { NgxPermissionsGuard } from 'ngx-permissions';
 
 const routes: Routes = [
 	{
 		path: 'add',
 		component: AddJobComponent,
-		canActivate: [AuthGuardService]
+		canActivate: [AuthGuardService],
+		// data: {
+		// 	permissions: {
+		// 		only: 'superemployer',
+		// 		redirectTo: '/employer/401'
+		// 	}
+		// }
 	},
 	{
 		path: 'list',
 		component: JobsListComponent,
-		canActivate: [AuthGuardService]
+		canActivate: [AuthGuardService],
+		// data: {
+		// 	permissions: {
+		// 		only: 'superemployer',
+		// 		redirectTo: '/employer/401'
+		// 	}
+		// }
 	},
 	{
 		path: ':job_id/edit',
 		component: EditJobComponent,
-		canActivate: [AuthGuardService]
+		canActivate: [AuthGuardService],
+		// data: {
+		// 	permissions: {
+		// 		only: 'superemployer',
+		// 		redirectTo: '/employer/401'
+		// 	}
+		// }
 	},
 	{
 		path: ':job_id/copyjob',
 		component: MakeDuplicateJobComponent,
-		canActivate: [AuthGuardService]
+		canActivate: [AuthGuardService],
+		// data: {
+		// 	permissions: {
+		// 		only: 'superemployer',
+		// 		redirectTo: '/employer/401'
+		// 	}
+		// }
 	},
 	{
 		path: ':job_id/view',
 		component: JobDetailsComponent,
-		canActivate: [AuthGuardService]
-  },
-  {
-    path: ':contract_id/contract_details',
-    component: ContractDetailsComponent,
-    canActivate: [AuthGuardService]
-  },
+		canActivate: [AuthGuardService],
+		// data: {
+		// 	permissions: {
+		// 		only: 'superemployer',
+		// 		redirectTo: '/employer/401'
+		// 	}
+		// }
+	},
+	{
+		path: ':contract_id/contract_details',
+		component: ContractDetailsComponent,
+		canActivate: [AuthGuardService],
+		// data: {
+		// 	permissions: {
+		// 		only: 'superemployer',
+		// 		redirectTo: '/employer/401'
+		// 	}
+		// }
+	},
 	{
 		path: ':job_id/candidates',
 		loadChildren: '../../pages/jobseeker/jobseeker.module#JobseekerModule',

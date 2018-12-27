@@ -15,6 +15,7 @@ import { RegisterComponent } from './register/register.component';
 import { Layout1Component } from './layouts/layout1/layout1.component';
 import { Layout2Component } from './layouts/layout2/layout2.component';
 import { NgxPermissionsModule } from 'ngx-permissions';
+import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 // import { TopProfiledialogComponent } from './top-profiledialog/top-profiledialog.component';
 // import { TopShortcutdialogComponent } from './top-shortcutdialog/top-shortcutdialog.component';
 
@@ -26,6 +27,7 @@ import { NgxPermissionsModule } from 'ngx-permissions';
 		RegisterComponent,
 		Layout1Component,
 		Layout2Component,
+		NotAuthorizedComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -35,9 +37,7 @@ import { NgxPermissionsModule } from 'ngx-permissions';
 		SharedModule,
 		NgxPermissionsModule.forRoot()
 	],
-	providers: [
-		// { provide: APP_BASE_HREF, useValue: window['_app_base'] || '/' },
-	],
+	providers: [],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

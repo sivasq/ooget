@@ -32,9 +32,6 @@ export class SidemenuComponent implements OnInit {
 	@Input() item: NavItem;
 	@Input() depth: number;
 
-	@ContentChildren(SidemenuComponent)
-	groups: QueryList<SidemenuComponent>;
-
 	constructor(public navService: NavService, public router: Router) {
 		if (this.depth === undefined) {
 			this.depth = 0;
@@ -53,21 +50,12 @@ export class SidemenuComponent implements OnInit {
 	}
 
 	onItemSelected(item: NavItem) {
-		console.log(item);
 		if (!item.children || !item.children.length) {
 			this.router.navigate([item.route]);
 			this.navService.closeNav();
 		}
 		if (item.children && item.children.length) {
 			this.expanded = !this.expanded;
-			// this.groups.toArray().forEach((t) => {
-			// 	console.log(t);
-			// 	t.expanded = false;
-			// 	// this.expanded = true;
-			// 	console.log(item);
-			// });
 		}
-		// console.log(this.groups);
 	}
-
 }

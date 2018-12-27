@@ -1,92 +1,91 @@
 <div class="inner-sidenav-content transition-2">
 
-<ng-template [ngxPermissionsOnly]="['all']">
-    <div> I will see it only admin</div>
-</ng-template>
-  <ng-template [ngxPermissionsExcept]="['superemployer1']">
-    <div> I will see it only admin role</div>
-  </ng-template>
+	<div *ngxPermissionsOnly="['superemployer']">
+		<div> I will see it only admin</div>
+	</div>
+	<ng-template [ngxPermissionsExcept]="['superemployer']">
+		<div> I will see it only admin role</div>
+	</ng-template>
 
-    <div fxLayout="row wrap">
-        <div class="flex-p" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
-            <mat-card>
-                <mat-card-title fxLayoutAlign="space-between center">
-                    <small class="text-muted">Employers</small>
-                    <mat-chip-list>
-                        <div class="mat-chip-list-wrapper">
-                            <mat-chip class="info-chip" color="accent" selected="true">
-                                <!-- <mat-icon class="icon-sm">trending_up</mat-icon>37% -->
-                                overall
-                            </mat-chip>
-                        </div>
-                    </mat-chip-list>
-                </mat-card-title>
+	<div fxLayout="row wrap">
+		<div class="flex-p" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+			<mat-card>
+				<mat-card-title fxLayoutAlign="space-between center">
+					<small class="text-muted">Employers</small>
+					<mat-chip-list>
+						<div class="mat-chip-list-wrapper">
+							<mat-chip class="info-chip" color="accent" selected="true">
+								<!-- <mat-icon class="icon-sm">trending_up</mat-icon>37% -->
+								overall
+							</mat-chip>
+						</div>
+					</mat-chip-list>
+				</mat-card-title>
 
-                <mat-card-content fxLayoutAlign="space-between center">
-                    <h3 class="font-normal" style="font-size: 1.75rem;">2540</h3>
-                </mat-card-content>
-            </mat-card>
-        </div>
+				<mat-card-content fxLayoutAlign="space-between center">
+					<h3 class="font-normal" style="font-size: 1.75rem;">2540</h3>
+				</mat-card-content>
+			</mat-card>
+		</div>
 
-        <div class="flex-p" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
-            <mat-card>
-                <mat-card-title fxLayoutAlign="space-between center">
-                    <small class="text-muted">Jobseekers</small>
-                    <mat-chip-list>
-                        <div class="mat-chip-list-wrapper">
-                            <mat-chip class="info-chip" color="accent" selected="true">
-                                <!-- <mat-icon class="icon-sm">trending_up</mat-icon>37% -->
-                                overall
-                            </mat-chip>
-                        </div>
-                    </mat-chip-list>
-                </mat-card-title>
+		<div class="flex-p" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+			<mat-card>
+				<mat-card-title fxLayoutAlign="space-between center">
+					<small class="text-muted">Jobseekers</small>
+					<mat-chip-list>
+						<div class="mat-chip-list-wrapper">
+							<mat-chip class="info-chip" color="accent" selected="true">
+								<!-- <mat-icon class="icon-sm">trending_up</mat-icon>37% -->
+								overall
+							</mat-chip>
+						</div>
+					</mat-chip-list>
+				</mat-card-title>
 
-                <mat-card-content fxLayoutAlign="space-between center">
-                    <h3 class="font-normal" style="font-size: 1.75rem;">2540</h3>
-                </mat-card-content>
-            </mat-card>
-        </div>
+				<mat-card-content fxLayoutAlign="space-between center">
+					<h3 class="font-normal" style="font-size: 1.75rem;">2540</h3>
+				</mat-card-content>
+			</mat-card>
+		</div>
 
-        <div class="flex-p" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
-            <mat-card>
-                <mat-card-title fxLayoutAlign="space-between center">
-                    <small class="text-muted">Jobs</small>
-                    <mat-chip-list>
-                        <div class="mat-chip-list-wrapper">
-                            <mat-chip class="info-chip" color="accent" selected="true">
-                                <!-- <mat-icon class="icon-sm">trending_up</mat-icon>37% -->
-                                overall
-                            </mat-chip>
-                        </div>
-                    </mat-chip-list>
-                </mat-card-title>
+		<div class="flex-p" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+			<mat-card>
+				<mat-card-title fxLayoutAlign="space-between center">
+					<small class="text-muted">Jobs</small>
+					<mat-chip-list>
+						<div class="mat-chip-list-wrapper">
+							<mat-chip class="info-chip" color="accent" selected="true">
+								<!-- <mat-icon class="icon-sm">trending_up</mat-icon>37% -->
+								overall
+							</mat-chip>
+						</div>
+					</mat-chip-list>
+				</mat-card-title>
 
-                <mat-card-content fxLayoutAlign="space-between center">
-                    <h3 class="font-normal" style="font-size: 1.75rem;">2540</h3>
-                </mat-card-content>
-            </mat-card>
-        </div>
+				<mat-card-content fxLayoutAlign="space-between center">
+					<h3 class="font-normal" style="font-size: 1.75rem;">2540</h3>
+				</mat-card-content>
+			</mat-card>
+		</div>
 
-        <div class="flex-p" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
-            <mat-card>
-                <mat-card-title fxLayoutAlign="space-between center">
-                    <small class="text-muted">Jobs Live</small>
-                    <mat-chip-list>
-                        <div class="mat-chip-list-wrapper">
-                            <mat-chip class="info-chip" color="accent" selected="true">
-                                <!-- <mat-icon class="icon-sm">trending_up</mat-icon>37% -->
-                                overall
-                            </mat-chip>
-                        </div>
-                    </mat-chip-list>
-                </mat-card-title>
+		<div class="flex-p" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+			<mat-card>
+				<mat-card-title fxLayoutAlign="space-between center">
+					<small class="text-muted">Jobs Live</small>
+					<mat-chip-list>
+						<div class="mat-chip-list-wrapper">
+							<mat-chip class="info-chip" color="accent" selected="true">
+								<!-- <mat-icon class="icon-sm">trending_up</mat-icon>37% -->
+								overall
+							</mat-chip>
+						</div>
+					</mat-chip-list>
+				</mat-card-title>
 
-                <mat-card-content fxLayoutAlign="space-between center">
-                    <h3 class="font-normal" style="font-size: 1.75rem;">2540</h3>
-                </mat-card-content>
-            </mat-card>
-        </div>
-    </div>
+				<mat-card-content fxLayoutAlign="space-between center">
+					<h3 class="font-normal" style="font-size: 1.75rem;">2540</h3>
+				</mat-card-content>
+			</mat-card>
+		</div>
+	</div>
 </div>
-

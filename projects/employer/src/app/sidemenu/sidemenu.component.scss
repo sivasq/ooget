@@ -5,12 +5,13 @@
     outline: none;
     width: 100%;
     .mat-list-item.active {
-        background-color: mat-color($primary, 50);
+		background-color: $primary;
+		color: #ffffff;
     }
     &:hover,
     &:focus {
         >.mat-list-item:not(.expanded) {
-            background-color: mat-color($primary, 100) !important;
+            background-color: #eee !important;
         }
     }
 }

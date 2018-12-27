@@ -13,12 +13,12 @@ import { ListUserComponent } from './list-user/list-user.component';
 import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
-  declarations: [ProfileComponent, ViewCompanyDetailsComponent, EditCompanyDetailsComponent, AddUserComponent, EditUserComponent, ListUserComponent],
-  imports: [
-    CommonModule,
-	  SettingsRoutingModule,
-    SharedModule,
-    NgxPermissionsModule.forChild()
-  ]
+	declarations: [ProfileComponent, ViewCompanyDetailsComponent, EditCompanyDetailsComponent, AddUserComponent, EditUserComponent, ListUserComponent],
+	imports: [
+		CommonModule,
+		SettingsRoutingModule,
+		SharedModule,
+		NgxPermissionsModule.forChild()
+	]
 })
 export class SettingsModule { }

@@ -30,7 +30,7 @@ import { AuthGuardService } from '../services/auth-guard.service';
 import { EqualValidator, CompareDirective } from '../directives/custom-directive.directive';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
 
-import { NgPipesModule } from 'ngx-pipes';
+import { NgPipesModule, CamelizePipe, UcFirstPipe } from 'ngx-pipes';
 
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpModule } from '@ngx-progressbar/http';
@@ -90,7 +90,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		TopShortcutdialogComponent,
 		TermsConditionsDialogComponent,
 		ConfirmDialogComponent,
-		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, AgePipe, EqualValidator, CompareDirective
+		UniqueMainLocation,
+		SubLocationFilter,
+		DatexPipe,
+		SearchPipe,
+		AgePipe,
+		EqualValidator,
+		CompareDirective
 	],
 	entryComponents: [
 		TopProfiledialogComponent,
@@ -129,7 +135,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		ConfigService,
 		ApiCallService,
 		DataService, JsonToCsvService, JsonToTextService,
-		DatePipe, UpperCasePipe, AgePipe,
+		DatePipe, UpperCasePipe, AgePipe, CamelizePipe, UcFirstPipe,
 		{ provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
 		{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
 		AuthGuardService
