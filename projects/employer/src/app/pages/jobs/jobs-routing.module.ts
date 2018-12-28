@@ -13,68 +13,68 @@ const routes: Routes = [
 	{
 		path: 'add',
 		component: AddJobComponent,
-		canActivate: [AuthGuardService],
-		// data: {
-		// 	permissions: {
-		// 		only: 'superemployer',
-		// 		redirectTo: '/employer/401'
-		// 	}
-		// }
+		canActivate: [AuthGuardService, NgxPermissionsGuard],
+		data: {
+			permissions: {
+				only: 'superemployer',
+				redirectTo: '/employer/401'
+			}
+		}
 	},
 	{
 		path: 'list',
 		component: JobsListComponent,
-		canActivate: [AuthGuardService],
-		// data: {
-		// 	permissions: {
-		// 		only: 'superemployer',
-		// 		redirectTo: '/employer/401'
-		// 	}
-		// }
+		canActivate: [AuthGuardService, NgxPermissionsGuard],
+		data: {
+			permissions: {
+				only: ['superemployer','verifier'],
+				redirectTo: '/employer/401'
+			}
+		}
 	},
 	{
 		path: ':job_id/edit',
 		component: EditJobComponent,
-		canActivate: [AuthGuardService],
-		// data: {
-		// 	permissions: {
-		// 		only: 'superemployer',
-		// 		redirectTo: '/employer/401'
-		// 	}
-		// }
+		canActivate: [AuthGuardService, NgxPermissionsGuard],
+		data: {
+			permissions: {
+				only: 'superemployer',
+				redirectTo: '/employer/401'
+			}
+		}
 	},
 	{
 		path: ':job_id/copyjob',
 		component: MakeDuplicateJobComponent,
-		canActivate: [AuthGuardService],
-		// data: {
-		// 	permissions: {
-		// 		only: 'superemployer',
-		// 		redirectTo: '/employer/401'
-		// 	}
-		// }
+		canActivate: [AuthGuardService, NgxPermissionsGuard],
+		data: {
+			permissions: {
+				only: 'superemployer',
+				redirectTo: '/employer/401'
+			}
+		}
 	},
 	{
 		path: ':job_id/view',
 		component: JobDetailsComponent,
-		canActivate: [AuthGuardService],
-		// data: {
-		// 	permissions: {
-		// 		only: 'superemployer',
-		// 		redirectTo: '/employer/401'
-		// 	}
-		// }
+		canActivate: [AuthGuardService, NgxPermissionsGuard],
+		data: {
+			permissions: {
+				only: ['superemployer', 'verifier'],
+				redirectTo: '/employer/401'
+			}
+		}
 	},
 	{
 		path: ':contract_id/contract_details',
 		component: ContractDetailsComponent,
-		canActivate: [AuthGuardService],
-		// data: {
-		// 	permissions: {
-		// 		only: 'superemployer',
-		// 		redirectTo: '/employer/401'
-		// 	}
-		// }
+		canActivate: [AuthGuardService, NgxPermissionsGuard],
+		data: {
+			permissions: {
+				only: ['superemployer', 'verifier'],
+				redirectTo: '/employer/401'
+			}
+		}
 	},
 	{
 		path: ':job_id/candidates',

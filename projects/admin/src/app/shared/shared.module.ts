@@ -39,10 +39,12 @@ import { NgProgressHttpModule } from '@ngx-progressbar/http';
 import { NgProgressRouterModule } from '@ngx-progressbar/router';
 import { JsonToCsvService } from '../services/json-to-csv.service';
 import { JsonToTextService } from '../services/json-to-text.service';
+import { DynamicTableModule } from 'material-dynamic-table';
 
 // Calendar
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { SidemenuComponent } from '../sidemenu/sidemenu.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true,
@@ -76,6 +78,7 @@ export const MY_NATIVE_FORMATS = {
 		NgBusyModule,
 		NgPipesModule,
 		MultipleDatePickerModule,
+		DynamicTableModule,
 		NgProgressModule.forRoot({
 			thick: true,
 			spinner: false,
@@ -92,6 +95,7 @@ export const MY_NATIVE_FORMATS = {
 	declarations: [
 		OogetsidenavComponent,
 		OogettopbarComponent,
+		SidemenuComponent,
 		TopProfiledialogComponent,
 		TopShortcutdialogComponent,
 		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, SafeHtml, AgePipe,
@@ -110,6 +114,7 @@ export const MY_NATIVE_FORMATS = {
 		RouterModule,
 		OogetsidenavComponent,
 		OogettopbarComponent,
+		SidemenuComponent,
 		FlexLayoutModule,
 		PerfectScrollbarModule,
 		FormsModule,
@@ -127,6 +132,7 @@ export const MY_NATIVE_FORMATS = {
 		NgProgressRouterModule,
 		MultipleDatePickerModule,
 		NgxMaskModule,
+		DynamicTableModule,
 		EqualValidator, CompareDirective, NgPipesModule,
 		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, SafeHtml, AgePipe,
 	],

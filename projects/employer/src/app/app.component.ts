@@ -13,10 +13,17 @@ export class AppComponent {
 
 	constructor(private ngProgress: NgProgress, private permissionsService: NgxPermissionsService, private rolesService: NgxRolesService, private asyncSubscriber: AsyncSubscriber, private _httpService: ApiCallService, ) {
 
-		this.permissionsService.loadPermissions(['create','view','edit','delete']);
-		this.rolesService.addRole('superemployer', ['create', 'view', 'edit', 'delete']);
+		// this.permissionsService.loadPermissions(['create','view','edit','delete']);
+		// this.rolesService.addRole('superemployer', ['create', 'view', 'edit', 'delete']);
 
 		if (localStorage.getItem('isLoggedIn')) {
+
+			let role = localStorage.getItem('ogRole');
+			let permissions = JSON.parse(localStorage.getItem('ogPermissions'));
+
+			this.permissionsService.loadPermissions(permissions);
+			this.rolesService.addRole(role, permissions);
+
 			// logged in so return true
 			// this.getRolesAndPermissions();
 		}

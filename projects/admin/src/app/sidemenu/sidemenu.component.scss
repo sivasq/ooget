@@ -1,0 +1,31 @@
+@import "../../variables.scss";
+:host {
+    display: flex;
+    flex-direction: column;
+    outline: none;
+    width: 100%;
+    .mat-list-item.active,
+    .mat-list-item.active:hover {
+        background-color: $primary;
+        color: #ffffff;
+    }
+    &:hover,
+    &:focus {
+        >.mat-list-item:not(.expanded):not(.active) {
+            background-color: #eee !important;
+        }
+    }
+}
+
+.mat-list-item {
+    // padding: 8px 0;
+    display: flex;
+    width: auto;
+    .routeIcon {
+        margin-right: 15px;
+    }
+}
+
+::ng-deep .mat-list-item-content {
+    width: 100% !important;
+}

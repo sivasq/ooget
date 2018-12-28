@@ -5,6 +5,14 @@ import { Router } from '@angular/router';
 import { AsyncSubscriber } from '../services/async.service';
 import { Observable } from 'rxjs';
 
+export interface NavItem {
+	displayName: string;
+	disabled?: boolean;
+	iconName: string;
+	route?: string;
+	children?: NavItem[];
+}
+
 @Component({
 	selector: 'app-oogetsidenav',
 	templateUrl: './oogetsidenav.component.html',
@@ -20,6 +28,63 @@ export class OogetsidenavComponent implements OnInit {
 	public UserRole: String;
 
 	appearance$: Observable<any>;
+
+	navItems: NavItem[] = [
+		{
+			displayName: 'Settings',
+			iconName: 'settings',
+			route: 'admin',
+			children: [
+				{
+					displayName: 'Holidays',
+					iconName: 'work_off',
+					route: '/admin/holidays',
+				}
+			]
+		},
+		{
+			displayName: 'Reports',
+			iconName: 'chrome_reader_mode',
+			children: [
+				{
+					displayName: 'JobSeeker Timesheet',
+					iconName: 'access_time',
+					route: '/admin/reports/jstr'
+				},
+				{
+					displayName: 'Employer Charges',
+					iconName: 'monetization_on',
+					route: '/admin/reports/cter'
+				},
+				{
+					displayName: 'Admin Payment',
+					iconName: 'monetization_on',
+					route: '/admin/reports/apr'
+				},
+				{
+					displayName: 'Work & Off Days',
+					iconName: 'work_off',
+					children: [
+						{
+							displayName: 'Calendar View',
+							iconName: 'calendar_today',
+							route: '/admin/reports/wocvr'
+						},
+						{
+							displayName: 'Matrix View',
+							iconName: 'table_chart',
+							route: '/admin/reports/womvr'
+						}
+					]
+				}
+			]
+		},
+		{
+			displayName: 'FAQ',
+			iconName: 'feedback',
+			route: '/admin/faq'
+		}
+	]
 
 	constructor(private configService: ConfigService, public router: Router, private urlconfig: ConfigService, private asyncSubscriber: AsyncSubscriber) {
 		this.baseUrl = configService.base_url;

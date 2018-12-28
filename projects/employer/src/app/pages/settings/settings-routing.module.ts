@@ -17,7 +17,6 @@ const routes: Routes = [
 		data: {
 			permissions: {
 				only: 'superemployer',
-				except: 'verifier',
 				redirectTo: '/employer/401'
 			}
 		}
@@ -25,57 +24,57 @@ const routes: Routes = [
 	{
 		path: 'editcompany',
 		component: EditCompanyDetailsComponent,
-		canActivate: [AuthGuardService],
-		// data: {
-		// 	permissions: {
-		// 		only: 'superemployer',
-		// 		redirectTo: '/employer/401'
-		// 	}
-		// }
+		canActivate: [AuthGuardService, NgxPermissionsGuard],
+		data: {
+			permissions: {
+				only: 'superemployer',
+				redirectTo: '/employer/401'
+			}
+		}
 	},
 	{
 		path: 'adduser',
 		component: AddUserComponent,
-		canActivate: [AuthGuardService],
-		// data: {
-		// 	permissions: {
-		// 		only: 'superemployer',
-		// 		redirectTo: '/employer/401'
-		// 	}
-		// }
+		canActivate: [AuthGuardService, NgxPermissionsGuard],
+		data: {
+			permissions: {
+				only: 'superemployer',
+				redirectTo: '/employer/401'
+			}
+		}
 	},
 	{
 		path: 'edituser/:userId',
 		component: EditUserComponent,
-		canActivate: [AuthGuardService],
-		// data: {
-		// 	permissions: {
-		// 		only: 'superemployer',
-		// 		redirectTo: '/employer/401'
-		// 	}
-		// }
+		canActivate: [AuthGuardService, NgxPermissionsGuard],
+		data: {
+			permissions: {
+				only: 'superemployer',
+				redirectTo: '/employer/401'
+			}
+		}
 	},
 	{
 		path: 'listusers',
 		component: ListUserComponent,
-		canActivate: [AuthGuardService],
-		// data: {
-		// 	permissions: {
-		// 		only: 'superemployer',
-		// 		redirectTo: '/employer/401'
-		// 	}
-		// }
+		canActivate: [AuthGuardService, NgxPermissionsGuard],
+		data: {
+			permissions: {
+				only: 'superemployer',
+				redirectTo: '/employer/401'
+			}
+		}
 	},
 	{
 		path: 'profile',
 		component: ProfileComponent,
-		canActivate: [AuthGuardService],
-		// data: {
-		// 	permissions: {
-		// 		only: ['superemployer','verifier'],
-		// 		redirectTo: '/employer/401'
-		// 	}
-		// }
+		canActivate: [AuthGuardService, NgxPermissionsGuard],
+		data: {
+			permissions: {
+				only: ['superemployer', 'verifier'],
+				redirectTo: '/employer/401'
+			}
+		}
 	}
 ];
 

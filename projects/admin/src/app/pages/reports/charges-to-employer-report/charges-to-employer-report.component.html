@@ -1,0 +1,58 @@
+<div class="inner-sidenav-content transition-2">
+	<!-- <div fxLayout="row wrap" fxFill>
+		<div fxFlex fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+			<h1 style="color: #bbbbbb; text-transform: uppercase; text-align: center;">
+				Working Here
+			</h1>
+			<button mat-stroked-button (click)="backClicked()">
+				<mat-icon>arrow_back</mat-icon>
+				Go Back
+			</button>
+		</div>
+	</div> -->
+
+	<mat-accordion>
+		<mat-expansion-panel *ngFor="let employer of employerDatas;">
+			<mat-expansion-panel-header>
+				<mat-panel-title>
+					Employer Name: {{employer.companyName}}
+				</mat-panel-title>
+				<mat-panel-description>
+					Employer Code: {{employer.compnyCode}}
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+
+			<mat-accordion>
+				<mat-expansion-panel *ngFor="let job of employer.jobs;">
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							Job No: {{job.jobNumber}}
+						</mat-panel-title>
+						<mat-panel-description>
+
+						</mat-panel-description>
+					</mat-expansion-panel-header>
+
+					<mat-accordion>
+						<mat-expansion-panel *ngFor="let contractor of job.contractors;">
+							<mat-expansion-panel-header>
+								<mat-panel-title>
+									Employee Code: {{job.name}}
+								</mat-panel-title>
+								<mat-panel-description>
+									Employee Code: {{job.employeeCode}}
+								</mat-panel-description>
+							</mat-expansion-panel-header>
+
+							<mdt-dynamic-table [columns]="columns" [dataSource]="getDataSource(contractor.timesheets)" [pageSize]="5"></mdt-dynamic-table>
+
+						</mat-expansion-panel>
+					</mat-accordion>
+
+				</mat-expansion-panel>
+			</mat-accordion>
+
+		</mat-expansion-panel>
+	</mat-accordion>
+
+</div>

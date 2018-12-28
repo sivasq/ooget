@@ -52,7 +52,6 @@ export class AuthloginComponent implements OnInit {
 						localStorage.setItem('ogUserEmail', response.employer.email);
 						localStorage.setItem('ogUserEmail', response.employer.username);
 						localStorage.setItem('ogDefaultEmployer', response.employer.defaultemployer);
-						localStorage.setItem('ogRole', response.employer.role.rolename);
 						localStorage.setItem('ogUserObjID', response.employer._id);
 						localStorage.setItem('ogCompanyObjID', response.employer.company._id);
 						localStorage.setItem('ogCompanyName', response.employer.company.companyname);
@@ -62,6 +61,9 @@ export class AuthloginComponent implements OnInit {
 						await this.router.navigate(['employer/jobs/list']);
 						// Reset form
 						this.resetEmployerAuthForm.resetForm();
+
+						localStorage.setItem('ogRole', response.employer.role.rolename);
+						localStorage.setItem('ogPermissions', JSON.stringify(response.employer.role.permissions));
 
 						this.permissionsService.loadPermissions(response.employer.role.permissions);
 						this.rolesService.addRole(response.employer.role.rolename, response.employer.role.permissions);

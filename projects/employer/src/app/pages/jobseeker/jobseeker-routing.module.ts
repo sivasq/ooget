@@ -9,24 +9,24 @@ const routes: Routes = [
 	{
 		path: 'applied',
 		component: AppliedJobseekerListComponent,
-		canActivate: [AuthGuardService],
-		// data: {
-		// 	permissions: {
-		// 		only: 'superemployer',
-		// 		redirectTo: '/employer/401'
-		// 	}
-		// }
+		canActivate: [AuthGuardService, NgxPermissionsGuard],
+		data: {
+			permissions: {
+				only: 'superemployer',
+				redirectTo: '/employer/401'
+			}
+		}
 	},
 	{
 		path: ':js_id/view',
 		component: JobseekerDetailsComponent,
-		canActivate: [AuthGuardService],
-		// data: {
-		// 	permissions: {
-		// 		only: 'superemployer',
-		// 		redirectTo: '/employer/401'
-		// 	}
-		// }
+		canActivate: [AuthGuardService, NgxPermissionsGuard],
+		data: {
+			permissions: {
+				only: 'superemployer',
+				redirectTo: '/employer/401'
+			}
+		}
 	},
 	{
 		path: '',
