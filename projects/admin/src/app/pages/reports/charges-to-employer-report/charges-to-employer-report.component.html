@@ -11,7 +11,7 @@
 		</div>
 	</div> -->
 
-	<mat-accordion>
+	<mat-accordion class="accordion-reports">
 		<mat-expansion-panel *ngFor="let employer of employerDatas;">
 			<mat-expansion-panel-header>
 				<mat-panel-title>
@@ -23,28 +23,32 @@
 			</mat-expansion-panel-header>
 
 			<mat-accordion>
-				<mat-expansion-panel *ngFor="let job of employer.jobs;">
+				<mat-expansion-panel *ngFor="let job of employer.jobs; let i = index" [expanded]='step === i' (opened)="setStep(i)">
 					<mat-expansion-panel-header>
 						<mat-panel-title>
 							Job No: {{job.jobNumber}}
 						</mat-panel-title>
 						<mat-panel-description>
-
+							<mat-form-field (click)="$event.stopPropagation()">
+								<input matInput #employeeFilterRef name="employeeFilter" [(ngModel)]="employeeFilter" placeholder="Search Employees...">
+							</mat-form-field>
 						</mat-panel-description>
 					</mat-expansion-panel-header>
 
 					<mat-accordion>
-						<mat-expansion-panel *ngFor="let contractor of job.contractors;">
+						<mat-expansion-panel class="contractor" *ngFor="let contractor of job.contractors | filter:employeeFilter;">
 							<mat-expansion-panel-header>
 								<mat-panel-title>
-									Employee Code: {{job.name}}
+									Employee Name: {{contractor.name}}
 								</mat-panel-title>
 								<mat-panel-description>
-									Employee Code: {{job.employeeCode}}
+									Employee Code: {{contractor.employeeCode}}
 								</mat-panel-description>
 							</mat-expansion-panel-header>
 
-							<mdt-dynamic-table [columns]="columns" [dataSource]="getDataSource(contractor.timesheets)" [pageSize]="5"></mdt-dynamic-table>
+							<!-- <mdt-dynamic-table [columns]="columns" [dataSource]="getDataSource(contractor.timesheets)" [pageSize]="5"></mdt-dynamic-table> -->
+							<app-charges-to-emp-timesheet [displayDatasource]="contractor.timesheets" [columns]="displayedColumns"
+							 [pageSize]="5"></app-charges-to-emp-timesheet>
 
 						</mat-expansion-panel>
 					</mat-accordion>

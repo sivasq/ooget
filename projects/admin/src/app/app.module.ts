@@ -16,29 +16,27 @@ import { Layout1Component } from './layouts/layout1/layout1.component';
 import { Layout2Component } from './layouts/layout2/layout2.component';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { EmployersModule } from './pages/employers/employers.module';
-// import { TopProfiledialogComponent } from './top-profiledialog/top-profiledialog.component';
-// import { TopShortcutdialogComponent } from './top-shortcutdialog/top-shortcutdialog.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AuthloginComponent,
-    ForgotPasswordComponent,
-    Layout1Component,
-    Layout2Component,
-  ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    SharedModule,
-    EmployersModule,
-    NgxPermissionsModule.forRoot()
-  ],
-  providers: [
-    // { provide: APP_BASE_HREF, useValue: window['_app_base'] || '/' },
-  ],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent,
+		AuthloginComponent,
+		ForgotPasswordComponent,
+		Layout1Component,
+		Layout2Component,
+	],
+	imports: [
+		CommonModule,
+		BrowserModule,
+		AppRoutingModule,
+		BrowserAnimationsModule,
+		SharedModule,
+		EmployersModule,
+		NgxPermissionsModule.forRoot()
+	],
+	providers: [
+		// { provide: APP_BASE_HREF, useValue: window['_app_base'] || '/' },
+	],
+	bootstrap: [AppComponent]
 })
 export class AppModule { }

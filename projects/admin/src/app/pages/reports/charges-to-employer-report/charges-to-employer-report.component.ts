@@ -3,28 +3,72 @@ import { Location } from '@angular/common';
 import { ColumnConfig } from 'material-dynamic-table';
 import { FilteredDataSource } from '../../../data-source/filtered-data-source';
 
+export interface ChargesToEmpTimesheetItem {
+	name: string;
+	id: number;
+}
+
 @Component({
 	selector: 'app-charges-to-employer-report',
 	templateUrl: './charges-to-employer-report.component.html',
 	styleUrls: ['./charges-to-employer-report.component.scss']
 })
 export class ChargesToEmployerReportComponent implements OnInit {
+	step = 0;
+	setStep(index: number) {
+		this.step = index;
+	}
 
-	columns: ColumnConfig[] = [
+	onEvent(event) {
+		event.stopPropagation();
+	}
+
+	public employeeFilter: string = '';
+	isExpanded;
+	expand() {
+		this.isExpanded = true;
+		console.log("called");
+	}
+	displayedColumns: any[] = [
 		{
 			name: 'date',
 			displayName: 'Date',
-			type: 'string'
 		},
 		{
-			name: 'normalsalary',
-			displayName: 'Normalsalary',
-			type: 'string'
+			name: 'punchintime',
+			displayName: 'In Time',
+		},
+		{
+			name: 'punchouttime',
+			displayName: 'Out Time',
 		},
 		{
 			name: 'normalworkhour',
-			displayName: 'Normalworkhour',
-			type: 'string'
+			displayName: 'Nor. hr',
+		},
+		{
+			name: 'otworkhour',
+			displayName: 'OT Hr',
+		},
+		{
+			name: 'totalworkhour',
+			displayName: 'Tot.Hr',
+		},
+		{
+			name: 'normalsalary',
+			displayName: 'Nor. Sal',
+		},
+		{
+			name: 'otsalary',
+			displayName: 'OT Sal',
+		},
+		{
+			name: 'totalsalary',
+			displayName: 'Tot. Sal',
+		},
+		{
+			name: 'salarymultiplier',
+			displayName: 'OT Type',
 		}
 	];
 
@@ -160,11 +204,32 @@ export class ChargesToEmployerReportComponent implements OnInit {
 		}
 	]
 
-	constructor(private _location: Location) { }
+	// displayedColumns = ['id', 'name'];
 
-	backClicked() {
-		this._location.back();
-	}
+	EXAMPLE_DATA: ChargesToEmpTimesheetItem[] = [
+		{ id: 1, name: 'Hydrogen' },
+		{ id: 2, name: 'Helium' },
+		{ id: 3, name: 'Lithium' },
+		{ id: 4, name: 'Beryllium' },
+		{ id: 5, name: 'Boron' },
+		{ id: 6, name: 'Carbon' },
+		{ id: 7, name: 'Nitrogen' },
+		{ id: 8, name: 'Oxygen' },
+		{ id: 9, name: 'Fluorine' },
+		{ id: 10, name: 'Neon' },
+		{ id: 11, name: 'Sodium' },
+		{ id: 12, name: 'Magnesium' },
+		{ id: 13, name: 'Aluminum' },
+		{ id: 14, name: 'Silicon' },
+		{ id: 15, name: 'Phosphorus' },
+		{ id: 16, name: 'Sulfur' },
+		{ id: 17, name: 'Chlorine' },
+		{ id: 18, name: 'Argon' },
+		{ id: 19, name: 'Potassium' },
+		{ id: 20, name: 'Calcium' },
+	];
+
+	constructor(private _location: Location) { }
 
 	getDataSource(sourceData) {
 		return new FilteredDataSource<any>(sourceData);

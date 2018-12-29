@@ -12148,6 +12148,26 @@ input.mat-input-element {
 
 /* Form Field Outline Styles End */
 
-form.mat-dialog-content{
-	box-sizing: content-box!important;
+form.mat-dialog-content {
+    box-sizing: content-box !important;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+//
+.accordion-reports .mat-expansion-panel-body {
+	padding-right: 0px;
+	padding-left: 18px;
+}
+
+.contractor .mat-expansion-panel-body {
+    padding: 0px !important;
 }
