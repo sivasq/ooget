@@ -12164,10 +12164,14 @@ body {
 
 //
 .accordion-reports .mat-expansion-panel-body {
-	padding-right: 0px;
-	padding-left: 18px;
+    padding-right: 0px;
+    padding-left: 18px;
 }
 
 .contractor .mat-expansion-panel-body {
     padding: 0px !important;
+}
+
+.no-padding .mat-form-field-wrapper {
+    padding-bottom: 0px !important;
 }

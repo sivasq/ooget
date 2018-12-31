@@ -630,4 +630,17 @@ export class ApiCallService {
 		return this.http.post(this.baseUrl + '/deletefaq', faqId, { headers: headers })
 			.map(res => res)
 	}
+
+	getEmployerJobs(): Observable<any> {
+		let dummyData = '';
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/employer/employerslist', dummyData, { headers: headers })
+			.map(res => res)
+	}
 }
