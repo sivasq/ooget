@@ -15,7 +15,8 @@
 					<span class="breadcrumb-title">Employers</span>
 				</a>
 
-				<a class="breadcrumb-item" routerLink="/admin/employers/{{contractJobDetails?.companyid?._id}}/view" fxLayout="row" fxLayoutAlign="center center">
+				<a class="breadcrumb-item" routerLink="/admin/employers/{{contractJobDetails?.companyid?._id}}/view" fxLayout="row"
+				 fxLayoutAlign="center center">
 					<span class="breadcrumb-title">{{contractJobDetails?.companyid?.companyname}}</span>
 				</a>
 
@@ -86,7 +87,8 @@
 					<p fxLayout="row" fxLayoutAlign="start center">
 						<!-- <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon> -->
 						<span class="key">Job Period : </span>
-						<span class="value">{{contractJobDetails?.jobperiodfrom | date:'dd/MM/yyyy'}} - {{contractJobDetails?.jobperiodto |
+						<span class="value">{{contractJobDetails?.jobperiodfrom | date:'dd/MM/yyyy'}} - {{contractJobDetails?.jobperiodto
+							|
 							date:'dd/MM/yyyy'}}
 						</span>
 					</p>
@@ -157,8 +159,8 @@
 								</mat-checkbox>
 							</th>
 							<td mat-cell *matCellDef="let row">
-								<mat-checkbox color="primary" (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
-								 [disabled]="row.verified">
+								<mat-checkbox color="primary" (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+								 [checked]="selection.isSelected(row)" [disabled]="row.verified">
 								</mat-checkbox>
 							</td>
 							<td mat-footer-cell *matFooterCellDef></td>
@@ -201,12 +203,13 @@
 								<mat-form-field *ngIf="row._id == editRowId && editField=='field1'" style="width:45px;" floatLabel="never">
 									<input matInput #fieldName1 type="text" [(ngModel)]="editableRow.verifiedpunchintime" (ngModelChange)="changeVerifiedTime($event)"
 									 name="verifiedpunchintime" (keyup.esc)="rowEditableOff()" (blur)="rowEditableOff()" (keyup.enter)="rowEditableSubmit(editableRow,'field1')"
-									 autocomplete="off" style="text-align: center;" [pattern]="verifiedTimePattern" [dropSpecialCharacters]="false" mask="00:00"
-									 required>
+									 autocomplete="off" style="text-align: center;" [pattern]="verifiedTimePattern" [dropSpecialCharacters]="false"
+									 mask="00:00" required>
 								</mat-form-field>
 
 								<span *ngIf="row._id !== editRowId || (row._id == editRowId && editField!='field1')" (click)="!row.verified && field1Editable(row, row._id)"
-								 style="cursor: pointer; text-decoration-line: underline; text-decoration-style: dashed; text-underline-position: under;">{{row.verifiedpunchintime | date:'HH:mm'}}</span>
+								 style="cursor: pointer; text-decoration-line: underline; text-decoration-style: dashed; text-underline-position: under;">{{row.verifiedpunchintime
+									| date:'HH:mm'}}</span>
 							</td>
 							<td mat-footer-cell *matFooterCellDef></td>
 						</ng-container>
@@ -219,10 +222,11 @@
 								<mat-form-field *ngIf="row._id == editRowId && editField=='field2'" style="width:45px;">
 									<input matInput #fieldName2 type="text" [(ngModel)]="editableRow.verifiedpunchouttime" (ngModelChange)="changeVerifiedTime($event)"
 									 name="verifiedpunchouttime" (keyup.esc)="rowEditableOff()" (blur)="rowEditableOff()" (keyup.enter)="rowEditableSubmit(editableRow,'field2')"
-									 autocomplete="off" style="text-align: center;" [pattern]="verifiedTimePattern" [dropSpecialCharacters]="false" mask="00:00"
-									 required>
+									 autocomplete="off" style="text-align: center;" [pattern]="verifiedTimePattern" [dropSpecialCharacters]="false"
+									 mask="00:00" required>
 								</mat-form-field>
-								<span *ngIf="row._id !== editRowId || (row._id == editRowId && editField!='field2')" (click)="!row.verified && field2Editable(row, row._id)" style="cursor: pointer; text-decoration-line: underline; text-decoration-style: dashed; text-underline-position: under;">{{row.verifiedpunchouttime
+								<span *ngIf="row._id !== editRowId || (row._id == editRowId && editField!='field2')" (click)="!row.verified && field2Editable(row, row._id)"
+								 style="cursor: pointer; text-decoration-line: underline; text-decoration-style: dashed; text-underline-position: under;">{{row.verifiedpunchouttime
 									| date:'HH:mm'}}</span>
 							</td>
 							<td mat-footer-cell *matFooterCellDef></td>
@@ -344,7 +348,8 @@
 									</div>
 									<div fxFlexAlign="end">
 										<button mat-stroked-button color="primary" (click)="processPayrollGenerate(payroll)">
-											<mat-icon>cloud_download</mat-icon> Download as CSV Data</button>
+											<mat-icon>cloud_download</mat-icon> Download as CSV Data
+										</button>
 									</div>
 								</div>
 							</mat-expansion-panel>
@@ -409,8 +414,8 @@
 											</mat-form-field>
 										</div>
 										<div class="mat-paginator-range-actions">
-											<pagination-controls class="ooget-pagination" [id]="dayOffPaginateConfig.id" [maxSize]="dayOffPaginateControlMaxSize" [autoHide]="dayOffPaginateControlAutoHide"
-											 (pageChange)="dayOffPaginateConfig.currentPage = $event"></pagination-controls>
+											<pagination-controls class="ooget-pagination" [id]="dayOffPaginateConfig.id" [maxSize]="dayOffPaginateControlMaxSize"
+											 [autoHide]="dayOffPaginateControlAutoHide" (pageChange)="dayOffPaginateConfig.currentPage = $event"></pagination-controls>
 										</div>
 									</div>
 								</div>

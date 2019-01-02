@@ -1,3 +1,16 @@
 .full-width-table {
-  width: 100%;
+    width: 100%;
+}
+
+td.mat-cell,
+td.mat-footer-cell,
+th.mat-header-cell {
+    text-align: center;
+}
+
+th.mat-header-cell {
+    color: #ffffff!important;
+	background: #1c3e8e;
+	font-weight: 600;
+	padding: 0 5px;
 }

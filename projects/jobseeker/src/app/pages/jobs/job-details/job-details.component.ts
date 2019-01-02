@@ -176,7 +176,7 @@ export class JobDetailsComponent implements OnInit {
 							this.isOffered = false;
 							this.isApplied = false;
 							this.btnName = '';
-							this.helpTxt1 = "You have Successfully Applied & Contract Signed In for this JOb.";
+							this.helpTxt1 = "You have Successfully Applied & Contract Signed In for this Job.";
 						}
 
 						if (response.message == "joboffered") {

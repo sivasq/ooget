@@ -631,7 +631,7 @@ export class ApiCallService {
 			.map(res => res)
 	}
 
-	getEmployerJobs(): Observable<any> {
+	getEmployerJobs(data): Observable<any> {
 		let dummyData = '';
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
@@ -640,7 +640,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/employer/employerslist', dummyData, { headers: headers })
+		return this.http.post(this.baseUrl + '/contract/generatereportforparticularemployer', data, { headers: headers })
 			.map(res => res)
 	}
 }

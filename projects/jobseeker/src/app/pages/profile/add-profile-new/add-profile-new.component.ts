@@ -699,6 +699,32 @@ export class AddProfileNewComponent implements OnInit {
 		}
 	]
 
+	public Races: any = [
+		{
+			"name": "Indian",
+			"value": "indian"
+		},
+		{
+			"name": "Chinese",
+			"value": "chinese"
+		},
+		{
+			"name": "Malay",
+			"value": "malay"
+		}
+	];
+
+	public Nationalitys: any = [
+		{
+			"name": "Singaporean",
+			"value": "singaporean"
+		},
+		{
+			"name": "Permanent",
+			"value": "permanent"
+		},
+	];
+
 	days: any[] = [];
 	months: any[] = [];
 	years: any[] = [];
@@ -722,6 +748,8 @@ export class AddProfileNewComponent implements OnInit {
 		// nameinidcard:'',
 		email: '',
 		country: '',
+		race: '',
+		residencytype: '',
 		mobileno: '',
 		address: '',
 		nricfinno: '',
@@ -819,6 +847,8 @@ export class AddProfileNewComponent implements OnInit {
 			// nameinidcard: ['', Validators.compose([Validators.required])],
 			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],
 			country: ['Singapore', Validators.compose([Validators.required])],
+			race: ['', Validators.compose([Validators.required])],
+			residencytype: ['', Validators.compose([Validators.required])],
 			mobileno: ['', Validators.compose([Validators.required, Validators.pattern(this.mobileNoPattern)]), this.isMobileUnique.bind(this)],
 			address: ['', Validators.compose([Validators.required])],
 			nricfinno: ['', Validators.compose([Validators.pattern(this.nricFinNoPattern)]), this.isNricFinUnique.bind(this)],
@@ -1373,6 +1403,8 @@ export class AddProfileNewComponent implements OnInit {
 						// this.myProfile.nameinidcard = response.message.nameinidcard ? response.message.nameinidcard : '';
 						this.myProfile.email = response.message.email ? response.message.email : '';
 						this.myProfile.country = response.message.country ? response.message.country : '';
+						this.myProfile.race = response.message.race ? response.message.race : '';
+						this.myProfile.residencytype = response.message.residencytype ? response.message.residencytype : '';
 						this.myProfile.mobileno = response.message.mobileno ? response.message.mobileno : '';
 						this.myProfile.address = response.message.address ? response.message.address : '';
 						this.myProfile.nricfinno = response.message.nricfinno ? response.message.nricfinno : '';
@@ -1412,8 +1444,8 @@ export class AddProfileNewComponent implements OnInit {
 
 						// Past Exp
 						this.myProfile.experiencein = response.message.experiencein ? response.message.experiencein : '';
-						this.myProfile.totalexperienceinyears = response.message.totalexperienceinyears ? response.message.totalexperienceinyears : '';						
-						
+						this.myProfile.totalexperienceinyears = response.message.totalexperienceinyears ? response.message.totalexperienceinyears : '';
+
 						let newExp: any[] = [];
 						let pastExp = response.message.previousexperince;
 						if (pastExp.length > 0) {
@@ -1425,7 +1457,7 @@ export class AddProfileNewComponent implements OnInit {
 							this.myProfile.previousexperince = newExp;
 						}
 						// this.myProfile.previousexperince = response.message.previousexperince;
-						
+
 						// Documents
 						this.profileImage = response.message.jobseekerimage ? this.imgBaseUrl + '/' + response.message.jobseekerimage : 'assets/img/avatars/profile-placeholder.png';
 						this.idProofFront = response.message.jobseekeridprooffront ? this.imgBaseUrl + '/' + response.message.jobseekeridprooffront : 'assets/img/avatars/id-front-placeholder.png';
@@ -1439,6 +1471,8 @@ export class AddProfileNewComponent implements OnInit {
 							// 'nameinidcard': this.myProfile.nameinidcard,
 							'email': this.myProfile.email,
 							'country': this.myProfile.country,
+							'race': this.myProfile.race,
+							'residencytype': this.myProfile.residencytype,
 							'mobileno': this.myProfile.mobileno,
 							'address': this.myProfile.address,
 							'nricfinno': this.myProfile.nricfinno,

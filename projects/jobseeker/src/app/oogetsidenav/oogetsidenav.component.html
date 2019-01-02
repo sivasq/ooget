@@ -1,103 +1,103 @@
 <!-- Side Nav Logo Start -->
 <mat-toolbar color="primary" class="sidenav-header" fxLayout="row" fxLayoutAlign="center center">
-    <img style="height:100%;" alt="oogetLogo" src="assets/img/logo/ooget.png">
+	<img style="height:100%;" alt="oogetLogo" src="assets/img/logo/ooget.png">
 </mat-toolbar>
 <!-- Side Nav Logo End -->
 
 <!-- Side Nav User Profile Section Start -->
-<div class="user-block transition-2" [ngClass]="userprofile ? 'show' : ''" [ngStyle.lt-md]="{'height':'116px'}" fxLayout="column"
-    fxLayoutAlign="center center">
-    <div class="user-info-wrapper" fxLayout="row" fxLayoutAlign="space-around center">
-        <img alt="user-image" src="{{profileImage}}">
-        <div class="user-info">
-            <p class="name">{{UserName | titlecase}}</p>
-            <p class="position">{{UserRole | titlecase}}
-                <br>
-                <small class="muted-text"></small>
-            </p>
-        </div>
-    </div>
+<div class="user-block transition-2" [ngClass]="userprofile ? 'show' : ''" [ngStyle.lt-md]="{'height':'116px'}"
+ fxLayout="column" fxLayoutAlign="center center">
+	<div class="user-info-wrapper" fxLayout="row" fxLayoutAlign="space-around center">
+		<img alt="user-image" src="{{profileImage}}">
+		<div class="user-info">
+			<p class="name">{{UserName | titlecase}}</p>
+			<p class="position">{{UserRole | titlecase}}
+				<br>
+				<small class="muted-text"></small>
+			</p>
+		</div>
+	</div>
 
-    <div fxHide.lt-md="true" class="w-100 muted-text" fxLayout="row" fxLayoutAlign="space-between center" style="padding:0 10px;">
-        <div fxFlex></div>
-        <a mat-icon-button matTooltip="Logout" matTooltipPosition="left" (click)="onLogout()">
-            <mat-icon>power_settings_new</mat-icon>
-        </a>
-    </div>
+	<div fxHide.lt-md="true" class="w-100 muted-text" fxLayout="row" fxLayoutAlign="space-between center" style="padding:0 10px;">
+		<div fxFlex></div>
+		<a mat-icon-button matTooltip="Logout" matTooltipPosition="left" (click)="onLogout()">
+			<mat-icon>power_settings_new</mat-icon>
+		</a>
+	</div>
 </div>
 <!-- Side Nav User Profile Section End -->
 
 <!-- Side Nav Navigation List Start  -->
 <div class="sidenav-menu-outer" id="sidenav-menu-outer">
-    <!-- <div class="menu-item">
+	<!-- <div class="menu-item">
         <a mat-button routerLink="/dashboard" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
             <mat-icon>dashboard</mat-icon>
             <span class="menu-title">Dashboard</span>
         </a>
     </div> -->
 
-    <div class="menu-item">
-        <a mat-button routerLink="/main/profile/add" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
-            <mat-icon>supervisor_account</mat-icon>
-            <!-- <mat-icon svgIcon="svgicons:cap2"></mat-icon> -->
-            <!-- <mat-icon svgIcon="svgicons:cap1"></mat-icon> -->
-            <span class="menu-title">Profile</span>
-        </a>
-    </div>
+	<div class="menu-item">
+		<a mat-button routerLink="/main/profile/add" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
+			<mat-icon>supervisor_account</mat-icon>
+			<!-- <mat-icon svgIcon="svgicons:cap2"></mat-icon> -->
+			<!-- <mat-icon svgIcon="svgicons:cap1"></mat-icon> -->
+			<span class="menu-title">Profile</span>
+		</a>
+	</div>
 
-    <!-- <div class="menu-item">
+	<!-- <div class="menu-item">
         <a mat-button routerLink="/main/profile/addnew" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
-            <mat-icon>supervisor_account</mat-icon>            
+            <mat-icon>supervisor_account</mat-icon>
             <span class="menu-title">Profile New</span>
         </a>
     </div> -->
 
-    <div class="menu-item">
-        <a mat-button routerLink="/main/jobs/list" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
-            <mat-icon>supervisor_account</mat-icon>
-            <span class="menu-title">Jobs Available</span>
-        </a>
-    </div>
+	<div class="menu-item">
+		<a mat-button routerLink="/main/jobs/list" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
+			<mat-icon>view_list</mat-icon>
+			<span class="menu-title">Jobs Available</span>
+		</a>
+	</div>
 
-    <div class="menu-item">
-        <a mat-button routerLink="/main/jobs/matchedjobs" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
-            <mat-icon>supervisor_account</mat-icon>
-            <span class="menu-title">Jobs Matched</span>
-        </a>
-    </div>
+	<div class="menu-item">
+		<a mat-button routerLink="/main/jobs/matchedjobs" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
+			<mat-icon>play_for_work</mat-icon>
+			<span class="menu-title">Jobs Matched</span>
+		</a>
+	</div>
 
-    <div class="menu-item">
-        <a mat-button routerLink="/main/jobs/appliedjobs" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
-            <mat-icon>supervisor_account</mat-icon>
-            <span class="menu-title">Jobs Applied</span>
-        </a>
-    </div>
+	<div class="menu-item">
+		<a mat-button routerLink="/main/jobs/appliedjobs" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
+			<mat-icon>work_outline</mat-icon>
+			<span class="menu-title">Jobs Applied</span>
+		</a>
+	</div>
 
-    <div class="menu-item">
-        <a mat-button routerLink="/main/jobs/joboffers" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
-            <mat-icon>supervisor_account</mat-icon>
-            <span class="menu-title">Job Offered</span>
-        </a>
-    </div>
+	<div class="menu-item">
+		<a mat-button routerLink="/main/jobs/joboffers" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
+			<mat-icon>work</mat-icon>
+			<span class="menu-title">Job Offered</span>
+		</a>
+	</div>
 
-    <div class="menu-item">
-        <a mat-button routerLink="/main/timesheet" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
-            <mat-icon>supervisor_account</mat-icon>
-            <span class="menu-title">Timesheet</span>
-        </a>
-    </div>
+	<div class="menu-item">
+		<a mat-button routerLink="/main/timesheet" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
+			<mat-icon>fingerprint</mat-icon>
+			<span class="menu-title">Timesheet</span>
+		</a>
+	</div>
 
-    <div class="menu-item">
-        <a mat-button (click)="openTermsConditionsDialog()" fxLayout="row" fxLayoutAlign="flex-start center">
-            <mat-icon>supervisor_account</mat-icon>
-            <span class="menu-title">Terms & Conditions</span>
-        </a>
-    </div>
+	<div class="menu-item">
+		<a mat-button (click)="openTermsConditionsDialog()" fxLayout="row" fxLayoutAlign="flex-start center">
+			<mat-icon>notification_important</mat-icon>
+			<span class="menu-title">Terms & Conditions</span>
+		</a>
+	</div>
 
-    <div class="menu-item">
-        <a mat-button routerLink="/main/faq" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
-            <mat-icon>supervisor_account</mat-icon>
-            <span class="menu-title">FAQ</span>
-        </a>
-    </div>
+	<div class="menu-item">
+		<a mat-button routerLink="/main/faq" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
+			<mat-icon>feedback</mat-icon>
+			<span class="menu-title">FAQ</span>
+		</a>
+	</div>
 </div>

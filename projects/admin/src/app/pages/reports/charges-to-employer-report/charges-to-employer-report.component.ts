@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ApiCallService } from '../../../services/api-call.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-charges-to-employer-report',
@@ -15,52 +16,63 @@ export class ChargesToEmployerReportComponent implements OnInit {
 	onEvent(event) {
 		event.stopPropagation();
 	}
-
+	//busy Config
+	busy: Subscription;
 	public employeeFilter: string = '';
 	public jobFilter: string = '';
 
-	displayedColumns: any[] = [
-		{
-			name: 'date',
-			displayName: 'Date',
-		},
-		{
-			name: 'punchintime',
-			displayName: 'In Time',
-		},
-		{
-			name: 'punchouttime',
-			displayName: 'Out Time',
-		},
-		{
-			name: 'normalworkhour',
-			displayName: 'Nor. hr',
-		},
-		{
-			name: 'otworkhour',
-			displayName: 'OT Hr',
-		},
-		{
-			name: 'totalworkhour',
-			displayName: 'Tot.Hr',
-		},
-		{
-			name: 'normalsalary',
-			displayName: 'Nor. Sal',
-		},
-		{
-			name: 'otsalary',
-			displayName: 'OT Sal',
-		},
-		{
-			name: 'totalsalary',
-			displayName: 'Tot. Sal',
-		},
-		{
-			name: 'salarymultiplier',
-			displayName: 'OT Type',
-		}
-	];
+	// displayedColumns: any[] = [
+	// 	{
+	// 		name: 'date',
+	// 		displayName: 'Date',
+	// 	},
+	// 	{
+	// 		name: 'punchintime',
+	// 		displayName: 'In Time',
+	// 	},
+	// 	{
+	// 		name: 'punchouttime',
+	// 		displayName: 'Out Time',
+	// 	},
+	// 	{
+	// 		name: 'verifiedpunchintime',
+	// 		displayName: 'Out Time',
+	// 	},
+	// 	{
+	// 		name: 'verifiedpunchouttime',
+	// 		displayName: 'Out Time',
+	// 	},
+	// 	{
+	// 		name: 'normalworkhour',
+	// 		displayName: 'Nor. hr',
+	// 	},
+	// 	{
+	// 		name: 'otworkhour',
+	// 		displayName: 'OT Hr',
+	// 	},
+	// 	{
+	// 		name: 'totalworkhour',
+	// 		displayName: 'Tot.Hr',
+	// 	},
+	// 	{
+	// 		name: 'normalsalary',
+	// 		displayName: 'Nor. Sal',
+	// 	},
+	// 	{
+	// 		name: 'otsalary',
+	// 		displayName: 'OT Sal',
+	// 	},
+	// 	{
+	// 		name: 'totalsalary',
+	// 		displayName: 'Tot. Sal',
+	// 	},
+	// 	{
+	// 		name: 'salarymultiplier',
+	// 		displayName: 'OT Type',
+	// 	}
+	// ];
+
+	displayedColumns = ['work_date', 'in_time', 'out_time', 'verified', 'verifiedpunchintime', 'verifiedpunchouttime', 'normalworkhour', 'otworkhour', 'salarymultiplier', 'totalworkhour', 'normalsalary', 'otsalary', 'totalsalary', 'invoiceno'];
 
 	employerDatas;
 
@@ -322,7 +334,7 @@ export class ChargesToEmployerReportComponent implements OnInit {
 	}
 
 	getAllEmployers() {
-		this._httpService.getAllEmployers()
+		this.busy = this._httpService.getAllEmployers()
 			.subscribe(
 				response => {
 					if (response.success) {
@@ -346,17 +358,18 @@ export class ChargesToEmployerReportComponent implements OnInit {
 
 	getEmployerJobs(event) {
 		console.log(event);
-		this._httpService.getEmployerJobs()
+		this.busy = this._httpService.getEmployerJobs({ 'companyid': event })
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log(response.employers);
-						if ((response.employers).length > 0) {
-							this.isEmployerAvailable = true;
-							this.employerCount = (response.employers).length;
-							this.employers_list = response.employers;
+						// console.log(response.employerreport);
+						if ((response.employerreport).length > 0) {
+							// this.isEmployerAvailable = true;
+							// this.employerCount = (response.employerreport).length;
+							// this.employers_list = response.employerreport;
 
-							this.employerDatas = this.DemoemployerDatas;
+							this.employerDatas = response.employerreport[0];
+							console.log(this.employerDatas);
 						} else {
 							this.isEmployerAvailable = false;
 						}

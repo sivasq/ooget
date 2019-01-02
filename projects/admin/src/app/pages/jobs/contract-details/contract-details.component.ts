@@ -141,7 +141,8 @@ export class ContractDetailsComponent implements OnInit {
 	isAllSelected() {
 		// console.log(this.selection);
 		const numSelected = this.selection.selected.length;
-		const numRows = this.dailyTimeSheetDataSource.data.length;
+		// const numRows = this.dailyTimeSheetDataSource.data.length;
+		const numRows = this.dailyTimeSheetDataSource.data.filter((data:any) => !data.verified).length;
 		return numSelected === numRows;
 	}
 
@@ -555,8 +556,8 @@ export class ContractDetailsComponent implements OnInit {
 		// 		return new Date(b.date).getTime() - new Date(a.date).getTime()
 		// 	});
 		// let demo = [{
-		// 	'data': '                     5656',
-		// 	'data1': '45645                   ',
+		// 	'data': '5656',
+		// 	'data1': '45645',
 		// }]
 		// console.log(demo);
 
@@ -565,6 +566,11 @@ export class ContractDetailsComponent implements OnInit {
 				return new Date(b.datefrom).getTime() - new Date(a.datefrom).getTime()
 			});
 		// console.log(this.contractorPayrolls);
+
+		let hrs = moment.duration(0, "minutes").format("hh:mm", {
+			trim: false
+		});
+		console.log(hrs);
 	}
 
 	// ==================================
@@ -758,8 +764,10 @@ export class ContractDetailsComponent implements OnInit {
 			return previous + min
 		}, 0);
 
-		let hrs = moment.duration(totalMin, "minutes").format("hh:mm");
-		if (hrs == '0' || hrs == '00') return 'Nil';
+		let hrs = moment.duration(totalMin, "minutes").format("hh:mm", {
+			trim: false
+		});
+		// if (hrs == '0' || hrs == '00') return 'Nil';
 		return hrs;
 	}
 
@@ -769,8 +777,10 @@ export class ContractDetailsComponent implements OnInit {
 			return previous + min
 		}, 0);
 
-		let hrs = moment.duration(totalMin, "minutes").format("hh:mm");
-		if (hrs == '0' || hrs == '00') return 'Nil';
+		let hrs = moment.duration(totalMin, "minutes").format("hh:mm", {
+			trim: false
+		});
+		// if (hrs == '0' || hrs == '00') return 'Nil';
 		return hrs;
 	}
 
@@ -780,8 +790,10 @@ export class ContractDetailsComponent implements OnInit {
 			return previous + min
 		}, 0);
 
-		let hrs = moment.duration(totalMin, "minutes").format("hh:mm");
-		if (hrs == '0' || hrs == '00') return 'Nil';
+		let hrs = moment.duration(totalMin, "minutes").format("hh:mm", {
+			trim: false
+		});
+		// if (hrs == '0' || hrs == '00') return 'Nil';
 		return hrs;
 	}
 

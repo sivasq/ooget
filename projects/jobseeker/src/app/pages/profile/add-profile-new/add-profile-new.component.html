@@ -87,6 +87,22 @@
 										</mat-error>
 									</mat-form-field>
 
+									<mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+										<mat-select placeholder="Race" name="race" formControlName="race" required>
+											<mat-option *ngFor="let race of Races" [value]="race.value">
+												{{ race.name }}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+
+									<mat-form-field fxFlex="100" fxFlex.gt-sm="47">
+										<mat-select placeholder="Nationality" name="residencytype" formControlName="residencytype" required>
+											<mat-option *ngFor="let nationality of Nationalitys" [value]="nationality.value">
+												{{ nationality.name }}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+
 									<mat-form-field fxFlex="100">
 										<input matInput placeholder="Mobile Number" name="mobileno" autocomplete="off" formControlName="mobileno" required>
 										<mat-error *ngIf="jobSeekerProfileForm.get('mobileno').hasError('required')" align="start">
