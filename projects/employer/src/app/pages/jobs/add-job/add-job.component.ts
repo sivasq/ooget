@@ -957,28 +957,28 @@ export class AddJobComponent implements OnInit {
 		employerJobData = Object.assign(employerJobData, Breaks);
 
 		console.log(employerJobData);
-		// this._httpService.jobAddToEmployer(employerJobData)
-		// 	.subscribe(
-		// 		response => {
-		// 			if (response.success) {
-		// 				employerJobForm.resetForm();
-		// 				console.log("Job Added Successfully");
-		// 				let snackBarRef = this.snackBar.open('Job Added Successfully.', 'Close', {
-		// 					duration: 5000,
-		// 				});
+		this._httpService.jobAddToEmployer(employerJobData)
+			.subscribe(
+				response => {
+					if (response.success) {
+						employerJobForm.resetForm();
+						console.log("Job Added Successfully");
+						let snackBarRef = this.snackBar.open('Job Added Successfully.', 'Close', {
+							duration: 5000,
+						});
 
-		// 				snackBarRef.onAction().subscribe(() => {
-		// 					snackBarRef.dismiss();
-		// 					console.log('The snack-bar action was triggered!');
-		// 				});
-		// 			} else if (!response.success) {
-		// 				console.log(response);
-		// 			}
-		// 		},
-		// 		error => {
-		// 			console.log(error);
-		// 		}
-		// 	);
+						snackBarRef.onAction().subscribe(() => {
+							snackBarRef.dismiss();
+							console.log('The snack-bar action was triggered!');
+						});
+					} else if (!response.success) {
+						console.log(response);
+					}
+				},
+				error => {
+					console.log(error);
+				}
+			);
 	}
 
 	addBreak() {

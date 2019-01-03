@@ -58,7 +58,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		NgBusyModule,
 		NguCarouselModule,
 		NgPipesModule,
-		NgProgressModule.forRoot({
+		NgProgressModule.withConfig({
 			thick: true,
 			spinner: false,
 			color: '#1abc9c'

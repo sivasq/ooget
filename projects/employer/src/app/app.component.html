@@ -1,4 +1,14 @@
 <div class="app indigo-light fixed-header">
-  <ng-progress [spinnerPosition]="'left'" [thick]="true" [color]="'red'"></ng-progress>
-  <router-outlet></router-outlet>
+	<ng-progress></ng-progress>
+
+	<!-- Custom Lazy Load Routeing -->
+	<div [hidden]="!isShowingRouteLoadIndicator">
+		<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+
+		<div class="router-load-indicator"> Loading Please Wait.. </div>
+	</div>
+	<!-- <div *ngIf="isShowingRouteLoadIndicator" class="router-load-indicator">
+		Loading Please Wait..
+	</div> -->
+	<router-outlet></router-outlet>
 </div>

@@ -80,13 +80,13 @@ export const MY_NATIVE_FORMATS = {
 		NgPipesModule,
 		MultipleDatePickerModule,
 		DynamicTableModule,
-		NgProgressModule.forRoot({
+		NgProgressModule.withConfig({
 			thick: true,
 			spinner: false,
 			color: '#1abc9c'
 		}),
-		NgProgressHttpModule.forRoot(),
-		NgProgressRouterModule.forRoot(),
+		NgProgressHttpModule,
+		NgProgressRouterModule,
 		NgxMaskModule.forRoot(),
 		CalendarModule.forRoot({
 			provide: DateAdapter,

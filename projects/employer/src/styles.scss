@@ -1716,10 +1716,9 @@ a {
     font-size: 14px !important
 }
 
-.mat-drawer-container {
-    height: 100%
-}
-
+// .mat-drawer-container {
+//     height: 100%
+// }
 .mat-paginator-page-size-select {
     width: 60px !important
 }
@@ -12118,4 +12117,19 @@ input.mat-input-element {
 
 form.mat-dialog-content {
     box-sizing: content-box !important;
+}
+
+.m-y-10 {
+    margin: 10px 0 !important;
+}
+
+.m-t-10{
+	margin-top: 10px!important;
+}
+
+.p-b-25{
+padding-bottom: 25px!important;
+}
+.no-shadow{
+	box-shadow: none!important;
 }

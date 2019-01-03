@@ -68,13 +68,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		OwlNativeDateTimeModule,
 		NgBusyModule,
 		NgPipesModule,
-		NgProgressModule.forRoot({
+		NgProgressModule.withConfig({
 			thick: true,
 			spinner: false,
 			color: '#1abc9c'
 		}),
-		NgProgressHttpModule.forRoot(),
-		NgProgressRouterModule.forRoot(),
+		NgProgressHttpModule,
+		NgProgressRouterModule,
 		NgxMaskModule.forRoot(),
 		CalendarModule.forRoot({
 			provide: DateAdapter,

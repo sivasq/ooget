@@ -91,7 +91,8 @@
 
 					<mat-list-item *ngIf="!employerDetails.companycode" class="dynamic-height">
 						<span class="title" style="white-space: nowrap;">Company Code : </span>
-						<button *ngIf="!companyCodeGenerator" mat-button color="primary" class="text-wrap" (click)="toggleCompanyCodeGenerator()">
+						<button *ngIf="!companyCodeGenerator" mat-button style="background-color: green; color: #ffffff;" class="text-wrap"
+						 (click)="toggleCompanyCodeGenerator()">
 							<span class="text-wrap">Click here to Create Company Code</span>
 						</button>
 
@@ -151,9 +152,11 @@
 							<input hidden type="file" #docFileInput name="termsDoc" (change)="getDoc($event)" />
 
 							<div *ngIf="showUpload">
-								<button type="button" class="td-file-upload text-wrap" mat-raised-button color="primary" (click)="docFileInput.click()">
-									<mat-icon>attach_file</mat-icon>Upload New (or) Modified Terms &amp; Conditions Document
-								</button>
+								<div fxFlex fxLayout="row" fxlayoutAlign="center" class="td-file-upload text-wrap text-center" style="background-color:#1c3e8e; color:#ffffff; border-radius:4px; padding:8px; cursor:pointer;" mat-raised-button
+								 color="primary" (click)="docFileInput.click()">
+									<mat-icon fxFlexAlign="center">attach_file</mat-icon>
+									<span>Upload New (or) Modified Terms &amp; Conditions Document</span>
+								</div>
 							</div>
 
 							<div *ngIf="uploaded">

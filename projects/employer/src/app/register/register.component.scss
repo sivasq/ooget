@@ -4,7 +4,7 @@
 
 .box .box-content {
     position: relative;
-    height: 590px
+    // height: 590px
 }
 
 .box .box-content .box-content-inner {
@@ -12,21 +12,21 @@
     top: -34px;
     left: 34px;
     right: 34px;
-    height: 545px
+    // height: 545px
 }
 
 .box .box-content .box-content-inner-mobile {
-    position: absolute;
-    top: -34px;
-    left: 34px;
-    right: 34px;
-    height: 545px
+    // position: absolute;
+    // top: -34px;
+    // left: 34px;
+    // right: 34px;
+    // height: 545px
 }
 
-.box.register .box-content,
-.box.register .box-content .box-content-inner {
-    height: 300px
-}
+// .box.register .box-content,
+// .box.register .box-content .box-content-inner {
+//     height: 300px
+// }
 
 .box .box-content .box-content-header {
     font-size: 16px;
@@ -47,14 +47,14 @@
 }
 
 .box .box-content .box-button {
-    bottom: 16px;
+    bottom: 18px;
     width: 40%;
     border-radius: 20px;
     overflow: hidden
 }
 
 .box .box-content .box-button-mobile {
-    bottom: 16px;
+    bottom: 18px;
     width: 70%;
     border-radius: 20px;
     overflow: hidden
@@ -77,4 +77,8 @@
 
 .mat-card-content {
     margin-bottom: 0;
+}
+
+.mat-drawer-container {
+    height: auto !important;
 }

@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 import { ApiCallService } from '../services/api-call.service';
 import { FormGroup, FormGroupDirective, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { ConfigService } from '../services/config.service';
+import { AsyncSubscriber } from '../services/async.service';
 
 @Component({
 	selector: 'app-register',
@@ -14,6 +15,7 @@ import { ConfigService } from '../services/config.service';
 })
 export class RegisterComponent implements OnInit {
 	public homePageUrl;
+	appearance$: Observable<any>;
 	//busy Config
 	busy: Subscription;
 
@@ -25,7 +27,10 @@ export class RegisterComponent implements OnInit {
 	@ViewChild(FormGroupDirective) resetEmployerRegForm;
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	constructor(public router: Router, private _httpService: ApiCallService, private config: ConfigService, public snackBar: MatSnackBar, private fb: FormBuilder) {
+	constructor(public router: Router, private _httpService: ApiCallService, private config: ConfigService, public snackBar: MatSnackBar, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber) {
+
+		this.appearance$ = asyncSubscriber.getAppearance.pipe();
+
 		this.homePageUrl = config.homePageUrl;
 		this.buildEmployerRegForm();
 	}
@@ -97,6 +102,7 @@ export class RegisterComponent implements OnInit {
 			uennumber: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]{7,9}[A-Za-z]{1}$')]), this.isUENUnique.bind(this)],
 			industry: ['', Validators.compose([Validators.required])],
 			country: ['', Validators.compose([Validators.required])],
+			username: ['', Validators.compose([Validators.required])],
 			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(8)]), this.isPatternMatch.bind(this)],
 			verify: ['', [Validators.required]],
@@ -196,11 +202,17 @@ export class RegisterComponent implements OnInit {
 							duration: 5000,
 						});
 						// Snackbar action
-						snackBarRef.onAction().subscribe(() => {
-							snackBarRef.dismiss();
+						snackBarRef.afterDismissed().subscribe(info => {
+							if (info.dismissedByAction === true) {
+								this.router.navigate(['auth/login']);
+							}
 							this.router.navigate(['auth/login']);
-							console.log('The snack-bar action was triggered!');
 						});
+						// snackBarRef.onAction().subscribe(() => {
+						// 	snackBarRef.dismiss();
+						// 	this.router.navigate(['auth/login']);
+						// });
+
 						// Response is failed
 					} else if (!response.success) {
 						console.log(response);
@@ -216,7 +228,7 @@ export class RegisterComponent implements OnInit {
 		this.employerRegForm.get('uennumber').valueChanges
 			.subscribe(x => {
 				if (x != null) {
-					console.log(x);
+					// console.log(x);
 					this.employerRegForm.patchValue({ uennumber: x.toUpperCase() }, { emitEvent: false });
 				}
 			});

@@ -4,6 +4,11 @@ import { NgxRolesService, NgxPermissionsService } from 'ngx-permissions';
 import { AsyncSubscriber } from './services/async.service';
 import { ApiCallService } from './services/api-call.service';
 
+import { Event as RouterEvent } from "@angular/router";
+import { Router } from "@angular/router";
+import { RouteConfigLoadEnd } from "@angular/router";
+import { RouteConfigLoadStart } from "@angular/router";
+
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
@@ -11,40 +16,65 @@ import { ApiCallService } from './services/api-call.service';
 })
 export class AppComponent {
 
-	constructor(private ngProgress: NgProgress, private permissionsService: NgxPermissionsService, private rolesService: NgxRolesService, private asyncSubscriber: AsyncSubscriber, private _httpService: ApiCallService, ) {
+	public isShowingRouteLoadIndicator: boolean;
 
-		// this.permissionsService.loadPermissions(['create','view','edit','delete']);
-		// this.rolesService.addRole('superemployer', ['create', 'view', 'edit', 'delete']);
+	constructor(private ngProgress: NgProgress, private permissionsService: NgxPermissionsService, private rolesService: NgxRolesService, private asyncSubscriber: AsyncSubscriber, private _httpService: ApiCallService, router: Router) {
 
+		// Load Roles and permissions
 		if (localStorage.getItem('isLoggedIn')) {
-
 			let role = localStorage.getItem('ogRole');
 			let permissions = JSON.parse(localStorage.getItem('ogPermissions'));
 
 			this.permissionsService.loadPermissions(permissions);
 			this.rolesService.addRole(role, permissions);
-
-			// logged in so return true
-			// this.getRolesAndPermissions();
 		}
+
+		// Set Lazy loading Router indicator
+		this.isShowingRouteLoadIndicator = false;
+
+		// As the router loads modules asynchronously (via loadChildren), we're going to
+		// keep track of how many asynchronous requests are currently active. If there is
+		// at least one pending load request, we'll show the indicator.
+		var asyncLoadCount = 0;
+
+		// The Router emits special events for "loadChildren" configuration loading. We
+		// just need to listen for the Start and End events in order to determine if we
+		// have any pending configuration requests.
+
+		router.events.subscribe(
+			(event: RouterEvent): void => {
+				if (event instanceof RouteConfigLoadStart) {
+					asyncLoadCount++;
+				} else if (event instanceof RouteConfigLoadEnd) {
+					asyncLoadCount--;
+				}
+
+				// If there is at least one pending asynchronous config load request,
+				// then let's show the loading indicator.
+				// --
+				// CAUTION: I'm using CSS to include a small delay such that this loading
+				// indicator won't be seen by people with sufficiently fast connections.
+				this.isShowingRouteLoadIndicator = !!asyncLoadCount;
+			}
+		);
 	}
 
-	getRolesAndPermissions() {
-		this._httpService.getRolesAndPermissions()
-			.subscribe(
-				response => {
-					if (response.success) {
-						console.log(response);
-						this.permissionsService.loadPermissions(response.roles.permissions);
-						this.rolesService.addRole(response.roles.rolename, response.roles.permissions);
-						console.log(this.permissionsService.getPermissions());
-					} else if (!response.success) {
-						console.log(response);
-					}
-				},
-				error => {
-					console.log(error);
-				}
-			);
-	}
+	// getRolesAndPermissions() {
+	// 	this._httpService.getRolesAndPermissions()
+	// 		.subscribe(
+	// 			response => {
+	// 				if (response.success) {
+	// 					console.log(response);
+	// 					this.permissionsService.loadPermissions(response.roles.permissions);
+	// 					this.rolesService.addRole(response.roles.rolename, response.roles.permissions);
+	// 					console.log(this.permissionsService.getPermissions());
+	// 				} else if (!response.success) {
+	// 					console.log(response);
+	// 				}
+	// 			},
+	// 			error => {
+	// 				console.log(error);
+	// 			}
+	// 		);
+	// }
 }
