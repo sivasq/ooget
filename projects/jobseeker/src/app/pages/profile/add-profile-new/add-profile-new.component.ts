@@ -2,11 +2,12 @@ import { Component, OnInit, Input, ViewChild, ViewChildren, HostListener, Elemen
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray, AbstractControl, ValidatorFn, ValidationErrors, FormGroupDirective } from '@angular/forms';
 import { ApiCallService } from '../../../services/api-call.service';
 import { MatTabChangeEvent, MatSnackBar } from '@angular/material';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { ConfigService } from '../../../services/config.service';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { MultipleSubLocationFilter } from '../../../pipes/custompipes.pipe';
+import { AsyncSubscriber } from '../../../services/async.service';
 
 @Component({
 	selector: 'app-add-profile-new',
@@ -15,7 +16,7 @@ import { MultipleSubLocationFilter } from '../../../pipes/custompipes.pipe';
 	// encapsulation: ViewEncapsulation.None,
 })
 export class AddProfileNewComponent implements OnInit {
-
+	appearance$: Observable<any>;
 	public BankDetails: any = [
 		{
 			"_id": "432424",
@@ -820,7 +821,8 @@ export class AddProfileNewComponent implements OnInit {
 	mobileNoPattern: RegExp = /^[0-9]{1,}$/;
 	nricFinNoPattern: RegExp = /^[F,T,S,G,f,t,s,g]{1}[0-9]{7}[A-Za-z]{1}$/;
 
-	constructor(private fb: FormBuilder, private _httpService: ApiCallService, private urlconfig: ConfigService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe, private toUppercase: UpperCasePipe, private multiplesublocationfilter: MultipleSubLocationFilter) {
+	constructor(private fb: FormBuilder, private _httpService: ApiCallService, private urlconfig: ConfigService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe, private toUppercase: UpperCasePipe, private multiplesublocationfilter: MultipleSubLocationFilter, private asyncSubscriber: AsyncSubscriber) {
+		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 		this.imgBaseUrl = urlconfig.img_base_url;
 		this.buildJobSeekerProfileForm();
 		this.buildPasswordUpdateForm();

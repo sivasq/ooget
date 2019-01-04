@@ -1,6 +1,6 @@
 <div class="inner-sidenav-content transition-2" perfectScrollbar>
 	<!-- Http Progress Bar -->
-	<ng-progress></ng-progress>
+	<!-- <ng-progress></ng-progress> -->
 
 	<!-- Breadcrumb Start -->
 	<div fxLayout="row wrap">
@@ -137,11 +137,11 @@
 				<div fxFlex="100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="m-b-10">
 					<button mat-raised-button color="primary" (click)="verifyTimeSheets()" [disabled]="selection.selected.length == 0">Verify</button>
 
-					<div *ngIf="contractorDetails?.accountno">
+					<!-- <div *ngIf="contractorDetails?.accountno">
 						<button mat-raised-button color="primary" (click)="generatePayroll()" [disabled]="verifiedTimeSheets?.length == 0">Generate
 							Payroll
 						</button>
-					</div>
+					</div> -->
 
 					<div *ngIf="!contractorDetails?.accountno">
 						<span style="color:orangered; font-size: small;">Contractor didn't update Account Details for Payment</span>
@@ -314,7 +314,7 @@
 		</div>
 
 		<!-- PayRolls List -->
-		<div *ngIf="payrollsList.length > 0" class="flex-p" fxFlex="100">
+		<!-- <div *ngIf="payrollsList.length > 0" class="flex-p" fxFlex="100">
 			<mat-card style="padding: 24px 12px;">
 				<mat-card-header fxLayoutAlign="center">
 					<div class="mat-card-header-text">
@@ -357,7 +357,7 @@
 					</div>
 				</mat-card-content>
 			</mat-card>
-		</div>
+		</div> -->
 
 		<!-- Off Days -->
 		<div *ngIf="contractJobDetails?.workdaystype != 'normal'" class="flex-p" fxFlex="50">

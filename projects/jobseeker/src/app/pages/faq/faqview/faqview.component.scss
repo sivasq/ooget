@@ -9,3 +9,9 @@
     min-height: calc(100% - 80px);
     overflow: auto;
 }
+
+.no-data {
+    min-height: 25vh;
+    border: 2px solid #eee;
+    margin: 8px;
+}

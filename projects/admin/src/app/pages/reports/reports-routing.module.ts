@@ -10,7 +10,7 @@ import { WorkOffdaysMatrixViewComponent } from './work-offdays-matrix-view/work-
 const routes: Routes = [
 	{
 		path: '',
-		component: CalendarReportComponent,
+		component: ChargesToEmployerReportComponent,
 	},
 	{
 		path: 'jstr',
@@ -26,7 +26,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'wocvr',
-		component: CalendarReportComponent,
+		component: WorkOffdaysCalendarViewComponent,
 	},
 	{
 		path: 'womvr',

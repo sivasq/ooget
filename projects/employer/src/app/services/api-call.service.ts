@@ -161,6 +161,19 @@ export class ApiCallService {
 			.map(res => res)
 	}
 
+	jobUpdateToEmployer(employerJobData): Observable<any> {
+		//var authDatas = JSON.stringify(authData);
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/job/updatejob', employerJobData, { headers: headers })
+			.map(res => res)
+	}
+
 	postRegData(regData): Observable<any> {
 		//var authDatas = JSON.stringify(authData);
 		let headers = new HttpHeaders()

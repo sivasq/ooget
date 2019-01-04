@@ -30,8 +30,12 @@
 			</mat-expansion-panel>
 		</mat-accordion>
 
-		<div *ngIf="faqList.length == 0" style="height:100px;" fxLayoutAlign="center center">
-			No Faq Found
+		<div *ngIf="faqList.length == 0">
+			<div fxFlex fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+				<h1 style="color: #bbbbbb; text-transform: uppercase; text-align: center;">
+					No FAQ Found
+				</h1>
+			</div>
 		</div>
 	</div>
 </div>

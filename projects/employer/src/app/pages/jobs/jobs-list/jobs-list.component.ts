@@ -137,13 +137,13 @@ export class JobsListComponent implements OnInit {
 			);
 	}
 
-	closeJob(employerId, jobId) {
-		this.busy = this._httpService.closeJob({ jobid: jobId, jobstatus: 'closed' })
+	closeJob(jobId) {
+		this.busy = this._httpService.closeJob({ 'companyid': localStorage.getItem('ogCompanyObjID'), jobid: jobId, jobstatus: 'closed' })
 			.subscribe(
 				response => {
 					if (response.success) {
 						console.log(response);
-						this.getSingleEmployersJobsList({ 'companyid': employerId });
+						this.getSingleEmployersJobsList({ 'companyid': localStorage.getItem('ogCompanyObjID') });
 						let snackBarRef = this.snackBar.open('Job Closed Successfully.', 'Close', {
 							duration: 5000,
 						});

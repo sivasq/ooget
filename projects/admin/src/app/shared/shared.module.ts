@@ -46,6 +46,7 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { SidemenuComponent } from '../sidemenu/sidemenu.component';
 import { ChargesToEmpTimesheetComponent } from '../reusable-components/charges-to-emp-timesheet/charges-to-emp-timesheet.component';
+import { PayslipComponent } from '../reusable-components/payslip/payslip.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true,
@@ -100,6 +101,7 @@ export const MY_NATIVE_FORMATS = {
 		TopProfiledialogComponent,
 		TopShortcutdialogComponent,
 		ChargesToEmpTimesheetComponent,
+		PayslipComponent,
 		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, SafeHtml, AgePipe,
 		ConfirmDialogComponent,
 		EqualValidator, CompareDirective,
@@ -124,6 +126,7 @@ export const MY_NATIVE_FORMATS = {
 		TopProfiledialogComponent,
 		TopShortcutdialogComponent,
 		ChargesToEmpTimesheetComponent,
+		PayslipComponent,
 		Ng2SearchPipeModule,
 		NgxPaginationModule,
 		OwlDateTimeModule,

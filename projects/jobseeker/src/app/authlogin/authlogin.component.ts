@@ -2,8 +2,9 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiCallService } from '../services/api-call.service';
 import { FormGroup, FormGroupDirective, FormBuilder, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { ConfigService } from '../services/config.service';
+import { AsyncSubscriber } from '../services/async.service';
 
 @Component({
 	selector: 'app-authlogin',
@@ -11,6 +12,8 @@ import { ConfigService } from '../services/config.service';
 	styleUrls: ['./authlogin.component.scss']
 })
 export class AuthloginComponent implements OnInit {
+
+	appearance$: Observable<any>;
 
 	// Password visibility set
 	public hide = true;
@@ -24,7 +27,10 @@ export class AuthloginComponent implements OnInit {
 	@ViewChild(FormGroupDirective) resetJobseekerAuthForm;
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	constructor(public router: Router, private _httpService: ApiCallService, private config: ConfigService, private fb: FormBuilder) {
+	constructor(public router: Router, private _httpService: ApiCallService, private config: ConfigService, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber) {
+
+		this.appearance$ = asyncSubscriber.getAppearance.pipe();
+
 		this.buildJobseekerAuthForm();
 	}
 

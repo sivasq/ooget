@@ -726,7 +726,7 @@ export class MakeDuplicateJobComponent implements OnInit {
 
 		let jobId = {
 			jobid: this.route.snapshot.params['job_id'],
-			companyid: this.route.snapshot.params['emp_id'],
+			companyid: localStorage.getItem('ogCompanyObjID'),
 		}
 		this.getJobDetails(jobId);
 
@@ -925,7 +925,7 @@ export class MakeDuplicateJobComponent implements OnInit {
 	}
 
 	jobAddToEmployer(employerJobData: any, employerJobForm) {
-		let companyid = { "companyid": this.companyid };
+		let companyid = { "companyid": localStorage.getItem('ogCompanyObjID') };
 		employerJobData = Object.assign(employerJobData, companyid);
 
 		let jobperiodfrom = { "jobperiodfrom": this.datePipe.transform(employerJobData.jobperiodfrom, 'yyyy/MM/dd') };
@@ -949,7 +949,7 @@ export class MakeDuplicateJobComponent implements OnInit {
 		let autoofferaccept = { "autoofferaccept": employerJobData.autoofferaccept == true ? "true" : "false" };
 		employerJobData = Object.assign(employerJobData, autoofferaccept);
 
-		let jobaddedby = { "jobaddedby": "ooget-team" };
+		let jobaddedby = { "jobaddedby": "employer" };
 		employerJobData = Object.assign(employerJobData, jobaddedby);
 
 		let jobstatus = { "jobstatus": "live" };
@@ -976,8 +976,8 @@ export class MakeDuplicateJobComponent implements OnInit {
 				response => {
 					if (response.success) {
 						employerJobForm.resetForm();
-						console.log("Job Updated Successfully");
-						let snackBarRef = this.snackBar.open('Job Updated Successfully.', 'Close', {
+						console.log("Job Created Successfully");
+						let snackBarRef = this.snackBar.open('Job Created Successfully.', 'Close', {
 							duration: 5000,
 						});
 

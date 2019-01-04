@@ -29,7 +29,7 @@ export class EditJobComponent implements OnInit {
 
 		numberofpax: '',
 		graceperiod: '',
-		overtimerounding:'',
+		overtimerounding: '',
 		jobperiodfrom: '',
 		jobperiodto: '',
 		starttime: '',
@@ -928,6 +928,9 @@ export class EditJobComponent implements OnInit {
 		let companyid = { "companyid": this.companyid };
 		employerJobData = Object.assign(employerJobData, companyid);
 
+		let jobId = { "jobid": this.route.snapshot.params['job_id'] };
+		employerJobData = Object.assign(employerJobData, jobId);
+
 		let jobperiodfrom = { "jobperiodfrom": this.datePipe.transform(employerJobData.jobperiodfrom, 'yyyy/MM/dd') };
 		employerJobData = Object.assign(employerJobData, jobperiodfrom);
 
@@ -971,11 +974,11 @@ export class EditJobComponent implements OnInit {
 		employerJobData = Object.assign(employerJobData, Breaks);
 
 		console.log(employerJobData);
-		this._httpService.jobAddToEmployer(employerJobData)
+		this._httpService.jobUpdateToEmployer(employerJobData)
 			.subscribe(
 				response => {
 					if (response.success) {
-						employerJobForm.resetForm();
+						// employerJobForm.resetForm();
 						console.log("Job Updated Successfully");
 						let snackBarRef = this.snackBar.open('Job Updated Successfully.', 'Close', {
 							duration: 5000,
