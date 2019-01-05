@@ -1,5 +1,5 @@
 <div class="inner-sidenav-content transition-2">
-    <ng-progress></ng-progress>
+    <!-- <ng-progress></ng-progress> -->
     <!-- Breadcrumb Start -->
     <div fxLayout="row wrap">
         <div class="flex-p" fxFlex="1 1 100%">
@@ -70,7 +70,7 @@
                                 <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">broken_image</mat-icon>
                                 <span matTooltip="Job Type" matTooltipPosition="right">Job Type : {{job.jobdetails?.employmenttype}}</span>
                             </p>
-                            
+
                             <p fxLayout="row" fxLayoutAlign="start center">
                                 <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">date_range</mat-icon>
                                 <span matTooltip="Job Period" matTooltipPosition="right">Job Period : {{job.jobdetails?.jobperiodfrom | date:'dd/MM/yyyy'}} - {{job.jobdetails?.jobperiodto

@@ -208,7 +208,8 @@ export class ContractDetailsComponent implements OnInit {
 	isAllSelected() {
 		// console.log(this.selection);
 		const numSelected = this.selection.selected.length;
-		const numRows = this.dailyTimeSheetDataSource.data.length;
+		// const numRows = this.dailyTimeSheetDataSource.data.length;
+		const numRows = this.dailyTimeSheetDataSource.data.filter((data: any) => !data.verified).length;
 		return numSelected === numRows;
 	}
 
@@ -517,8 +518,10 @@ export class ContractDetailsComponent implements OnInit {
 			return previous + min
 		}, 0);
 
-		let hrs = moment.duration(totalMin, "minutes").format("hh:mm");
-		if (hrs == '0' || hrs == '00') return 'Nil';
+		let hrs = moment.duration(totalMin, "minutes").format("hh:mm", {
+			trim: false
+		});
+		// if (hrs == '0' || hrs == '00') return 'Nil';
 		return hrs;
 	}
 
@@ -528,8 +531,10 @@ export class ContractDetailsComponent implements OnInit {
 			return previous + min
 		}, 0);
 
-		let hrs = moment.duration(totalMin, "minutes").format("hh:mm");
-		if (hrs == '0' || hrs == '00') return 'Nil';
+		let hrs = moment.duration(totalMin, "minutes").format("hh:mm", {
+			trim: false
+		});
+		// if (hrs == '0' || hrs == '00') return 'Nil';
 		return hrs;
 	}
 
@@ -539,8 +544,10 @@ export class ContractDetailsComponent implements OnInit {
 			return previous + min
 		}, 0);
 
-		let hrs = moment.duration(totalMin, "minutes").format("hh:mm");
-		if (hrs == '0' || hrs == '00') return 'Nil';
+		let hrs = moment.duration(totalMin, "minutes").format("hh:mm", {
+			trim: false
+		});
+		// if (hrs == '0' || hrs == '00') return 'Nil';
 		return hrs;
 	}
 

@@ -86,19 +86,19 @@
                         </div>
 
                         <div class="user-details transition-2" fxFlex="70" fxLayout="column">
-                            <p fxLayout="row" fxLayoutAlign="start center">
+                            <p fxLayout="row" fxLayoutAlign="start center" *ngIf="employer.uennumber">
                                 <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">payment</mat-icon>
                                 <span matTooltip="UEN Number" matTooltipPosition="right">{{employer.uennumber}}</span>
                             </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
+                            <p fxLayout="row" fxLayoutAlign="start center" *ngIf="employer.industry">
                                 <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">business</mat-icon>
                                 <span matTooltip="Industry" matTooltipPosition="right">{{employer.industry}}</span>
                             </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
+                            <p fxLayout="row" fxLayoutAlign="start center" *ngIf="employer.country">
                                 <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">location_on</mat-icon>
                                 <span matTooltip="Country" matTooltipPosition="right">{{employer.country}}</span>
                             </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
+                            <p fxLayout="row" fxLayoutAlign="start center" *ngIf="employer.companycode">
                                 <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">code</mat-icon>
                                 <span matTooltip="Company Code" matTooltipPosition="right">{{employer.companycode}}</span>
                             </p>

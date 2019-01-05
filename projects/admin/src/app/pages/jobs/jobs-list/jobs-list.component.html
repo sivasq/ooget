@@ -1,7 +1,7 @@
 <div class="inner-sidenav-content transition-2">
     <!-- Http Progress Bar -->
     <ng-progress></ng-progress>
-    
+
     <!-- Breadcrumb Start -->
     <div fxLayout="row wrap">
         <div class="flex-p" fxFlex="1 1 100%">
@@ -33,10 +33,14 @@
                     <span style="font-style:italic; text-decoration: underline; color: blue; cursor: pointer;" routerLink="/admin/employers/{{companyDetails?._id}}/view">{{companyDetails?.companyname | titlecase}}</span>
                 </div>
 
-                <div style="font-size:16px;">
+                <div style="font-size:16px;" *ngIf="companyDetails?.companycode;">
                     <span style="font-weight:600;">Company Code</span> :
                     <span style="font-style:italic; text-decoration: underline; color: blue; cursor: pointer;" routerLink="/admin/employers/{{companyDetails?._id}}/view">{{companyDetails?.companycode | titlecase}}</span>
-                </div>
+				</div>
+
+				<div style="font-size:16px;" *ngIf="!companyDetails?.companycode;">
+					<span style="font-style:italic; text-decoration: underline; color: blue; cursor: pointer;" routerLink="/admin/employers/{{companyDetails?._id}}/view">Generate Company Code</span>
+				</div>
             </mat-card>
         </div>
     </div>
@@ -110,7 +114,7 @@
                                     <p fxLayout="row" fxLayoutAlign="start center">
                                         <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">rowing</mat-icon>
                                         <span matTooltip="PAX" matTooltipPosition="right">Vacancies / PAX Required : {{job.numberofpax-job.numberofcontracts}} / {{job.numberofpax}}</span>&nbsp;&nbsp;
-                                        <span style="color:blue; font-style: italic; cursor: pointer;">Edit Applicants</span>
+                                        <!-- <span style="color:blue; font-style: italic; cursor: pointer;">Edit Applicants</span> -->
                                     </p>
                                     <p fxLayout="row" fxLayoutAlign="start center">
                                         <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">gavel</mat-icon>

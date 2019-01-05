@@ -1611,7 +1611,9 @@ export class AddProfileNewComponent implements OnInit {
 						} else {
 							localStorage.setItem('ogUserName', this.jobSeekerProfileForm.get('username').value);
 							localStorage.setItem('ogUserEmail', this.jobSeekerProfileForm.get('email').value);
-							location.reload();
+							// location.reload();
+							this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
+							this.getProfileDetails();
 							let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
 								duration: 5000,
 							});
@@ -1654,7 +1656,9 @@ export class AddProfileNewComponent implements OnInit {
 					response => {
 						if (response.success) {
 							localStorage.setItem('ogUserLogo', response.jobseekerimage);
-							location.reload();
+							this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
+							// location.reload();
+							this.getProfileDetails();
 
 							let snackBarRef = this.snackBar.open('Profile and Documents Updated Successfully.', 'Close', {
 								duration: 5000,

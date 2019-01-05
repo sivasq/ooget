@@ -57,7 +57,6 @@
     margin-bottom: 15px
 }
 
-.box .box-content-mobile .box-button,
 .box .box-content .box-button {
     bottom: 18px;
     width: 40%;
@@ -65,11 +64,10 @@
     overflow: hidden
 }
 
-.box .box-content-mobile .box-button-mobile,
 .box .box-content .box-button-mobile {
-    bottom: 16px;
+    bottom: 18px;
     width: 70%;
-    border-radius: 2px;
+    border-radius: 20px;
     overflow: hidden
 }
 

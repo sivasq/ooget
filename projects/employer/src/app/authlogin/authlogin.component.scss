@@ -8,7 +8,12 @@
 
 .box .box-content {
     position: relative;
-    height: 251px
+    height: 275px
+}
+
+.box .error .box-content {
+    position: relative;
+    height: 294px
 }
 
 .box .box-content .box-content-inner {
@@ -16,7 +21,11 @@
     top: -34px;
     left: 34px;
     right: 34px;
-    height: 206px
+    height: 244px
+}
+
+.box .error .box-content .box-content-inner {
+    height: 264px
 }
 
 .box .box-content .box-content-inner-mobile {
@@ -24,7 +33,11 @@
     top: -34px;
     left: 7px;
     right: 7px;
-    height: 206px
+    height: 244px
+}
+
+.box .error .box-content .box-content-inner-mobile {
+    height: 264px
 }
 
 .box.register .box-content,
@@ -51,14 +64,14 @@
 }
 
 .box .box-content .box-button {
-    bottom: 16px;
+    // bottom: 16px;
     width: 40%;
     border-radius: 20px;
     overflow: hidden
 }
 
 .box .box-content .box-button-mobile {
-    bottom: 16px;
+    // bottom: 16px;
     width: 70%;
     border-radius: 20px;
     overflow: hidden

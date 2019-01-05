@@ -43,10 +43,15 @@
 						| titlecase}}</span>
 				</div>
 
-				<div style="font-size:16px;">
+				<div style="font-size:16px;" *ngIf="companyDetails?.companycode;">
 					<span style="font-weight:600;">Company Code</span> :
 					<span style="font-style:italic; text-decoration: underline; color: blue; cursor: pointer;" routerLink="/admin/employers/{{companyDetails?._id}}/view">{{companyDetails.companycode
 						| titlecase}}</span>
+				</div>
+
+				<div style="font-size:16px;" *ngIf="!companyDetails?.companycode;">
+					<span style="font-style:italic; text-decoration: underline; color: blue; cursor: pointer;" routerLink="/admin/employers/{{companyDetails?._id}}/view">Generate
+						Company Code</span>
 				</div>
 			</mat-card>
 		</div>
@@ -73,6 +78,7 @@
 						</button>
 					</div>
 					<div *ngIf="jobDetails.jobstatus == 'pending'">
+						&nbsp;
 						<button mat-raised-button color="primary" (click)="activateJob(jobDetails.companyid._id, jobDetails._id)">Activate
 							This Job</button>
 					</div>
@@ -263,82 +269,11 @@
 						</div>
 					</div>
 				</mat-card-content>
-
-				<!-- <mat-card-actions>
-										<button mat-button>LIKE</button>
-										<button mat-button>SHARE</button>
-								</mat-card-actions> -->
 			</mat-card>
 		</div>
 
-		<!-- <div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
-			<mat-card class="p-0">
-				<div class="bg-lightgray" fxLayout="row" fxLayoutAlign="start center" style="height: 40px;">
-					<h3 class="user-name">Candidates Applied</h3>
-				</div>
-
-				<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="candidatesApplied?.length > 0">
-					<div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
-						<p *ngFor="let candidate of candidatesApplied; let i=index;">
-							<span>{{i+1}}.&nbsp;{{candidate.username}}</span>
-						</p>
-					</div>
-				</div>
-
-				<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="candidatesApplied?.length == 0">
-					<div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
-						No Candidates Applied
-					</div>
-				</div>
-			</mat-card>
-		</div> -->
-
-		<!-- <div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
-			<mat-card class="p-0">
-				<div class="bg-lightgray" fxLayout="row" fxLayoutAlign="start center" style="height: 40px;">
-					<h3 class="user-name">Candidates Offered</h3>
-				</div>
-
-				<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="candidatesOffered?.length > 0">
-					<div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
-						<p *ngFor="let candidate of candidatesOffered; let i=index;">
-							<span>{{i+1}}.&nbsp;{{candidate.username}}</span>
-						</p>
-					</div>
-				</div>
-
-				<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="candidatesOffered?.length == 0">
-					<div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
-						No Candidates offered
-					</div>
-				</div>
-			</mat-card>
-		</div> -->
-
-		<!-- <div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
-			<mat-card class="p-0">
-				<div class="bg-lightgray" fxLayout="row" fxLayoutAlign="start center" style="height: 40px;">
-					<h3 class="user-name">Offers Accepted</h3>
-				</div>
-
-				<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="offersAccepted?.length > 0">
-					<div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
-						<p *ngFor="let candidate of offersAccepted; let i=index;">
-							<span>{{i+1}}.&nbsp;{{candidate.username}}</span>
-						</p>
-					</div>
-				</div>
-
-				<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="offersAccepted?.length == 0">
-					<div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
-						No one Accepting Offers
-					</div>
-				</div>
-			</mat-card>
-		</div> -->
-
-		<div class="flex-p" fxFlex="100">
-			<mat-card>
+		<div class="flex-p" fxFlex="100" *ngIf="jobContractors?.length > 0">
+			<!-- <mat-card>
 				<mat-card-header>
 					<mat-card-title>Job Contractors</mat-card-title>
 				</mat-card-header>
@@ -360,9 +295,30 @@
 						No Contractors
 					</div>
 				</div>
-			</mat-card>
-		</div>
+			</mat-card> -->
 
+			<mat-accordion>
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							<h4>Job Contractors</h4>
+						</mat-panel-title>
+					</mat-expansion-panel-header>
+
+					<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
+						<div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
+							<p *ngFor="let contractor of jobContractors; let i=index;">
+								<span>{{i+1}}.&nbsp;
+									<a style="color:blue; font-weight: bold;" routerLink="/admin/employers/jobs/{{contractor._id}}/contract_details">
+										{{contractor.jobseekerid.username}}
+									</a>
+								</span>
+							</p>
+						</div>
+					</div>
+				</mat-expansion-panel>
+			</mat-accordion>
+		</div>
 		<!-- <button mat-raised-button color="primary" (click)="exportAsExcel()">Export as Excel</button>
 
 		<div class="flex-p" style="overflow: overlay; overflow-y: hidden;" #TABLE>

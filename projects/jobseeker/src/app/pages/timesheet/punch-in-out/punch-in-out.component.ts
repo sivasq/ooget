@@ -315,17 +315,28 @@ export class PunchInOutComponent implements OnInit {
 							console.log('The snack-bar action was triggered!');
 						});
 					} else if (!response.success) {
-						let inTime = new Date(response.verifiedpunchintime);
-						let waitTime = new Date(inTime.getTime() + 900000);
-						let parsedWaitTime = this.datePipe.transform(waitTime, 'dd/MM/yyyy HH:mm');
-						let snackBarRef = this.snackBar.open('Please Wait Until ' + parsedWaitTime + ' To PunchOut.', 'Close', {
-							duration: 10000,
-						});
+						if (response.message == 'punchinfirst') {
+							let snackBarRef = this.snackBar.open('You are not yet Punched In', 'Close', {
+								duration: 5000,
+							});
 
-						snackBarRef.onAction().subscribe(() => {
-							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
-						});
+							snackBarRef.onAction().subscribe(() => {
+								snackBarRef.dismiss();
+								console.log('The snack-bar action was triggered!');
+							});
+						} else {
+							let inTime = new Date(response.verifiedpunchintime);
+							let waitTime = new Date(inTime.getTime() + 900000);
+							let parsedWaitTime = this.datePipe.transform(waitTime, 'dd/MM/yyyy HH:mm');
+							let snackBarRef = this.snackBar.open('Please Wait Until ' + parsedWaitTime + ' To PunchOut.', 'Close', {
+								duration: 10000,
+							});
+
+							snackBarRef.onAction().subscribe(() => {
+								snackBarRef.dismiss();
+								console.log('The snack-bar action was triggered!');
+							});
+						}
 					}
 				},
 				error => {

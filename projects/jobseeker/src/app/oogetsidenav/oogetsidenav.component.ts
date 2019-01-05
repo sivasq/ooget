@@ -4,6 +4,7 @@ import { ConfigService } from '../services/config.service';
 import { Router } from '@angular/router';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { TermsConditionsDialogComponent } from '../terms-conditions-dialog/terms-conditions-dialog.component';
+import { AsyncSubscriber } from '../services/async.service';
 
 @Component({
 	selector: 'app-oogetsidenav',
@@ -18,14 +19,26 @@ export class OogetsidenavComponent implements OnInit {
 	public imgBaseUrl;
 	public profileImage: String;
 	public UserName: String;
-	public UserRole: String;
+	// public UserRole: String;
 	public userEmail: String;
 
 	userprofile: boolean = true;
 
-	constructor(private urlconfig: ConfigService, public router: Router, public dialog: MatDialog,) {
+	constructor(private urlconfig: ConfigService, public router: Router, public dialog: MatDialog, private asyncSubscriber: AsyncSubscriber) {
 		this.baseUrl = urlconfig.base_url;
 		this.imgBaseUrl = urlconfig.img_base_url;
+
+		asyncSubscriber.getProfileDetails.subscribe(value => {
+			this.UserName = localStorage.getItem('ogUserName');
+			this.userEmail = localStorage.getItem('ogUserEmail');
+			let userLogo = localStorage.getItem('ogUserLogo');
+
+			if (userLogo == null || userLogo == 'undefined') {
+				this.profileImage = "assets/img/avatars/profile-placeholder.png";
+			} else {
+				this.profileImage = this.imgBaseUrl + '/' + userLogo;
+			}
+		});
 	}
 
 	toggleshowprofile() {
@@ -44,7 +57,7 @@ export class OogetsidenavComponent implements OnInit {
 		// this.UserRole = localStorage.getItem('ogUserRole');
 		this.UserName = localStorage.getItem('ogUserName');
 		this.userEmail = localStorage.getItem('ogUserEmail');
-		this.UserRole = "JobSeeker";
+		// this.UserRole = "JobSeeker";
 		let userLogo = localStorage.getItem('ogUserLogo');
 
 		if (userLogo == null || userLogo == 'undefined') {
@@ -69,7 +82,7 @@ export class OogetsidenavComponent implements OnInit {
 		};
 		let dialog = this.dialog.open(TermsConditionsDialogComponent, dialogConfig);
 	}
-	
+
 	ngOnInit() {
 		this.refreshLS();
 	}

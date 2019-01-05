@@ -115,8 +115,7 @@
 								<mat-label>Password</mat-label>
 								<input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" name="password" autocomplete="off"
 								 formControlName="password" advs-compare="verify" parent='true' required>
-								<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-								<mat-hint>Min 8 characters with Alphanumeric &amp; special character</mat-hint>
+								<mat-icon matSuffix (click)="hide = !hide" class="pointer">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
 								<mat-error *ngIf="employerRegForm.get('password').hasError('required')" align="start">
 									Password is Required
 								</mat-error>
@@ -135,7 +134,7 @@
 								<mat-label>Confirm Password</mat-label>
 								<input matInput [type]="rehide ? 'password' : 'text'" placeholder="Confirm Password" name="verify" autocomplete="off"
 								 formControlName="verify" advs-compare="password" parent='false' required>
-								<mat-icon matSuffix (click)="rehide = !rehide">{{rehide ? 'visibility_off' : 'visibility'}}</mat-icon>
+								<mat-icon matSuffix (click)="rehide = !rehide" class="pointer">{{rehide ? 'visibility_off' : 'visibility'}}</mat-icon>
 								<mat-error *ngIf="employerRegForm.get('verify').hasError('required')" align="start">
 									Verify Password is required
 								</mat-error>

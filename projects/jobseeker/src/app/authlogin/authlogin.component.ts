@@ -58,7 +58,7 @@ export class AuthloginComponent implements OnInit {
 						localStorage.setItem('ogUserLogo', response.jobseekerimage);
 						localStorage.setItem('ogActiveStatus', response.activestatus);
 
-						// If Successfull Validatio redirect to dashboard
+						// If Successfull Validation redirect to dashboard
 						if (response.firsttime == "true") {
 							await this.router.navigate(['main/profile']);
 

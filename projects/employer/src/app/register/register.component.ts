@@ -199,7 +199,7 @@ export class RegisterComponent implements OnInit {
 						this.resetEmployerRegForm.resetForm();
 						// Show Success Snackbar
 						let snackBarRef = this.snackBar.open('You Have Registered Successfully.', 'Close', {
-							duration: 5000,
+							duration: 2000,
 						});
 						// Snackbar action
 						snackBarRef.afterDismissed().subscribe(info => {
