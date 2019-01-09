@@ -302,7 +302,7 @@
                             <mat-datepicker #dayoffpicker touchUi></mat-datepicker>
                         </mat-form-field>
 
-                        <button color="primary" mat-mini-fab (click)="dayoffpicker.open()">
+                        <button color="primary" mat-mini-fab (click)="dayoffpicker.open()" *ngxPermissionsOnly="['superemployer']">
                             <mat-icon>add</mat-icon>
                         </button>
                     </div>
@@ -312,7 +312,7 @@
                                 <div class="mat-list-text" style="padding-left:0;">
                                     {{day.date | date:'dd/MM/yyyy EEEE'}}
                                 </div>
-                                <button mat-icon-button color="warn" [disabled]="checkPastDay(day.date)" (click)="removeDate(day._id, i)">
+                                <button mat-icon-button color="warn" [disabled]="checkPastDay(day.date)" (click)="removeDate(day._id, i)" *ngxPermissionsOnly="['superemployer']">
                                     <mat-icon>delete_forever</mat-icon>
                                 </button>
                             </mat-list-item>

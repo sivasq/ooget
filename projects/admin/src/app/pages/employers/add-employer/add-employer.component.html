@@ -101,8 +101,17 @@
 							</mat-error>
 						</mat-form-field>
 
+						<!-- User Name -->
+						<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
+							<mat-label>User Name</mat-label>
+							<input matInput placeholder="User Name" name="username" autocomplete="off" formControlName="username" required>
+							<mat-error *ngIf="employerAddForm.get('username').hasError('required')" align="start">
+								User Name Required
+							</mat-error>
+						</mat-form-field>
+
 						<!-- Login Mail -->
-						<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
+						<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 							<mat-label>Login Email</mat-label>
 							<input matInput type="email" placeholder="Login Email" name="email" autocomplete="off" formControlName="email"
 							 required>

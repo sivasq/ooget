@@ -97,6 +97,7 @@ export class AddEmployerComponent implements OnInit {
 			industry: ['', Validators.compose([Validators.required])],
 			country: ['', Validators.compose([Validators.required])],
 			companycode: ['', Validators.compose([Validators.required])],
+			username: ['', Validators.compose([Validators.required])],
 			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(8)]), this.isPatternMatch.bind(this)],
 			verify: ['', [Validators.required]],

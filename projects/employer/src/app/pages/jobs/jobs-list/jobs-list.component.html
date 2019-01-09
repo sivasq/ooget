@@ -59,15 +59,19 @@
 									<span>View Job Details</span>
 								</button>
 
-								<button *ngIf="job.jobstatus != 'pending'" mat-menu-item routerLink="/employer/jobs/{{job._id}}/candidates/applied">
-									<mat-icon>list</mat-icon>
-									<span>Applied Candidates</span>
-								</button>
+								<div *ngxPermissionsOnly="['superemployer']">
+									<button *ngIf="job.jobstatus != 'pending'" mat-menu-item routerLink="/employer/jobs/{{job._id}}/candidates/applied">
+										<mat-icon>list</mat-icon>
+										<span>Applied Candidates</span>
+									</button>
+								</div>
 
-								<button *ngIf="job.jobstatus == 'live'" mat-menu-item (click)="closeJob(job._id)">
-									<mat-icon>remove_circle</mat-icon>
-									<span>Close This Job</span>
-								</button>
+								<div *ngxPermissionsOnly="['superemployer']">
+									<button *ngIf="job.jobstatus == 'live'" mat-menu-item (click)="closeJob(job._id)">
+										<mat-icon>remove_circle</mat-icon>
+										<span>Close This Job</span>
+									</button>
+								</div>
 							</mat-menu>
 
 							<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
@@ -269,15 +273,19 @@
 									<mat-icon>description</mat-icon>
 									<span>View Job Details</span>
 								</button>
+								<div *ngxPermissionsOnly="['superemployer']">
+									<button mat-menu-item routerLink="/employer/jobs/{{job._id}}/candidates/applied">
+										<mat-icon>list</mat-icon>
+										<span>Applied Candidates</span>
+									</button>
+								</div>
 
-								<button mat-menu-item routerLink="/employer/jobs/{{job._id}}/candidates/applied">
-									<mat-icon>list</mat-icon>
-									<span>Applied Candidates</span>
-								</button>
-								<button mat-menu-item (click)="closeJob(job._id)">
-									<mat-icon>remove_circle</mat-icon>
-									<span>Close This Job</span>
-								</button>
+								<div *ngxPermissionsOnly="['superemployer']">
+									<button mat-menu-item (click)="closeJob(job._id)">
+										<mat-icon>remove_circle</mat-icon>
+										<span>Close This Job</span>
+									</button>
+								</div>
 							</mat-menu>
 
 							<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
@@ -378,10 +386,12 @@
 									<mat-icon>description</mat-icon>
 									<span>View Details</span>
 								</button>
-								<button mat-menu-item routerLink="/employer/jobs/{{job._id}}/candidates/applied">
-									<mat-icon>list</mat-icon>
-									<span>Applied Candidates</span>
-								</button>
+								<div *ngxPermissionsOnly="['superemployer']">
+									<button mat-menu-item routerLink="/employer/jobs/{{job._id}}/candidates/applied">
+										<mat-icon>list</mat-icon>
+										<span>Applied Candidates</span>
+									</button>
+								</div>
 							</mat-menu>
 
 							<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">

@@ -712,6 +712,10 @@ export class AddProfileNewComponent implements OnInit {
 		{
 			"name": "Malay",
 			"value": "malay"
+		},
+		{
+			"name": "Others",
+			"value": "others"
 		}
 	];
 

@@ -33,14 +33,17 @@
 					<mat-card-subtitle style="text-transform: capitalize;">Job Status: {{jobDetails.jobstatus}}</mat-card-subtitle>
 
 					<div fxFlex></div>
-
-					<div *ngIf="jobDetails != ''">
-						<button mat-raised-button color="primary" routerLink="/employer/jobs/{{ jobDetails._id}}/copyjob">Copy </button>
-						&nbsp;
+					<div *ngxPermissionsOnly="['superemployer']">
+						<div *ngIf="jobDetails != ''">
+							<button mat-raised-button color="primary" routerLink="/employer/jobs/{{ jobDetails._id}}/copyjob">Copy </button>
+							&nbsp;
+						</div>
 					</div>
 
-					<div *ngIf="jobDetails != ''">
-						<button mat-raised-button color="primary" routerLink="/employer/jobs/{{jobDetails._id}}/edit">Edit </button>
+					<div *ngxPermissionsOnly="['superemployer']">
+						<div *ngIf="jobDetails != ''">
+							<button mat-raised-button color="primary" routerLink="/employer/jobs/{{jobDetails._id}}/edit">Edit </button>
+						</div>
 					</div>
 
 					<!-- <div *ngIf="jobDetails.jobstatus == 'pending'">
@@ -264,7 +267,7 @@
 						</mat-panel-title>
 					</mat-expansion-panel-header>
 
-					<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center" >
+					<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
 						<div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
 							<p *ngFor="let contractor of jobContractors; let i=index;">
 								<span>{{i+1}}.&nbsp;

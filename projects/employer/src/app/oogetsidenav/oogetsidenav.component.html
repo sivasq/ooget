@@ -10,7 +10,7 @@
 		<img alt="user-image" src="{{profileImage}}">
 		<div class="user-info">
 			<p class="name" style="text-transform: capitalize;">{{companyName}}</p>
-			<p class="position">{{UserRole}}
+			<p class="position">{{UserName}}
 				<br>
 				<small class="muted-text"></small>
 			</p>
@@ -40,7 +40,7 @@
         </a>
     </div> -->
 
-	<div class="menu-item">
+	<div class="menu-item" *ngxPermissionsOnly="['superemployer']">
 		<a mat-button routerLink="/employer/settings/viewcompany" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
 			<mat-icon>info</mat-icon>
 			<span class="menu-title"> Company Details</span>
@@ -54,21 +54,21 @@
 		</a>
 	</div>
 
-	<div class="menu-item">
+	<div class="menu-item" *ngxPermissionsOnly="['superemployer']">
 		<a mat-button routerLink="/employer/jobs/add" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
 			<mat-icon>work</mat-icon>
 			<span class="menu-title"> Add Job</span>
 		</a>
 	</div>
 
-	<div class="menu-item">
+	<div class="menu-item" *ngxPermissionsOnly="['superemployer']">
 		<a mat-button routerLink="/employer/settings/listusers" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
 			<mat-icon>person</mat-icon>
 			<span class="menu-title"> Users List</span>
 		</a>
 	</div>
 
-	<div class="menu-item">
+	<div class="menu-item" *ngxPermissionsOnly="['superemployer']">
 		<a mat-button routerLink="/employer/settings/adduser" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
 			<mat-icon>person_add</mat-icon>
 			<span class="menu-title"> Add User</span>

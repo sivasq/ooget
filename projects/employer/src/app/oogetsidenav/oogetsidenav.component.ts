@@ -80,6 +80,7 @@ export class OogetsidenavComponent implements OnInit {
 			this.companyName = localStorage.getItem('ogCompanyName');
 			this.companyCode = localStorage.getItem('ogCompanyCode');
 			this.userEmail = localStorage.getItem('ogUserEmail');
+			this.UserName = localStorage.getItem('ogUserName');
 			// this.UserRole = localStorage.getItem('ogUserRole');
 			this.UserRole = "Employer";
 			let companyLogo = localStorage.getItem('ogCompanyLogo');
@@ -112,6 +113,7 @@ export class OogetsidenavComponent implements OnInit {
 		this.companyName = localStorage.getItem('ogCompanyName');
 		this.companyCode = localStorage.getItem('ogCompanyCode');
 		this.userEmail = localStorage.getItem('ogUserEmail');
+		this.UserName = localStorage.getItem('ogUserName');
 		// this.UserRole = localStorage.getItem('ogUserRole');
 		this.UserRole = "Employer";
 		let companyLogo = localStorage.getItem('ogCompanyLogo');
