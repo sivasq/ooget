@@ -11,7 +11,7 @@
 		<img alt="user-image" src="{{profileImage}}">
 		<div class="user-info">
 			<p class="name">{{UserName | titlecase}}</p>
-			<p class="position">{{userEmail}}
+			<p class="position">Jobseeker
 				<br>
 				<small class="muted-text"></small>
 			</p>
@@ -19,7 +19,10 @@
 	</div>
 
 	<div fxHide.lt-md="true" class="w-100 muted-text" fxLayout="row" fxLayoutAlign="space-between center" style="padding:0 10px;">
-		<div fxFlex></div>
+		<a mat-icon-button matTooltip="Profile" matTooltipPosition="right" routerLink="/main/profile/add">
+			<mat-icon>person_outline</mat-icon>
+		</a>
+		<!-- <div fxFlex></div> -->
 		<a mat-icon-button matTooltip="Logout" matTooltipPosition="left" (click)="onLogout()">
 			<mat-icon>power_settings_new</mat-icon>
 		</a>
@@ -36,14 +39,12 @@
         </a>
     </div> -->
 
-	<div class="menu-item">
+	<!-- <div class="menu-item">
 		<a mat-button routerLink="/main/profile/add" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
 			<mat-icon>supervisor_account</mat-icon>
-			<!-- <mat-icon svgIcon="svgicons:cap2"></mat-icon> -->
-			<!-- <mat-icon svgIcon="svgicons:cap1"></mat-icon> -->
 			<span class="menu-title">Profile</span>
 		</a>
-	</div>
+	</div> -->
 
 	<!-- <div class="menu-item">
         <a mat-button routerLink="/main/profile/addnew" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">

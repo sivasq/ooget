@@ -81,13 +81,23 @@
 										<span matTooltip="Job Title" matTooltipPosition="right">Job Title : {{job.jobtitle | titlecase}}</span>
 									</p>
 									<p fxLayout="row" fxLayoutAlign="start center">
+										<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">event_seat</mat-icon>
+										<span matTooltip="Department" matTooltipPosition="right">Dept : {{job.department}}</span>
+									</p>
+									<p fxLayout="row" fxLayoutAlign="start center">
 										<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">rowing</mat-icon>
-										<span matTooltip="PAX" matTooltipPosition="right">PAX Required : {{job.numberofpax-job.numberofcontracts}} /
+										<span matTooltip="PAX" matTooltipPosition="right">Vacancies / PAX Required :
+											{{job.numberofpax-job.numberofcontracts}} /
 											{{job.numberofpax}}</span>
 									</p>
 									<p fxLayout="row" fxLayoutAlign="start center">
 										<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">gavel</mat-icon>
 										<span matTooltip="Job Type" matTooltipPosition="right">Job Type : {{job.employmenttype}}</span>
+									</p>
+									<p fxLayout="row" fxLayoutAlign="start center">
+										<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">date_range</mat-icon>
+										<span matTooltip="Job Period" matTooltipPosition="right">Job Period : {{job.jobperiodfrom
+											| date:'dd/MM/yyyy'}} - {{job.jobperiodto | date:'dd/MM/yyyy'}}</span>
 									</p>
 									<p fxLayout="row" fxLayoutAlign="start center">
 										<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">security</mat-icon>
@@ -181,6 +191,10 @@
 										<span matTooltip="Job Title" matTooltipPosition="right">Job Title : {{job.jobtitle | titlecase}}</span>
 									</p>
 									<p fxLayout="row" fxLayoutAlign="start center">
+										<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">event_seat</mat-icon>
+										<span matTooltip="Department" matTooltipPosition="right">Dept : {{job.department}}</span>
+									</p>
+									<p fxLayout="row" fxLayoutAlign="start center">
 										<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">rowing</mat-icon>
 										<span matTooltip="PAX" matTooltipPosition="right">PAX Required : {{job.numberofpax-job.numberofcontracts}} /
 											{{job.numberofpax}}</span>
@@ -190,9 +204,9 @@
 										<span matTooltip="Job Type" matTooltipPosition="right">Job Type : {{job.employmenttype}}</span>
 									</p>
 									<p fxLayout="row" fxLayoutAlign="start center">
-										<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">calendar_today</mat-icon>
-										<span matTooltip="Job Status" matTooltipPosition="right">Contract Start On : {{job.jobperiodfrom |
-											date:'dd/MM/yyyy'}}</span>
+										<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">date_range</mat-icon>
+										<span matTooltip="Job Period" matTooltipPosition="right">Job Period : {{job.jobperiodfrom
+											| date:'dd/MM/yyyy'}} - {{job.jobperiodto | date:'dd/MM/yyyy'}}</span>
 									</p>
 									<p fxLayout="row" fxLayoutAlign="start center">
 										<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">security</mat-icon>
@@ -295,6 +309,10 @@
 										<span matTooltip="Job Title" matTooltipPosition="right">Job Title : {{job.jobtitle | titlecase}}</span>
 									</p>
 									<p fxLayout="row" fxLayoutAlign="start center">
+										<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">event_seat</mat-icon>
+										<span matTooltip="Department" matTooltipPosition="right">Dept : {{job.department}}</span>
+									</p>
+									<p fxLayout="row" fxLayoutAlign="start center">
 										<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">rowing</mat-icon>
 										<span matTooltip="PAX" matTooltipPosition="right">PAX Required : {{job.numberofpax-job.numberofcontracts}} /
 											{{job.numberofpax}}</span>
@@ -302,6 +320,11 @@
 									<p fxLayout="row" fxLayoutAlign="start center">
 										<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">gavel</mat-icon>
 										<span matTooltip="Job Type" matTooltipPosition="right">Job Type : {{job.employmenttype}}</span>
+									</p>
+									<p fxLayout="row" fxLayoutAlign="start center">
+										<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">date_range</mat-icon>
+										<span matTooltip="Job Period" matTooltipPosition="right">Job Period : {{job.jobperiodfrom
+											| date:'dd/MM/yyyy'}} - {{job.jobperiodto | date:'dd/MM/yyyy'}}</span>
 									</p>
 									<p fxLayout="row" fxLayoutAlign="start center">
 										<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">security</mat-icon>
@@ -401,6 +424,10 @@
 										<span matTooltip="Job Title" matTooltipPosition="right">Job Title : {{job.jobtitle | titlecase}}</span>
 									</p>
 									<p fxLayout="row" fxLayoutAlign="start center">
+										<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">event_seat</mat-icon>
+										<span matTooltip="Department" matTooltipPosition="right">Dept : {{job.department}}</span>
+									</p>
+									<p fxLayout="row" fxLayoutAlign="start center">
 										<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">rowing</mat-icon>
 										<span matTooltip="PAX" matTooltipPosition="right">PAX Required : {{job.numberofpax-job.numberofcontracts}} /
 											{{job.numberofpax}}</span>
@@ -411,9 +438,8 @@
 									</p>
 									<p fxLayout="row" fxLayoutAlign="start center">
 										<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">date_range</mat-icon>
-										<span matTooltip="Contract Period" matTooltipPosition="right">Contract Period : {{job.jobperiodfrom |
-											date:'dd/MM/yyyy'}} to {{job.jobperiodto
-											| date:'dd/MM/yyyy'}}</span>
+										<span matTooltip="Job Period" matTooltipPosition="right">Job Period : {{job.jobperiodfrom
+											| date:'dd/MM/yyyy'}} - {{job.jobperiodto | date:'dd/MM/yyyy'}}</span>
 									</p>
 									<p fxLayout="row" fxLayoutAlign="start center">
 										<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">security</mat-icon>

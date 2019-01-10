@@ -79,9 +79,14 @@
 					</div>
 					<div *ngIf="jobDetails.jobstatus == 'pending'">
 						&nbsp;
-						<button mat-raised-button color="primary" (click)="activateJob(jobDetails.companyid._id, jobDetails._id)">Activate
+						<button mat-raised-button color="primary" (click)="activateJobConfirm(jobDetails.companyid._id, jobDetails._id)">Activate
 							This Job</button>
 					</div>
+					<!-- <div>
+						&nbsp;
+						<button mat-raised-button color="primary" (click)="activateJobConfirm(jobDetails.companyid._id, jobDetails._id)">Activate
+							This Job</button>
+					</div> -->
 					<div *ngIf="jobDetails.jobstatus == 'closed'">
 						&nbsp;
 						<button mat-raised-button color="primary" (click)="rePostJob(jobDetails.companyid._id, jobDetails._id)" disabled=true>Repost
@@ -243,9 +248,9 @@
 							</p>
 						</div>
 					</div>
-					<mat-divider></mat-divider>
+					<mat-divider *ngIf="jobDetails.chargerate"></mat-divider>
 					<!-- Salary Details -->
-					<div>
+					<div *ngIf="jobDetails.chargerate">
 						<div class="user-details transition-2" fxFlex="100" fxLayout="column">
 							<p fxLayout="row" fxLayoutAlign="start center">
 								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
@@ -307,13 +312,26 @@
 
 					<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
 						<div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
-							<p *ngFor="let contractor of jobContractors; let i=index;">
+							<!-- <p *ngFor="let contractor of jobContractors; let i=index;">
 								<span>{{i+1}}.&nbsp;
 									<a style="color:blue; font-weight: bold;" routerLink="/admin/employers/jobs/{{contractor._id}}/contract_details">
 										{{contractor.jobseekerid.username}}
 									</a>
 								</span>
-							</p>
+							</p> -->
+
+							<mat-list>
+								<mat-list-item *ngFor="let contractor of jobContractors; let i=index;">
+									<div class="mat-list-text" style="padding-left:0;">
+										{{i+1}}.&nbsp; {{contractor.jobseekerid.username}}
+									</div>
+
+									<button mat-icon-button color="warn" (click)="removeContractorFromJobConfirm(contractor._id, i)">
+										<mat-icon>delete_forever</mat-icon>
+									</button>
+								</mat-list-item>
+							</mat-list>
+
 						</div>
 					</div>
 				</mat-expansion-panel>

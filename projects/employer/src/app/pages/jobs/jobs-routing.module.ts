@@ -82,6 +82,11 @@ const routes: Routes = [
 		canActivate: [AuthGuardService]
 	},
 	{
+		path: 'candidates',
+		loadChildren: '../../pages/jobseeker/jobseeker.module#JobseekerModule',
+		canActivate: [AuthGuardService]
+	},
+	{
 		path: '',
 		redirectTo: 'add',
 		pathMatch: 'full'

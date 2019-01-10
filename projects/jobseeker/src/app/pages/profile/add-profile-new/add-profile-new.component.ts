@@ -721,13 +721,13 @@ export class AddProfileNewComponent implements OnInit {
 
 	public Nationalitys: any = [
 		{
-			"name": "Singaporean",
-			"value": "singaporean"
+			"name": "Singapore Citizen",
+			"value": "Singapore Citizen"
 		},
 		{
-			"name": "Permanent",
-			"value": "permanent"
-		},
+			"name": "Permanent Resident",
+			"value": "Permanent Resident"
+		}
 	];
 
 	days: any[] = [];

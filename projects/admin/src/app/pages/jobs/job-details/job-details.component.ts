@@ -12,6 +12,8 @@ import { DublicateJobConfirmComponent } from '../dialogs/dublicate-job-confirm/d
 import { SelectionModel } from '@angular/cdk/collections';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import * as XLSX from 'xlsx';
+import { JobActivationComponent } from '../dialogs/job-activation/job-activation.component';
+import { SingleTextareaComponent } from '../dialogs/single-textarea/single-textarea.component';
 
 @Component({
 	selector: 'app-job-details',
@@ -298,8 +300,28 @@ export class JobDetailsComponent implements OnInit {
 			);
 	}
 
+	// Job Activation with Pay Info
+	activateJobConfirm(employerId, jobId) {
+		let dialogConfig = new MatDialogConfig();
+
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+		dialogConfig.data = {
+			'jobid': jobId,
+			'companyid': employerId,
+		};
+		let dialogRef = this.dialog.open(JobActivationComponent, dialogConfig);
+
+		dialogRef.afterClosed().subscribe(response => {
+			if (response.callback) {
+				this.getJobDetails({ jobid: jobId, companyid: employerId });
+			}
+		})
+	}
+
+	// Currently Not in use // Only for job activation
 	activateJob(employerId, jobId) {
-		this.busy = this._httpService.getEmployerDetails({ companyid: employerId })
+		this.busy = this._httpService.activateJob({ companyid: employerId })
 			.subscribe(
 				response => {
 					if (response.success) {
@@ -373,9 +395,7 @@ export class JobDetailsComponent implements OnInit {
 	}
 
 	duplicateJobConfirm(companyid, jobid) {
-
 		// routerLink="/admin/employers/{{jobDetails.companyid._id}}/jobs/{{jobDetails._id}}/copyjob"
-
 		let dialogConfig = new MatDialogConfig();
 
 		dialogConfig.disableClose = true;
@@ -404,6 +424,77 @@ export class JobDetailsComponent implements OnInit {
 	// 	this.holidaysList = holidaysDates;
 	// 	console.log(this.holidaysList);
 	// }
+
+	removeContractorFromJobConfirm(contractId, index) {
+		let dialogConfig = new MatDialogConfig();
+
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+		dialogConfig.data = {
+			// boxTitle:"Confirmation",
+			confirmMsg: "<h4>Do you want remove this contractor from This Contract ?</h4>",
+			okButtonText: "Yes",
+			noButtonText: "No",
+			actionalign: "center"
+		};
+		let dialogref = this.dialog.open(ConfirmDialogComponent, dialogConfig);
+
+		dialogref.afterClosed().subscribe(
+			data => {
+				// this.confirmResponse(data)
+				if (data == 'yes') {
+					// console.log(employerId);
+					// this.removeContractorFromJob(contractId, index)
+					this.getReasonForRemoveContractorFromJob(contractId, index)
+				} else if (data == 'no') {
+					//this.accept_terms = "true";
+					console.log('no');
+				}
+			}
+		);
+	}
+
+	// Job Activation with Pay Info
+	getReasonForRemoveContractorFromJob(contractId, index) {
+		let dialogConfig = new MatDialogConfig();
+
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+		dialogConfig.data = {
+			boxTitle: "Please Enter Valid Reason",
+			textPlaceHolder: "Valid Reason",
+			okButtonText: "Submit",
+			noButtonText: "Cancel",
+			actionalign: "center"
+		};
+		let dialogRef = this.dialog.open(SingleTextareaComponent, dialogConfig);
+
+		dialogRef.afterClosed().subscribe(response => {
+			if (response.callback) {
+				this.removeContractorFromJob(contractId, index)
+			}
+			console.log(response);
+		})
+	}
+
+	public removeContractorFromJob(contractId, index) {
+
+		this.jobContractors.splice(index, 1);
+
+		// this.busy = this._httpService.removeContractorFromJob({ 'contractid': contractId })
+		// 	.subscribe(
+		// 		response => {
+		// 			if (response.success) {
+		// 				this.jobContractors.splice(index, 1);
+		// 			} else if (!response.success) {
+		// 				console.log(response);
+		// 			}
+		// 		},
+		// 		error => {
+		// 			console.log(error);
+		// 		}
+		// 	);
+	}
 
 	ngOnInit() {
 		// let startDate = new Date("2017-10-01"); //YYYY-MM-DD

@@ -10,7 +10,7 @@
 		<img alt="user-image" src="{{profileImage}}">
 		<div class="user-info">
 			<p class="name" style="text-transform: capitalize;">{{companyName}}</p>
-			<p class="position">{{UserName}}
+			<p class="position">Employer
 				<br>
 				<small class="muted-text"></small>
 			</p>
@@ -51,6 +51,14 @@
 		<a mat-button routerLink="/employer/jobs/list" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
 			<mat-icon>view_list</mat-icon>
 			<span class="menu-title"> Jobs List</span>
+		</a>
+	</div>
+
+	<div class="menu-item">
+		<a mat-button routerLink="/employer/jobs/candidates/pendingapplication" routerLinkActive="active-link" fxLayout="row"
+		 fxLayoutAlign="flex-start center">
+			<mat-icon>all_out</mat-icon>
+			<span class="menu-title"> Pending Job Applications</span>
 		</a>
 	</div>
 

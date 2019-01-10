@@ -20,7 +20,7 @@
 				</a> -->
 
 				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
-					<span class="breadcrumb-title active">Pending Jobs List</span>
+					<span class="breadcrumb-title active">Live Jobs List</span>
 				</div>
 			</mat-card>
 		</div>
@@ -30,7 +30,7 @@
 	<div [ngBusy]="{busy:busy}"></div>
 
 	<!-- Search Data and More.. Start -->
-	<div class="flex-p" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="isPendingJobAvailable">
+	<div class="flex-p" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="isLiveJobAvailable">
 		<div fxLayout="row">
 			<mat-button-toggle (click)="tab1search=!tab1search">
 				<mat-icon>search</mat-icon>
@@ -52,8 +52,8 @@
 	<!-- Search Data and More.. End -->
 
 	<!-- Data Lists Start -->
-	<div fxLayout="row wrap" *ngIf="isPendingJobAvailable">
-		<div class="flex-p" fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50" *ngFor="let job of pending_jobs_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
+	<div fxLayout="row wrap" *ngIf="isLiveJobAvailable">
+		<div class="flex-p" fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50" *ngFor="let job of jobs_list_live | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
 			<mat-card class="p-0">
 				<div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
 					<h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below" routerLink="/admin/employers/{{job.companyid._id}}/jobs/{{job._id}}/view">{{job.jobtitle}}</h3>
@@ -94,7 +94,7 @@
 	<!-- Data Lists End -->
 
 	<!-- Pagination Start -->
-	<div fxLayout="row wrap" *ngIf="isPendingJobAvailable">
+	<div fxLayout="row wrap" *ngIf="isLiveJobAvailable">
 		<div class="flex-p" fxFlex="100">
 			<mat-card class="p-0 mat-paginator">
 				<div class="mat-paginator-container">
@@ -120,8 +120,8 @@
 	</div>
 	<!-- Pagination End -->
 
-	<div *ngIf="!isPendingJobAvailable" fxLayout="column" fxLayoutAlign="center center" class="no-data" style="border: 2px solid #eee; margin:8px;">
-		<p>Currently No Pending Jobs Found.</p>
+	<div *ngIf="!isLiveJobAvailable" fxLayout="column" fxLayoutAlign="center center" class="no-data" style="border: 2px solid #eee; margin:8px;">
+		<p>Currently No Live Jobs Found.</p>
 	</div>
 
 </div>

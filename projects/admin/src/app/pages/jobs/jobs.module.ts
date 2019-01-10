@@ -15,6 +15,9 @@ import { MakeDuplicateJobComponent } from './make-duplicate-job/make-duplicate-j
 import { DublicateJobConfirmComponent } from './dialogs/dublicate-job-confirm/dublicate-job-confirm.component';
 import { TimesheetNotesComponent } from './dialogs/timesheet-notes/timesheet-notes.component';
 import { LatereasonComponent } from './dialogs/latereason/latereason.component';
+import { JobActivationComponent } from './dialogs/job-activation/job-activation.component';
+import { LivejobsComponent } from './livejobs/livejobs.component';
+import { SingleTextareaComponent } from './dialogs/single-textarea/single-textarea.component';
 
 @NgModule({
 	imports: [
@@ -33,11 +36,16 @@ import { LatereasonComponent } from './dialogs/latereason/latereason.component';
 		EditClockInOutComponent,
 		DublicateJobConfirmComponent,
 		TimesheetNotesComponent,
-		LatereasonComponent
+		LatereasonComponent,
+		JobActivationComponent,
+		LivejobsComponent,
+		SingleTextareaComponent
 	],
 	entryComponents: [
 		EditClockInOutComponent,
 		DublicateJobConfirmComponent,
+		JobActivationComponent,
+		SingleTextareaComponent,
 		TimesheetNotesComponent,
 		LatereasonComponent
 	]

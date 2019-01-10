@@ -219,6 +219,18 @@ export class ApiCallService {
 		return this.http.post(this.baseUrl + '/job/changejobstatus', jobStatus, { headers: headers })
 	}
 
+	addPayInfoToJob(jobStatus): Observable<any> {
+		// let jobStatus = jobStatus;
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/job/addpayinfo', jobStatus, { headers: headers })
+	}
+
 	closeJob(jobStatus): Observable<any> {
 		// let jobStatus = jobStatus;
 		let userToken = localStorage.getItem('ogToken');
@@ -468,6 +480,17 @@ export class ApiCallService {
 	}
 
 	removeOffDay(Data): Observable<any> {
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/contract/removeoffday', Data, { headers: headers })
+	}
+
+	removeContractorFromJob(Data): Observable<any> {
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
 			{

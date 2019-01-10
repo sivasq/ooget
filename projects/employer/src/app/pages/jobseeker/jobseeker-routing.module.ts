@@ -4,6 +4,7 @@ import { AppliedJobseekerListComponent } from './applied-jobseeker-list/applied-
 import { AuthGuardService } from '../../services/auth-guard.service';
 import { JobseekerDetailsComponent } from './jobseeker-details/jobseeker-details.component';
 import { NgxPermissionsGuard } from 'ngx-permissions';
+import { AllAppliedJobseekersListComponent } from './all-applied-jobseekers-list/all-applied-jobseekers-list.component';
 
 const routes: Routes = [
 	{
@@ -20,6 +21,17 @@ const routes: Routes = [
 	{
 		path: ':js_id/view',
 		component: JobseekerDetailsComponent,
+		canActivate: [AuthGuardService, NgxPermissionsGuard],
+		data: {
+			permissions: {
+				only: 'superemployer',
+				redirectTo: '/employer/401'
+			}
+		}
+	},
+	{
+		path: 'pendingapplication',
+		component: AllAppliedJobseekersListComponent,
 		canActivate: [AuthGuardService, NgxPermissionsGuard],
 		data: {
 			permissions: {

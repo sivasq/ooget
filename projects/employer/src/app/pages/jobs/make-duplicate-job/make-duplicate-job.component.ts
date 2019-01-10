@@ -952,7 +952,7 @@ export class MakeDuplicateJobComponent implements OnInit {
 		let jobaddedby = { "jobaddedby": "employer" };
 		employerJobData = Object.assign(employerJobData, jobaddedby);
 
-		let jobstatus = { "jobstatus": "live" };
+		let jobstatus = { "jobstatus": "pending" };
 		employerJobData = Object.assign(employerJobData, jobstatus);
 
 		let newBreaks: any[] = [];

@@ -1,0 +1,61 @@
+<div class="container">
+	<div mat-dialog-title>
+		Enter Pay Details
+	</div>
+	<div class="mat-dialog-content">
+		<form #payJobForm="ngForm">
+			<div fxLayout="row wrap" fxLayoutAlign="space-between center">
+				<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
+					<mat-label>Charge Rate (S$)</mat-label>
+					<!-- <span matPrefix style="font-size: 24px;">S&#x24; &nbsp;</span> -->
+					<span matPrefix>
+						<span style="font-size: 17px;">S</span>
+						<span style="font-size: 19px;">$ &nbsp;</span>
+					</span>
+					<input matInput placeholder="Charge Rate (S$)" name="chargerate" autocomplete="off" [(ngModel)]="jobDetails.chargerate"
+					 pattern="([0-9]*[.])?[0-9]+" (ngModelChange)="vlidateChargingRate()" required>
+				</mat-form-field>
+
+				<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
+					<mat-label>Markup Rate {{jobDetails.markupratetype == 'sgdollar' ? '(S$)' : jobDetails.markupratetype ==
+						'percentage' ? '(%)' : ''
+						}}</mat-label>
+					<span matPrefix *ngIf="jobDetails.markupratetype == 'sgdollar'">
+						<span style="font-size: 17px;">S</span>
+						<span style="font-size: 19px;">$ &nbsp;</span>
+					</span>
+					<span matPrefix *ngIf="jobDetails.markupratetype == 'percentage'" style="font-size: 17px;">% &nbsp;</span>
+					<input matInput placeholder="Markup Rate {{jobDetails.markupratetype == 'sgdollar' ? '(S$)' : jobDetails.markupratetype == 'percentage' ? '(%)' : '' }}"
+					 name="markuprate" autocomplete="off" [(ngModel)]="jobDetails.markuprate" pattern="([0-9]*[.])?[0-9]+"
+					 (ngModelChange)="vlidateChargingRate()" required>
+				</mat-form-field>
+
+				<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
+					<mat-label>Markup Rate In</mat-label>
+					<mat-select placeholder="Markup Rate In" name="markupratetype" [(ngModel)]="jobDetails.markupratetype"
+					 (selectionChange)="vlidateChargingRate()" required>
+						<mat-option value="sgdollar">SG Dollar(S$)</mat-option>
+						<mat-option value="percentage">Percentage(%)</mat-option>
+					</mat-select>
+				</mat-form-field>
+
+				<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
+					<mat-label>JobSeeker Salary/hr</mat-label>
+					<input matInput placeholder="JobSeeker Salary/hr" name="salary" autocomplete="off" [(ngModel)]="jobDetails.salary"
+					 pattern="([0-9]*[.])?[0-9]+" readonly required>
+				</mat-form-field>
+
+				<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
+					<mat-label>Markup Rate In Currency(S$)</mat-label>
+					<input matInput placeholder="Markup Rate In Currency(S$)" name="markuprateincurrency" autocomplete="off"
+					 [(ngModel)]="jobDetails.markuprateincurrency" pattern="([0-9]*[.])?[0-9]+" readonly required>
+				</mat-form-field>
+			</div>
+
+			<div mat-dialog-actions>
+				<button mat-button type="submit" [disabled]="!payJobForm.valid" (click)="addPayInfoToJob(payJobForm.value)">Save</button>
+				<button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+			</div>
+		</form>
+	</div>
+</div>

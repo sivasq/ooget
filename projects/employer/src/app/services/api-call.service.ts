@@ -125,6 +125,18 @@ export class ApiCallService {
 		return this.http.post(this.baseUrl + '/job/fetchparticularjobappliedjobseekers', jobId, { headers: headers })
 	}
 
+	getPendingJobApplications(): Observable<any> {
+		let userToken = localStorage.getItem('ogToken');
+		let dummy = '';
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/job/fetchalljobappliedjobseekers', dummy, { headers: headers })
+	}
+
 	getJobSeekerDetails(jobseekerId): Observable<any> {
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
@@ -145,7 +157,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/job/selectcandidate', ids, { headers: headers })
+		return this.http.post(this.baseUrl + '/job/offerjob', ids, { headers: headers })
 	}
 
 	jobAddToEmployer(employerJobData): Observable<any> {
