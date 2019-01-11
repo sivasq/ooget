@@ -14,7 +14,8 @@ import { ConfigService } from '../../../services/config.service';
 export class JobsListComponent implements OnInit {
 
 	search = {
-		employmenttype: '',
+		parttime: '',
+		fulltime: '',
 		minsalary: '',
 		maxsalary: '',
 		jobspecialization: ''
@@ -342,10 +343,152 @@ export class JobsListComponent implements OnInit {
 
 	makeSearch() {
 		console.log(this.search);
-		console.log(this.search.jobspecialization ? this.search.jobspecialization : '0');
+		// console.log(this.search.jobspecialization ? this.search.jobspecialization : '0');
+		let con;
 		this.jobs_list_all = this.jobs.filter((jobs: any) => {
 			// return jobs.employmenttype === "Part Time" && jobs.salary == 19
-			return (jobs.employmenttype === this.search.employmenttype) || (jobs.jobspecialization === this.search.jobspecialization ? this.search.jobspecialization : '0') || (jobs.salary >= this.search.minsalary ? this.search.minsalary : 0 && jobs.salary <= this.search.maxsalary ? this.search.maxsalary : 0);
+
+			if ((this.search.parttime && !this.search.fulltime) && this.search.jobspecialization == '' && ((this.search.minsalary == '' && this.search.minsalary == null) && this.search.maxsalary == '')) {
+				con = 'jobs.employmenttype === "Part Time"19'
+			}
+
+			if (((this.search.parttime && this.search.fulltime) || (!this.search.parttime && !this.search.fulltime)) && this.search.jobspecialization == '' && ((this.search.minsalary == '' && this.search.minsalary == null) && this.search.maxsalary == '')) {
+				con = '(jobs.employmenttype === "Part Time" || jobs.employmenttype === "Full Time")23'
+			}
+
+			if ((!this.search.parttime && this.search.fulltime) && this.search.jobspecialization == '' && ((this.search.minsalary == '' && this.search.minsalary == null) && this.search.maxsalary == '')) {
+				con = 'jobs.employmenttype === "Full Time"22'
+			}
+
+			if (((this.search.parttime && this.search.fulltime) || (!this.search.parttime && !this.search.fulltime)) && this.search.jobspecialization != '' && ((this.search.minsalary == '' && this.search.minsalary == null) && this.search.maxsalary == '')) {
+				con = '(jobs.employmenttype === "Part Time" || jobs.employmenttype === "Full Time") && jobs.jobspecialization === this.search.jobspecialization 29'
+			}
+
+			if (((this.search.parttime && this.search.fulltime) || (!this.search.parttime && !this.search.fulltime)) && this.search.jobspecialization == '' && ((this.search.minsalary == '' && this.search.minsalary == null) && this.search.maxsalary == '')) {
+				con = '(jobs.employmenttype === "Part Time" || jobs.employmenttype === "Full Time")  30'
+			}
+
+			if (((this.search.parttime && this.search.fulltime) || (!this.search.parttime && !this.search.fulltime)) && this.search.jobspecialization != '' && ((this.search.minsalary != '' && this.search.minsalary != null) && this.search.maxsalary != '')) {
+				con = '(jobs.employmenttype === "Part Time" || jobs.employmenttype === "Full Time") && jobs.jobspecialization === this.search.jobspecialization && (jobs.salary >= this.search.minsalary && jobs.salary <= this.search.maxsalary)7'
+			}
+
+			if (((this.search.parttime && this.search.fulltime) || (!this.search.parttime && !this.search.fulltime)) && this.search.jobspecialization != '' && ((this.search.minsalary == '' && this.search.minsalary == null) && this.search.maxsalary != '')) {
+				con = '(jobs.employmenttype === "Part Time" || jobs.employmenttype === "Full Time") && jobs.jobspecialization === this.search.jobspecialization && (jobs.salary >= 0 && jobs.salary <= this.search.maxsalary)8'
+			}
+
+			if (((this.search.parttime && this.search.fulltime) || (!this.search.parttime && !this.search.fulltime)) && this.search.jobspecialization != '' && ((this.search.minsalary != '' && this.search.minsalary != null) && this.search.maxsalary == '')) {
+				con = '(jobs.employmenttype === "Part Time" || jobs.employmenttype === "Full Time") && jobs.jobspecialization === this.search.jobspecialization && (jobs.salary >= this.search.minsalary && jobs.salary <= 100000)9'
+			}
+
+			// if (((this.search.parttime && this.search.fulltime) || (!this.search.parttime && !this.search.fulltime)) && this.search.jobspecialization != '' && ((this.search.minsalary == '' && this.search.minsalary == null) && this.search.maxsalary == '')) {
+			// 	con = '(jobs.employmenttype === "Part Time" || jobs.employmenttype === "Full Time") && jobs.jobspecialization === this.search.jobspecialization 29'
+			// }
+
+			// if (((this.search.parttime && this.search.fulltime) || (!this.search.parttime && !this.search.fulltime)) && this.search.jobspecialization == '' && ((this.search.minsalary == '' && this.search.minsalary == null) && this.search.maxsalary == '')) {
+			// 	con = '(jobs.employmenttype === "Part Time" || jobs.employmenttype === "Full Time")  30'
+			// }
+
+			if (((this.search.parttime && this.search.fulltime) || (!this.search.parttime && !this.search.fulltime)) && this.search.jobspecialization == '' && ((this.search.minsalary != '' && this.search.minsalary != null) && this.search.maxsalary != '')) {
+				con = '(jobs.employmenttype === "Part Time" || jobs.employmenttype === "Full Time") && (jobs.salary >= this.search.minsalary && jobs.salary <= this.search.maxsalary)10'
+			}
+
+			if (((this.search.parttime && this.search.fulltime) || (!this.search.parttime && !this.search.fulltime)) && this.search.jobspecialization == '' && ((this.search.minsalary == '' && this.search.minsalary == null) && this.search.maxsalary != '')) {
+				con = '(jobs.employmenttype === "Part Time" || jobs.employmenttype === "Full Time") &&(jobs.salary >= 0 && jobs.salary <= this.search.maxsalary)11'
+			}
+
+			if (((this.search.parttime && this.search.fulltime) || (!this.search.parttime && !this.search.fulltime)) && this.search.jobspecialization == '' && ((this.search.minsalary != '' && this.search.minsalary != null) && this.search.maxsalary == '')) {
+				con = '(jobs.employmenttype === "Part Time" || jobs.employmenttype === "Full Time") && (jobs.salary >= this.search.minsalary && jobs.salary <= 100000) 12'
+			}
+
+			if (((this.search.parttime && this.search.fulltime) || (!this.search.parttime && !this.search.fulltime)) && this.search.jobspecialization == '' && ((this.search.minsalary == '' && this.search.minsalary == null) && this.search.maxsalary == '')) {
+				con = '(jobs.employmenttype === "Part Time" || jobs.employmenttype === "Full Time") 33'
+			}
+			// if (((this.search.parttime && this.search.fulltime) || (!this.search.parttime && !this.search.fulltime)) && this.search.jobspecialization == '' && ((this.search.minsalary == '' && this.search.minsalary == null) && this.search.maxsalary == '')) {
+			// 	con = '(jobs.employmenttype === "Part Time" || jobs.employmenttype === "Full Time")23'
+			// }
+
+			// if (!this.search.parttime && !this.search.fulltime) {
+			// 	con = (jobs.employmenttype === "Part Time" || jobs.employmenttype === "Full Time")
+			// }
+
+			if ((this.search.parttime && !this.search.fulltime) && this.search.jobspecialization != '' && ((this.search.minsalary != '' && this.search.minsalary != null) && this.search.maxsalary != '')) {
+				con = 'jobs.employmenttype === "Part Time" && jobs.jobspecialization === this.search.jobspecialization && (jobs.salary >= this.search.minsalary && jobs.salary <= this.search.maxsalary)6'
+			}
+
+			if ((this.search.parttime && !this.search.fulltime) && this.search.jobspecialization != '' && ((this.search.minsalary == '' && this.search.minsalary == null) && this.search.maxsalary != '')) {
+				con = 'jobs.employmenttype === "Part Time" && jobs.jobspecialization === this.search.jobspecialization && (jobs.salary >= 0 && jobs.salary <= this.search.maxsalary)5'
+			}
+			if ((this.search.parttime && !this.search.fulltime) && this.search.jobspecialization != '' && ((this.search.minsalary != '' && this.search.minsalary != null) && this.search.maxsalary == '')) {
+				con = 'jobs.employmenttype === "Part Time" && jobs.jobspecialization === this.search.jobspecialization && (jobs.salary >= this.search.minsalary && jobs.salary <= 100000)4'
+			}
+
+
+			if ((this.search.parttime && !this.search.fulltime) && this.search.jobspecialization == '' && ((this.search.minsalary != '' && this.search.minsalary != null) && this.search.maxsalary != '')) {
+				con = 'jobs.employmenttype === "Part Time" && (jobs.salary >= this.search.minsalary && jobs.salary <= this.search.maxsalary)3'
+			}
+
+			// if ((this.search.parttime && !this.search.fulltime) && this.search.jobspecialization == '' && ((this.search.minsalary == '' && this.search.minsalary == null) && this.search.maxsalary == '')) {
+			// 	con = 'jobs.employmenttype === "Part Time"19'
+			// }
+
+			if ((this.search.parttime && !this.search.fulltime) && this.search.jobspecialization == '' && ((this.search.minsalary == '' && this.search.minsalary == null) && this.search.maxsalary != '')) {
+				con = 'jobs.employmenttype === "Part Time" && (jobs.salary >= 0 && jobs.salary <= this.search.maxsalary)2'
+			}
+
+			if ((this.search.parttime && !this.search.fulltime) && this.search.jobspecialization == '' && ((this.search.minsalary != '' && this.search.minsalary != null) && this.search.maxsalary == '')) {
+				con = 'jobs.employmenttype === "Part Time" && (jobs.salary >= this.search.minsalary && jobs.salary <= 100000)1'
+			}
+
+
+			if ((!this.search.parttime && this.search.fulltime) && this.search.jobspecialization != '' && ((this.search.minsalary != '' && this.search.minsalary != null) && this.search.maxsalary != '')) {
+				con = 'jobs.employmenttype === "Full Time" && jobs.jobspecialization === this.search.jobspecialization && (jobs.salary >= this.search.minsalary && jobs.salary <= this.search.maxsalary)13'
+			}
+
+			if ((!this.search.parttime && this.search.fulltime) && this.search.jobspecialization != '' && ((this.search.minsalary == '' && this.search.minsalary == null) && this.search.maxsalary != '')) {
+				con = 'jobs.employmenttype === "Full Time" && jobs.jobspecialization === this.search.jobspecialization && (jobs.salary >= 0 && jobs.salary <= this.search.maxsalary)14'
+			}
+
+			if ((!this.search.parttime && this.search.fulltime) && this.search.jobspecialization != '' && ((this.search.minsalary != '' && this.search.minsalary != null) && this.search.maxsalary == '')) {
+				con = 'jobs.employmenttype === "Full Time" && jobs.jobspecialization === this.search.jobspecialization && (jobs.salary >= this.search.minsalary && jobs.salary <= 100000)15'
+			}
+
+
+			if ((!this.search.parttime && this.search.fulltime) && this.search.jobspecialization == '' && ((this.search.minsalary != '' && this.search.minsalary != null) && this.search.maxsalary != '')) {
+				con = 'jobs.employmenttype === "Full Time" && (jobs.salary >= this.search.minsalary && jobs.salary <= this.search.maxsalary)16'
+			}
+
+			// if ((!this.search.parttime && this.search.fulltime) && this.search.jobspecialization == '' && ((this.search.minsalary == '' && this.search.minsalary == null) && this.search.maxsalary == '')) {
+			// 	con = 'jobs.employmenttype === "Full Time"22'
+			// }
+
+			if ((!this.search.parttime && this.search.fulltime) && this.search.jobspecialization == '' && ((this.search.minsalary == '' && this.search.minsalary == null) && this.search.maxsalary != '')) {
+				con = 'jobs.employmenttype === "Full Time" && (jobs.salary >= 0 && jobs.salary <= this.search.maxsalary)17'
+			}
+
+			if ((!this.search.parttime && this.search.fulltime) && this.search.jobspecialization == '' && ((this.search.minsalary != '' && this.search.minsalary != null) && this.search.maxsalary == '')) {
+				con = 'jobs.employmenttype === "Full Time" && (jobs.salary >= this.search.minsalary && jobs.salary <= 100000)18'
+			}
+
+			console.log(con);
+			return con;
+
+			// if ((this.search.jobspecialization != '') && this.search.jobspecialization == '') {
+			// 	con = con && jobs.jobspecialization === this.search.jobspecialization
+			// }
+
+			// if ((this.search.minsalary != '' && this.search.minsalary != null) && this.search.maxsalary != '') {
+			// 	con = con && (jobs.salary >= this.search.minsalary && jobs.salary <= this.search.maxsalary)
+			// }
+
+			// if ((this.search.minsalary == '' && this.search.minsalary == null) && this.search.maxsalary != '') {
+			// 	con += '&&' + (jobs.salary >= 0 && jobs.salary <= this.search.maxsalary)
+			// }
+
+			// if ((this.search.minsalary != '' && this.search.minsalary != null) && this.search.maxsalary == '') {
+			// 	con += '&&' + (jobs.salary >= this.search.minsalary && jobs.salary <= 100000)
+			// }
+
+			// return (jobs.employmenttype === this.search.employmenttype) || (jobs.jobspecialization === this.search.jobspecialization ? this.search.jobspecialization : '0') || (jobs.salary >= this.search.minsalary ? this.search.minsalary : 0 && jobs.salary <= this.search.maxsalary ? this.search.maxsalary : 0);
 		});
 	}
 

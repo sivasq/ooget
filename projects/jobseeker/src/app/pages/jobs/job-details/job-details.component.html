@@ -28,7 +28,7 @@
     <div fxLayout="row wrap">
         <div [ngBusy]="{busy:busy}"></div>
         <div class="flex-p" fxFlex="1 1 100%">
-            <mat-card class="p-10" fxLayout="row" fxLayoutAlign="start center">
+            <mat-card class="p-10" fxLayout="row" fxLayoutAlign="start center" fxLayoutAlign="space-between center">
 
                 <div *ngIf="isUnderContract" fxLayout="row" fxLayoutAlign="start center">
                     <div>{{helpTxt1}}</div>
@@ -50,7 +50,11 @@
 
                 <div *ngIf="isNotApplied" fxLayout="row" fxLayoutAlign="start center">
                     <button mat-raised-button color="primary" (click)="sendApplication(jobDetails._id)">{{btnName}}</button>
-                </div>
+				</div>
+
+				<!-- <div fxLayout="row" fxLayoutAlign="start center">
+					<button mat-raised-button color="primary" (click)="saveJob(jobDetails._id)">Save Job</button>
+				</div> -->
             </mat-card>
         </div>
     </div>

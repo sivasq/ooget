@@ -36,10 +36,14 @@
                         {{activeContract.jobid.jobtitle}} ({{activeContract.jobid.companyid.companyname}})
                     </a>
                 </div> -->
-                <mat-button-toggle-group vertical #toggleGroup1="matButtonToggleGroup" (click)="doReset2()">
-                    <mat-button-toggle *ngFor="let activeContract of activeContracts; let i=index;" [value]="activeContract._id" (click)="getContractTodayTimesheet(activeContract._id); getContractDetails(activeContract._id);"
+                <mat-button-toggle-group vertical #toggleGroup1="matButtonToggleGroup" style="border:none!important;" (click)="doReset2()">
+                    <mat-button-toggle *ngFor="let activeContract of activeContracts |slice:0:showActiveContract; let i=index;" [value]="activeContract._id" (click)="getContractTodayTimesheet(activeContract._id); getContractDetails(activeContract._id);"
                         style="text-transform: capitalize;">{{activeContract.jobid.jobtitle}} ({{activeContract.jobid.companyid.companyname}})</mat-button-toggle>
-                </mat-button-toggle-group>
+				</mat-button-toggle-group>
+				 <div class="m-b-10" fxFlex="100" fxLayoutAlign="end center" style="margin-top: 10px;">
+                   <a *ngIf="activeContracts.length > showActiveContract" (click)="showActiveContract = activeContracts.length" style="color: blue; font-style: italic; font-size: 12px; cursor: pointer;">Show More</a>
+					<a *ngIf="activeContracts.length == showActiveContract" (click)="showActiveContract = defaultActiveContract" style="color: blue; font-style: italic; font-size: 12px; cursor: pointer;">Show Less</a>
+                </div>
             </mat-card>
 
             <mat-card *ngIf="isCompletedContractsAvailable" style="margin-top:30px;padding: 12px;" [ngStyle.xs]="{'margin-top':'15px'}"
@@ -53,7 +57,7 @@
                         {{completedContract.jobid.jobtitle}} ({{completedContract.jobid.companyid.companyname}})
                     </a>
                 </div> -->
-                <mat-button-toggle-group vertical #toggleGroup2="matButtonToggleGroup" (click)="doReset1()">
+                <mat-button-toggle-group vertical #toggleGroup2="matButtonToggleGroup" (click)="doReset1()" style="border:none!important;">
                     <mat-button-toggle *ngFor="let completedContract of completedContracts; let i=index;" [value]="completedContract._id" (click)="getContractTodayTimesheet(completedContract._id); getContractDetails(completedContract._id);"
                         style="text-transform:
                     capitalize;">{{completedContract.jobid.jobtitle}} ({{completedContract.jobid.companyid.companyname}})</mat-button-toggle>
@@ -118,7 +122,7 @@
                     </div>
                 </div>
 
-                <div *ngIf="currentTimeSheetLayout?.contractstatus == 'open' && !currentTimeSheetLayout?.timesheet" class="flex-p" fxLayout="row wrap"
+                <div *ngIf="currentTimeSheetLayout?.contractstatus == 'open' && !currentTimeSheetLayout?.timesheet && currentTimeSheetLayout?.waittill" class="flex-p" fxLayout="row wrap"
                     fxLayoutAlign="center center">
                     <!-- <span style="font-weight: 600; color:orangered;"> Please Wait Sometime, Job Will Start at {{currentTimeSheetLayout.starttime}}</span> -->
                     <span style="font-weight: 600; color:orangered;"> Please Wait {{ waitTime | async }}</span>
@@ -133,7 +137,11 @@
 
                 <div *ngIf="currentTimeSheetLayout?.contractstatus == 'jobclosed'" class="flex-p" fxLayout="row" fxLayoutAlign="space-around center">
                     <span style="color: red; font-size: 14px; font-weight: bold;">Contract Closed</span>
-                </div>
+				</div>
+
+				<div *ngIf="!currentTimeSheetLayout?.waittill && !currentTimeSheetLayout?.timesheet" class="flex-p" fxLayout="row" fxLayoutAlign="space-around center">
+					<span style="color: red; font-size: 14px; font-weight: bold;">Contract Closed</span>
+				</div>
             </mat-card>
 
             <!-- Job Details -->

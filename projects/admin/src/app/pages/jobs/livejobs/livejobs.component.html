@@ -1,9 +1,9 @@
 <div class="inner-sidenav-content transition-2">
 	<!-- Http Progress Bar -->
-	<ng-progress></ng-progress>
+	<!-- <ng-progress></ng-progress> -->
 
 	<!-- Breadcrumb Start -->
-	<div fxLayout="row wrap">
+	<!-- <div fxLayout="row wrap">
 		<div class="flex-p" fxFlex="1 1 100%">
 			<mat-card class="mat-breadcrumb" fxLayout="row">
 				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
@@ -15,22 +15,19 @@
 					<span class="breadcrumb-title">Employers</span>
 				</a>
 
-				<!-- <a class="breadcrumb-item" routerLink="/admin/employers/jobs/pending" fxLayout="row" fxLayoutAlign="center center">
-					<span class="breadcrumb-title">Jobs</span>
-				</a> -->
 
 				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
 					<span class="breadcrumb-title active">Live Jobs List</span>
 				</div>
 			</mat-card>
 		</div>
-	</div>
+	</div> -->
 	<!-- Breadcrumb End -->
 
-	<div [ngBusy]="{busy:busy}"></div>
+	<!-- <div [ngBusy]="{busy:busy}"></div> -->
 
 	<!-- Search Data and More.. Start -->
-	<div class="flex-p" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="isLiveJobAvailable">
+	<!-- <div class="flex-p" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="isLiveJobAvailable">
 		<div fxLayout="row">
 			<mat-button-toggle (click)="tab1search=!tab1search">
 				<mat-icon>search</mat-icon>
@@ -48,11 +45,11 @@
 				<mat-icon>person_add</mat-icon>
 			</mat-button-toggle>
 		</div>
-	</div>
+	</div> -->
 	<!-- Search Data and More.. End -->
 
 	<!-- Data Lists Start -->
-	<div fxLayout="row wrap" *ngIf="isLiveJobAvailable">
+	<!-- <div fxLayout="row wrap" *ngIf="isLiveJobAvailable">
 		<div class="flex-p" fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50" *ngFor="let job of jobs_list_live | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
 			<mat-card class="p-0">
 				<div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
@@ -62,10 +59,6 @@
 					</button>
 				</div>
 				<mat-menu #i="matMenu" xPosition="before">
-					<!-- <button mat-menu-item routerLink="/admin/employers/{{job.companyid}}/jobs/{{job._id}}/edit">
-									<mat-icon>mode_edit</mat-icon>
-									<span>Edit</span>
-								</button> -->
 					<button mat-menu-item routerLink="/admin/employers/{{job.companyid._id}}/jobs/{{job._id}}/view">
 						<mat-icon>visibility</mat-icon>
 						<span>details</span>
@@ -90,11 +83,11 @@
 				</div>
 			</mat-card>
 		</div>
-	</div>
+	</div> -->
 	<!-- Data Lists End -->
 
 	<!-- Pagination Start -->
-	<div fxLayout="row wrap" *ngIf="isLiveJobAvailable">
+	<!-- <div fxLayout="row wrap" *ngIf="isLiveJobAvailable">
 		<div class="flex-p" fxFlex="100">
 			<mat-card class="p-0 mat-paginator">
 				<div class="mat-paginator-container">
@@ -117,11 +110,24 @@
 				</div>
 			</mat-card>
 		</div>
-	</div>
+	</div> -->
 	<!-- Pagination End -->
 
-	<div *ngIf="!isLiveJobAvailable" fxLayout="column" fxLayoutAlign="center center" class="no-data" style="border: 2px solid #eee; margin:8px;">
+	<!-- <div *ngIf="!isLiveJobAvailable" fxLayout="column" fxLayoutAlign="center center" class="no-data" style="border: 2px solid #eee; margin:8px;">
 		<p>Currently No Live Jobs Found.</p>
-	</div>
+	</div> -->
+</div>
 
+<div class="inner-sidenav-content transition-2">
+	<div fxLayout="row wrap" fxFill>
+		<div fxFlex fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+			<h1 style="color: #bbbbbb; text-transform: uppercase; text-align: center;">
+				Working Here
+			</h1>
+			<button mat-stroked-button (click)="backClicked()">
+				<mat-icon>arrow_back</mat-icon>
+				Go Back
+			</button>
+		</div>
+	</div>
 </div>

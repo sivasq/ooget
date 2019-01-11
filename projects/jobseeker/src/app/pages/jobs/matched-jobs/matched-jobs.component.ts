@@ -4,6 +4,7 @@ import { ApiCallService } from '../../../services/api-call.service';
 import { MenuPositionX } from '@angular/material';
 import { PaginationInstance } from 'ngx-pagination';
 import { Subscription } from 'rxjs';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
 	selector: 'app-matched-jobs',
@@ -12,9 +13,10 @@ import { Subscription } from 'rxjs';
 })
 export class MatchedJobsComponent implements OnInit {
 
+	public imgBaseUrl;
 	//busy Config
 	busy: Subscription;
-	
+
 	//Mat Menu Configuration
 	@Input() xPosition: MenuPositionX
 	@Input() overlapTrigger: boolean
@@ -39,7 +41,10 @@ export class MatchedJobsComponent implements OnInit {
 	//set jobs array
 	public matched_jobs_list: any[];
 
-	constructor(private _httpService: ApiCallService, private route: ActivatedRoute) {
+	constructor(private urlconfig: ConfigService, private _httpService: ApiCallService, private route: ActivatedRoute) {
+
+		this.imgBaseUrl = urlconfig.img_base_url;
+
 		let employerId = {
 			// companyid: localStorage.getItem('ogCompanyObjID'),
 		}

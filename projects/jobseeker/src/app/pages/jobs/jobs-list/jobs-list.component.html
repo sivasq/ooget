@@ -19,7 +19,7 @@
 	<div [ngBusy]="{busy:busy}"></div>
 
 	<div *ngIf="isJobsListAllAvailable">
-		<div fxFlex="75">
+		<div fxFlex="100">
 			<!-- Search Data and More.. Start -->
 			<div class="flex-p" fxLayout="row" fxLayoutAlign="start end">
 				<div fxLayout="row">
@@ -44,9 +44,9 @@
 							<h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below" routerLink="/main/jobs/{{job._id}}/view">{{job.jobtitle
 								| titlecase}} ( {{job.companyid.companyname}} )</h3>
 							<div>
-								<button mat-icon-button>
+								<!-- <button mat-icon-button>
 									<mat-icon>save</mat-icon>
-								</button>
+								</button> -->
 								<button mat-icon-button [matMenuTriggerFor]=i>
 									<mat-icon>more_vert</mat-icon>
 								</button>
@@ -62,7 +62,7 @@
 						<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
 							<div fxFlex="30" fxLayout="column" fxLayoutAlign="center center">
 								<div class="user-img" *ngIf="job.employer?.companylogo">
-									<img class="transition-2 ng-star-inserted" src="{{imgBaseUrl}}/company/{{job.employer.companylogo}}">
+									<img class="transition-2 ng-star-inserted" src="{{imgBaseUrl}}/company/{{job.companyid.companylogo}}">
 								</div>
 								<div class="user-img" *ngIf="!employer?.companylogo">
 									<img class="transition-2 ng-star-inserted" src="assets/img/avatars/logo-placeholder.png">
@@ -104,7 +104,7 @@
 							</p> -->
 								<p fxLayout="row" fxLayoutAlign="start center">
 									<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">security</mat-icon>
-									<span matTooltip="Job Status" matTooltipPosition="right">Salary : {{job.salary}}</span>
+									<span matTooltip="Job Status" matTooltipPosition="right">Salary : S$&nbsp;{{job.salary}}</span>
 								</p>
 							</div>
 						</div>
@@ -141,7 +141,7 @@
 			<!-- Pagination End -->
 		</div>
 
-		<div fxFlex="25">
+		<!-- <div fxFlex="25">
 			<mat-card>
 				<div fxFlex fxLayout="row wrap">
 					<div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center" style="padding: 10px 0px;">
@@ -149,10 +149,9 @@
 						<h5 (click)="clearSearch()" style="color:blue; cursor: pointer;">Clear Filter</h5>
 					</div>
 
-					<mat-radio-group fxFlex="100" [(ngModel)]="search.employmenttype" (ngModelChange)="makeSearch()" fxLayoutGap="10">
-						<mat-radio-button class="example-margin" value="Part Time">Part Time</mat-radio-button>
-						&nbsp;&nbsp;
-						<mat-radio-button class="example-margin" value="Full Time">Full Time</mat-radio-button>
+					<mat-radio-group fxFlex="100" fxLayoutGap="10">
+						<mat-checkbox class="example-margin" [(ngModel)]="search.parttime" (ngModelChange)="makeSearch()">Part Time</mat-checkbox>
+						<mat-checkbox class="example-margin" [(ngModel)]="search.fulltime" (ngModelChange)="makeSearch()">Full Time</mat-checkbox>
 					</mat-radio-group>
 
 					<mat-form-field fxFlex="100">
@@ -175,7 +174,7 @@
 					</mat-form-field>
 				</div>
 			</mat-card>
-		</div>
+		</div> -->
 	</div>
 
 	<div *ngIf="!isJobsListAllAvailable" fxLayout="row" fxLayoutAlign="center center" style="height:100px; border: 2px solid #eee; margin:8px;">

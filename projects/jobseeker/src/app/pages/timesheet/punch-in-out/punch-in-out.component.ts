@@ -14,7 +14,8 @@ import 'moment-duration-format';
 	styleUrls: ['./punch-in-out.component.scss']
 })
 export class PunchInOutComponent implements OnInit {
-
+	defaultActiveContract = 5;
+	showActiveContract = 5;
 	busy: Subscription;//busy Config
 
 	public contract_jobs_list: any[] = [];
@@ -62,6 +63,7 @@ export class PunchInOutComponent implements OnInit {
 
 	waitUntillInMin;
 	contractId;
+
 	public waitTime = new Observable<any>((observer: Subscriber<any>) => {
 		let CurrentDate = moment().format("YYYY/MM/DD");
 
@@ -108,8 +110,9 @@ export class PunchInOutComponent implements OnInit {
 			parsedTime += remainingWaitTimeInMin + "Mins"
 
 			observer.next(parsedTime);
-
+			console.log('call start' + this.waitUntillInMin);
 			if (this.waitUntillInMin == 0) {
+				console.log('call end' + this.waitUntillInMin);
 				observer.complete();
 				clearInterval(intervel);
 				this.getContractTodayTimesheet(this.contractId);
@@ -165,6 +168,7 @@ export class PunchInOutComponent implements OnInit {
 
 	getContractTodayTimesheet(contractId) {
 		this.isContractDetails = false;
+		this.waitUntillInMin == 0;
 		this.busy = this._httpService.getContractTodayTimesheet({ 'contractid': contractId })
 			.subscribe(
 				response => {
@@ -173,7 +177,6 @@ export class PunchInOutComponent implements OnInit {
 						this.currentTimeSheetLayout = response;
 						this.waitUntillInMin = response.waittill;
 						this.contractId = response.contractid
-
 						if (this.currentTimeSheetLayout.contractstatus == 'open' && this.currentTimeSheetLayout.timesheet) {
 							this.ispunchedIn = this.currentTimeSheetLayout.timesheet.punchedin;
 							this.ispunchedOut = this.currentTimeSheetLayout.timesheet.punchedout;

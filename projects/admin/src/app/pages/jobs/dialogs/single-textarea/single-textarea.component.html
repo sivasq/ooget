@@ -4,8 +4,8 @@
 		<div fxLayout="row wrap" fxLayoutAlign="space-between center">
 			<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 				<mat-label>{{data.textPlaceHolder}}</mat-label>
-				<input matInput placeholder="{{data.textPlaceHolder}}" name="textarea" autocomplete="off" [(ngModel)]="textFields.textData"
-				 required>
+				<textarea  matInput placeholder="{{data.textPlaceHolder}}" name="textarea" autocomplete="off" [(ngModel)]="textFields.textData"
+				 required></textarea>
 			</mat-form-field>
 		</div>
 		<mat-dialog-actions [attr.align]="data.actionalign">

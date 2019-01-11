@@ -312,86 +312,14 @@ export class JobDetailsComponent implements OnInit {
 		};
 		let dialogRef = this.dialog.open(JobActivationComponent, dialogConfig);
 
-		dialogRef.afterClosed().subscribe(response => {
-			if (response.callback) {
-				this.getJobDetails({ jobid: jobId, companyid: employerId });
-			}
-		})
-	}
-
-	// Currently Not in use // Only for job activation
-	activateJob(employerId, jobId) {
-		this.busy = this._httpService.activateJob({ companyid: employerId })
-			.subscribe(
-				response => {
-					if (response.success) {
-						if (response.employer.companycode) {
-							console.log(response.employer.companycode);
-
-							this._httpService.activateJob({ jobid: jobId, jobstatus: 'live' })
-								.subscribe(
-									response => {
-										if (response.success) {
-											this.jobDetails.jobstatus = "live";
-											console.log(response);
-
-											let snackBarRef = this.snackBar.open('Job Status Successfully Changed from Pending to Live.', 'Close', {
-												duration: 5000,
-											});
-											snackBarRef.onAction().subscribe(() => {
-												snackBarRef.dismiss();
-												console.log('The snack-bar action was triggered!');
-											});
-
-										} else if (!response.success) {
-
-											console.log(response);
-										}
-									},
-									error => {
-										console.log(error);
-									}
-								);
-
-						} else {
-							// console.log('no');
-							let dialogConfig = new MatDialogConfig();
-
-							dialogConfig.disableClose = true;
-							dialogConfig.autoFocus = true;
-							dialogConfig.data = {
-								// boxTitle:"Confirmation",
-								confirmMsg: "<h4>Company Code Not Generated Yet. <br/>Do you want to Create Company Code Now ?</h4>",
-								okButtonText: "Yes",
-								noButtonText: "No",
-								actionalign: "center"
-							};
-							let dialogref = this.dialog.open(ConfirmDialogComponent, dialogConfig);
-
-							dialogref.afterClosed().subscribe(
-								data => {
-									// this.confirmResponse(data)
-									if (data == 'yes') {
-										// console.log(employerId);
-										this.router.navigate(['admin/employers/' + employerId + '/view']);
-									} else if (data == 'no') {
-										//this.accept_terms = "true";
-										console.log('no');
-									}
-								}
-							);
-						}
-						// console.log(response.employer.companycode);
-
-					} else if (!response.success) {
-
-						console.log(response);
-					}
-				},
-				error => {
-					console.log(error);
-				}
-			);
+		// dialogRef.afterClosed().subscribe(response => {
+		// 	if (response.callback) {
+		// 		this.getJobDetails({ jobid: jobId, companyid: employerId });			
+		// 		},
+		// 		error => {
+		// 			console.log(error);
+		// 		}
+		// 	);
 	}
 
 	duplicateJobConfirm(companyid, jobid) {
@@ -479,8 +407,14 @@ export class JobDetailsComponent implements OnInit {
 
 	public removeContractorFromJob(contractId, index) {
 
-		this.jobContractors.splice(index, 1);
+		// this.jobContractors.splice(index, 1);
 
+		let snackBarRef = this.snackBar.open('This Function not Done.', 'Close', {
+							duration: 10000,
+						});
+						snackBarRef.onAction().subscribe(() => {
+							snackBarRef.dismiss();							
+						});
 		// this.busy = this._httpService.removeContractorFromJob({ 'contractid': contractId })
 		// 	.subscribe(
 		// 		response => {

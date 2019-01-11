@@ -160,6 +160,9 @@ export class JobDetailsComponent implements OnInit {
 		}
 	}
 
+	saveJob(jobId) {
+
+	}
 	continueSendApplication(jobId) {
 		console.log(jobId);
 		this._httpService.sendJobApplication({ jobid: jobId })

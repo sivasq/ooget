@@ -7,6 +7,7 @@ import { DatePipe, UpperCasePipe } from '@angular/common';
 import { JsonToTextService } from '../../../services/json-to-text.service';
 import { PayrollProcessService } from '../../../services/payroll-process.service';
 import { Subscription } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
 	selector: 'app-livejobs',
@@ -42,7 +43,7 @@ export class LivejobsComponent implements OnInit {
 	//set pending jobs array
 	public jobs_list_live: any[];
 
-	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public datePipe: DatePipe, public toUpperCase: UpperCasePipe, public texts: JsonToTextService, public payroll: PayrollProcessService) {
+	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public datePipe: DatePipe, public toUpperCase: UpperCasePipe, public texts: JsonToTextService, public payroll: PayrollProcessService, private _location: Location) {
 		this.getLiveJobsList();
 	}
 
@@ -102,5 +103,10 @@ export class LivejobsComponent implements OnInit {
 		// let payrollData = this.payroll.processPayroll();
 		// this.processPayrollGenerate(payrollData);
 	}
+
+	backClicked() {
+		this._location.back();
+	}
+
 
 }
