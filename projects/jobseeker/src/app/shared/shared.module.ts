@@ -35,6 +35,7 @@ import { NgPipesModule } from 'ngx-pipes';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpModule } from '@ngx-progressbar/http';
 import { NgProgressRouterModule } from '@ngx-progressbar/router';
+import { Ng5SliderModule } from 'ng5-slider';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true,
@@ -64,7 +65,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 			color: '#1abc9c'
 		}),
 		NgProgressHttpModule,
-		NgProgressRouterModule
+		NgProgressRouterModule,
+		Ng5SliderModule,
 	],
 	declarations: [
 		OogetsidenavComponent,
@@ -106,6 +108,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		NgProgressRouterModule,
 		NguCarouselModule,
 		NgPipesModule,
+		Ng5SliderModule,
 		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, MultipleSubLocationFilter, SafeHtml
 	],
 	providers: [
