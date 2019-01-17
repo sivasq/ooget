@@ -18,10 +18,10 @@
 
 	<div [ngBusy]="{busy:busy}"></div>
 
-	<div *ngIf="isJobsListAllAvailable">
-		<div fxFlex="75">
+	<div fxLayout="row wrap">
+		<div fxFlex="100" fxFlex.gt-sm="75" [fxFlexOrder.lt-md]=2>
 			<!-- Search Data and More.. Start -->
-			<div class="flex-p" fxLayout="row" fxLayoutAlign="start end">
+			<div class="flex-p" fxLayout="row" fxLayoutAlign="start end" *ngIf="jobs_list_all.length > 0">
 				<div fxLayout="row">
 					<mat-button-toggle matTooltip="Search" matTooltipPosition="right" (click)="tab1search=!tab1search" (click)="tab1search ? tab1FilterRef.focus() : false">
 						<mat-icon>search</mat-icon>
@@ -37,7 +37,7 @@
 			<!-- Search Data and More.. End -->
 
 			<!-- Data Lists Start -->
-			<div fxLayout="row wrap" *ngIf="isJobsListAllAvailable">
+			<div fxLayout="row wrap" *ngIf="jobs_list_all.length > 0">
 				<div class="flex-p" fxFlex="100" fxFlex.gt-md="100" fxFlex.md="100" *ngFor="let job of jobs_list_all | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
 					<mat-card class="p-0">
 						<div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
@@ -114,7 +114,7 @@
 			<!-- Data Lists End -->
 
 			<!-- Pagination Start -->
-			<div fxLayout="row wrap">
+			<div fxLayout="row wrap" *ngIf="jobs_list_all.length > 0">
 				<div class="flex-p" fxFlex="100">
 					<mat-card class="p-0 mat-paginator">
 						<div class="mat-paginator-container">
@@ -139,23 +139,33 @@
 				</div>
 			</div>
 			<!-- Pagination End -->
+
+			<div *ngIf="jobs_list_all.length == 0" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px" style="height:100px; border: 2px solid #eee; margin:8px;">
+				<h1 style="color: #bbbbbb; text-transform: uppercase; text-align: center;">
+					No Jobs Found
+				</h1>
+			</div>
 		</div>
 
-		<div fxFlex="25">
+		<div fxFlex="100" class="flex-p" fxFlex.gt-sm="25" [fxFlexOrder.lt-md]=1>
 			<mat-card>
-				<div fxFlex fxLayout="row wrap">
-					<div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center" style="padding: 10px 0px;">
-						<h3>Filter</h3>
-						<h5 (click)="clearSearch()" style="color:blue; cursor: pointer;">Clear Filter</h5>
+				<div fxFlex="100" fxLayout="row wrap">
+					<div fxFlex="100" fxLayout="row wrap" style="padding: 10px 0px; margin-bottom: 15px;">
+						<div>
+							<h3 style="width:100%; color: gray; font-size: 15px;">FILTER BY JOB TYPE</h3>
+						</div>
+						<hr />
 					</div>
 
-					<mat-radio-group fxFlex="100" fxLayoutGap="10">
-						<mat-checkbox class="example-margin" [(ngModel)]="search.parttime" (ngModelChange)="makeSearch2()" [checked]="search.parttime" value="Part Time">Part
+					<mat-radio-group fxFlex="100" fxLayout="row wrap" fxLayoutGap="10px">
+						<mat-checkbox color="primary" [(ngModel)]="search.parttime" (ngModelChange)="jobSearch()" [checked]="search.parttime"
+						 value="Part Time">Part
 							Time</mat-checkbox>
 
-						<div fxFlex></div>
+						<div fxFlex.gt-sm></div>
 
-						<mat-checkbox class="example-margin" [(ngModel)]="search.fulltime" (ngModelChange)="makeSearch2()" [checked]="search.fulltime" value="Full Time">Full
+						<mat-checkbox color="primary" [(ngModel)]="search.fulltime" (ngModelChange)="jobSearch()" [checked]="search.fulltime"
+						 value="Full Time">Full
 							Time</mat-checkbox>
 					</mat-radio-group>
 
@@ -170,13 +180,20 @@
 						</mat-select>
 					</mat-form-field> -->
 
-					<mat-form-field fxFlex="100" class="m-t-10" color="warn">
+					<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center" style="padding: 10px 0px; margin-top: 15px;">
+						<div>
+							<h3 style="width:100%; color: gray; font-size: 15px;">FILTER BY JOB SPECIALIZATION</h3>
+						</div>
+						<hr />
+					</div>
+
+					<mat-form-field fxFlex="100" class="m-t-10" color="primary">
 						<mat-label>Job Specialization</mat-label>
 						<mat-select placeholder="Job Specialization" name="jobspecialization" [(ngModel)]="search.jobspecialization"
-						 (selectionChange)="makeSearch2()" #specSelect="ngModel" multiple>
+						 (selectionChange)="jobSearch()" #specSelect="ngModel" multiple>
 							<div style="padding:15px 15px;font-weight: 500;">
 								<mat-checkbox color="primary" (change)="$event ? masterToggle(checkAll.checked, specSelect) : null" [checked]="search.jobspecialization.length > 0 && isAllSelected()"
-								 [indeterminate]="search.jobspecialization.length > 0  && !isAllSelected()" #checkAll>All
+								 [indeterminate]="search.jobspecialization.length > 0  && !isAllSelected()" #checkAll disabled>All
 								</mat-checkbox>
 							</div>
 							<mat-option *ngFor="let Specialization of Specializations" [value]="Specialization.specialization">
@@ -185,19 +202,19 @@
 						</mat-select>
 					</mat-form-field>
 
-					<!--  -->
+					<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center" style="padding: 10px 0px; margin-top: 15px;">
+						<div>
+							<h3 style="width:100%; color: gray; font-size: 15px;">FILTER BY SALARY</h3>
+						</div>
+						<hr />
+					</div>
 
 					<div fxFlex="100" class="custom-slider">
 						<ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options" (userChangeEnd)="onUserChangeEnd($event)"></ng5-slider>
 					</div>
 
-					<!--  -->
 				</div>
 			</mat-card>
 		</div>
-	</div>
-
-	<div *ngIf="!isJobsListAllAvailable" fxLayout="row" fxLayoutAlign="center center" style="height:100px; border: 2px solid #eee; margin:8px;">
-		<p>Currently No Jobs Found.</p>
 	</div>
 </div>
