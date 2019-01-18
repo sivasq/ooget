@@ -160,9 +160,6 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	saveJob(jobId) {
-
-	}
 	continueSendApplication(jobId) {
 		console.log(jobId);
 		this._httpService.sendJobApplication({ jobid: jobId })
@@ -389,6 +386,30 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 		console.log('Offered', isUnderOffered);
 		console.log('Rejected', isOfferRejected);
 		console.log('Accepted', isUnderContract);
+	}
+
+	saveJob(companyId, jobId) {
+		console.log({ 'companyid': companyId, 'jobid': jobId });
+		// this.busy = this._httpService.saveJob({ 'companyid': companyId, 'jobid': jobId })
+		// 	.subscribe(
+		// 		response => {
+		// 			if (response.success) {
+		// 				let snackBarRef = this.snackBar.open('Job Saved Successfully.', 'Close', {
+		// 					duration: 5000,
+		// 				});
+
+		// 				snackBarRef.onAction().subscribe(() => {
+		// 					snackBarRef.dismiss();
+		// 					console.log('The snack-bar action was triggered!');
+		// 				});
+		// 			} else if (!response.success) {
+		// 				console.log(response);
+		// 			}
+		// 		},
+		// 		error => {
+		// 			console.log(error);
+		// 		}
+		// 	);
 	}
 
 	ngOnDestroy() {

@@ -39,15 +39,21 @@
 
 			<!-- Data Lists Start -->
 			<div fxLayout="row wrap" *ngIf="applied_jobs_list.length > 0">
-				<div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50" *ngFor="let job of applied_jobs_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
+				<div class="flex-p" fxFlex="100" fxFlex.gt-md="100" fxFlex.md="100" *ngFor="let job of applied_jobs_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
 					<mat-card class="p-0">
 						<div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
 							<h3 class="user-name pointer ellipsis" matTooltip="Click to View Details" matTooltipPosition="below" routerLink="/main/jobs/{{job.jobid}}/view">{{job.jobdetails?.jobtitle
 								| titlecase}}
 								( {{job.jobdetails?.companydetails[0].companyname | titlecase}} )</h3>
-							<button mat-icon-button [matMenuTriggerFor]=i>
-								<mat-icon>more_vert</mat-icon>
-							</button>
+							<div>
+								<button mat-icon-button matTooltip="Save Job" matTooltipPosition="below" (click)="saveJob(job.jobdetails?.companydetails[0]._id, job.jobdetails?._id)">
+									<mat-icon>favorite</mat-icon>
+									<!-- <mat-icon>favorite_border</mat-icon> -->
+								</button>
+								<button mat-icon-button [matMenuTriggerFor]=i>
+									<mat-icon>more_vert</mat-icon>
+								</button>
+							</div>
 						</div>
 						<mat-menu #i="matMenu" xPosition="before">
 							<button mat-menu-item routerLink="/main/jobs/{{job.jobid}}/view">

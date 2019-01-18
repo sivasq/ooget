@@ -39,7 +39,7 @@
 
 					<!-- Data Lists Start -->
 					<div fxLayout="row wrap">
-						<div class="flex-p" fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50" *ngFor="let job of pendingJobOffers | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
+						<div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50" *ngFor="let job of pendingJobOffers | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
 							<mat-card class="p-0">
 								<div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
 									<div style="line-height: 40px; width: 100%;">
@@ -164,7 +164,7 @@
 
 					<!-- Data Lists Start -->
 					<div fxLayout="row wrap">
-						<div class="flex-p" fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50" *ngFor="let job of acceptedJobOffers | filter:tab2Filter | paginate: tab2PaginateConfig; let i=index;">
+						<div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50" *ngFor="let job of acceptedJobOffers | filter:tab2Filter | paginate: tab2PaginateConfig; let i=index;">
 							<mat-card class="p-0">
 								<div class="bg-primary" [style.background]="job.jobdetails?.jobstatus == 'closed' ? 'gray' : ''" fxLayout="row"
 								 fxLayoutAlign="space-between center">
@@ -290,7 +290,7 @@
 
 					<!-- Data Lists Start -->
 					<div fxLayout="row wrap">
-						<div class="flex-p" fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50" *ngFor="let job of rejectedJobOffers | filter:tab3Filter | paginate: tab3PaginateConfig; let i=index;">
+						<div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50" *ngFor="let job of rejectedJobOffers | filter:tab3Filter | paginate: tab3PaginateConfig; let i=index;">
 							<mat-card class="p-0">
 								<div class="bg-primary" [style.background]="job.jobdetails?.jobstatus == 'closed' ? 'gray' : ''" fxLayout="row"
 								 fxLayoutAlign="space-between center">
@@ -417,7 +417,7 @@
 
 					<!-- Data Lists Start -->
 					<div fxLayout="row wrap">
-						<div class="flex-p" fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50" *ngFor="let job of expiredJobOffers | filter:tab4Filter | paginate: tab4PaginateConfig; let i=index;">
+						<div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50" *ngFor="let job of expiredJobOffers | filter:tab4Filter | paginate: tab4PaginateConfig; let i=index;">
 							<mat-card class="p-0">
 								<div class="bg-primary" [style.background]="job.jobdetails?.jobstatus == 'closed' ? 'gray' : ''" fxLayout="row"
 								 fxLayoutAlign="space-between center">

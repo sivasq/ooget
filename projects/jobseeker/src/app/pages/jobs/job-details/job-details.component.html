@@ -52,9 +52,9 @@
                     <button mat-raised-button color="primary" (click)="sendApplication(jobDetails._id)">{{btnName}}</button>
 				</div>
 
-				<!-- <div fxLayout="row" fxLayoutAlign="start center">
-					<button mat-raised-button color="primary" (click)="saveJob(jobDetails._id)">Save Job</button>
-				</div> -->
+				<div fxLayout="row" fxLayoutAlign="start center">
+					<button mat-raised-button color="primary" (click)="saveJob(jobDetails.companyid._id, jobDetails._id)">Save Job</button>
+				</div>
             </mat-card>
         </div>
     </div>

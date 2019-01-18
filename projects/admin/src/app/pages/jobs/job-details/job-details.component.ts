@@ -314,7 +314,7 @@ export class JobDetailsComponent implements OnInit {
 
 		// dialogRef.afterClosed().subscribe(response => {
 		// 	if (response.callback) {
-		// 		this.getJobDetails({ jobid: jobId, companyid: employerId });			
+		// 		this.getJobDetails({ jobid: jobId, companyid: employerId });
 		// 		},
 		// 		error => {
 		// 			console.log(error);
@@ -413,7 +413,7 @@ export class JobDetailsComponent implements OnInit {
 							duration: 10000,
 						});
 						snackBarRef.onAction().subscribe(() => {
-							snackBarRef.dismiss();							
+							snackBarRef.dismiss();
 						});
 		// this.busy = this._httpService.removeContractorFromJob({ 'contractid': contractId })
 		// 	.subscribe(

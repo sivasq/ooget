@@ -437,6 +437,30 @@ export class MatchedJobsComponent implements OnInit, OnDestroy {
 		this.maxValue = this.options.ceil;
 	}
 
+	saveJob(companyId, jobId) {
+		console.log({ 'companyid': companyId, 'jobid': jobId });
+		// this.busy = this._httpService.saveJob({ 'companyid': companyId, 'jobid': jobId })
+		// 	.subscribe(
+		// 		response => {
+		// 			if (response.success) {
+		// 				let snackBarRef = this.snackBar.open('Job Saved Successfully.', 'Close', {
+		// 					duration: 5000,
+		// 				});
+
+		// 				snackBarRef.onAction().subscribe(() => {
+		// 					snackBarRef.dismiss();
+		// 					console.log('The snack-bar action was triggered!');
+		// 				});
+		// 			} else if (!response.success) {
+		// 				console.log(response);
+		// 			}
+		// 		},
+		// 		error => {
+		// 			console.log(error);
+		// 		}
+		// 	);
+	}
+
 	ngOnInit() {
 		this.search.jobspecialization = this.Specializations.map(x => x.specialization);
 		this.search.parttime = true;
