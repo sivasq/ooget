@@ -45,18 +45,23 @@
 			</a>
 		</div>
 
-		<!-- <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" *ngIf="featuredEmployersAvailable">
+		<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" *ngIf="featuredEmployersAvailable">
 			<div fxFlex="70" fxLayout="column" fxFlex.md="60" fxFlex.gt-md="50" style="margin: 0 auto;">
 				<h4 class="pl-10">Featured Employers</h4>
-				<ngu-carousel #carousel [inputs]="carouselTile" (carouselLoad)="carouselTileLoad($event)" fxLayoutGap="10px">
-					<ngu-tile NguCarouselItem *ngFor="let featuredEmployer of featuredEmployers">
+				<ngu-carousel #carousel [inputs]="carouselTile" [dataSource]="featuredEmployers" fxLayoutGap="10px">
+					<ngu-tile *nguCarouselDef="let featuredEmployer; let i = index;">
 						<img style="height: 100%; width: 100%;" src="{{imgBaseUrl}}/featured/{{featuredEmployer.featuredimage}}" />
 					</ngu-tile>
-					<a NguCarouselPrev style="display: none;"></a>
-					<a NguCarouselNext style="display: none;"></a>
+
+					<!-- <button NguCarouselPrev class="leftRs" style="display: none;">&lt;</button>
+					<button NguCarouselNext class="rightRs" style="display: none;">&gt;</button> -->
+
+					<!-- <ul class="myPoint" NguCarouselPoint>
+						<li *ngFor="let i of carousel.pointNumbers; let i = index" [class.active]="i==carousel.activePoint" (click)="carousel.moveTo(i)"></li>
+					</ul> -->
 				</ngu-carousel>
 			</div>
-		</div> -->
+		</div>
 	</mat-sidenav-content>
 </mat-sidenav-container>
 

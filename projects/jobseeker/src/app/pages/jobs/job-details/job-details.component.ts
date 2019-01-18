@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ApiCallService } from '../../../services/api-call.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatRadioChange, MatDialogConfig, MatDialog } from '@angular/material';
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 	templateUrl: './job-details.component.html',
 	styleUrls: ['./job-details.component.scss']
 })
-export class JobDetailsComponent implements OnInit {
+export class JobDetailsComponent implements OnInit, OnDestroy {
 
 	public jobDetails: any = [];
 
@@ -389,5 +389,11 @@ export class JobDetailsComponent implements OnInit {
 		console.log('Offered', isUnderOffered);
 		console.log('Rejected', isOfferRejected);
 		console.log('Accepted', isUnderContract);
+	}
+
+	ngOnDestroy() {
+		if (this.busy) {
+			this.busy.unsubscribe();
+		}
 	}
 }

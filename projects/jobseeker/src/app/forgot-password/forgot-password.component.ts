@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiCallService } from '../services/api-call.service';
 import { FormGroup, FormGroupDirective, FormBuilder, Validators } from '@angular/forms';
@@ -12,8 +12,9 @@ import { AsyncSubscriber } from '../services/async.service';
 	templateUrl: './forgot-password.component.html',
 	styleUrls: ['./forgot-password.component.scss']
 })
-export class ForgotPasswordComponent implements OnInit {
+export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
+	// set form field Appearance
 	appearance$: Observable<any>;
 
 	//Error Message
@@ -22,12 +23,15 @@ export class ForgotPasswordComponent implements OnInit {
 	//busy Config
 	busy: Subscription;
 
+	// Form Build
 	jobseekerPassResetForm: FormGroup;
+
 	@ViewChild(FormGroupDirective) resetJobseekerPassResetForm;
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 	constructor(public router: Router, private _httpService: ApiCallService, private config: ConfigService, private fb: FormBuilder, public snackBar: MatSnackBar, private asyncSubscriber: AsyncSubscriber) {
 
+		// get value form field Appearance from service
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
 		this.buildJobseekerPassResetForm();
@@ -79,4 +83,9 @@ export class ForgotPasswordComponent implements OnInit {
 	ngOnInit() {
 	}
 
+	ngOnDestroy() {
+		if (this.busy) {
+			this.busy.unsubscribe();
+		}
+	}
 }

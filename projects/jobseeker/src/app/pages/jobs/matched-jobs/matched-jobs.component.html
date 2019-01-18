@@ -42,8 +42,6 @@
 				<div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50" *ngFor="let job of matched_jobs_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
 					<mat-card class="p-0">
 						<div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
-							<!-- <h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below" routerLink="/main/jobs/{{job._id}}/view">{{job.jobtitle
-                            | titlecase}} ( {{job.companyid.companyname}} )</h3> -->
 							<h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below" routerLink="/main/jobs/{{job._id}}/view">{{job.jobtitle
 								| titlecase}}</h3>
 							<button mat-icon-button [matMenuTriggerFor]=i>
@@ -59,10 +57,10 @@
 
 						<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
 							<div fxFlex="30" fxLayout="column" fxLayoutAlign="center center">
-								<div class="user-img" *ngIf="job.employer?.companylogo">
+								<div class="user-img" style="text-align: center;" *ngIf="job.employer?.companylogo">
 									<img class="transition-2 ng-star-inserted" src="{{imgBaseUrl}}/company/{{job.companyid.companylogo}}">
 								</div>
-								<div class="user-img" *ngIf="!employer?.companylogo">
+								<div class="user-img" style="text-align: center;" *ngIf="!employer?.companylogo">
 									<img class="transition-2 ng-star-inserted" src="assets/img/avatars/logo-placeholder.png">
 								</div>
 							</div>
@@ -139,11 +137,10 @@
 			</div>
 			<!-- Pagination End -->
 
-			<div *ngIf="matched_jobs_list.length == 0" fxLayout="row" fxLayoutAlign="center center" style="height:100px; border: 2px solid #eee; margin:8px;">
+			<div *ngIf="matched_jobs_list.length == 0" fxLayout="row" fxLayoutAlign="center center" style="height:100px; margin:8px;">
 				<h3 style="color: #bbbbbb; text-transform: uppercase; text-align: center;">
-					Based On Your Profile No Jobs Matched. Please Go to Available Jobs And make Search..</h3>
+					Based On Your Profile No Jobs Matched.<br /> Please Go to Available Jobs And make Search..</h3>
 			</div>
-
 		</div>
 
 		<div fxFlex="100" class="flex-p" fxFlex.gt-sm="25" [fxFlexOrder.lt-md]=1>

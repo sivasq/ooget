@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiCallService } from '../services/api-call.service';
 import { FormGroup, FormGroupDirective, FormBuilder, Validators } from '@angular/forms';
@@ -11,12 +11,12 @@ import { MatSnackBar } from '@angular/material';
 	templateUrl: './reset-password.component.html',
 	styleUrls: ['./reset-password.component.scss']
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetPasswordComponent implements OnInit, OnDestroy {
 
 	public hide = true;
 	public rehide = true;
 
-	isValidUrl: boolean;
+	// isValidUrl: boolean;
 
 	//busy Config
 	busy: Subscription;
@@ -99,4 +99,9 @@ export class ResetPasswordComponent implements OnInit {
 
 	ngOnInit() { }
 
+	ngOnDestroy() {
+		if (this.busy) {
+			this.busy.unsubscribe();
+		}
+	}
 }

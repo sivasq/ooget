@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, OnDestroy } from '@angular/core';
 import { ApiCallService } from '../../../services/api-call.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscriber, Subscription } from 'rxjs';
@@ -13,7 +13,7 @@ import 'moment-duration-format';
 	templateUrl: './punch-in-out.component.html',
 	styleUrls: ['./punch-in-out.component.scss']
 })
-export class PunchInOutComponent implements OnInit {
+export class PunchInOutComponent implements OnInit, OnDestroy {
 	defaultActiveContract = 5;
 	showActiveContract = 5;
 	busy: Subscription;//busy Config
@@ -408,5 +408,11 @@ export class PunchInOutComponent implements OnInit {
 	ngOnInit() {
 		// let today = Date.now();
 		// console.log(this.datePipe.transform(Date.now(), 'y/MM/d'));
+	}
+
+	ngOnDestroy() {
+		if (this.busy) {
+			this.busy.unsubscribe();
+		}
 	}
 }

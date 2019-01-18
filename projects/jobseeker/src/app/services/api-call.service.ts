@@ -1,8 +1,34 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Rx';
+import { HttpClient, HttpHeaders, HttpResponse, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Observable, Subject } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { ConfigService } from './config.service';
+
+@Injectable()
+export class HttpCancelInterceptor implements HttpInterceptor {
+	constructor(private httpCancelService: HttpCancelService) { }
+
+	intercept<T>(req: HttpRequest<T>, next: HttpHandler): Observable<HttpEvent<T>> {
+		return next.handle(req).takeUntil(this.httpCancelService.onCancelPendingRequests())
+	}
+}
+
+@Injectable()
+export class HttpCancelService {
+	private cancelPendingRequests$ = new Subject<void>()
+
+	constructor() { }
+
+	/** Cancels all pending Http requests. */
+	public cancelPendingRequests() {
+		this.cancelPendingRequests$.next()
+	}
+
+	public onCancelPendingRequests() {
+		return this.cancelPendingRequests$.asObservable()
+	}
+
+}
 
 @Injectable()
 export class ApiCallService {

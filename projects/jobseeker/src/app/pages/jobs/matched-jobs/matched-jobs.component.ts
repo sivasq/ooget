@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Input, HostListener, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiCallService } from '../../../services/api-call.service';
 import { MenuPositionX } from '@angular/material';
@@ -13,7 +13,7 @@ import { NgModel } from '@angular/forms';
 	templateUrl: './matched-jobs.component.html',
 	styleUrls: ['./matched-jobs.component.scss']
 })
-export class MatchedJobsComponent implements OnInit {
+export class MatchedJobsComponent implements OnInit, OnDestroy {
 	options: Options = {
 		floor: 0,
 		ceil: 200,
@@ -442,5 +442,9 @@ export class MatchedJobsComponent implements OnInit {
 		this.search.parttime = true;
 		this.search.fulltime = true;
 	}
-
+	ngOnDestroy() {
+		if (this.busy) {
+			this.busy.unsubscribe();
+		}
+	}
 }

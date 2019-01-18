@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ApiCallService } from '../../../services/api-call.service';
 
@@ -7,7 +7,7 @@ import { ApiCallService } from '../../../services/api-call.service';
 	templateUrl: './faqview.component.html',
 	styleUrls: ['./faqview.component.scss']
 })
-export class FaqviewComponent implements OnInit {
+export class FaqviewComponent implements OnInit, OnDestroy {
 
 	title = 'FAQ';
 
@@ -18,7 +18,7 @@ export class FaqviewComponent implements OnInit {
 	faqList: any[] = [];
 
 	public busy: Subscription;
-	
+
 	constructor(private _httpService: ApiCallService) {
 		this.getAllFaqItems();
 	}
@@ -45,4 +45,9 @@ export class FaqviewComponent implements OnInit {
 
 	ngOnInit() { }
 
+	ngOnDestroy() {
+		if (this.busy) {
+			this.busy.unsubscribe();
+		}
+	}
 }

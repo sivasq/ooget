@@ -1,18 +1,20 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { PaginationInstance } from 'ngx-pagination';
 import { MenuPositionX, MatTabChangeEvent } from '@angular/material';
 import { ApiCallService } from '../../../services/api-call.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
 	selector: 'app-job-offers',
 	templateUrl: './job-offers.component.html',
 	styleUrls: ['./job-offers.component.scss']
 })
-export class JobOffersComponent implements OnInit {
+export class JobOffersComponent implements OnInit, OnDestroy {
 	//busy Config
 	busy: Subscription;
+	public imgBaseUrl;
 
 	@Input() selectedIndex: number | null;
 	currentlyActiveIndexTab: number | null = 0;
@@ -81,8 +83,9 @@ export class JobOffersComponent implements OnInit {
 	public rejectedJobOffers: any[];
 	public expiredJobOffers: any[];
 
-	constructor(private _httpService: ApiCallService, private route: ActivatedRoute) {
+	constructor(private urlconfig: ConfigService, private _httpService: ApiCallService, private route: ActivatedRoute) {
 		this.getMyJobOffersList();
+		this.imgBaseUrl = urlconfig.img_base_url;
 	}
 
 	// set currently active tab index
@@ -313,4 +316,9 @@ export class JobOffersComponent implements OnInit {
 
 	ngOnInit() { }
 
+	ngOnDestroy() {
+		if (this.busy) {
+			this.busy.unsubscribe();
+		}
+	}
 }

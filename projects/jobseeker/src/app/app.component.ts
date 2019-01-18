@@ -3,10 +3,11 @@ import { NgProgress } from '@ngx-progressbar/core';
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 
-import { Event as RouterEvent } from "@angular/router";
+import { Event as RouterEvent, ActivationEnd } from "@angular/router";
 import { Router } from "@angular/router";
 import { RouteConfigLoadEnd } from "@angular/router";
 import { RouteConfigLoadStart } from "@angular/router";
+import { HttpCancelService } from './services/api-call.service';
 
 @Component({
 	selector: 'app-root',
@@ -17,7 +18,7 @@ export class AppComponent {
 
 	public isShowingRouteLoadIndicator: boolean;
 
-	constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer, private ngProgress: NgProgress, router: Router) {
+	constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer, private ngProgress: NgProgress, router: Router, httpCancelService: HttpCancelService) {
 		// this.matIconRegistry.addSvgIcon(
 		// 	"user-silhouette",
 		// 	this.domSanitizer.bypassSecurityTrustResourceUrl("assets/img/svg/user-silhouette.svg")
@@ -56,5 +57,11 @@ export class AppComponent {
 				this.isShowingRouteLoadIndicator = !!asyncLoadCount;
 			}
 		);
+
+		router.events.subscribe(event => {
+			if (event instanceof ActivationEnd) {
+				httpCancelService.cancelPendingRequests()
+			}
+		})
 	}
 }

@@ -58,10 +58,10 @@
 
 						<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
 							<div fxFlex="30" fxLayout="column" fxLayoutAlign="center center">
-								<div class="user-img" *ngIf="job.employer?.companylogo">
+								<div class="user-img" style="text-align: center;" *ngIf="job.employer?.companylogo">
 									<img class="transition-2 ng-star-inserted" src="{{imgBaseUrl}}/company/{{job.jobdetails?.companydetails[0].companylogo}}">
 								</div>
-								<div class="user-img" *ngIf="!employer?.companylogo">
+								<div class="user-img" style="text-align: center;" *ngIf="!employer?.companylogo">
 									<img class="transition-2 ng-star-inserted" src="assets/img/avatars/logo-placeholder.png">
 								</div>
 							</div>

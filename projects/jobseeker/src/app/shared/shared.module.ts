@@ -18,7 +18,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { TermsConditionsDialogComponent } from '../terms-conditions-dialog/terms-conditions-dialog.component';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { ConfigService } from '../services/config.service';
-import { ApiCallService } from '../services/api-call.service';
+import { ApiCallService, HttpCancelService } from '../services/api-call.service';
 import { HttpClientModule } from '@angular/common/http';
 import { EqualValidatorDirective, Collapse, CompareDirective } from '../directives/equal-validator.directive';
 import { UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, MultipleSubLocationFilter, SafeHtml } from '../pipes/custompipes.pipe';
@@ -114,6 +114,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	providers: [
 		ConfigService,
 		ApiCallService,
+		HttpCancelService,
 		DatePipe, UpperCasePipe, MultipleSubLocationFilter,
 		{ provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
 		{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },

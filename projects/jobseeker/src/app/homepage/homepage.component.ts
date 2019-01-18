@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { NguCarousel } from '@ngu/carousel';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { NguCarouselConfig } from '@ngu/carousel';
+import { Subscription, Observable, interval } from 'rxjs';
 import { ApiCallService } from '../services/api-call.service';
 import { ConfigService } from '../services/config.service';
 
 @Component({
 	selector: 'app-homepage',
 	templateUrl: './homepage.component.html',
-	styleUrls: ['./homepage.component.scss']
+	styleUrls: ['./homepage.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomepageComponent implements OnInit {
+export class HomepageComponent implements OnInit, OnDestroy {
 	busy: Subscription; //busy Config
 	public imgBaseUrl;
-	// public carouselTile: NguCarousel;
+	public carouselTile: NguCarouselConfig;
 
 	public homePageContent: any = {
 		title: '',
@@ -62,15 +63,13 @@ export class HomepageComponent implements OnInit {
 		this.busy = this._httpService.getFeaturedEmployers()
 			.subscribe(
 				response => {
-					// console.log(response);
 					if (response.success) {
-						this.featuredEmployers = response.message;
-						if (this.featuredEmployers.length > 0) {
+						if (response.message.length > 0) {
+							this.featuredEmployers = response.message;
 							this.featuredEmployersAvailable = true;
 						} else {
 							this.featuredEmployersAvailable = false;
 						}
-
 					} else if (!response.success) {
 						// console.log(response);
 					}
@@ -82,19 +81,25 @@ export class HomepageComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		// this.carouselTile = {
-		// 	grid: { xs: 2, sm: 3, md: 5, lg: 5, all: 0 },
-		// 	slide: 1,
-		// 	speed: 400,
-		// 	interval: 3000,
-		// 	animation: 'lazy',
-		// 	point: {
-		// 		visible: false
-		// 	},
-		// 	load: 2,
-		// 	touch: true,
-		// 	easing: 'ease',
-		// 	loop: true,
-		// };
+		this.carouselTile = {
+			grid: { xs: 2, sm: 3, md: 5, lg: 5, all: 0 },
+			slide: 1,
+			speed: 400,
+			interval: { timing: 3000 },
+			animation: 'lazy',
+			point: {
+				visible: false
+			},
+			load: 2,
+			touch: true,
+			easing: 'ease',
+			loop: true,
+		};
+	}
+
+	ngOnDestroy() {
+		if (this.busy) {
+			this.busy.unsubscribe();
+		}
 	}
 }

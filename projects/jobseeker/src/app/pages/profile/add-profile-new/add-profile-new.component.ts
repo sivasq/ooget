@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ViewChildren, HostListener, ElementRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ViewChildren, HostListener, ElementRef, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray, AbstractControl, ValidatorFn, ValidationErrors, FormGroupDirective } from '@angular/forms';
 import { ApiCallService } from '../../../services/api-call.service';
 import { MatTabChangeEvent, MatSnackBar } from '@angular/material';
@@ -15,7 +15,7 @@ import { AsyncSubscriber } from '../../../services/async.service';
 	styleUrls: ['./add-profile-new.component.scss'],
 	// encapsulation: ViewEncapsulation.None,
 })
-export class AddProfileNewComponent implements OnInit {
+export class AddProfileNewComponent implements OnInit, OnDestroy {
 	appearance$: Observable<any>;
 	public BankDetails: any = [
 		{
@@ -1942,5 +1942,11 @@ export class AddProfileNewComponent implements OnInit {
 				// 	});
 				// }
 			});
+	}
+
+	ngOnDestroy() {
+		if (this.busy) {
+			this.busy.unsubscribe();
+		}
 	}
 }

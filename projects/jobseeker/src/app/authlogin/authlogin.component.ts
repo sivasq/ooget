@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiCallService } from '../services/api-call.service';
 import { FormGroup, FormGroupDirective, FormBuilder, Validators } from '@angular/forms';
@@ -11,24 +11,29 @@ import { AsyncSubscriber } from '../services/async.service';
 	templateUrl: './authlogin.component.html',
 	styleUrls: ['./authlogin.component.scss']
 })
-export class AuthloginComponent implements OnInit {
+export class AuthloginComponent implements OnInit, OnDestroy {
 
+	// set form field Appearance
 	appearance$: Observable<any>;
 
 	// Password visibility set
-	public hide = true;
+	hide = true;
+
 	//Error Message
 	isAuthMsg: string;
 
 	//busy Config
 	busy: Subscription;
 
+	// Form Build
 	jobseekerAuthForm: FormGroup;
+
 	@ViewChild(FormGroupDirective) resetJobseekerAuthForm;
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 	constructor(public router: Router, private _httpService: ApiCallService, private config: ConfigService, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber) {
 
+		// get value form field Appearance from service
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
 		this.buildJobseekerAuthForm();
@@ -45,6 +50,7 @@ export class AuthloginComponent implements OnInit {
 	//Submit form
 	onAuthCheck() {
 		if (!this.jobseekerAuthForm.valid) return false;
+
 		this.busy = this._httpService.postLoginData(this.jobseekerAuthForm.value)
 			.subscribe(
 				async response => {
@@ -58,7 +64,7 @@ export class AuthloginComponent implements OnInit {
 						localStorage.setItem('ogUserLogo', response.jobseekerimage);
 						localStorage.setItem('ogActiveStatus', response.activestatus);
 
-						// If Successfull Validation redirect to dashboard
+						// If Successfull Validation redirect to Dashboard or Profile
 						if (response.firsttime == "true") {
 							await this.router.navigate(['main/profile']);
 
@@ -67,6 +73,7 @@ export class AuthloginComponent implements OnInit {
 							await this.router.navigate(['main/profile']);
 							// this.router.navigate(['main/dashboard']);
 						}
+
 						this.resetJobseekerAuthForm.resetForm();
 
 					} else if (!response.success) {
@@ -90,4 +97,10 @@ export class AuthloginComponent implements OnInit {
 	}
 
 	ngOnInit() { }
+
+	ngOnDestroy() {
+		if (this.busy) {
+			this.busy.unsubscribe();
+		}
+	}
 }
