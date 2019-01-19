@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, HostListener, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiCallService } from '../../../services/api-call.service';
-import { MenuPositionX } from '@angular/material';
+import { MenuPositionX, MatSnackBar } from '@angular/material';
 import { PaginationInstance } from 'ngx-pagination';
 import { Subscription } from 'rxjs';
 import { ConfigService } from '../../../services/config.service';
@@ -322,13 +322,10 @@ export class MatchedJobsComponent implements OnInit, OnDestroy {
 	//set jobs array
 	public matched_jobs_list: any[] = [];
 
-	constructor(private urlconfig: ConfigService, private _httpService: ApiCallService, private route: ActivatedRoute) {
+	constructor(private urlconfig: ConfigService, private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar) {
 
 		this.imgBaseUrl = urlconfig.img_base_url;
 
-		let employerId = {
-			// companyid: localStorage.getItem('ogCompanyObjID'),
-		}
 		this.getMatchedJobsList();
 	}
 
@@ -439,26 +436,33 @@ export class MatchedJobsComponent implements OnInit, OnDestroy {
 
 	saveJob(companyId, jobId) {
 		console.log({ 'companyid': companyId, 'jobid': jobId });
-		// this.busy = this._httpService.saveJob({ 'companyid': companyId, 'jobid': jobId })
-		// 	.subscribe(
-		// 		response => {
-		// 			if (response.success) {
-		// 				let snackBarRef = this.snackBar.open('Job Saved Successfully.', 'Close', {
-		// 					duration: 5000,
-		// 				});
+		this.busy = this._httpService.saveJob({ 'companyid': companyId, 'jobid': jobId })
+			.subscribe(
+				response => {
+					if (response.success) {
+						let snackBarRef = this.snackBar.open('Job Saved Successfully.', 'Close', {
+							duration: 5000,
+						});
 
-		// 				snackBarRef.onAction().subscribe(() => {
-		// 					snackBarRef.dismiss();
-		// 					console.log('The snack-bar action was triggered!');
-		// 				});
-		// 			} else if (!response.success) {
-		// 				console.log(response);
-		// 			}
-		// 		},
-		// 		error => {
-		// 			console.log(error);
-		// 		}
-		// 	);
+						snackBarRef.onAction().subscribe(() => {
+							snackBarRef.dismiss();
+							console.log('The snack-bar action was triggered!');
+						});
+					} else if (!response.success) {
+						let snackBarRef = this.snackBar.open('Job Already Saved.', 'Close', {
+							duration: 5000,
+						});
+
+						snackBarRef.onAction().subscribe(() => {
+							snackBarRef.dismiss();
+							console.log('The snack-bar action was triggered!');
+						});
+					}
+				},
+				error => {
+					console.log(error);
+				}
+			);
 	}
 
 	ngOnInit() {
