@@ -25,7 +25,7 @@ export class FaqviewComponent implements OnInit, OnDestroy {
 
 	getAllFaqItems() {
 		console.log();
-		this._httpService.getAllFaqItems()
+		this.busy = this._httpService.getAllFaqItems()
 			.subscribe(
 				response => {
 					// Response is success

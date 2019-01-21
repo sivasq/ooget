@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Injectable, forwardRef, Inject, PLATFORM_ID } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpResponse, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { ConfigService } from './config.service';
 
 @Injectable()
 export class HttpCancelInterceptor implements HttpInterceptor {
-	constructor(private httpCancelService: HttpCancelService) { }
+	constructor(@Inject(forwardRef(() => HttpCancelService)) private httpCancelService: HttpCancelService) { }
 
 	intercept<T>(req: HttpRequest<T>, next: HttpHandler): Observable<HttpEvent<T>> {
 		return next.handle(req).takeUntil(this.httpCancelService.onCancelPendingRequests())
@@ -27,7 +27,31 @@ export class HttpCancelService {
 	public onCancelPendingRequests() {
 		return this.cancelPendingRequests$.asObservable()
 	}
+}
 
+@Injectable()
+export class InternetInterceptor implements HttpInterceptor {
+	constructor() { }
+
+	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+		// check to see if there's internet
+		if (!window.navigator.onLine) {
+			// if there is no internet, throw a HttpErrorResponse error
+			// since an error is thrown, the function will terminate here
+			return Observable.throw(new HttpErrorResponse({ error: 'Internet is required.' }));
+
+		} else {
+			// else return the normal request
+			return next.handle(request);
+		}
+
+		// const authReq = request.clone({
+		// 	headers: request.headers.set('Authorization', "testing")
+		// });
+
+		// // send cloned request with header to the next handler.
+		// return next.handle(authReq);
+	}
 }
 
 @Injectable()

@@ -47,6 +47,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { SidemenuComponent } from '../sidemenu/sidemenu.component';
 import { ChargesToEmpTimesheetComponent } from '../reusable-components/charges-to-emp-timesheet/charges-to-emp-timesheet.component';
 import { PayslipComponent } from '../reusable-components/payslip/payslip.component';
+import { InvoiceTemp1Component } from '../reusable-components/invoice-temp1/invoice-temp1.component';
+import { InvoiceTemp2Component } from '../reusable-components/invoice-temp2/invoice-temp2.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true,
@@ -104,7 +106,7 @@ export const MY_NATIVE_FORMATS = {
 		PayslipComponent,
 		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, SafeHtml, AgePipe,
 		ConfirmDialogComponent,
-		EqualValidator, CompareDirective,
+		EqualValidator, CompareDirective, InvoiceTemp1Component, InvoiceTemp2Component,
 	],
 	entryComponents: [
 		TopProfiledialogComponent,
@@ -139,7 +141,7 @@ export const MY_NATIVE_FORMATS = {
 		MultipleDatePickerModule,
 		NgxMaskModule,
 		DynamicTableModule,
-		EqualValidator, CompareDirective, NgPipesModule,
+		EqualValidator, CompareDirective, NgPipesModule, InvoiceTemp1Component, InvoiceTemp2Component,
 		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, SafeHtml, AgePipe,
 	],
 	providers: [

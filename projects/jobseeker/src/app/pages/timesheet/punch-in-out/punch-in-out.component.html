@@ -1,393 +1,402 @@
+<div [ngBusy]="{busy:busy}"> </div>
 <div class="inner-sidenav-content transition-2">
-    <!-- <ng-progress></ng-progress> -->
-    <!-- Breadcrumb Start -->
-    <div fxLayout="row wrap">
-        <div class="flex-p" fxFlex="100">
-            <mat-card class="mat-breadcrumb" fxLayout="row">
-                <a class="breadcrumb-item" routerLink="/main/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
-                    <mat-icon>home</mat-icon>
-                    <span class="breadcrumb-title">Home</span>
-                </a>
-                <div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
-                    <span class="breadcrumb-title active">My Job Contracts</span>
-                </div>
-            </mat-card>
-        </div>
-    </div>
 
-    <div [ngBusy]="{busy:busy}"> </div>
+	<!-- Breadcrumb Start -->
+	<div fxLayout="row wrap">
+		<div class="flex-p" fxFlex="100">
+			<mat-card class="mat-breadcrumb" fxLayout="row">
+				<a class="breadcrumb-item" routerLink="/main/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+					<mat-icon>home</mat-icon>
+					<span class="breadcrumb-title">Home</span>
+				</a>
+				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+					<span class="breadcrumb-title active">My Job Contracts</span>
+				</div>
+			</mat-card>
+		</div>
+	</div>
 
-    <div fxLayout="row wrap">
-        <!-- No Contract Msg -->
-        <div *ngIf="!isContractJobsAvailable" fxFlex fxLayout="row" fxLayoutAlign="center center" style="height:100px; border: 2px solid #eee; margin:8px;">
-            <p>Currently You Have No Job Contracts</p>
-        </div>
+	<div fxLayout="row wrap">
+		<!-- No Contract Msg -->
+		<div *ngIf="!isContractJobsAvailable" fxFlex fxLayout="row" fxLayoutAlign="center center" style="height:100px; border: 2px solid #eee; margin:8px;">
+			<p>Currently You Have No Job Contracts</p>
+		</div>
 
-        <!-- Contracts List -->
-        <div fxFlexOrder.xs="2" *ngIf="isContractJobsAvailable" fxFlex.lt-md="100" fxFlex.gt-sm="25" class="flex-p section_container"
-            fxLayout="row wrap" fxLayoutAlign="center start">
-            <mat-card *ngIf="isActiveContractsAvailable" fxLayout="row wrap" fxLayoutAlign="center start" style="padding:12px;">
-                <div class="m-b-10" fxFlex="100" fxLayoutAlign="center start">
-                    <h4 class="underline">My Active Job Contracts</h4>
-                </div>
-                <!-- <div fxLayout="column" fxLayoutGap="10px">
+		<!-- Contracts List -->
+		<div fxFlexOrder.xs="2" *ngIf="isContractJobsAvailable" fxFlex.lt-md="100" fxFlex.gt-sm="25" class="flex-p section_container"
+		 fxLayout="row wrap" fxLayoutAlign="center start">
+			<mat-card *ngIf="isActiveContractsAvailable" fxLayout="row wrap" fxLayoutAlign="center start" style="padding:12px;">
+				<div class="m-b-10" fxFlex="100" fxLayoutAlign="center start">
+					<h4 class="underline">My Active Job Contracts</h4>
+				</div>
+				<!-- <div fxLayout="column" fxLayoutGap="10px">
                     <a class="w-100 text-wrap" mat-raised-button *ngFor="let activeContract of activeContracts; let i=index;" (click)="getContractTodayTimesheet(activeContract._id); getContractDetails(activeContract._id);"
                         style="text-transform: capitalize;">
                         {{activeContract.jobid.jobtitle}} ({{activeContract.jobid.companyid.companyname}})
                     </a>
                 </div> -->
-                <mat-button-toggle-group vertical #toggleGroup1="matButtonToggleGroup" style="border:none!important;" (click)="doReset2()">
-                    <mat-button-toggle *ngFor="let activeContract of activeContracts |slice:0:showActiveContract; let i=index;" [value]="activeContract._id" (click)="getContractTodayTimesheet(activeContract._id); getContractDetails(activeContract._id);"
-                        style="text-transform: capitalize;">{{activeContract.jobid.jobtitle}} ({{activeContract.jobid.companyid.companyname}})</mat-button-toggle>
+				<mat-button-toggle-group vertical #toggleGroup1="matButtonToggleGroup" style="border:none!important;" (click)="doReset2()">
+					<mat-button-toggle *ngFor="let activeContract of activeContracts |slice:0:showActiveContract; let i=index;"
+					 [value]="activeContract._id" (click)="getContractTodayTimesheet(activeContract._id); getContractDetails(activeContract._id);"
+					 style="text-transform: capitalize;">{{activeContract.jobid.jobtitle}}
+						({{activeContract.jobid.companyid.companyname}})</mat-button-toggle>
 				</mat-button-toggle-group>
-				 <div class="m-b-10" fxFlex="100" fxLayoutAlign="end center" style="margin-top: 10px;">
-                   <a *ngIf="activeContracts.length > showActiveContract" (click)="showActiveContract = activeContracts.length" style="color: blue; font-style: italic; font-size: 12px; cursor: pointer;">Show More</a>
-					<a *ngIf="activeContracts.length == showActiveContract" (click)="showActiveContract = defaultActiveContract" style="color: blue; font-style: italic; font-size: 12px; cursor: pointer;">Show Less</a>
-                </div>
-            </mat-card>
+				<div class="m-b-10" fxFlex="100" fxLayoutAlign="end center" style="margin-top: 10px;">
+					<a *ngIf="activeContracts.length > showActiveContract" (click)="showActiveContract = activeContracts.length" style="color: blue; font-style: italic; font-size: 12px; cursor: pointer;">Show
+						More</a>
+					<a *ngIf="activeContracts.length == showActiveContract" (click)="showActiveContract = defaultActiveContract" style="color: blue; font-style: italic; font-size: 12px; cursor: pointer;">Show
+						Less</a>
+				</div>
+			</mat-card>
 
-            <mat-card *ngIf="isCompletedContractsAvailable" style="margin-top:30px;padding: 12px;" [ngStyle.xs]="{'margin-top':'15px'}"
-                fxLayout="row wrap" fxLayoutAlign="center start">
-                <div class="m-b-10" fxFlex="100" fxLayoutAlign="center start">
-                    <h4 class="underline">My Completed Job Contracts</h4>
-                </div>
-                <!-- <div fxLayout="column" fxLayoutGap="10px">
+			<mat-card *ngIf="isCompletedContractsAvailable" style="margin-top:30px;padding: 12px;" [ngStyle.xs]="{'margin-top':'15px'}"
+			 fxLayout="row wrap" fxLayoutAlign="center start">
+				<div class="m-b-10" fxFlex="100" fxLayoutAlign="center start">
+					<h4 class="underline">My Completed Job Contracts</h4>
+				</div>
+				<!-- <div fxLayout="column" fxLayoutGap="10px">
                     <a class="w-100 text-wrap" mat-raised-button *ngFor="let completedContract of completedContracts; let i=index;" (click)="getContractTodayTimesheet(completedContract._id); getContractDetails(completedContract._id);"
                         style="text-transform: capitalize;">
                         {{completedContract.jobid.jobtitle}} ({{completedContract.jobid.companyid.companyname}})
                     </a>
                 </div> -->
-                <mat-button-toggle-group vertical #toggleGroup2="matButtonToggleGroup" (click)="doReset1()" style="border:none!important;">
-                    <mat-button-toggle *ngFor="let completedContract of completedContracts; let i=index;" [value]="completedContract._id" (click)="getContractTodayTimesheet(completedContract._id); getContractDetails(completedContract._id);"
-                        style="text-transform:
-                    capitalize;">{{completedContract.jobid.jobtitle}} ({{completedContract.jobid.companyid.companyname}})</mat-button-toggle>
-                </mat-button-toggle-group>
-            </mat-card>
-        </div>
+				<mat-button-toggle-group vertical #toggleGroup2="matButtonToggleGroup" (click)="doReset1()" style="border:none!important;">
+					<mat-button-toggle *ngFor="let completedContract of completedContracts; let i=index;" [value]="completedContract._id"
+					 (click)="getContractTodayTimesheet(completedContract._id); getContractDetails(completedContract._id);" style="text-transform:
+                    capitalize;">{{completedContract.jobid.jobtitle}}
+						({{completedContract.jobid.companyid.companyname}})</mat-button-toggle>
+				</mat-button-toggle-group>
+			</mat-card>
+		</div>
 
-        <!-- Contract Details -->
-        <div fxFlexOrder.xs="1" *ngIf="isContractDetails" class="flex-p" fxFlex.lt-md="100" fxFlex.gt-sm="75" fxLayout="row wrap">
-            <!-- TimeSheet Layout -->
-            <mat-card class="flex-p" fxFlex="100" fxLayout="column">
-                <div *ngIf="currentTimeSheetLayout?.contractstatus == 'open' && currentTimeSheetLayout?.timesheet" class="flex-p" fxLayout="row wrap"
-                    fxLayoutAlign="space-around center">
-                    <div style="font-weight: 700; text-align: center;" class="flex-p" fxLayout="row" fxLayoutAlign="center center">
-                        Shift From {{ ((currentTimeSheetLayout.timesheet.date +" "+ currentTimeSheetLayout.starttime) | date:'yyyy/MM/dd HH:mm')
-                        > ((currentTimeSheetLayout.timesheet.date +" "+ currentTimeSheetLayout.endtime) | date:'yyyy/MM/dd
-                        HH:mm') ? ((currentTimeSheetLayout.timesheet.date +" "+ currentTimeSheetLayout.starttime) | date:'dd/MM/yyyy
-                        HH:mm') + " To " + (convertNextDay((currentTimeSheetLayout.timesheet.date +" "+ currentTimeSheetLayout.endtime)
-                        | date:'yyyy/MM/dd HH:mm') | date:'dd/MM/yyyy HH:mm') : ((currentTimeSheetLayout.timesheet.date +"
-                        "+ currentTimeSheetLayout.starttime) | date:'dd/MM/yyyy HH:mm') + " To " + ((currentTimeSheetLayout.timesheet.date
-                        +" "+ currentTimeSheetLayout.endtime) | date:'dd/MM/yyyy HH:mm') }}
-                    </div>
+		<!-- Contract Details -->
+		<div fxFlexOrder.xs="1" *ngIf="isContractDetails" class="flex-p" fxFlex.lt-md="100" fxFlex.gt-sm="75" fxLayout="row wrap">
+			<!-- TimeSheet Layout -->
+			<mat-card class="flex-p" fxFlex="100" fxLayout="column">
+				<div *ngIf="currentTimeSheetLayout?.contractstatus == 'open' && currentTimeSheetLayout?.timesheet" class="flex-p"
+				 fxLayout="row wrap" fxLayoutAlign="space-around center">
+					<div style="font-weight: 700; text-align: center;" class="flex-p" fxLayout="row" fxLayoutAlign="center center">
+						Shift From {{ ((currentTimeSheetLayout.timesheet.date +" "+ currentTimeSheetLayout.starttime) | date:'yyyy/MM/dd
+						HH:mm')
+						> ((currentTimeSheetLayout.timesheet.date +" "+ currentTimeSheetLayout.endtime) | date:'yyyy/MM/dd
+						HH:mm') ? ((currentTimeSheetLayout.timesheet.date +" "+ currentTimeSheetLayout.starttime) | date:'dd/MM/yyyy
+						HH:mm') + " To " + (convertNextDay((currentTimeSheetLayout.timesheet.date +" "+ currentTimeSheetLayout.endtime)
+						| date:'yyyy/MM/dd HH:mm') | date:'dd/MM/yyyy HH:mm') : ((currentTimeSheetLayout.timesheet.date +"
+						"+ currentTimeSheetLayout.starttime) | date:'dd/MM/yyyy HH:mm') + " To " +
+						((currentTimeSheetLayout.timesheet.date
+						+" "+ currentTimeSheetLayout.endtime) | date:'dd/MM/yyyy HH:mm') }}
+					</div>
 
-                    <div class="flex-p" fxFlex="100" fxLayout="column" fxLayoutAlign="center center">
-                        <mat-radio-group name="punchBehaviour" [(ngModel)]="punchBehaviour" (change)="showContactOogetDialog($event)" required>
-                            <mat-radio-button value="Normal">Normal</mat-radio-button>
-                            <mat-radio-button value="Late" [disabled]="currentTimeSheetLayout.timesheet.punchedin || currentTimeSheetLayout.timesheet.punchedout || currentTimeSheetLayout.timesheet.lateintimation">Late</mat-radio-button>
-                            <mat-radio-button value="Sick" [disabled]="currentTimeSheetLayout.timesheet.punchedin || currentTimeSheetLayout.timesheet.punchedout">Sick</mat-radio-button>
-                        </mat-radio-group>
-                        <div *ngIf="currentTimeSheetLayout.timesheet.lateintimation" style="color: coral; font-size: smaller; padding-top: 10px;">You
-                            have Initimated Late.</div>
-                    </div>
+					<div class="flex-p" fxFlex="100" fxLayout="column" fxLayoutAlign="center center">
+						<mat-radio-group name="punchBehaviour" [(ngModel)]="punchBehaviour" (change)="showContactOogetDialog($event)"
+						 required>
+							<mat-radio-button value="Normal">Normal</mat-radio-button>
+							<mat-radio-button value="Late" [disabled]="currentTimeSheetLayout.timesheet.punchedin || currentTimeSheetLayout.timesheet.punchedout || currentTimeSheetLayout.timesheet.lateintimation">Late</mat-radio-button>
+							<mat-radio-button value="Sick" [disabled]="currentTimeSheetLayout.timesheet.punchedin || currentTimeSheetLayout.timesheet.punchedout">Sick</mat-radio-button>
+						</mat-radio-group>
+						<div *ngIf="currentTimeSheetLayout.timesheet.lateintimation" style="color: coral; font-size: smaller; padding-top: 10px;">You
+							have Initimated Late.</div>
+					</div>
 
-                    <form *ngIf="punchBehaviour == 'Late'" (ngSubmit)="submitLateReason(currentTimeSheetLayout.contractid, currentTimeSheetLayout.timesheet._id, lateReasonForm)"
-                        #lateReasonForm="ngForm" class="flex-p" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center"
-                        fxLayoutGap="10px">
-                        <mat-form-field appearance="outline" fxFlex="80" fxFlex.gt-sm="40">
-                            <mat-label>Late Reason</mat-label>
-                            <input matInput placeholder="Reason" name="punchLateReason" [(ngModel)]="punchLateReason" autocomplete="off" required>
-                            <mat-icon matSuffix>info_outline</mat-icon>
-                        </mat-form-field>
+					<form *ngIf="punchBehaviour == 'Late'" (ngSubmit)="submitLateReason(currentTimeSheetLayout.contractid, currentTimeSheetLayout.timesheet._id, lateReasonForm)"
+					 #lateReasonForm="ngForm" class="flex-p" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center"
+					 fxLayoutGap="10px">
+						<mat-form-field appearance="outline" fxFlex="80" fxFlex.gt-sm="40">
+							<mat-label>Late Reason</mat-label>
+							<input matInput placeholder="Reason" name="punchLateReason" [(ngModel)]="punchLateReason" autocomplete="off"
+							 required>
+							<mat-icon matSuffix>info_outline</mat-icon>
+						</mat-form-field>
 
-                        <button mat-raised-button type="submit" [disabled]="!lateReasonForm.form.valid">Send</button>
-                    </form>
+						<button mat-raised-button type="submit" [disabled]="!lateReasonForm.form.valid">Send</button>
+					</form>
 
-                    <div *ngIf="punchBehaviour == 'Normal'" class="flex-p" fxLayout="column" fxFlex fxLayout.gt-xs="row wrap" fxLayoutAlign.gt-xs="space-around start"
-                        fxLayoutAlign="space-around center" fxLayoutGap.xs="20px">
-                        <div fxLayout="column" fxLayoutAlign="space-around center">
-                            <button mat-raised-button color="primary" [disabled]="ispunchedIn" (click)="punchIn(currentTimeSheetLayout.contractid, currentTimeSheetLayout.timesheet._id)">Time
-                                - In</button>
-                            <div *ngIf="ispunchedIn">
-                                <span *ngIf="inTime">In-Time {{inTime | date:'dd/MM/yyyy HH:mm'}} </span>
-                            </div>
-                        </div>
-                        <div fxLayout="column" fxLayoutAlign="space-around center">
-                            <button mat-raised-button color="accent" [disabled]="ispunchedOut" (click)="punchOut(currentTimeSheetLayout.contractid, currentTimeSheetLayout.timesheet._id)">Time
-                                - Out</button>
-                            <div *ngIf="ispunchedOut">
-                                <span *ngIf="outTime">Out-Time {{outTime | date:'dd/MM/yyyy HH:mm'}} </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div *ngIf="currentTimeSheetLayout?.contractstatus == 'open' && !currentTimeSheetLayout?.timesheet && currentTimeSheetLayout?.waittill" class="flex-p" fxLayout="row wrap"
-                    fxLayoutAlign="center center">
-                    <!-- <span style="font-weight: 600; color:orangered;"> Please Wait Sometime, Job Will Start at {{currentTimeSheetLayout.starttime}}</span> -->
-                    <span style="font-weight: 600; color:orangered;"> Please Wait {{ waitTime | async }}</span>
-                </div>
-
-                <div *ngIf="currentTimeSheetLayout?.contractstatus == 'notstarted'" class="flex-p" fxLayout="row" fxLayoutAlign="center center">
-                    Your Contract Will be Start on &nbsp;
-                    <span style="font-weight: 600;"> {{(currentTimeSheetLayout.jobperiodfrom +" "+ currentTimeSheetLayout.starttime
-                        ) | date:'dd/MM/yyyy HH:mm'}}
-                    </span>
-                </div>
-
-                <div *ngIf="currentTimeSheetLayout?.contractstatus == 'jobclosed'" class="flex-p" fxLayout="row" fxLayoutAlign="space-around center">
-                    <span style="color: red; font-size: 14px; font-weight: bold;">Contract Closed</span>
+					<div *ngIf="punchBehaviour == 'Normal'" class="flex-p" fxLayout="column" fxFlex fxLayout.gt-xs="row wrap"
+					 fxLayoutAlign.gt-xs="space-around start" fxLayoutAlign="space-around center" fxLayoutGap.xs="20px">
+						<div fxLayout="column" fxLayoutAlign="space-around center">
+							<button mat-raised-button color="primary" [disabled]="ispunchedIn" (click)="punchIn(currentTimeSheetLayout.contractid, currentTimeSheetLayout.timesheet._id)">Time
+								- In</button>
+							<div *ngIf="ispunchedIn">
+								<span *ngIf="inTime">In-Time {{inTime | date:'dd/MM/yyyy HH:mm'}} </span>
+							</div>
+						</div>
+						<div fxLayout="column" fxLayoutAlign="space-around center">
+							<button mat-raised-button color="accent" [disabled]="ispunchedOut" (click)="punchOut(currentTimeSheetLayout.contractid, currentTimeSheetLayout.timesheet._id)">Time
+								- Out</button>
+							<div *ngIf="ispunchedOut">
+								<span *ngIf="outTime">Out-Time {{outTime | date:'dd/MM/yyyy HH:mm'}} </span>
+							</div>
+						</div>
+					</div>
 				</div>
 
-				<div *ngIf="!currentTimeSheetLayout?.waittill && !currentTimeSheetLayout?.timesheet" class="flex-p" fxLayout="row" fxLayoutAlign="space-around center">
+				<div *ngIf="currentTimeSheetLayout?.contractstatus == 'open' && !currentTimeSheetLayout?.timesheet && currentTimeSheetLayout?.waittill"
+				 class="flex-p" fxLayout="row wrap" fxLayoutAlign="center center">
+					<!-- <span style="font-weight: 600; color:orangered;"> Please Wait Sometime, Job Will Start at {{currentTimeSheetLayout.starttime}}</span> -->
+					<span style="font-weight: 600; color:orangered;"> Please Wait {{ waitTime | async }}</span>
+				</div>
+
+				<div *ngIf="currentTimeSheetLayout?.contractstatus == 'notstarted'" class="flex-p" fxLayout="row" fxLayoutAlign="center center">
+					Your Contract Will be Start on &nbsp;
+					<span style="font-weight: 600;"> {{(currentTimeSheetLayout.jobperiodfrom +" "+ currentTimeSheetLayout.starttime
+						) | date:'dd/MM/yyyy HH:mm'}}
+					</span>
+				</div>
+
+				<div *ngIf="currentTimeSheetLayout?.contractstatus == 'jobclosed'" class="flex-p" fxLayout="row" fxLayoutAlign="space-around center">
 					<span style="color: red; font-size: 14px; font-weight: bold;">Contract Closed</span>
 				</div>
-            </mat-card>
 
-            <!-- Job Details -->
-            <mat-card *ngIf="isContractJobDetails" class="flex-p section_container" style="margin-top: 8px;" fxFlex="100" fxLayout="column">
-                <!-- <mat-card-header>
+				<div *ngIf="!currentTimeSheetLayout?.waittill && !currentTimeSheetLayout?.timesheet" class="flex-p" fxLayout="row"
+				 fxLayoutAlign="space-around center">
+					<span style="color: red; font-size: 14px; font-weight: bold;">Contract Closed</span>
+				</div>
+			</mat-card>
+
+			<!-- Job Details -->
+			<mat-card *ngIf="isContractJobDetails" class="flex-p section_container" style="margin-top: 8px;" fxFlex="100"
+			 fxLayout="column">
+				<!-- <mat-card-header>
                     <img *ngIf="!companyDetails?.companylogo" mat-card-avatar src="assets/img/avatars/logo-placeholder.png" alt="">
                     <img *ngIf="companyDetails?.companylogo" mat-card-avatar src="{{imgBaseUrl}}/company/{{companyDetails?.companylogo}}" alt="">
                     <mat-card-title>{{jobDetails.jobnumber}}</mat-card-title>
                     <mat-card-subtitle style="text-transform: capitalize;">Job Status: {{jobDetails.jobstatus}}</mat-card-subtitle>
                     <div fxFlex></div>
                 </mat-card-header> -->
-                <mat-card-content ngClass.xs="small">
-                    <!-- Company Details -->
-                    <div>
-                        <div class="user-details transition-2" fxFlex="100" fxLayout="column">
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start">
-                                    <span class="key">Company Name <span fxHide.xs>:</span></span>
-                                    <span class="value"> {{contractJobDetails.jobid.companyid.companyname | titlecase}} </span>
-                                </span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start">
-                                    <span class="key">Company Profile <span fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.companyid.profile | titlecase}}</span>
-                                </span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Industry Type
-                                        <span fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.companyid.industry | titlecase}}</span>
-                                </span></p>
-                        </div>
-                    </div>
-                    <mat-divider></mat-divider>
-                    <!-- Job Basic Details -->
-                    <div>
-                        <div class="user-details transition-2" fxFlex="100" fxLayout="column">
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job Number <span
-                                            fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.jobnumber | titlecase}}</span>
-                                </span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Project Name
-                                        <span fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.project | titlecase}}</span>
-                                </span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job Title <span
-                                            fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.jobtitle | titlecase}}</span>
-                                </span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Employment Type
-                                        <span fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.employmenttype | titlecase}}</span>
-                                </span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Department <span
-                                            fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.department | titlecase}}</span>
-                                </span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Description
-                                        <span fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.jobdescription | titlecase}}</span>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                    <mat-divider></mat-divider>
-                    <!-- Job Specialization Details -->
-                    <div>
-                        <div class="user-details transition-2" fxFlex="100" fxLayout="column">
-                            <p fxLayout="row" fxLayoutAlign="start center" *ngIf="contractJobDetails.jobid.jobspecialization !== 'others'">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job Specialization
-                                        <span fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.project | titlecase}}</span>
-                                </span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center" *ngIf="contractJobDetails.jobid.jobspecialization == 'others'">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job Specialization
-                                        <span fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.otherjobspecialization | titlecase}}</span>
-                                </span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center" *ngIf="contractJobDetails.jobid.workingenvironment">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Working Environment
-                                        <span fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.workingenvironment}}</span>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                    <mat-divider></mat-divider>
-                    <!-- Work Details -->
-                    <div>
-                        <div class="user-details transition-2" fxFlex="100" fxLayout="column">
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Pax Required
-                                        <span fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.numberofpax - contractJobDetails.jobid.numberofcontracts}}
-                                        / {{contractJobDetails.jobid.numberofpax}}</span>
-                                </span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job period <span
-                                            fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.jobperiodfrom | date:'dd/MM/yyyy'}} to
-                                        {{contractJobDetails.jobid.jobperiodto | date:'dd/MM/yyyy'}}</span>
-                                </span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Grace Period
-                                        <span fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.graceperiod}} Mins</span>
-                                </span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Work Time <span
-                                            fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.starttime}} to {{contractJobDetails.jobid.endtime}}</span>
-                                </span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Work Days Type
-                                        <span fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.workdaystype | titlecase}}</span>
-                                </span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center" *ngIf="contractJobDetails.jobid.workdays">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Work Days are
-                                        <span fxHide.xs>:</span></span>
-                                    <span fxLayout.xs="row wrap">
-                                        <span class="value" *ngIf="contractJobDetails.jobid.workdays?.sunday"> {{contractJobDetails.jobid.workdays?.sunday
-                                            ? 'Sunday,' : ''}} </span>
-                                        <span class="value" *ngIf="contractJobDetails.jobid.workdays?.monday"> {{contractJobDetails.jobid.workdays?.monday
-                                            ? 'Monday,' : ''}} </span>
-                                        <span class="value" *ngIf="contractJobDetails.jobid.workdays?.tuesday"> {{contractJobDetails.jobid.workdays?.tuesday
-                                            ? 'Tuesday,' : ''}} </span>
-                                        <span class="value" *ngIf="contractJobDetails.jobid.workdays?.wednesday"> {{contractJobDetails.jobid.workdays?.wednesday
-                                            ? 'Wednesday,' : ''}} </span>
-                                        <span class="value" *ngIf="contractJobDetails.jobid.workdays?.thursday"> {{contractJobDetails.jobid.workdays?.thursday
-                                            ? 'Thursday,' : ''}} </span>
-                                        <span class="value" *ngIf="contractJobDetails.jobid.workdays?.friday"> {{contractJobDetails.jobid.workdays?.friday
-                                            ? 'Friday,' : ''}} </span>
-                                        <span class="value" *ngIf="contractJobDetails.jobid.workdays?.saturday"> {{contractJobDetails.jobid.workdays?.saturday
-                                            ? 'Saturday' : ''}} </span>
-                                    </span>
-                                </span>
-                            </p>
-                            <!-- Break Details -->
-                            <p fxLayout="row" fxLayoutAlign="start center" *ngFor="let break of contractJobDetails.jobid.breaktime">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">{{break.breakname
-                                        | titlecase}} <span fxHide.xs>:</span></span>
-                                    <span class="value">{{break.breakstart}} to {{break.breakend}}</span>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                    <mat-divider></mat-divider>
-                    <!-- Address Details -->
-                    <div>
-                        <div class="user-details transition-2" fxFlex="100" fxLayout="column">
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Postal Code
-                                        <span fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.addresspostalcode}}</span>
-                                </span>
-                            </p>
-                            <!-- <p fxLayout="row" fxLayoutAlign="start center">
+				<mat-card-content ngClass.xs="small">
+					<!-- Company Details -->
+					<div>
+						<div class="user-details transition-2" fxFlex="100" fxLayout="column">
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start">
+									<span class="key">Company Name <span fxHide.xs>:</span></span>
+									<span class="value"> {{contractJobDetails.jobid.companyid.companyname | titlecase}} </span>
+								</span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start">
+									<span class="key">Company Profile <span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.companyid.profile | titlecase}}</span>
+								</span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Industry Type
+										<span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.companyid.industry | titlecase}}</span>
+								</span>
+							</p>
+						</div>
+					</div>
+					<mat-divider></mat-divider>
+					<!-- Job Basic Details -->
+					<div>
+						<div class="user-details transition-2" fxFlex="100" fxLayout="column">
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job Number <span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.jobnumber | titlecase}}</span>
+								</span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Project Name
+										<span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.project | titlecase}}</span>
+								</span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job Title <span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.jobtitle | titlecase}}</span>
+								</span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Employment Type
+										<span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.employmenttype | titlecase}}</span>
+								</span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Department <span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.department | titlecase}}</span>
+								</span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Description
+										<span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.jobdescription | titlecase}}</span>
+								</span>
+							</p>
+						</div>
+					</div>
+					<mat-divider></mat-divider>
+					<!-- Job Specialization Details -->
+					<div>
+						<div class="user-details transition-2" fxFlex="100" fxLayout="column">
+							<p fxLayout="row" fxLayoutAlign="start center" *ngIf="contractJobDetails.jobid.jobspecialization !== 'others'">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job Specialization
+										<span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.project | titlecase}}</span>
+								</span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center" *ngIf="contractJobDetails.jobid.jobspecialization == 'others'">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job Specialization
+										<span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.otherjobspecialization | titlecase}}</span>
+								</span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center" *ngIf="contractJobDetails.jobid.workingenvironment">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Working Environment
+										<span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.workingenvironment}}</span>
+								</span>
+							</p>
+						</div>
+					</div>
+					<mat-divider></mat-divider>
+					<!-- Work Details -->
+					<div>
+						<div class="user-details transition-2" fxFlex="100" fxLayout="column">
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Pax Required
+										<span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.numberofpax - contractJobDetails.jobid.numberofcontracts}}
+										/ {{contractJobDetails.jobid.numberofpax}}</span>
+								</span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job period <span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.jobperiodfrom | date:'dd/MM/yyyy'}} to
+										{{contractJobDetails.jobid.jobperiodto | date:'dd/MM/yyyy'}}</span>
+								</span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Grace Period
+										<span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.graceperiod}} Mins</span>
+								</span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Work Time <span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.starttime}} to {{contractJobDetails.jobid.endtime}}</span>
+								</span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Work Days Type
+										<span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.workdaystype | titlecase}}</span>
+								</span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center" *ngIf="contractJobDetails.jobid.workdays">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Work Days are
+										<span fxHide.xs>:</span></span>
+									<span fxLayout.xs="row wrap">
+										<span class="value" *ngIf="contractJobDetails.jobid.workdays?.sunday">
+											{{contractJobDetails.jobid.workdays?.sunday
+											? 'Sunday,' : ''}} </span>
+										<span class="value" *ngIf="contractJobDetails.jobid.workdays?.monday">
+											{{contractJobDetails.jobid.workdays?.monday
+											? 'Monday,' : ''}} </span>
+										<span class="value" *ngIf="contractJobDetails.jobid.workdays?.tuesday">
+											{{contractJobDetails.jobid.workdays?.tuesday
+											? 'Tuesday,' : ''}} </span>
+										<span class="value" *ngIf="contractJobDetails.jobid.workdays?.wednesday">
+											{{contractJobDetails.jobid.workdays?.wednesday
+											? 'Wednesday,' : ''}} </span>
+										<span class="value" *ngIf="contractJobDetails.jobid.workdays?.thursday">
+											{{contractJobDetails.jobid.workdays?.thursday
+											? 'Thursday,' : ''}} </span>
+										<span class="value" *ngIf="contractJobDetails.jobid.workdays?.friday">
+											{{contractJobDetails.jobid.workdays?.friday
+											? 'Friday,' : ''}} </span>
+										<span class="value" *ngIf="contractJobDetails.jobid.workdays?.saturday">
+											{{contractJobDetails.jobid.workdays?.saturday
+											? 'Saturday' : ''}} </span>
+									</span>
+								</span>
+							</p>
+							<!-- Break Details -->
+							<p fxLayout="row" fxLayoutAlign="start center" *ngFor="let break of contractJobDetails.jobid.breaktime">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">{{break.breakname
+										| titlecase}} <span fxHide.xs>:</span></span>
+									<span class="value">{{break.breakstart}} to {{break.breakend}}</span>
+								</span>
+							</p>
+						</div>
+					</div>
+					<mat-divider></mat-divider>
+					<!-- Address Details -->
+					<div>
+						<div class="user-details transition-2" fxFlex="100" fxLayout="column">
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Postal Code
+										<span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.addresspostalcode}}</span>
+								</span>
+							</p>
+							<!-- <p fxLayout="row" fxLayoutAlign="start center">
                                 <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
                                 <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Block <span
                                             fxHide.xs>:</span></span>
                                     <span class="value">{{contractJobDetails.jobid.addressblock}}</span>
                                 </span></p> -->
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Street <span
-                                            fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.addressstreet | titlecase}}</span>
-                                </span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Unit <span fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.addressunit | titlecase}}</span>
-                                </span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Region <span
-                                            fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.addressregion | titlecase}}</span>
-                                </span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Location <span
-                                            fxHide.xs>:</span></span>
-                                    <span class="value">{{contractJobDetails.jobid.addresslocation | titlecase}}</span>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                    <mat-divider></mat-divider>
-                    <!-- Salary Details -->
-                    <div>
-                        <div class="user-details transition-2" fxFlex="100" fxLayout="column">
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-                                <span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Salary <span
-                                            fxHide.xs>:</span></span>
-                                    <span class="value">&#x24;&nbsp;{{contractJobDetails.jobid.salary}}</span>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                </mat-card-content>
-            </mat-card>
-        </div>
-    </div>
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Street <span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.addressstreet | titlecase}}</span>
+								</span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Unit <span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.addressunit | titlecase}}</span>
+								</span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Region <span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.addressregion | titlecase}}</span>
+								</span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Location <span fxHide.xs>:</span></span>
+									<span class="value">{{contractJobDetails.jobid.addresslocation | titlecase}}</span>
+								</span>
+							</p>
+						</div>
+					</div>
+					<mat-divider></mat-divider>
+					<!-- Salary Details -->
+					<div>
+						<div class="user-details transition-2" fxFlex="100" fxLayout="column">
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
+								<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Salary <span fxHide.xs>:</span></span>
+									<span class="value">&#x24;&nbsp;{{contractJobDetails.jobid.salary}}</span>
+								</span>
+							</p>
+						</div>
+					</div>
+				</mat-card-content>
+			</mat-card>
+		</div>
+	</div>
 </div>

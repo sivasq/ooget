@@ -1,5 +1,6 @@
+<div [ngBusy]="{busy:busy}"> </div>
 <div class="inner-sidenav-content transition-2">
-	<!-- <ng-progress></ng-progress> -->
+
 	<!-- Breadcrumb Start -->
 	<div fxLayout="row wrap">
 		<div class="flex-p" fxFlex="1 1 100%">
@@ -15,8 +16,6 @@
 		</div>
 	</div>
 	<!-- Breadcrumb End -->
-
-	<div [ngBusy]="{busy:busy}"> </div>
 
 	<div fxLayout="row wrap">
 		<div fxFlex="100" fxFlex.gt-sm="75" [fxFlexOrder.lt-md]=2>

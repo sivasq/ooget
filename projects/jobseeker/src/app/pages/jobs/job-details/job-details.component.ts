@@ -62,9 +62,9 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.jobDetails = response.job;
-						this.companyDetails = response.job.companyid;
-						this.appliedCandidates = response.job.jobseekers;
+						this.jobDetails = response.job[0];
+						this.companyDetails = response.job[0].companydetails[0];
+						this.appliedCandidates = response.job[0].jobseekers;
 						// this.offeredCandidates = response.job.candidatesseleceted;
 						// this.CandidatesUnderContract = response.job.candidatessigned;
 						// this.offerRejected = response.job.rejectedcandidates;
@@ -388,9 +388,9 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 		console.log('Accepted', isUnderContract);
 	}
 
-	saveJob(companyId, jobId) {
-		console.log({ 'companyid': companyId, 'jobid': jobId });
-		this.busy = this._httpService.saveJob({ 'companyid': companyId, 'jobid': jobId })
+	saveJob(jobId) {
+		console.log({ 'jobid': jobId });
+		this.busy = this._httpService.saveJob({ 'jobid': jobId })
 			.subscribe(
 				response => {
 					if (response.success) {
@@ -417,6 +417,10 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 					console.log(error);
 				}
 			);
+	}
+
+	unSaveJob(jobId) {
+
 	}
 
 	ngOnDestroy() {

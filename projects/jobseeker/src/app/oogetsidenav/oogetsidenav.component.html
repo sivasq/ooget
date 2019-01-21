@@ -5,7 +5,7 @@
 <!-- Side Nav Logo End -->
 
 <!-- Side Nav User Profile Section Start -->
-<div class="user-block transition-2" [ngClass]="userprofile ? 'show' : ''" [ngStyle.lt-md]="{'height':'116px'}"
+<div class="user-block transition-2" [ngClass]="userprofile ? 'show' : ''" [ngStyle.lt-md]="{'height':'156px'}"
  fxLayout="column" fxLayoutAlign="center center">
 	<div class="user-info-wrapper" fxLayout="row" fxLayoutAlign="space-around center">
 		<img alt="user-image" src="{{profileImage}}">
@@ -18,7 +18,7 @@
 		</div>
 	</div>
 
-	<div fxHide.lt-md="true" class="w-100 muted-text" fxLayout="row" fxLayoutAlign="space-between center" style="padding:0 10px;">
+	<div  class="w-100 muted-text" fxLayout="row" fxLayoutAlign="space-between center" style="padding:0 10px;">
 		<a mat-icon-button matTooltip="Profile" matTooltipPosition="right" routerLink="/main/profile/add">
 			<mat-icon>person_outline</mat-icon>
 		</a>

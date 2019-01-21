@@ -1,5 +1,6 @@
+<div [ngBusy]="{busy:busy}"> </div>
 <div class="inner-sidenav-content transition-2">
-	<!-- <ng-progress></ng-progress> -->
+
 	<!-- Breadcrumb Start -->
 	<div fxLayout="row wrap">
 		<div class="flex-p" fxFlex="1 1 100%">
@@ -15,8 +16,6 @@
 		</div>
 	</div>
 	<!-- Breadcrumb End -->
-
-	<div [ngBusy]="{busy:busy}"> </div>
 
 	<mat-tab-group class="offers" (selectedTabChange)="tabChanged($event)" [selectedIndex]="selectedIndex" #tabGroup
 	 dynamicHeight="true" (swipeleft)="tabGroup.selectedIndex = currentlyActiveIndexTab+1" (swiperight)="tabGroup.selectedIndex = currentlyActiveIndexTab-1">

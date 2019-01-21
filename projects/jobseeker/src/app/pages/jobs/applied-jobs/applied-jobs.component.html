@@ -1,5 +1,6 @@
+<div [ngBusy]="{busy:busy}"> </div>
 <div class="inner-sidenav-content transition-2">
-	<!-- <ng-progress></ng-progress> -->
+
 	<!-- Breadcrumb Start -->
 	<div fxLayout="row wrap">
 		<div class="flex-p" fxFlex="1 1 100%">
@@ -15,8 +16,6 @@
 		</div>
 	</div>
 	<!-- Breadcrumb End -->
-
-	<div [ngBusy]="{busy:busy}"> </div>
 
 	<div fxLayout="row wrap">
 		<div fxFlex="100" fxFlex.gt-sm="75" [fxFlexOrder.lt-md]=2>
@@ -42,13 +41,18 @@
 				<div class="flex-p" fxFlex="100" fxFlex.gt-md="100" fxFlex.md="100" *ngFor="let job of applied_jobs_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
 					<mat-card class="p-0">
 						<div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
-							<h3 class="user-name pointer ellipsis" matTooltip="Click to View Details" matTooltipPosition="below" routerLink="/main/jobs/{{job.jobid}}/view">{{job.jobdetails?.jobtitle
+							<h3 class="user-name pointer ellipsis" matTooltip="Click to View Details" matTooltipPosition="below" routerLink="/main/jobs/{{job.jobdetails?._id}}/view">{{job.jobdetails?.jobtitle
 								| titlecase}}
 								( {{job.jobdetails?.companydetails[0].companyname | titlecase}} )</h3>
 							<div>
-								<button mat-icon-button matTooltip="Save Job" matTooltipPosition="below" color="accent" (click)="saveJob(job.jobdetails?.companydetails[0]._id, job.jobdetails?._id)">
+								<button mat-icon-button matTooltip="Click to Un Save Job" color="accent" matTooltipPosition="below" *ngIf="job.jobdetails?.saved"
+								 (click)="unSaveJob(job.jobdetails?._id)">
 									<mat-icon>favorite</mat-icon>
-									<!-- <mat-icon>favorite_border</mat-icon> -->
+								</button>
+
+								<button mat-icon-button matTooltip="Click to Save Job" color="accent" matTooltipPosition="below" *ngIf="!job.jobdetails?.saved"
+								 (click)="saveJob(job.jobdetails?._id)">
+									<mat-icon>favorite_border</mat-icon>
 								</button>
 								<button mat-icon-button [matMenuTriggerFor]=i>
 									<mat-icon>more_vert</mat-icon>

@@ -18,8 +18,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { TermsConditionsDialogComponent } from '../terms-conditions-dialog/terms-conditions-dialog.component';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { ConfigService } from '../services/config.service';
-import { ApiCallService, HttpCancelService } from '../services/api-call.service';
-import { HttpClientModule } from '@angular/common/http';
+import { ApiCallService, HttpCancelService, InternetInterceptor, HttpCancelInterceptor } from '../services/api-call.service';
+import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
 import { EqualValidatorDirective, Collapse, CompareDirective } from '../directives/equal-validator.directive';
 import { UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, MultipleSubLocationFilter, SafeHtml } from '../pipes/custompipes.pipe';
 
@@ -119,7 +119,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		{ provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
 		{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
 		{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
-		AuthGuardService
+		AuthGuardService,
+		{ provide: HTTP_INTERCEPTORS, useClass: InternetInterceptor, multi: true },
+		{ provide: HTTP_INTERCEPTORS, useClass: HttpCancelInterceptor, multi: true }
 	],
 })
 export class SharedModule { }

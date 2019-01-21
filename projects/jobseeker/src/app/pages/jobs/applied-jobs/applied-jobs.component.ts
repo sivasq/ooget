@@ -335,6 +335,8 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 				response => {
 					if (response.success) {
 						if ((response.appliedjobs).length > 0) {
+							// this.jobs = response.appliedjobs;
+							// this.applied_jobs_list = response.appliedjobs;
 							this.jobs = response.appliedjobs;
 							this.applied_jobs_list = response.appliedjobs;
 							this.isJobsListAllAvailable = true;
@@ -432,12 +434,15 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 		this.maxValue = this.options.ceil;
 	}
 
-	saveJob(companyId, jobId) {
-		console.log({ 'companyid': companyId, 'jobid': jobId });
-		this.busy = this._httpService.saveJob({ 'companyid': companyId, 'jobid': jobId })
+	saveJob(jobId) {
+		console.log({ 'jobid': jobId });
+		this.busy = this._httpService.saveJob({ 'jobid': jobId })
 			.subscribe(
 				response => {
 					if (response.success) {
+
+						this.getAppliedJobsList();
+
 						let snackBarRef = this.snackBar.open('Job Saved Successfully.', 'Close', {
 							duration: 5000,
 						});
@@ -461,6 +466,10 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 					console.log(error);
 				}
 			);
+	}
+
+	unSaveJob(jobId) {
+
 	}
 
 	ngOnInit() {

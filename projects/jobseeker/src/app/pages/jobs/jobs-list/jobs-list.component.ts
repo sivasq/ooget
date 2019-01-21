@@ -363,12 +363,15 @@ export class JobsListComponent implements OnInit, OnDestroy {
 			);
 	}
 
-	saveJob(companyId, jobId) {
-		// console.log({ 'companyid': companyId, 'jobid': jobId });
-		this.busy = this._httpService.saveJob({ 'companyid': companyId, 'jobid': jobId })
+	saveJob(jobId) {
+		// console.log({ 'jobid': jobId });
+		this.busy = this._httpService.saveJob({ 'jobid': jobId })
 			.subscribe(
 				response => {
 					if (response.success) {
+
+						this.getActiveJobsList();
+
 						let snackBarRef = this.snackBar.open('Job Saved Successfully.', 'Close', {
 							duration: 5000,
 						});
@@ -392,6 +395,10 @@ export class JobsListComponent implements OnInit, OnDestroy {
 					console.log(error);
 				}
 			);
+	}
+
+	unSaveJob(jobId) {
+
 	}
 
 	onUserChangeEnd(changeContext: ChangeContext): void {

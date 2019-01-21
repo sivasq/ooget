@@ -1,5 +1,7 @@
+<div [ngBusy]="{busy: busy}"></div>
 <div class="inner-sidenav-content transition-2">
-	<!-- <ng-progress></ng-progress> -->
+
+
 	<!-- Breadcrumb Start -->
 	<div fxLayout="row wrap">
 		<div class="flex-p" fxFlex="1 1 100%">
@@ -15,8 +17,6 @@
 		</div>
 	</div>
 	<!-- Breadcrumb End -->
-
-	<div [ngBusy]="{busy:busy}"></div>
 
 	<div fxLayout="row wrap">
 		<div fxFlex="100" fxFlex.gt-sm="75" [fxFlexOrder.lt-md]=2>
@@ -42,11 +42,16 @@
 					<mat-card class="p-0">
 						<div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
 							<h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below" routerLink="/main/jobs/{{job._id}}/view">{{job.jobtitle
-								| titlecase}} ( {{job.companyid.companyname}} )</h3>
+								| titlecase}} ( {{job.companydetails[0].companyname}} )</h3>
 							<div>
-								<button mat-icon-button matTooltip="Save Job" color="accent" matTooltipPosition="below" (click)="saveJob(job.companyid._id, job._id)">
+								<button mat-icon-button matTooltip="Click to Un Save Job" color="accent" matTooltipPosition="below" *ngIf="job.saved"
+								 (click)="unSaveJob(job._id)">
 									<mat-icon>favorite</mat-icon>
-									<!-- <mat-icon>favorite_border</mat-icon> -->
+								</button>
+
+								<button mat-icon-button matTooltip="Click to Save Job" color="accent" matTooltipPosition="below" *ngIf="!job.saved"
+								 (click)="saveJob(job._id)">
+									<mat-icon>favorite_border</mat-icon>
 								</button>
 								<button mat-icon-button [matMenuTriggerFor]=i>
 									<mat-icon>more_vert</mat-icon>
@@ -63,7 +68,7 @@
 						<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
 							<div fxFlex="30" fxLayout="column" fxLayoutAlign="center center">
 								<div class="user-img" style="text-align: center;" *ngIf="job.employer?.companylogo">
-									<img class="transition-2 ng-star-inserted" src="{{imgBaseUrl}}/company/{{job.companyid.companylogo}}">
+									<img class="transition-2 ng-star-inserted" src="{{imgBaseUrl}}/company/{{job.companydetails[0].companylogo}}">
 								</div>
 								<div class="user-img" style="text-align: center;" *ngIf="!employer?.companylogo">
 									<img class="transition-2 ng-star-inserted" src="assets/img/avatars/logo-placeholder.png">
@@ -99,10 +104,6 @@
 										| date:'dd/MM/yyyy'}} - {{job.jobperiodto | date:'dd/MM/yyyy'}}</span>
 								</p>
 
-								<!-- <p fxLayout="row" fxLayoutAlign="start center">
-								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">security</mat-icon>
-								<span matTooltip="Job Status" matTooltipPosition="right">Status : {{job.jobstatus | titlecase}}</span>
-							</p> -->
 								<p fxLayout="row" fxLayoutAlign="start center">
 									<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">security</mat-icon>
 									<span matTooltip="Job Status" matTooltipPosition="right">Salary : S$&nbsp;{{job.salary}}</span>

@@ -1,5 +1,4 @@
 <div class="app indigo-light fixed-header">
-	<!-- <ng-progress></ng-progress> -->
 
 	<!-- Custom Lazy Load Routeing -->
 	<div [hidden]="!isShowingRouteLoadIndicator">
@@ -7,9 +6,18 @@
 
 		<div class="router-load-indicator"> Loading Please Wait.. </div>
 	</div>
+
 	<!-- <div *ngIf="isShowingRouteLoadIndicator" class="router-load-indicator">
 		Loading Please Wait..
 	</div> -->
+
+	<div *ngIf="connectionStatus === 'online'" class="online">
+		<span>{{connectionStatusMessage}}</span>
+	</div>
+
+	<div *ngIf="connectionStatus === 'offline'" class="offline">
+		<span>{{connectionStatusMessage}}</span>
+	</div>
 
 	<router-outlet></router-outlet>
 </div>
