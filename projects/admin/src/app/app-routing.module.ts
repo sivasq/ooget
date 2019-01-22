@@ -6,8 +6,18 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { Layout1Component } from './layouts/layout1/layout1.component';
 import { Layout2Component } from './layouts/layout2/layout2.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import { InvoiceTemp1Component } from './reusable-components/invoice-temp1/invoice-temp1.component';
+import { InvoiceTemp2Component } from './reusable-components/invoice-temp2/invoice-temp2.component';
 
 const routes: Routes = [
+	{
+		path: 'inv1',
+		component: InvoiceTemp1Component,
+	},
+	{
+		path: 'inv2',
+		component: InvoiceTemp2Component,
+	},
 	{
 		path: 'auth',
 		component: Layout1Component,
@@ -33,28 +43,28 @@ const routes: Routes = [
 			},
 			{
 				path: 'employers',
-        loadChildren: './pages/employers/employers.module#EmployersModule',
+				loadChildren: './pages/employers/employers.module#EmployersModule',
 			},
 			{
 				path: 'jobseekers',
-        loadChildren: './pages/jobseeker/jobseeker.module#JobseekerModule',
+				loadChildren: './pages/jobseeker/jobseeker.module#JobseekerModule',
 			},
 			{
 				path: 'settings',
-        loadChildren: './pages/settings/settings.module#SettingsModule',
+				loadChildren: './pages/settings/settings.module#SettingsModule',
 			},
 			{
 				path: 'holidays',
-        loadChildren: './pages/holidays/holidays.module#HolidaysModule',
+				loadChildren: './pages/holidays/holidays.module#HolidaysModule',
 			},
 			{
 				path: 'faq',
-        loadChildren: './pages/faq/faq.module#FaqModule'
-      },
-      {
-        path: 'reports',
-        loadChildren: './pages/reports/reports.module#ReportsModule'
-      }
+				loadChildren: './pages/faq/faq.module#FaqModule'
+			},
+			{
+				path: 'reports',
+				loadChildren: './pages/reports/reports.module#ReportsModule'
+			}
 		]
 	},
 	{

@@ -9,6 +9,7 @@ import { JobDetailsComponent } from './job-details/job-details.component';
 import { MatchedJobsComponent } from './matched-jobs/matched-jobs.component';
 import { AppliedJobsComponent } from './applied-jobs/applied-jobs.component';
 import { JobOffersComponent } from './job-offers/job-offers.component';
+import { SavedJobsComponent } from './saved-jobs/saved-jobs.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { JobOffersComponent } from './job-offers/job-offers.component';
     JobsRoutingModule,
     SharedModule
   ],
-  declarations: [JobsListComponent, JobDetailsComponent, MatchedJobsComponent, AppliedJobsComponent, JobOffersComponent]
+  declarations: [JobsListComponent, JobDetailsComponent, MatchedJobsComponent, AppliedJobsComponent, JobOffersComponent, SavedJobsComponent]
 })
 export class JobsModule { }

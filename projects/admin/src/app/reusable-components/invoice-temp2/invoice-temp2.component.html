@@ -1,963 +1,261 @@
-<html lang="en">
+<div id="container">
 
-<head>
-	<link rel="stylesheet" href="https://1dd265088a6cef288739-152492db8df9591a73e16991ac6a30fb.ssl.cf2.rackcdn.com/generator/generator.min.css"
-	 media="all">
-	<meta charset="utf-8">
-	<title>Vip (tertia)</title>
-
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<meta name="description" content="Invoicebus Invoice Template">
-	<meta name="author" content="Invoicebus">
-
-	<meta name="template-hash" content="44fdfd74f33d3033971aea2e49b7c656">
-
-	<link rel="stylesheet" href="css/template.css">
-	<link rel="stylesheet" data-href="css/mobile.css" href="css/mobile.css">
-
-</head>
-
-<body>
-	<div id="container">
-
-		<section id="memo">
-			<div class="logo">
-				<span class="ib_drop_zone" title="Drop image or click to upload your logo (max 2MB).<br>For better print resolution use larger image,<br>as it's automatically scaled down."
-				 style="width: 0px; height: 0px;">
-					<span>Drop your logo here<br>
-						<span>(0 x 0px)</span><input type="file" accept="image/*" class="ib_drop_logo">
-					</span>
-				</span><img data-logo="company_logo" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-				 style="display: none;">
-				<div class="ib_remove_logo_overlay">
-					<span class="ib_remove_logo" title="Remove logo"><i class="fa fa-times-circle"></i></span>
-				</div>
+	<section id="memo">
+		<div class="logo">
+			<span class="ib_drop_zone" title="Drop image or click to upload your logo (max 2MB).<br>For better print resolution use larger image,<br>as it's automatically scaled down."
+			 style="width: 0px; height: 0px;">
+				<span>Drop your logo here<br>
+					<span>(0 x 0px)</span><input type="file" accept="image/*" class="ib_drop_logo">
+				</span>
+			</span><img data-logo="company_logo" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+			 style="display: none;">
+			<div class="ib_remove_logo_overlay">
+				<span class="ib_remove_logo" title="Remove logo"><i class="fa fa-times-circle"></i></span>
 			</div>
+		</div>
 
-			<div class="company-info">
-				<span data-ibcl-id="company_name" class="ibcl_company_name" data-tooltip="tooltip" data-placement="top" title="Enter your company name"
-				 contenteditable="true">Dino Store</span>
+		<div class="company-info">
+			<span data-ibcl-id="company_name" class="ibcl_company_name" data-tooltip="tooltip" data-placement="top" title="Enter your company name"
+			 contenteditable="true">Dino Store</span>
 
-				<div class="separator less"></div>
+			<div class="separator less"></div>
 
-				<span data-ibcl-id="company_address" class="ibcl_company_address" data-tooltip="tooltip" data-placement="top" title="Enter company's address"
-				 contenteditable="true">227 Cobblestone Road</span>
-				<span data-ibcl-id="company_city_zip_state" class="ibcl_company_city_zip_state" data-tooltip="tooltip"
-				 data-placement="top" title="Enter company's zip, city and country" contenteditable="true">30000 Bedrock,
-					Cobblestone County</span>
+			<span data-ibcl-id="company_address" class="ibcl_company_address" data-tooltip="tooltip" data-placement="top" title="Enter company's address"
+			 contenteditable="true">227 Cobblestone Road</span>
+			<span data-ibcl-id="company_city_zip_state" class="ibcl_company_city_zip_state" data-tooltip="tooltip"
+			 data-placement="top" title="Enter company's zip, city and country" contenteditable="true">30000 Bedrock,
+				Cobblestone County</span>
 
-				<br>
+			<br>
 
-				<span data-ibcl-id="company_email_web" class="ibcl_company_email_web" data-tooltip="tooltip" data-placement="top"
-				 title="Enter company's web and email address" contenteditable="true">http://dinostore.bed | hello@dinostore.bed</span>
-				<span data-ibcl-id="company_phone_fax" class="ibcl_company_phone_fax" data-tooltip="tooltip" data-placement="top"
-				 title="Enter company's contact phones" contenteditable="true">+555 7 789-1234</span>
-			</div>
-		</section>
+			<span data-ibcl-id="company_email_web" class="ibcl_company_email_web" data-tooltip="tooltip" data-placement="top"
+			 title="Enter company's web and email address" contenteditable="true">http://dinostore.bed | hello@dinostore.bed</span>
+			<span data-ibcl-id="company_phone_fax" class="ibcl_company_phone_fax" data-tooltip="tooltip" data-placement="top"
+			 title="Enter company's contact phones" contenteditable="true">+555 7 789-1234</span>
+		</div>
+	</section>
 
-		<section id="invoice-title-number">
+	<section id="invoice-title-number">
 
-			<span id="title" data-ibcl-id="invoice_title" class="ibcl_invoice_title" data-tooltip="tooltip" data-placement="top"
-			 title="Enter invoice title" contenteditable="true">INVOICE</span>
-			<div class="separator"></div>
-			<span id="number" data-ibcl-id="invoice_number" class="ibcl_invoice_number" data-tooltip="tooltip" data-placement="top"
-			 title="" data-original-title="Enter invoice number" contenteditable="true">#1</span>
+		<span id="title" data-ibcl-id="invoice_title" class="ibcl_invoice_title" data-tooltip="tooltip" data-placement="top"
+		 title="Enter invoice title" contenteditable="true">INVOICE</span>
+		<div class="separator"></div>
+		<span id="number" data-ibcl-id="invoice_number" class="ibcl_invoice_number" data-tooltip="tooltip" data-placement="top"
+		 title="" data-original-title="Enter invoice number" contenteditable="true">#1</span>
 
-		</section>
+	</section>
 
-		<div class="clearfix"></div>
+	<div class="clearfix"></div>
 
-		<section id="invoice-info">
-			<div>
-				<span data-ibcl-id="issue_date_label" class="ibcl_issue_date_label" data-tooltip="tooltip" data-placement="top"
-				 title="Enter issue date label" contenteditable="true">Issue Date:</span>
-				<span data-ibcl-id="due_date_label" class="ibcl_due_date_label" data-tooltip="tooltip" data-placement="top" title="Enter invoice due date label"
-				 contenteditable="true">Due Date:</span>
-				<span data-ibcl-id="net_term_label" class="ibcl_net_term_label" data-tooltip="tooltip" data-placement="top" title="Enter net days label"
-				 contenteditable="true">Net:</span>
-				<span data-ibcl-id="currency_label" class="ibcl_currency_label" data-tooltip="tooltip" data-placement="top" title=""
-				 data-original-title="Enter invoice currency label" contenteditable="true">Currency:</span>
-				<span data-ibcl-id="po_number_label" class="ibcl_po_number_label" data-tooltip="tooltip" data-placement="top" title="Enter P.O. label"
-				 contenteditable="true">P.O. #</span>
-			</div>
+	<section id="invoice-info">
+		<div>
+			<span data-ibcl-id="issue_date_label" class="ibcl_issue_date_label" data-tooltip="tooltip" data-placement="top"
+			 title="Enter issue date label" contenteditable="true">Issue Date:</span>
+			<span data-ibcl-id="due_date_label" class="ibcl_due_date_label" data-tooltip="tooltip" data-placement="top" title="Enter invoice due date label"
+			 contenteditable="true">Due Date:</span>
+			<span data-ibcl-id="net_term_label" class="ibcl_net_term_label" data-tooltip="tooltip" data-placement="top" title="Enter net days label"
+			 contenteditable="true">Net:</span>
+			<span data-ibcl-id="currency_label" class="ibcl_currency_label" data-tooltip="tooltip" data-placement="top" title=""
+			 data-original-title="Enter invoice currency label" contenteditable="true">Currency:</span>
+			<span data-ibcl-id="po_number_label" class="ibcl_po_number_label" data-tooltip="tooltip" data-placement="top" title="Enter P.O. label"
+			 contenteditable="true">P.O. #</span>
+		</div>
 
-			<div>
-				<span data-ibcl-id="issue_date" class="ibcl_issue_date" data-tooltip="tooltip" data-placement="top" title="Select invoice issue date"
-				 data-date="01/21/2019">01/21/2019</span>
-				<span data-ibcl-id="due_date" class="ibcl_due_date" data-tooltip="tooltip" data-placement="top" title="Select invoice due date"
-				 data-date="02/11/2019">02/11/2019</span>
-				<span data-ibcl-id="net_term" class="ibcl_net_term" data-tooltip="tooltip" data-placement="top" title="Enter invoice net days"
-				 contenteditable="true">21</span>
-				<span data-ibcl-id="currency" class="ibcl_currency" data-tooltip="tooltip" data-placement="top" title="Enter invoice currency"
-				 contenteditable="true">USD</span>
-				<span data-ibcl-id="po_number" class="ibcl_po_number" data-tooltip="tooltip" data-placement="top" title="Enter P.O. Number"
-				 contenteditable="true">1/3-147</span>
-			</div>
-		</section>
+		<div>
+			<span data-ibcl-id="issue_date" class="ibcl_issue_date" data-tooltip="tooltip" data-placement="top" title="Select invoice issue date"
+			 data-date="01/21/2019">01/21/2019</span>
+			<span data-ibcl-id="due_date" class="ibcl_due_date" data-tooltip="tooltip" data-placement="top" title="Select invoice due date"
+			 data-date="02/11/2019">02/11/2019</span>
+			<span data-ibcl-id="net_term" class="ibcl_net_term" data-tooltip="tooltip" data-placement="top" title="Enter invoice net days"
+			 contenteditable="true">21</span>
+			<span data-ibcl-id="currency" class="ibcl_currency" data-tooltip="tooltip" data-placement="top" title="Enter invoice currency"
+			 contenteditable="true">USD</span>
+			<span data-ibcl-id="po_number" class="ibcl_po_number" data-tooltip="tooltip" data-placement="top" title="Enter P.O. Number"
+			 contenteditable="true">1/3-147</span>
+		</div>
+	</section>
 
-		<section id="client-info">
-			<span data-ibcl-id="bill_to_label" class="ibcl_bill_to_label" data-tooltip="tooltip" data-placement="top" title="Enter bill to label"
-			 contenteditable="true">Bill to:</span>
-			<div>
-				<span class="client-name ibcl_client_name" data-ibcl-id="client_name" data-tooltip="tooltip" data-placement="top"
-				 title="Enter client name" contenteditable="true">Slate Rock and Gravel Company</span>
-			</div>
+	<section id="client-info">
+		<span data-ibcl-id="bill_to_label" class="ibcl_bill_to_label" data-tooltip="tooltip" data-placement="top" title="Enter bill to label"
+		 contenteditable="true">Bill to:</span>
+		<div>
+			<span class="client-name ibcl_client_name" data-ibcl-id="client_name" data-tooltip="tooltip" data-placement="top"
+			 title="Enter client name" contenteditable="true">Slate Rock and Gravel Company</span>
+		</div>
 
-			<div>
-				<span data-ibcl-id="client_address" class="ibcl_client_address" data-tooltip="tooltip" data-placement="top" title="Enter client address"
-				 contenteditable="true">222 Rocky Way</span>
-			</div>
+		<div>
+			<span data-ibcl-id="client_address" class="ibcl_client_address" data-tooltip="tooltip" data-placement="top" title="Enter client address"
+			 contenteditable="true">222 Rocky Way</span>
+		</div>
 
-			<div>
-				<span data-ibcl-id="client_city_zip_state" class="ibcl_client_city_zip_state" data-tooltip="tooltip" data-placement="top"
-				 title="Enter client city, zip, country" contenteditable="true">30000 Bedrock, Cobblestone County</span>
-			</div>
+		<div>
+			<span data-ibcl-id="client_city_zip_state" class="ibcl_client_city_zip_state" data-tooltip="tooltip" data-placement="top"
+			 title="Enter client city, zip, country" contenteditable="true">30000 Bedrock, Cobblestone County</span>
+		</div>
 
-			<div>
-				<span data-ibcl-id="client_phone_fax" class="ibcl_client_phone_fax" data-tooltip="tooltip" data-placement="top"
-				 title="Enter client pnone &amp; fax" contenteditable="true">+555 7 123-5555</span>
-			</div>
+		<div>
+			<span data-ibcl-id="client_phone_fax" class="ibcl_client_phone_fax" data-tooltip="tooltip" data-placement="top"
+			 title="Enter client pnone &amp; fax" contenteditable="true">+555 7 123-5555</span>
+		</div>
 
-			<div>
-				<span data-ibcl-id="client_email" class="ibcl_client_email" data-tooltip="tooltip" data-placement="top" title="Enter client email"
-				 contenteditable="true">fred@slaterockgravel.bed</span>
-			</div>
+		<div>
+			<span data-ibcl-id="client_email" class="ibcl_client_email" data-tooltip="tooltip" data-placement="top" title="Enter client email"
+			 contenteditable="true">fred@slaterockgravel.bed</span>
+		</div>
 
-			<div>
-				<span data-ibcl-id="client_other" class="ibcl_client_other" data-tooltip="tooltip" data-placement="top" title="Enter other client info"
-				 contenteditable="true">Attn: Fred Flintstone</span>
-			</div>
-		</section>
+		<div>
+			<span data-ibcl-id="client_other" class="ibcl_client_other" data-tooltip="tooltip" data-placement="top" title="Enter other client info"
+			 contenteditable="true">Attn: Fred Flintstone</span>
+		</div>
+	</section>
 
-		<div class="clearfix"></div>
+	<div class="clearfix"></div>
 
-		<section id="items">
+	<section id="items">
+		<table cellspacing="0" cellpadding="0">
+			<tbody>
+				<tr>
+					<th data-ibcl-id="item_row_number_label" class="ibcl_item_row_number_label" data-tooltip="tooltip" data-placement="top"
+					 title="" data-original-title=""></th> <!-- Dummy cell for the row number and row commands -->
+					<th data-ibcl-id="item_description_label" class="ibcl_item_description_label" data-tooltip="tooltip"
+					 data-placement="top" title="Enter item header" contenteditable="true">Item</th>
+					<th data-ibcl-id="item_quantity_label" class="ibcl_item_quantity_label" data-tooltip="tooltip" data-placement="top"
+					 title="Enter quantity header" contenteditable="true">Quantity</th>
+					<th data-ibcl-id="item_price_label" class="ibcl_item_price_label" data-tooltip="tooltip" data-placement="top"
+					 title="" data-original-title="Enter price header" contenteditable="true">Price</th>
+					<th data-ibcl-id="item_discount_label" class="ibcl_item_discount_label" data-tooltip="tooltip" data-placement="top"
+					 title="Enter discount header" contenteditable="true">Discount</th>
+					<th data-ibcl-id="item_tax_label" class="ibcl_item_tax_label" data-tooltip="tooltip" data-placement="top" title="Enter tax header"
+					 contenteditable="true">Tax</th>
+					<th data-ibcl-id="item_line_total_label" class="ibcl_item_line_total_label" data-tooltip="tooltip" data-placement="top"
+					 title="Enter line total header" contenteditable="true">Linetotal</th>
+				</tr>
 
-			<table cellspacing="0" cellpadding="0">
-
-				<tbody>
-					<tr>
-						<th data-ibcl-id="item_row_number_label" class="ibcl_item_row_number_label" data-tooltip="tooltip" data-placement="top"
-						 title="" data-original-title=""></th> <!-- Dummy cell for the row number and row commands -->
-						<th data-ibcl-id="item_description_label" class="ibcl_item_description_label" data-tooltip="tooltip"
-						 data-placement="top" title="Enter item header" contenteditable="true">Item</th>
-						<th data-ibcl-id="item_quantity_label" class="ibcl_item_quantity_label" data-tooltip="tooltip" data-placement="top"
-						 title="Enter quantity header" contenteditable="true">Quantity</th>
-						<th data-ibcl-id="item_price_label" class="ibcl_item_price_label" data-tooltip="tooltip" data-placement="top"
-						 title="" data-original-title="Enter price header" contenteditable="true">Price</th>
-						<th data-ibcl-id="item_discount_label" class="ibcl_item_discount_label" data-tooltip="tooltip" data-placement="top"
-						 title="Enter discount header" contenteditable="true">Discount</th>
-						<th data-ibcl-id="item_tax_label" class="ibcl_item_tax_label" data-tooltip="tooltip" data-placement="top" title="Enter tax header"
-						 contenteditable="true">Tax</th>
-						<th data-ibcl-id="item_line_total_label" class="ibcl_item_line_total_label" data-tooltip="tooltip" data-placement="top"
-						 title="Enter line total header" contenteditable="true">Linetotal</th>
-					</tr>
-
-					<tr data-iterate="item">
-						<td data-ibcl-id="item_row_number" class="ibcl_item_row_number" data-tooltip="tooltip" data-placement="top" title=""
-						 style="position: relative;">
-							<span class="ib_row_commands" style="height:0px;">
-								<span class="ib_commands" style="display: none;">
-									<span class="ib_add" title="Insert row"><i class="fa fa-plus"></i></span>
-									<span class="ib_delete" title="Remove row"><i class="fa fa-minus"></i></span>
-									<span class="ib_move" title="Drag to reorder" style="cursor: move;"><i class="fa fa-sort"></i></span>
-								</span>
-							</span>
-							<span data-row-number="item_row_number">1</span>
-						</td> <!-- Don't remove this column as it's needed for the row commands -->
-						<td><span class="show-mobile ibcl_item_description_label" data-ibcl-id="item_description_label" data-tooltip="tooltip"
-							 data-placement="top" title="Enter item header" contenteditable="true">Item</span> <span data-ibcl-id="item_description"
-							 class="ibcl_item_description" data-tooltip="tooltip" data-placement="top" title="Enter item description"
-							 contenteditable="true">Frozen Brontosaurus Ribs</span></td>
-						<td><span class="show-mobile ibcl_item_quantity_label" data-ibcl-id="item_quantity_label" data-tooltip="tooltip"
-							 data-placement="top" title="Enter quantity header" contenteditable="true">Quantity</span> <span data-ibcl-id="item_quantity"
-							 class="ibcl_item_quantity" data-tooltip="tooltip" data-placement="top" title="" data-original-title="Enter quantity"
-							 contenteditable="true">2</span></td>
-						<td><span class="show-mobile ibcl_item_price_label" data-ibcl-id="item_price_label" data-tooltip="tooltip"
-							 data-placement="top" title="Enter price header" contenteditable="true">Price</span> <span data-ibcl-id="item_price"
-							 class="ibcl_item_price add_currency_left" data-tooltip="tooltip" data-placement="top" title="" data-currency="$"
-							 data-original-title="Enter price" contenteditable="true">120</span></td>
-						<td><span class="show-mobile ibcl_item_discount_label" data-ibcl-id="item_discount_label" data-tooltip="tooltip"
-							 data-placement="top" title="Enter discount header" contenteditable="true">Discount</span> <span data-ibcl-id="item_discount"
-							 class="ibcl_item_discount" data-tooltip="tooltip" data-placement="top" title="Enter discount" contenteditable="true"></span></td>
-						<td><span class="show-mobile ibcl_item_tax_label" data-ibcl-id="item_tax_label" data-tooltip="tooltip"
-							 data-placement="top" title="Enter tax header" contenteditable="true">Tax</span> <span data-ibcl-id="item_tax"
-							 class="ibcl_item_tax ib_item_percentage" data-tooltip="tooltip" data-placement="top" title="Enter tax"
-							 contenteditable="true">2</span></td>
-						<td><span class="show-mobile ibcl_item_line_total_label" data-ibcl-id="item_line_total_label" data-tooltip="tooltip"
-							 data-placement="top" title="Enter line total header" contenteditable="true">Linetotal</span> <span data-ibcl-id="item_line_total"
-							 class="ibcl_item_line_total" data-tooltip="tooltip" data-placement="top" title=""></span></td>
-					</tr>
-					<tr data-iterate="item">
-						<td data-ibcl-id="item_row_number" class="ibcl_item_row_number" data-tooltip="tooltip" data-placement="top" title=""
-						 style="position: relative;" data-original-title="">
-							<span class="ib_row_commands" style="height:0px;">
-								<span class="ib_commands" style="display: none;">
-									<span class="ib_add" title="Insert row"><i class="fa fa-plus"></i></span>
-									<span class="ib_delete" title="Remove row"><i class="fa fa-minus"></i></span>
-									<span class="ib_move" title="Drag to reorder" style="cursor: move;"><i class="fa fa-sort"></i></span>
-								</span>
-							</span>
-							<span data-row-number="item_row_number">2</span>
-						</td> <!-- Don't remove this column as it's needed for the row commands -->
-						<td><span class="show-mobile ibcl_item_description_label" data-ibcl-id="item_description_label" data-tooltip="tooltip"
-							 data-placement="top" title="Enter item header" contenteditable="true">Item</span> <span data-ibcl-id="item_description"
-							 class="ibcl_item_description" data-tooltip="tooltip" data-placement="top" title="Enter item description"
-							 contenteditable="true">Mammoth Chops</span></td>
-						<td><span class="show-mobile ibcl_item_quantity_label" data-ibcl-id="item_quantity_label" data-tooltip="tooltip"
-							 data-placement="top" title="Enter quantity header" contenteditable="true">Quantity</span> <span data-ibcl-id="item_quantity"
-							 class="ibcl_item_quantity" data-tooltip="tooltip" data-placement="top" title="Enter quantity" contenteditable="true">14</span></td>
-						<td><span class="show-mobile ibcl_item_price_label" data-ibcl-id="item_price_label" data-tooltip="tooltip"
-							 data-placement="top" title="Enter price header" contenteditable="true">Price</span> <span data-ibcl-id="item_price"
-							 class="ibcl_item_price add_currency_left" data-tooltip="tooltip" data-placement="top" title="" data-currency="$"
-							 data-original-title="Enter price" contenteditable="true">175</span></td>
-						<td><span class="show-mobile ibcl_item_discount_label" data-ibcl-id="item_discount_label" data-tooltip="tooltip"
-							 data-placement="top" title="Enter discount header" contenteditable="true">Discount</span> <span data-ibcl-id="item_discount"
-							 class="ibcl_item_discount ib_item_percentage" data-tooltip="tooltip" data-placement="top" title="Enter discount"
-							 contenteditable="true">-10</span></td>
-						<td><span class="show-mobile ibcl_item_tax_label" data-ibcl-id="item_tax_label" data-tooltip="tooltip"
-							 data-placement="top" title="Enter tax header" contenteditable="true">Tax</span> <span data-ibcl-id="item_tax"
-							 class="ibcl_item_tax ib_item_percentage" data-tooltip="tooltip" data-placement="top" title="Enter tax"
-							 contenteditable="true">5</span></td>
-						<td><span class="show-mobile ibcl_item_line_total_label" data-ibcl-id="item_line_total_label" data-tooltip="tooltip"
-							 data-placement="top" title="Enter line total header" contenteditable="true">Linetotal</span> <span data-ibcl-id="item_line_total"
-							 class="ibcl_item_line_total" data-tooltip="tooltip" data-placement="top" title=""></span></td>
-					</tr>
-					<tr data-iterate="item">
-						<td data-ibcl-id="item_row_number" class="ibcl_item_row_number" data-tooltip="tooltip" data-placement="top" title=""
-						 style="position: relative;" data-original-title="">
-							<span class="ib_row_commands" style="height:0px;">
-								<span class="ib_commands" style="display: none;">
-									<span class="ib_add" title="Insert row"><i class="fa fa-plus"></i></span>
-									<span class="ib_delete" title="Remove row"><i class="fa fa-minus"></i></span>
-									<span class="ib_move" title="Drag to reorder" style="cursor: move;"><i class="fa fa-sort"></i></span>
-								</span>
-							</span>
-							<span data-row-number="item_row_number">3</span>
-						</td> <!-- Don't remove this column as it's needed for the row commands -->
-						<td><span class="show-mobile ibcl_item_description_label" data-ibcl-id="item_description_label" data-tooltip="tooltip"
-							 data-placement="top" title="Enter item header" contenteditable="true">Item</span> <span data-ibcl-id="item_description"
-							 class="ibcl_item_description" data-tooltip="tooltip" data-placement="top" title="Enter item description"
-							 contenteditable="true"></span></td>
-						<td><span class="show-mobile ibcl_item_quantity_label" data-ibcl-id="item_quantity_label" data-tooltip="tooltip"
-							 data-placement="top" title="Enter quantity header" contenteditable="true">Quantity</span> <span data-ibcl-id="item_quantity"
-							 class="ibcl_item_quantity" data-tooltip="tooltip" data-placement="top" title="Enter quantity" contenteditable="true"></span></td>
-						<td><span class="show-mobile ibcl_item_price_label" data-ibcl-id="item_price_label" data-tooltip="tooltip"
-							 data-placement="top" title="Enter price header" contenteditable="true">Price</span> <span data-ibcl-id="item_price"
-							 class="ibcl_item_price" data-tooltip="tooltip" data-placement="top" title="" data-original-title="Enter price"
-							 contenteditable="true"></span></td>
-						<td><span class="show-mobile ibcl_item_discount_label" data-ibcl-id="item_discount_label" data-tooltip="tooltip"
-							 data-placement="top" title="Enter discount header" contenteditable="true">Discount</span> <span data-ibcl-id="item_discount"
-							 class="ibcl_item_discount" data-tooltip="tooltip" data-placement="top" title="Enter discount" contenteditable="true"></span></td>
-						<td><span class="show-mobile ibcl_item_tax_label" data-ibcl-id="item_tax_label" data-tooltip="tooltip"
-							 data-placement="top" title="Enter tax header" contenteditable="true">Tax</span> <span data-ibcl-id="item_tax"
-							 class="ibcl_item_tax" data-tooltip="tooltip" data-placement="top" title="Enter tax" contenteditable="true"></span></td>
-						<td><span class="show-mobile ibcl_item_line_total_label" data-ibcl-id="item_line_total_label" data-tooltip="tooltip"
-							 data-placement="top" title="Enter line total header" contenteditable="true">Linetotal</span> <span data-ibcl-id="item_line_total"
-							 class="ibcl_item_line_total" data-tooltip="tooltip" data-placement="top" title=""></span></td>
-					</tr>
-					<span class="ib_bottom_row_commands">
-						<span class="ib_blue_link ib_add_new_row_link">Add new row</span>
-						<span class="ib_blue_link ib_show_hide_columns_link">Configure columns</span>
-						<span class="ib_show_hide_columns">
-							<span><input type="checkbox" value="item_row_number">
-								<span>Row number</span>
-							</span>
-							<span><input type="checkbox" value="item_description">
-								<span>Item</span>
-							</span>
-							<span><input type="checkbox" value="item_quantity">
-								<span>Quantity</span>
-							</span>
-							<span><input type="checkbox" value="item_price">
-								<span>Price</span>
-							</span>
-							<span><input type="checkbox" value="item_discount">
-								<span>Discount</span>
-							</span>
-							<span><input type="checkbox" value="item_tax">
-								<span>Tax</span>
-							</span>
-							<span><input type="checkbox" value="item_line_total">
-								<span>Linetotal</span>
+				<tr data-iterate="item">
+					<td data-ibcl-id="item_row_number" class="ibcl_item_row_number" data-tooltip="tooltip" data-placement="top" title=""
+					 style="position: relative;">
+						<span class="ib_row_commands" style="height:0px;">
+							<span class="ib_commands" style="display: none;">
+								<span class="ib_add" title="Insert row"><i class="fa fa-plus"></i></span>
+								<span class="ib_delete" title="Remove row"><i class="fa fa-minus"></i></span>
+								<span class="ib_move" title="Drag to reorder" style="cursor: move;"><i class="fa fa-sort"></i></span>
 							</span>
 						</span>
-					</span>
+						<span data-row-number="item_row_number">1</span>
+					</td> <!-- Don't remove this column as it's needed for the row commands -->
+					<td><span class="show-mobile ibcl_item_description_label" data-ibcl-id="item_description_label" data-tooltip="tooltip"
+						 data-placement="top" title="Enter item header" contenteditable="true">Item</span> <span data-ibcl-id="item_description"
+						 class="ibcl_item_description" data-tooltip="tooltip" data-placement="top" title="Enter item description"
+						 contenteditable="true">Frozen Brontosaurus Ribs</span></td>
+					<td><span class="show-mobile ibcl_item_quantity_label" data-ibcl-id="item_quantity_label" data-tooltip="tooltip"
+						 data-placement="top" title="Enter quantity header" contenteditable="true">Quantity</span> <span data-ibcl-id="item_quantity"
+						 class="ibcl_item_quantity" data-tooltip="tooltip" data-placement="top" title="" data-original-title="Enter quantity"
+						 contenteditable="true">2</span></td>
+					<td><span class="show-mobile ibcl_item_price_label" data-ibcl-id="item_price_label" data-tooltip="tooltip"
+						 data-placement="top" title="Enter price header" contenteditable="true">Price</span> <span data-ibcl-id="item_price"
+						 class="ibcl_item_price add_currency_left" data-tooltip="tooltip" data-placement="top" title="" data-currency="$"
+						 data-original-title="Enter price" contenteditable="true">120</span></td>
+					<td><span class="show-mobile ibcl_item_discount_label" data-ibcl-id="item_discount_label" data-tooltip="tooltip"
+						 data-placement="top" title="Enter discount header" contenteditable="true">Discount</span> <span data-ibcl-id="item_discount"
+						 class="ibcl_item_discount" data-tooltip="tooltip" data-placement="top" title="Enter discount" contenteditable="true"></span></td>
+					<td><span class="show-mobile ibcl_item_tax_label" data-ibcl-id="item_tax_label" data-tooltip="tooltip"
+						 data-placement="top" title="Enter tax header" contenteditable="true">Tax</span> <span data-ibcl-id="item_tax"
+						 class="ibcl_item_tax ib_item_percentage" data-tooltip="tooltip" data-placement="top" title="Enter tax"
+						 contenteditable="true">2</span></td>
+					<td><span class="show-mobile ibcl_item_line_total_label" data-ibcl-id="item_line_total_label" data-tooltip="tooltip"
+						 data-placement="top" title="Enter line total header" contenteditable="true">Linetotal</span> <span data-ibcl-id="item_line_total"
+						 class="ibcl_item_line_total" data-tooltip="tooltip" data-placement="top" title=""></span></td>
+				</tr>
 
-				</tbody>
-			</table>
+				<tr data-iterate="item">
+					<td data-ibcl-id="item_row_number" class="ibcl_item_row_number" data-tooltip="tooltip" data-placement="top" title=""
+					 style="position: relative;" data-original-title="">
+						<span class="ib_row_commands" style="height:0px;">
+							<span class="ib_commands" style="display: none;">
+								<span class="ib_add" title="Insert row"><i class="fa fa-plus"></i></span>
+								<span class="ib_delete" title="Remove row"><i class="fa fa-minus"></i></span>
+								<span class="ib_move" title="Drag to reorder" style="cursor: move;"><i class="fa fa-sort"></i></span>
+							</span>
+						</span>
+						<span data-row-number="item_row_number">2</span>
+					</td> <!-- Don't remove this column as it's needed for the row commands -->
+					<td><span class="show-mobile ibcl_item_description_label" data-ibcl-id="item_description_label" data-tooltip="tooltip"
+						 data-placement="top" title="Enter item header" contenteditable="true">Item</span> <span data-ibcl-id="item_description"
+						 class="ibcl_item_description" data-tooltip="tooltip" data-placement="top" title="Enter item description"
+						 contenteditable="true">Mammoth Chops</span></td>
+					<td><span class="show-mobile ibcl_item_quantity_label" data-ibcl-id="item_quantity_label" data-tooltip="tooltip"
+						 data-placement="top" title="Enter quantity header" contenteditable="true">Quantity</span> <span data-ibcl-id="item_quantity"
+						 class="ibcl_item_quantity" data-tooltip="tooltip" data-placement="top" title="Enter quantity" contenteditable="true">14</span></td>
+					<td><span class="show-mobile ibcl_item_price_label" data-ibcl-id="item_price_label" data-tooltip="tooltip"
+						 data-placement="top" title="Enter price header" contenteditable="true">Price</span> <span data-ibcl-id="item_price"
+						 class="ibcl_item_price add_currency_left" data-tooltip="tooltip" data-placement="top" title="" data-currency="$"
+						 data-original-title="Enter price" contenteditable="true">175</span></td>
+					<td><span class="show-mobile ibcl_item_discount_label" data-ibcl-id="item_discount_label" data-tooltip="tooltip"
+						 data-placement="top" title="Enter discount header" contenteditable="true">Discount</span> <span data-ibcl-id="item_discount"
+						 class="ibcl_item_discount ib_item_percentage" data-tooltip="tooltip" data-placement="top" title="Enter discount"
+						 contenteditable="true">-10</span></td>
+					<td><span class="show-mobile ibcl_item_tax_label" data-ibcl-id="item_tax_label" data-tooltip="tooltip"
+						 data-placement="top" title="Enter tax header" contenteditable="true">Tax</span> <span data-ibcl-id="item_tax"
+						 class="ibcl_item_tax ib_item_percentage" data-tooltip="tooltip" data-placement="top" title="Enter tax"
+						 contenteditable="true">5</span></td>
+					<td><span class="show-mobile ibcl_item_line_total_label" data-ibcl-id="item_line_total_label" data-tooltip="tooltip"
+						 data-placement="top" title="Enter line total header" contenteditable="true">Linetotal</span> <span data-ibcl-id="item_line_total"
+						 class="ibcl_item_line_total" data-tooltip="tooltip" data-placement="top" title=""></span></td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
 
-		</section>
+	<section id="sums">
+		<table cellspacing="0" cellpadding="0">
+			<tbody>
+				<tr>
+					<th data-ibcl-id="amount_subtotal_label" class="ibcl_amount_subtotal_label" data-tooltip="tooltip" data-placement="top"
+					 title="Enter subtotal label" contenteditable="true">Subtotal:</th>
+					<td data-ibcl-id="amount_subtotal" class="ibcl_amount_subtotal" data-tooltip="tooltip" data-placement="top" title="">$0.00</td>
+				</tr>
 
-		<section id="sums">
+				<tr data-iterate="tax" style="display: none;">
+					<th data-ibcl-id="tax_name" class="ibcl_tax_name" data-tooltip="tooltip" data-placement="top" title="Enter tax label"
+					 contenteditable="true">Tax:</th>
+					<td data-ibcl-id="tax_value" class="ibcl_tax_value" data-tooltip="tooltip" data-placement="top" title=""></td>
+				</tr>
 
-			<table cellspacing="0" cellpadding="0">
-				<tbody>
-					<tr>
-						<th data-ibcl-id="amount_subtotal_label" class="ibcl_amount_subtotal_label" data-tooltip="tooltip" data-placement="top"
-						 title="Enter subtotal label" contenteditable="true">Subtotal:</th>
-						<td data-ibcl-id="amount_subtotal" class="ibcl_amount_subtotal" data-tooltip="tooltip" data-placement="top" title="">$0.00</td>
-					</tr>
+				<tr class="amount-total">
+					<th data-ibcl-id="amount_total_label" class="ibcl_amount_total_label" data-tooltip="tooltip" data-placement="top"
+					 title="Enter total label" contenteditable="true">Total:</th>
+					<td data-ibcl-id="amount_total" class="ibcl_amount_total" data-tooltip="tooltip" data-placement="top" title="">$0.00</td>
+				</tr>
 
-					<tr data-iterate="tax" style="display: none;">
-						<th data-ibcl-id="tax_name" class="ibcl_tax_name" data-tooltip="tooltip" data-placement="top" title="Enter tax label"
-						 contenteditable="true">Tax:</th>
-						<td data-ibcl-id="tax_value" class="ibcl_tax_value" data-tooltip="tooltip" data-placement="top" title=""></td>
-					</tr>
-
-					<tr class="amount-total">
-						<th data-ibcl-id="amount_total_label" class="ibcl_amount_total_label" data-tooltip="tooltip" data-placement="top"
-						 title="Enter total label" contenteditable="true">Total:</th>
-						<td data-ibcl-id="amount_total" class="ibcl_amount_total" data-tooltip="tooltip" data-placement="top" title="">$0.00</td>
-					</tr>
-
-					<!-- You can use attribute data-hide-on-quote="true" to hide specific information on quotes.
+				<!-- You can use attribute data-hide-on-quote="true" to hide specific information on quotes.
                For example Invoicebus doesn't need amount paid and amount due on quotes  -->
-					<tr data-hide-on-quote="true">
-						<th data-ibcl-id="amount_paid_label" class="ibcl_amount_paid_label" data-tooltip="tooltip" data-placement="top"
-						 title="Enter amount paid label" contenteditable="true">Paid:</th>
-						<td data-ibcl-id="amount_paid" class="ibcl_amount_paid add_currency_left" data-tooltip="tooltip" data-placement="top"
-						 title="Enter amount paid" data-currency="$" contenteditable="true">0.00</td>
-					</tr>
+				<tr data-hide-on-quote="true">
+					<th data-ibcl-id="amount_paid_label" class="ibcl_amount_paid_label" data-tooltip="tooltip" data-placement="top"
+					 title="Enter amount paid label" contenteditable="true">Paid:</th>
+					<td data-ibcl-id="amount_paid" class="ibcl_amount_paid add_currency_left" data-tooltip="tooltip" data-placement="top"
+					 title="Enter amount paid" data-currency="$" contenteditable="true">0.00</td>
+				</tr>
 
-					<tr data-hide-on-quote="true">
-						<th data-ibcl-id="amount_due_label" class="ibcl_amount_due_label" data-tooltip="tooltip" data-placement="top"
-						 title="Enter amount due label" contenteditable="true">Amount Due:</th>
-						<td data-ibcl-id="amount_due" class="ibcl_amount_due" data-tooltip="tooltip" data-placement="top" title="">$0.00</td>
-					</tr>
+				<tr data-hide-on-quote="true">
+					<th data-ibcl-id="amount_due_label" class="ibcl_amount_due_label" data-tooltip="tooltip" data-placement="top"
+					 title="Enter amount due label" contenteditable="true">Amount Due:</th>
+					<td data-ibcl-id="amount_due" class="ibcl_amount_due" data-tooltip="tooltip" data-placement="top" title="">$0.00</td>
+				</tr>
 
-				</tbody>
-			</table>
+			</tbody>
+		</table>
 
-		</section>
+	</section>
 
-		<div class="clearfix"></div>
-
-		<section id="terms">
-
-			<span class="hidden ibcl_terms_label" data-ibcl-id="terms_label" data-tooltip="tooltip" data-placement="top" title="Enter terms and notes label"
-			 contenteditable="true">Terms &amp; Notes</span>
-			<div data-ibcl-id="terms" class="ibcl_terms" data-tooltip="tooltip" data-placement="top" title=""
-			 data-original-title="Enter invoice terms and notes" contenteditable="true">Fred, thank you very much. We really
-				appreciate your business.<br>Please send payments before the due date.</div>
-
-		</section>
-
-		<div class="payment-info">
-			<div data-ibcl-id="payment_info1" class="ibcl_payment_info1" data-tooltip="tooltip" data-placement="top" title="Enter your payment details"
-			 contenteditable="true">Payment details:</div>
-			<div data-ibcl-id="payment_info2" class="ibcl_payment_info2" data-tooltip="tooltip" data-placement="top" title="Enter other payment details"
-			 contenteditable="true">ACC:123006705</div>
-			<div data-ibcl-id="payment_info3" class="ibcl_payment_info3" data-tooltip="tooltip" data-placement="top" title="Enter other payment details"
-			 contenteditable="true">IBAN:US100000060345</div>
-			<div data-ibcl-id="payment_info4" class="ibcl_payment_info4" data-tooltip="tooltip" data-placement="top" title="Enter other payment details"
-			 contenteditable="true">SWIFT:BOA447</div>
-			<div data-ibcl-id="payment_info5" class="ibcl_payment_info5" data-tooltip="tooltip" data-placement="top" title="Enter other payment details"
-			 contenteditable="true"></div>
-		</div>
-
-		<div class="bottom-circles">
-			<section>
-				<div>
-					<div></div>
-				</div>
-				<div>
-					<div>
-						<div>
-							<div></div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
-	</div>
-
-	<script src="https://1dd265088a6cef288739-152492db8df9591a73e16991ac6a30fb.ssl.cf2.rackcdn.com/generator/generator.min.js?data=true"></script>
-	<script type="text/javascript" src="https://1dd265088a6cef288739-152492db8df9591a73e16991ac6a30fb.ssl.cf2.rackcdn.com/generator/jquery.min.js"></script>
-	<script src="https://1dd265088a6cef288739-152492db8df9591a73e16991ac6a30fb.ssl.cf2.rackcdn.com/generator/lang/en.txt"></script>
-	<script src="https://1dd265088a6cef288739-152492db8df9591a73e16991ac6a30fb.ssl.cf2.rackcdn.com/generator/docs/raw-data/raw-data-en.js"></script>
-
-
-	<script type="text/javascript" src="https://1dd265088a6cef288739-152492db8df9591a73e16991ac6a30fb.ssl.cf2.rackcdn.com/generator/bootstrap.min.js"></script>
-	<script src="https://1dd265088a6cef288739-152492db8df9591a73e16991ac6a30fb.ssl.cf2.rackcdn.com/generator/docs/save-state/save-state-en.js"></script>
-	<script src="https://1dd265088a6cef288739-152492db8df9591a73e16991ac6a30fb.ssl.cf2.rackcdn.com/generator/docs/how-to/how-to-en.js"></script>
-	<div class="datepicker dropdown-menu">
-		<div class="datepicker-days" style="">
-			<table class=" table-condensed">
-				<thead>
-					<tr>
-						<th class="prev">‹</th>
-						<th colspan="5" class="switch">January 2019</th>
-						<th class="next">›</th>
-					</tr>
-					<tr>
-						<th class="dow">Su</th>
-						<th class="dow">Mo</th>
-						<th class="dow">Tu</th>
-						<th class="dow">We</th>
-						<th class="dow">Th</th>
-						<th class="dow">Fr</th>
-						<th class="dow">Sa</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="day  old">30</td>
-						<td class="day  old">31</td>
-						<td class="day ">1</td>
-						<td class="day ">2</td>
-						<td class="day ">3</td>
-						<td class="day ">4</td>
-						<td class="day ">5</td>
-					</tr>
-					<tr>
-						<td class="day ">6</td>
-						<td class="day ">7</td>
-						<td class="day ">8</td>
-						<td class="day ">9</td>
-						<td class="day ">10</td>
-						<td class="day ">11</td>
-						<td class="day ">12</td>
-					</tr>
-					<tr>
-						<td class="day ">13</td>
-						<td class="day ">14</td>
-						<td class="day ">15</td>
-						<td class="day ">16</td>
-						<td class="day ">17</td>
-						<td class="day ">18</td>
-						<td class="day ">19</td>
-					</tr>
-					<tr>
-						<td class="day ">20</td>
-						<td class="day  active">21</td>
-						<td class="day ">22</td>
-						<td class="day ">23</td>
-						<td class="day ">24</td>
-						<td class="day ">25</td>
-						<td class="day ">26</td>
-					</tr>
-					<tr>
-						<td class="day ">27</td>
-						<td class="day ">28</td>
-						<td class="day ">29</td>
-						<td class="day ">30</td>
-						<td class="day ">31</td>
-						<td class="day  new">1</td>
-						<td class="day  new">2</td>
-					</tr>
-					<tr>
-						<td class="day  new">3</td>
-						<td class="day  new">4</td>
-						<td class="day  new">5</td>
-						<td class="day  new">6</td>
-						<td class="day  new">7</td>
-						<td class="day  new">8</td>
-						<td class="day  new">9</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="datepicker-months" style="display: none;">
-			<table class="table-condensed">
-				<thead>
-					<tr>
-						<th class="prev">‹</th>
-						<th colspan="5" class="switch">2019</th>
-						<th class="next">›</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td colspan="7">
-							<span class="month active">Jan</span>
-							<span class="month">Feb</span>
-							<span class="month">Mar</span>
-							<span class="month">Apr</span>
-							<span class="month">May</span>
-							<span class="month">Jun</span>
-							<span class="month">Jul</span>
-							<span class="month">Aug</span>
-							<span class="month">Sep</span>
-							<span class="month">Oct</span>
-							<span class="month">Nov</span>
-							<span class="month">Dec</span>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="datepicker-years" style="display: none;">
-			<table class="table-condensed">
-				<thead>
-					<tr>
-						<th class="prev">‹</th>
-						<th colspan="5" class="switch">2010-2019</th>
-						<th class="next">›</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td colspan="7">
-							<span class="year old">2009</span>
-							<span class="year">2010</span>
-							<span class="year">2011</span>
-							<span class="year">2012</span>
-							<span class="year">2013</span>
-							<span class="year">2014</span>
-							<span class="year">2015</span>
-							<span class="year">2016</span>
-							<span class="year">2017</span>
-							<span class="year">2018</span>
-							<span class="year active">2019</span>
-							<span class="year old">2020</span>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	<div class="datepicker dropdown-menu">
-		<div class="datepicker-days" style="">
-			<table class=" table-condensed">
-				<thead>
-					<tr>
-						<th class="prev">‹</th>
-						<th colspan="5" class="switch">February 2019</th>
-						<th class="next">›</th>
-					</tr>
-					<tr>
-						<th class="dow">Su</th>
-						<th class="dow">Mo</th>
-						<th class="dow">Tu</th>
-						<th class="dow">We</th>
-						<th class="dow">Th</th>
-						<th class="dow">Fr</th>
-						<th class="dow">Sa</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="day  old">27</td>
-						<td class="day  old">28</td>
-						<td class="day  old">29</td>
-						<td class="day  old">30</td>
-						<td class="day  old">31</td>
-						<td class="day ">1</td>
-						<td class="day ">2</td>
-					</tr>
-					<tr>
-						<td class="day ">3</td>
-						<td class="day ">4</td>
-						<td class="day ">5</td>
-						<td class="day ">6</td>
-						<td class="day ">7</td>
-						<td class="day ">8</td>
-						<td class="day ">9</td>
-					</tr>
-					<tr>
-						<td class="day ">10</td>
-						<td class="day  active">11</td>
-						<td class="day ">12</td>
-						<td class="day ">13</td>
-						<td class="day ">14</td>
-						<td class="day ">15</td>
-						<td class="day ">16</td>
-					</tr>
-					<tr>
-						<td class="day ">17</td>
-						<td class="day ">18</td>
-						<td class="day ">19</td>
-						<td class="day ">20</td>
-						<td class="day ">21</td>
-						<td class="day ">22</td>
-						<td class="day ">23</td>
-					</tr>
-					<tr>
-						<td class="day ">24</td>
-						<td class="day ">25</td>
-						<td class="day ">26</td>
-						<td class="day ">27</td>
-						<td class="day ">28</td>
-						<td class="day  new">1</td>
-						<td class="day  new">2</td>
-					</tr>
-					<tr>
-						<td class="day  new">3</td>
-						<td class="day  new">4</td>
-						<td class="day  new">5</td>
-						<td class="day  new">6</td>
-						<td class="day  new">7</td>
-						<td class="day  new">8</td>
-						<td class="day  new">9</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="datepicker-months" style="display: none;">
-			<table class="table-condensed">
-				<thead>
-					<tr>
-						<th class="prev">‹</th>
-						<th colspan="5" class="switch">2019</th>
-						<th class="next">›</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td colspan="7">
-							<span class="month">Jan</span>
-							<span class="month active">Feb</span>
-							<span class="month">Mar</span>
-							<span class="month">Apr</span>
-							<span class="month">May</span>
-							<span class="month">Jun</span>
-							<span class="month">Jul</span>
-							<span class="month">Aug</span>
-							<span class="month">Sep</span>
-							<span class="month">Oct</span>
-							<span class="month">Nov</span>
-							<span class="month">Dec</span>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="datepicker-years" style="display: none;">
-			<table class="table-condensed">
-				<thead>
-					<tr>
-						<th class="prev">‹</th>
-						<th colspan="5" class="switch">2010-2019</th>
-						<th class="next">›</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td colspan="7">
-							<span class="year old">2009</span>
-							<span class="year">2010</span>
-							<span class="year">2011</span>
-							<span class="year">2012</span>
-							<span class="year">2013</span>
-							<span class="year">2014</span>
-							<span class="year">2015</span>
-							<span class="year">2016</span>
-							<span class="year">2017</span>
-							<span class="year">2018</span>
-							<span class="year active">2019</span>
-							<span class="year old">2020</span>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-</body>
-<div id="ib_saveCurrentStateModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="saveStateModal"
- aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<span type="button" class="close" data-dismiss="modal">
-					<span aria-hidden="true">×</span>
-				</span>
-				<div class="modal-title" id="saveStateModal">Save State</div>
-			</div>
-			<div class="modal-body">
-				<div class="ib_how_to_container">
-					<div class="ib_modal_container">
-						<div class="ib_p">
-							This action will save the current state of the template to a local <span class="ib_code">.txt</span> file.
-							The data from this file can be used to pre-populate the template fields in the future. This comes handy when you
-							want to save the invoice details such as company address, logo, client info, currency, notes, etc. so you don't
-							need to re-enter them every time.
-						</div>
-
-						<div class="ib_p">
-							After clicking the button below, you'll be prompted to save the file. In order to open the file in future make
-							sure you save it in the template root directory. The saved file will store instance of the invoice for record
-							keeping.
-						</div>
-
-						<div class="ib_p ib_b">
-							To save the current invoice data as your default, make sure to name the file <span class="ib_code">data.txt</span>
-							and save it in the template root directory. If the file already exists, overwrite it.
-						</div>
-
-						<div class="ib_p ib_notice">
-							<span class="ib_b">Hint:</span> In addition to saving the data locally, you can <span class="ib_a"
-							 onclick="window.open('https://groups.google.com/forum/#!topic/html-invoice-generator/H8s1yUCXnj4', '_blank')">save
-								the invoice to PDF</span> (by using the Print option) or <span class="ib_a" onclick="window.open('https://groups.google.com/forum/#!topic/html-invoice-generator/EfafX6izKxc', '_blank')">save
-								it online</span>.
-						</div>
-
-						<a href="javascript:void(0);" download="data.txt" class="ib_default_button ib_success_button ib_large_button" id="ib-save-current-data">
-							<span class="fa fa-bolt"></span> Save Invoice Data
-						</a>
-						<div id="ib-safari-save-as" class="ib_hide ib_safari_note">Right click the button and choose <span class="ib_b">"Download
-								Linked File As..."</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div id="ib_howToModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="howToModal" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<span type="button" class="close" data-dismiss="modal">
-					<span aria-hidden="true">×</span>
-				</span>
-				<div class="modal-title" id="howToModal">About</div>
-			</div>
-			<div class="modal-body">
-				<div class="ib_how_to_container">
-					<div class="ib_modal_container">
-						<div class="ib_p">
-							If you're one-man performer and everything you do for your business you do it by yourself – welcome to the club!
-							You're well familiar with the pain of writing invoices. Word? Excel? Complicated accounting software? Forget
-							about it and hello you new joy!
-						</div>
-
-						<div class="ib_h3">What can I do with this template?</div>
-						<div class="ib_p">
-							<div class="ib_ul">
-								<div class="ib_li">
-									● &nbsp; Write professional looking invoices in a matter of seconds.
-									<div class="ib_ul">
-										<div class="ib_li">
-											○ &nbsp; Use any language or currency.
-										</div>
-										<div class="ib_li">
-											○ &nbsp; Add your own logo with simple drag and drop.
-										</div>
-										<div class="ib_li">
-											○ &nbsp; Easily add, remove, and reorder item rows.
-										</div>
-										<div class="ib_li">
-											○ &nbsp; Add taxes and discounts.
-										</div>
-										<div class="ib_li">
-											○ &nbsp; Configure item column visibility.
-										</div>
-										<div class="ib_li">
-											○ &nbsp; Auto calculate subtotals, totals, taxes and discounts.
-										</div>
-										<div class="ib_li">
-											○ &nbsp; Save the current invoice data for future re-use.
-										</div>
-										<div class="ib_li">
-											○ &nbsp; Open already saved invoice data (useful when invoicing different clients).
-										</div>
-									</div>
-								</div>
-								<div class="ib_li">
-									● &nbsp; Restyle it by using simple HTML &amp; CSS techniques.
-								</div>
-								<div class="ib_li">
-									● &nbsp; Directly print it out.
-								</div>
-								<div class="ib_li">
-									● &nbsp; Save it to PDF or save it online.
-								</div>
-							</div>
-						</div>
-
-						<div class="ib_h3">How to save the invoice?</div>
-						<div class="ib_p">
-							There are three ways to save the invoice:
-							<div class="ib_ul">
-								<div class="ib_li">
-									1) &nbsp;Save it locally in editable <span class="ib_code">.txt</span> format with the "Save State"
-									button.
-								</div>
-								<div class="ib_li">
-									2) &nbsp;Save it to PDF using PDF printer.
-								</div>
-								<div class="ib_li">
-									3) &nbsp;Save it online to our online invoicing system <span class="ib_a" onclick="window.open('https://invoicebus.com', '_blank')">Invoicebus</span>.
-								</div>
-							</div>
-						</div>
-
-						<div class="ib_p">
-							1) To save the invoice data locally in editable format use the <span class="ib_b">"Save State"</span>
-							button in the top menu and follow the on-screen instructions.
-						</div>
-
-						<div class="ib_p">
-							2) Saving the invoice to PDF can be done by using something called PDF Print Driver. This is also known as
-							printing to PDF because the output from the browser is sent to a file instead to a printer. This functionality
-							is built-in in some browsers (like Google Chrome), while in others (like Firefox or Internet Explorer) you have
-							to install PDF printer manually. A good and free PDF printer is <span class="ib_a" onclick="window.open('http://www.bullzip.com', '_blank')">Bullzip</span>.
-							If you already have your PDF printer installed, <span class="ib_b">click "Print", set the destination printer
-								to "Save as PDF" and click Save</span>.
-						</div>
-
-						<div class="ib_p">
-							3) In order to save the invoice online you'll need to create an Invoicebus account first. You can do this by
-							clicking "Save Online" button. Then you'll be taken to a secure page where you can complete your registration
-							and save the invoice. Please note that an online invoice is much more powerful than a static PDF invoice. For
-							example, an online invoice can be edited on-the-fly, sent by email, tracked, and paid directly by Credit card,
-							PayPal or Bitcoin. Here's an <span class="ib_a" onclick="window.open('https://invoicebus.com/demoinvoice/', '_blank')">example</span>.
-						</div>
-
-						<div class="ib_h3">How can I open already saved local invoice data?</div>
-						<div class="ib_p">
-							To open local data, click the <span class="ib_b">"Open"</span> button and from the file browser window
-							select the data file you want to open. Note that the file must be previously saved invoice data with <span
-							 class="ib_code">.txt</span> extension, otherwise it won't load.
-						</div>
-
-						<div class="ib_p">
-							Due to browser privacy restrictions the file <span class="ib_b">must be loaded</span> from the same
-							location as the <span class="ib_code">template.html</span> file (the root directory of the template). So
-							if you want to open data file from other location on your computer, first copy it to the template root folder.
-						</div>
-
-						<div class="ib_h3">How to restyle the template?</div>
-						<div class="ib_p">
-							The template is made with simplicity in mind so can be easily customized with your own branding and colors.
-							However, basic knowledge in HTML and CSS is required.
-						</div>
-
-						<div class="ib_p">
-							For smaller modifications (like changing colors, fonts or element sizes) you only need to modify the <span
-							 class="ib_code">template.css</span> file. If you want to make bigger structural changes of the layout
-							(deleting or rearranging elements), you'll need to modify the <span class="ib_code">template.html</span>
-							file. We've made a <span class="ib_a" onclick="window.open('https://invoicebus.com/create-html-invoice-template/', '_blank')">guide</span>
-							with best practices on how to create your own template, so feel free to use it as a reference point.
-						</div>
-
-						<div class="ib_p">
-							<span class="ib_b">Note:</span> The template is completely separate from its logic, so you don't need to
-							mess up with any programming or JavaScript code.
-						</div>
-
-						<div class="ib_h3">Do I have to be connected to internet to use it?</div>
-						<div class="ib_p">
-							Yes, but isn't necessary. In the background the template links to remote JavaScript file (<span class="ib_code">generator.min.js</span>)
-							located on our server from which it pulls all the logic. If for some reason you don't have internet access on
-							your computer, you can <span class="ib_a" onclick="window.open('http://cdn.invoicebus.com/generator/generator.zip', '_blank')">download</span>
-							the script locally, and modify the <span class="ib_code">template.html</span> file to point to the local
-							version of the script.
-						</div>
-
-						<div class="ib_p">
-							We generally encourage you to continue using the remote script because any recent updates immediately reflect
-							into the template you're using.
-						</div>
-
-						<div class="ib_h3">What about the fonts used?</div>
-						<div class="ib_p">
-							The template uses Google Fonts as they are free and open to everyone. If you want to use the template offline
-							(without being connected to internet) you'll have to download and install the fonts on your local computer (<span
-							 class="ib_a" onclick="window.open('http://www.fonts.com/web-fonts/google', '_blank')">SkyFonts</span> is a
-							simple tool that helps you do this easily).
-						</div>
-
-						<div class="ib_h3">Can I use the JavaScript source code?</div>
-						<div class="ib_p">
-							Absolutely! In fact, we would be proud if you decide to use it (<span class="ib_a" onclick="window.open('https://github.com/Invoicebus/html-invoice-generator', '_blank')">fork
-								us on GitHub</span>). Whether you choose to use it in commercial or non-commercial project, feel free to
-							give us a shout as we are eager to hear all possibilities how this tool can be used. Sometimes, we may even give
-							you a hand ;)
-						</div>
-
-						<div class="ib_h3">Support our work</div>
-						<div class="ib_p">
-							Maintaining this script takes a lot of time and effort to keep it bug free and up to date. All we're asking is a
-							little favor – discrete fine print of our invoicing service at the bottom of the printed document. It would mean
-							the world to us if you leave it there. Thanks!
-						</div>
-
-						<div class="ib_p">
-							It's fine even if you decide to avoid giving us credit, so we made this choice easier to you. In the local
-							<span class="ib_code">.txt</span> invoice data file there's a property called <span class="ib_code">invoicebus_fineprint</span>
-							which can be set to <span class="ib_code">true</span> (to show the fine print) or <span class="ib_code">false</span>
-							(to hide the fine print).
-						</div>
-
-						<div class="ib_h3">Found a bug?</div>
-						<div class="ib_p">
-							If you encounter any issue or found a bug, please report it at our <span class="ib_a" onclick="window.open('https://github.com/Invoicebus/html-invoice-generator/issues', '_blank')">GitHub
-								repo</span>. Please do not submit general questions here, instead use the support forum (see below).
-						</div>
-
-						<div class="ib_h3">Suggestions, questions, criticism?</div>
-						<div class="ib_p">
-							Is there anything we can do to improve this template and make it better for you? Good things / bad things? Feel
-							free to find the appropriate topic at our <span class="ib_a" onclick="window.open('https://groups.google.com/d/forum/html-invoice-generator', '_blank')">support
-								forum</span> and hit us up – we read and respond to every post.
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<span class="ib_default_button" data-dismiss="modal">OK, got it</span>
-			</div>
-		</div>
-	</div>
-</div>
-<span class="ib_invoicebus_fineprint">Receive online payments through your invoices at <span onclick="window.open('https://invoicebus.com', '_blank')">invoicebus.com</span>
-</span>
-<span class="ib_invoicebus_love">Crafted with ❤ by<br>
-	<span onclick="window.open('https://invoicebus.com/team/', '_blank')">The Invoicebus Mechanics</span>
-</span>
-<span class="ib_number_settings">
-	<table>
-		<tbody>
-			<tr>
-				<td><input type="radio" id="ib_currency_left" name="ib_currency" value="left" checked="checked"><label for="ib_currency_left"
-					 title="Show currency on left">$100</label></td>
-				<td><input type="radio" id="ib_number_format_1" name="ib_number_format" value="0,000.00" checked="checked"><label
-					 for="ib_number_format_1">1,234.56</label></td>
-			</tr>
-			<tr>
-				<td><input type="radio" id="ib_currency_right" name="ib_currency" value="right"><label for="ib_currency_right"
-					 title="Show currency on right">100$</label></td>
-				<td><input type="radio" id="ib_number_format_3" name="ib_number_format" value="0 000.00"><label for="ib_number_format_3">1 234.56</label></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="radio" id="ib_number_format_2" name="ib_number_format" value="0000.00"><label for="ib_number_format_2">1234.56</label></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="radio" id="ib_number_format_4" name="ib_number_format" value="0.000,00"><label for="ib_number_format_4">1.234,56</label></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="radio" id="ib_number_format_6" name="ib_number_format" value="0 000,00"><label for="ib_number_format_6">1 234,56</label></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="radio" id="ib_number_format_5" name="ib_number_format" value="0000,00"><label for="ib_number_format_5">1234,56</label></td>
-			</tr>
-			<tr>
-				<td colspan="2" class="ib_show_currency"><input type="checkbox" id="ib_show_currency" name="ib_show_currency"
-					 checked="checked"><label for="ib_show_currency" title="Checking this will show the currency symbol on all amounts on the invoice">Show
-						currency symbol</label></td>
-			</tr>
-		</tbody>
-	</table>
-</span>
-<div class="ib_date_format">
-	<div><input type="radio" id="ib_date_format_radio0" name="ib_date_format_choice" value="dd/mm/yyyy"><label for="ib_date_format_radio0">dd/mm/yyyy</label></div>
-	<div><input type="radio" id="ib_date_format_radio1" name="ib_date_format_choice" value="dd-mm-yyyy"><label for="ib_date_format_radio1">dd-mm-yyyy</label></div>
-	<div><input type="radio" id="ib_date_format_radio2" name="ib_date_format_choice" value="dd.mm.yyyy"><label for="ib_date_format_radio2">dd.mm.yyyy</label></div>
-	<div><input type="radio" id="ib_date_format_radio3" name="ib_date_format_choice" value="mm/dd/yyyy"><label for="ib_date_format_radio3">mm/dd/yyyy</label></div>
-	<div><input type="radio" id="ib_date_format_radio4" name="ib_date_format_choice" value="mm-dd-yyyy"><label for="ib_date_format_radio4">mm-dd-yyyy</label></div>
-	<div><input type="radio" id="ib_date_format_radio5" name="ib_date_format_choice" value="mm.dd.yyyy"><label for="ib_date_format_radio5">mm.dd.yyyy</label></div>
-	<div><input type="radio" id="ib_date_format_radio6" name="ib_date_format_choice" value="yyyy mm dd"><label for="ib_date_format_radio6">yyyy
-			mm dd</label></div>
-	<div><input type="radio" id="ib_date_format_radio7" name="ib_date_format_choice" value="yyyy-mm-dd"><label for="ib_date_format_radio7">yyyy-mm-dd</label></div>
-	<div><input type="radio" id="ib_date_format_radio8" name="ib_date_format_choice" value="yyyy.mm.dd"><label for="ib_date_format_radio8">yyyy.mm.dd</label></div>
+	<div class="clearfix"></div>
 </div>
 
-</html>
+<!-- <script src="https://1dd265088a6cef288739-152492db8df9591a73e16991ac6a30fb.ssl.cf2.rackcdn.com/generator/generator.min.js?data=true"></script> -->
+<!-- <script type="text/javascript" src="https://1dd265088a6cef288739-152492db8df9591a73e16991ac6a30fb.ssl.cf2.rackcdn.com/generator/jquery.min.js"></script> -->
+<!-- <script src="https://1dd265088a6cef288739-152492db8df9591a73e16991ac6a30fb.ssl.cf2.rackcdn.com/generator/lang/en.txt"></script> -->
+<!-- <script src="https://1dd265088a6cef288739-152492db8df9591a73e16991ac6a30fb.ssl.cf2.rackcdn.com/generator/docs/raw-data/raw-data-en.js"></script> -->
+
+<!--
+<script type="text/javascript" src="https://1dd265088a6cef288739-152492db8df9591a73e16991ac6a30fb.ssl.cf2.rackcdn.com/generator/bootstrap.min.js"></script> -->
+<!-- <script src="https://1dd265088a6cef288739-152492db8df9591a73e16991ac6a30fb.ssl.cf2.rackcdn.com/generator/docs/save-state/save-state-en.js"></script> -->
+<!-- <script src="https://1dd265088a6cef288739-152492db8df9591a73e16991ac6a30fb.ssl.cf2.rackcdn.com/generator/docs/how-to/how-to-en.js"></script> -->

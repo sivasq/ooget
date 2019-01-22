@@ -1,5 +1,6 @@
-<div [ngBusy]="{busy:busy}"> </div>
+<div [ngBusy]="{busy: busy}"></div>
 <div class="inner-sidenav-content transition-2">
+
 
 	<!-- Breadcrumb Start -->
 	<div fxLayout="row wrap">
@@ -10,7 +11,7 @@
 					<span class="breadcrumb-title">Home</span>
 				</a>
 				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
-					<span class="breadcrumb-title active">My Applied Jobs</span>
+					<span class="breadcrumb-title active">Available Jobs</span>
 				</div>
 			</mat-card>
 		</div>
@@ -20,46 +21,43 @@
 	<div fxLayout="row wrap">
 		<div fxFlex="100" fxFlex.gt-sm="75" [fxFlexOrder.lt-md]=2>
 			<!-- Search Data and More.. Start -->
-			<div class="flex-p" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="applied_jobs_list.length > 0">
+			<div class="flex-p" fxLayout="row" fxLayoutAlign="start end" *ngIf="jobs_list_all.length > 0">
 				<div fxLayout="row">
-					<mat-button-toggle matTooltip="Search" matTooltipPosition="right" (click)="tab1search=!tab1search" (click)="tab1search ? tab1FilterRef.focus()
-                : false">
+					<mat-button-toggle matTooltip="Search" matTooltipPosition="right" (click)="tab1search=!tab1search" (click)="tab1search ? tab1FilterRef.focus() : false">
 						<mat-icon>search</mat-icon>
 					</mat-button-toggle>
 				</div>
 
 				<form class="user-search" [ngClass]="tab1search ? 'show' : ''">
 					<mat-form-field>
-						<input #tab1FilterRef matInput name="tab1Filter" [(ngModel)]="tab1Filter" placeholder="Search Applied Jobs...">
+						<input matInput #tab1FilterRef name="tab1Filter" [(ngModel)]="tab1Filter" placeholder="Search Available Jobs...">
 					</mat-form-field>
 				</form>
 			</div>
 			<!-- Search Data and More.. End -->
 
 			<!-- Data Lists Start -->
-			<div fxLayout="row wrap" *ngIf="applied_jobs_list.length > 0">
-				<div class="flex-p" fxFlex="100" fxFlex.gt-md="100" fxFlex.md="100" *ngFor="let job of applied_jobs_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
+			<div fxLayout="row wrap" *ngIf="jobs_list_all.length > 0">
+				<div class="flex-p" fxFlex="100" fxFlex.gt-md="100" fxFlex.md="100" *ngFor="let job of jobs_list_all | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
 					<mat-card class="p-0">
 						<div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
-							<h3 class="user-name pointer ellipsis" matTooltip="Click to View Details" matTooltipPosition="below" routerLink="/main/jobs/{{job._id}}/view">{{job.jobtitle
-								| titlecase}}
-								( {{job.companydetails[0].companyname | titlecase}} )</h3>
+							<h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below" routerLink="/main/jobs/{{job._id}}/view">{{job.jobtitle | titlecase}} ( {{job.companydetails[0]?.companyname}} )</h3>
 							<div>
-								<button mat-icon-button matTooltip="Saved" color="accent" matTooltipPosition="below" *ngIf="job.saved">
+								<!-- <button mat-icon-button matTooltip="Saved" color="accent" matTooltipPosition="below" *ngIf="job.saved">
 									<mat-icon>favorite</mat-icon>
-								</button>
+								</button> -->
 
-								<button mat-icon-button matTooltip="Click to Save Job" color="accent" matTooltipPosition="below" *ngIf="!job.saved"
+								<!-- <button mat-icon-button matTooltip="Click to Save Job" color="accent" matTooltipPosition="below" *ngIf="!job.saved"
 								 (click)="saveJob(job._id)">
 									<mat-icon>favorite_border</mat-icon>
-								</button>
+								</button> -->
 								<button mat-icon-button [matMenuTriggerFor]=i>
 									<mat-icon>more_vert</mat-icon>
 								</button>
 							</div>
 						</div>
 						<mat-menu #i="matMenu" xPosition="before">
-							<button mat-menu-item routerLink="/main/jobs/{{job.jobid}}/view">
+							<button mat-menu-item routerLink="/main/jobs/{{job._id}}/view">
 								<mat-icon>visibility</mat-icon>
 								<span>View Details</span>
 							</button>
@@ -67,14 +65,13 @@
 
 						<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
 							<div fxFlex="30" fxLayout="column" fxLayoutAlign="center center">
-								<div class="user-img" style="text-align: center;" *ngIf="job.employer?.companylogo">
-									<img class="transition-2 ng-star-inserted" src="{{imgBaseUrl}}/company/{{job.companydetails[0].companylogo}}">
+								<div class="user-img" style="text-align: center;" *ngIf="job.companydetails[0]?.companylogo">
+									<img class="transition-2 ng-star-inserted" src="{{imgBaseUrl}}/company/{{job.companydetails[0]?.companylogo}}">
 								</div>
-								<div class="user-img" style="text-align: center;" *ngIf="!employer?.companylogo">
+								<div class="user-img" style="text-align: center;" *ngIf="!job.companydetails[0]?.companylogo">
 									<img class="transition-2 ng-star-inserted" src="assets/img/avatars/logo-placeholder.png">
 								</div>
 							</div>
-
 							<div class="user-details transition-2" fxFlex="70" fxLayout="column">
 								<p fxLayout="row" fxLayoutAlign="start center">
 									<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">book</mat-icon>
@@ -105,10 +102,6 @@
 										| date:'dd/MM/yyyy'}} - {{job.jobperiodto | date:'dd/MM/yyyy'}}</span>
 								</p>
 
-								<!-- <p fxLayout="row" fxLayoutAlign="start center">
-								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">security</mat-icon>
-								<span matTooltip="Job Status" matTooltipPosition="right">Status : {{job.jobstatus | titlecase}}</span>
-							</p> -->
 								<p fxLayout="row" fxLayoutAlign="start center">
 									<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">security</mat-icon>
 									<span matTooltip="Job Status" matTooltipPosition="right">Salary : S$&nbsp;{{job.salary}}</span>
@@ -121,7 +114,7 @@
 			<!-- Data Lists End -->
 
 			<!-- Pagination Start -->
-			<div fxLayout="row wrap" *ngIf="applied_jobs_list.length > 0">
+			<div fxLayout="row wrap" *ngIf="jobs_list_all.length > 0">
 				<div class="flex-p" fxFlex="100">
 					<mat-card class="p-0 mat-paginator">
 						<div class="mat-paginator-container">
@@ -147,8 +140,10 @@
 			</div>
 			<!-- Pagination End -->
 
-			<div *ngIf="applied_jobs_list.length == 0" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px" style="height:100px; border: 2px solid #eee; margin:8px;">
-				<h1 style="color: #bbbbbb; text-transform: uppercase; text-align: center;">You have not Applied Any jobs</h1>
+			<div *ngIf="jobs_list_all.length == 0" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px" style="height:100px; border: 2px solid #eee; margin:8px;">
+				<h1 style="color: #bbbbbb; text-transform: uppercase; text-align: center;">
+					No Saved Jobs Found
+				</h1>
 			</div>
 		</div>
 
@@ -178,7 +173,7 @@
 						<mat-label>Job Specialization</mat-label>
 						<mat-select placeholder="Job Specialization" name="jobspecialization" [(ngModel)]="search.jobspecialization"
 						 (ngModelChange)="makeSearch()" multiple>
-							<mat-option #allS [value]="-1">All</mat-option>
+							<mat-option #allS  [value]="-1">All</mat-option>
 							<mat-option [disabled]="allS.selected" *ngFor="let Specialization of Specializations" [value]="Specialization.specialization">{{
 								Specialization.specialization }}</mat-option>
 							<mat-option value="Others">Others</mat-option>

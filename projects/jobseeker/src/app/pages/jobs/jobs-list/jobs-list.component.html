@@ -44,8 +44,7 @@
 							<h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below" routerLink="/main/jobs/{{job._id}}/view">{{job.jobtitle
 								| titlecase}} ( {{job.companydetails[0].companyname}} )</h3>
 							<div>
-								<button mat-icon-button matTooltip="Click to Un Save Job" color="accent" matTooltipPosition="below" *ngIf="job.saved"
-								 (click)="unSaveJob(job._id)">
+								<button mat-icon-button matTooltip="Saved" color="accent" matTooltipPosition="below" *ngIf="job.saved">
 									<mat-icon>favorite</mat-icon>
 								</button>
 

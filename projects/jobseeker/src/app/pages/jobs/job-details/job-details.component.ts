@@ -394,6 +394,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 			.subscribe(
 				response => {
 					if (response.success) {
+						this.getJobDetails({ 'jobid': jobId });
 						let snackBarRef = this.snackBar.open('Job Saved Successfully.', 'Close', {
 							duration: 5000,
 						});

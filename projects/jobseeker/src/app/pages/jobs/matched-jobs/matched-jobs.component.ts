@@ -434,9 +434,9 @@ export class MatchedJobsComponent implements OnInit, OnDestroy {
 		this.maxValue = this.options.ceil;
 	}
 
-	saveJob(companyId, jobId) {
-		console.log({ 'companyid': companyId, 'jobid': jobId });
-		this.busy = this._httpService.saveJob({ 'companyid': companyId, 'jobid': jobId })
+	saveJob(jobId) {
+		console.log({ 'jobid': jobId });
+		this.busy = this._httpService.saveJob({ 'jobid': jobId })
 			.subscribe(
 				response => {
 					if (response.success) {

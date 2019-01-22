@@ -174,6 +174,18 @@ export class ApiCallService {
 		return this.http.post(this.baseUrl + '/job/jobslist', employerIds, { headers: headers })
 	}
 
+	getSavedJobsList(): Observable<any> {
+		let employerIds = '';
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/job/fetchsavedjobs', employerIds, { headers: headers })
+	}
+
 	getMatchedJobsList(): Observable<any> {
 		let employerIds = '';
 		let userToken = localStorage.getItem('ogToken');
