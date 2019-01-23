@@ -263,7 +263,7 @@ export class JobOffersComponent implements OnInit, OnDestroy {
 								this.isJobOffersAvailable = false;
 							}
 
-							this.pendingJobOffers = response.offeredjobs.filter((e) => e.offered && !e.rejected && !e.accepted && e.jobdetails.jobstatus !== 'closed');
+							this.pendingJobOffers = response.offeredjobs.filter((e) => e.offered && !e.rejected && !e.accepted && e.jobdetails.hiringstatus !== 'closed');
 							if ((this.pendingJobOffers).length > 0) {
 								this.isPendingJobOffersAvailable = true;
 							} else {
@@ -284,7 +284,7 @@ export class JobOffersComponent implements OnInit, OnDestroy {
 								this.isRejectedJobOffersAvailable = false;
 							}
 
-							this.expiredJobOffers = response.offeredjobs.filter((e) => e.offered && !e.rejected && !e.accepted && e.jobdetails.jobstatus == 'closed');
+							this.expiredJobOffers = response.offeredjobs.filter((e) => e.offered && !e.rejected && !e.accepted && e.jobdetails.hiringstatus == 'closed');
 							if ((this.expiredJobOffers).length > 0) {
 								this.isExpiredJobOffersAvailable = true;
 							} else {

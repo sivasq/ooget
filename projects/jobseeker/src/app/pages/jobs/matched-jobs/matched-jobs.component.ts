@@ -340,7 +340,7 @@ export class MatchedJobsComponent implements OnInit, OnDestroy {
 							this.isJobsListAllAvailable = true;
 
 							// Create Salary Arr
-							let salaryArr = response.jobs.map(x => x.salary);
+							let salaryArr = response.matches.map(x => x.salary);
 							let minValue = Math.min(...salaryArr);
 							let maxValue = Math.max(...salaryArr);
 							// Update range slider
@@ -440,6 +440,7 @@ export class MatchedJobsComponent implements OnInit, OnDestroy {
 			.subscribe(
 				response => {
 					if (response.success) {
+						this.getMatchedJobsList();
 						let snackBarRef = this.snackBar.open('Job Saved Successfully.', 'Close', {
 							duration: 5000,
 						});

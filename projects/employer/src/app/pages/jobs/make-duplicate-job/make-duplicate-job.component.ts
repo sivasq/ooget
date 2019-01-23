@@ -949,11 +949,11 @@ export class MakeDuplicateJobComponent implements OnInit {
 		let autoofferaccept = { "autoofferaccept": employerJobData.autoofferaccept == true ? "true" : "false" };
 		employerJobData = Object.assign(employerJobData, autoofferaccept);
 
-		let jobaddedby = { "jobaddedby": "employer" };
-		employerJobData = Object.assign(employerJobData, jobaddedby);
+		// let jobaddedby = { "jobaddedby": "employer" };
+		// employerJobData = Object.assign(employerJobData, jobaddedby);
 
-		let jobstatus = { "jobstatus": "pending" };
-		employerJobData = Object.assign(employerJobData, jobstatus);
+		// let jobstatus = { "jobstatus": "pending" };
+		// employerJobData = Object.assign(employerJobData, jobstatus);
 
 		let newBreaks: any[] = [];
 		let oldBreaks = this.jobDetails.breaks;

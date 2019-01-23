@@ -44,9 +44,13 @@
 							<h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below" routerLink="/main/jobs/{{job._id}}/view">{{job.jobtitle
 								| titlecase}}</h3>
 							<div>
-								<button mat-icon-button matTooltip="Saved" color="accent" matTooltipPosition="below" (click)="saveJob(job._id)">
+								<button mat-icon-button matTooltip="Saved" color="accent" matTooltipPosition="below" *ngIf="job.saved">
 									<mat-icon>favorite</mat-icon>
-									<!-- <mat-icon>favorite_border</mat-icon> -->
+								</button>
+
+								<button mat-icon-button matTooltip="Click to Save Job" color="accent" matTooltipPosition="below" *ngIf="!job.saved"
+								 (click)="saveJob(job._id)">
+									<mat-icon>favorite_border</mat-icon>
 								</button>
 								<button mat-icon-button [matMenuTriggerFor]=i>
 									<mat-icon>more_vert</mat-icon>

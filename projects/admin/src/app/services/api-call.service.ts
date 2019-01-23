@@ -231,7 +231,7 @@ export class ApiCallService {
 		return this.http.post(this.baseUrl + '/job/addpayinfo', jobStatus, { headers: headers })
 	}
 
-	closeJob(jobStatus): Observable<any> {
+	closeJobHiring(jobStatus): Observable<any> {
 		// let jobStatus = jobStatus;
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
@@ -240,7 +240,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/job/changejobstatus', jobStatus, { headers: headers })
+		return this.http.post(this.baseUrl + '/job/changehiringstatus', jobStatus, { headers: headers })
 	}
 
 	changeEmployerStatus(jobStatus): Observable<any> {

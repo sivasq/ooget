@@ -64,19 +64,16 @@ export class JobsListComponent implements OnInit {
 	public tab4PaginateControlAutoHide: boolean = true;
 
 	//set filtered jobs
-	public jobs_list_all: any[];
-	public jobs_list_pending: any[];
-	public jobs_list_live: any[];
-	public jobs_list_closed: any[];
+	public jobs_list_all: any[] = [];
+	public jobs_list_pending: any[] = [];
+	public jobs_list_live: any[] = [];
+	public jobs_list_closed: any[] = [];
 
 	//set Job Lists
-	public isJobsListAllAvailable: boolean;
-	public isJobsListPendingAvailable: boolean;
-	public isJobsListLiveAvailable: boolean;
-	public isJobsListClosedAvailable: boolean;
+	public isJobsAvailable: boolean;
 
 	//set Company Details
-	public companyDetails: any;
+	public companyDetails: any = '';
 
 	//busy Config
 	busy: Subscription;
@@ -90,42 +87,21 @@ export class JobsListComponent implements OnInit {
 				response => {
 					if (response.success) {
 						this.companyDetails = response.company;
-						if ((response.jobs).length > 0) {
+						if (response.jobs.length > 0) {
+							this.isJobsAvailable = true;
 							//get all jobs
 							this.jobs_list_all = response.jobs;
-							if ((this.jobs_list_all).length > 0) {
-								this.isJobsListAllAvailable = true;
-							} else {
-								this.isJobsListAllAvailable = false;
-							}
+
 							//filter pending Jobs
 							this.jobs_list_pending = response.jobs.filter((book: any) => book.jobstatus === "pending");
-							if ((this.jobs_list_pending).length > 0) {
-								this.isJobsListPendingAvailable = true;
-							} else {
-								this.isJobsListPendingAvailable = false;
-							}
 
 							//filter live jobs
 							this.jobs_list_live = response.jobs.filter((book: any) => book.jobstatus === "live");
-							if ((this.jobs_list_live).length > 0) {
-								this.isJobsListLiveAvailable = true;
-							} else {
-								this.isJobsListLiveAvailable = false;
-							}
 
 							//filter closed jobs
 							this.jobs_list_closed = response.jobs.filter((book: any) => book.jobstatus === "closed");
-							if ((this.jobs_list_closed).length > 0) {
-								this.isJobsListClosedAvailable = true;
-							} else {
-								this.isJobsListClosedAvailable = false;
-							}
 						} else {
-							this.isJobsListAllAvailable = false;
-							this.isJobsListPendingAvailable = false;
-							this.isJobsListLiveAvailable = false;
-							this.isJobsListClosedAvailable = false;
+							this.isJobsAvailable = false;
 						}
 					} else if (!response.success) {
 						console.log(response);
@@ -144,7 +120,7 @@ export class JobsListComponent implements OnInit {
 		dialogConfig.autoFocus = true;
 		dialogConfig.data = {
 			// boxTitle:"Confirmation",
-			confirmMsg: "<h4>Do you want to close this Job ?</h4>",
+			confirmMsg: "<h4>Do you want to close Hiring for this Job ?</h4>",
 			okButtonText: "Yes",
 			noButtonText: "No",
 			actionalign: "center"
@@ -163,13 +139,13 @@ export class JobsListComponent implements OnInit {
 	}
 
 	ConfirmCloseJob(employerId, jobId) {
-		this.busy = this._httpService.closeJob({ jobid: jobId, jobstatus: 'closed' })
+		this.busy = this._httpService.closeJobHiring({ jobid: jobId, hiringstatus: 'closed' })
 			.subscribe(
 				response => {
 					if (response.success) {
 						console.log(response);
 						this.getSingleEmployersJobsList({ 'companyid': employerId });
-						let snackBarRef = this.snackBar.open('Job Closed Successfully.', 'Close', {
+						let snackBarRef = this.snackBar.open('Hiring Closed Successfully.', 'Close', {
 							duration: 5000,
 						});
 						snackBarRef.onAction().subscribe(() => {

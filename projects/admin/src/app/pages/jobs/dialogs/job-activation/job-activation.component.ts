@@ -45,6 +45,9 @@ export class JobActivationComponent implements OnInit {
 		let jobStatus = { "jobstatus": "live" };
 		payData = Object.assign(payData, jobStatus);
 
+		let hiringStatus = { "hiringstatus": "open" };
+		payData = Object.assign(payData, hiringStatus);
+
 		let callback = { "callback": true };
 		payData = Object.assign(payData, callback);
 
@@ -57,8 +60,8 @@ export class JobActivationComponent implements OnInit {
 							snackBarRef.dismiss();
 							console.log('The snack-bar action was triggered!');
 						});
-		
-		// this._httpService.addPayInfoToJob(payData)
+
+		this._httpService.addPayInfoToJob(payData)
 		// 	.subscribe(
 		// 		response => {
 		// 			if (response.success) {
