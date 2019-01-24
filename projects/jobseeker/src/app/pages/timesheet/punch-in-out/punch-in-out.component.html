@@ -143,11 +143,11 @@
 					</span>
 				</div>
 
-				<div *ngIf="currentTimeSheetLayout?.contractstatus == 'jobclosed'" class="flex-p" fxLayout="row" fxLayoutAlign="space-around center">
+				<div *ngIf="currentTimeSheetLayout?.contractstatus == 'contractclosed'" class="flex-p" fxLayout="row" fxLayoutAlign="space-around center">
 					<span style="color: red; font-size: 14px; font-weight: bold;">Contract Closed</span>
 				</div>
 
-				<div *ngIf="currentTimeSheetLayout?.contractstatus != 'jobclosed' && !currentTimeSheetLayout?.waittill && !currentTimeSheetLayout?.timesheet" class="flex-p" fxLayout="row"
+				<div *ngIf="currentTimeSheetLayout?.contractstatus != 'notstarted' && currentTimeSheetLayout?.contractstatus != 'contractclosed' && !currentTimeSheetLayout?.waittill && !currentTimeSheetLayout?.timesheet" class="flex-p" fxLayout="row"
 				 fxLayoutAlign="space-around center">
 					<span style="color: red; font-size: 14px; font-weight: bold;">Contract Closed</span>
 				</div>

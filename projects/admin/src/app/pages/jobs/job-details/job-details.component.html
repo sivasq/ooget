@@ -323,7 +323,10 @@
 							<mat-list>
 								<mat-list-item *ngFor="let contractor of jobContractors; let i=index;">
 									<div class="mat-list-text" style="padding-left:0;">
-										{{i+1}}.&nbsp; {{contractor.jobseekerid.username}}
+										<p>{{i+1}}.&nbsp;
+											<a style="color:blue; font-weight: bold;" routerLink="/admin/employers/jobs/{{contractor._id}}/contract_details">
+												{{contractor.jobseekerid.username}}
+											</a></p>
 									</div>
 
 									<button mat-icon-button color="warn" (click)="removeContractorFromJobConfirm(contractor._id, i)">
