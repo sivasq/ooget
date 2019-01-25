@@ -157,7 +157,6 @@
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
-										<mat-label></mat-label>
 										<mat-label>Grace Period</mat-label>
 										<mat-select placeholder="Grace Period" name="graceperiod" [(ngModel)]="jobDetails.graceperiod" required>
 											<mat-option *ngFor="let graceperiod of graceperiods" [value]="graceperiod">{{graceperiod}} Min</mat-option>
@@ -227,7 +226,7 @@
 									<div *ngIf="jobDetails.workdaystype=='flexible'" style="margin-top:15px; color:gray;" fxFlex="100" fxLayout="row wrap">
 										Note*: You have to proceed to go "Jobs List -> Select Respective Job -> Jobseeker's Timesheet -> Roster(Off Days)" to set the roster
 									</div>
-									
+
 									<div *ngIf="jobDetails.workdaystype=='normal'" style="margin-top:15px;" fxFlex="100" fxLayout="row wrap">
 										<!-- <p fxFlex="100" style="padding-bottom: 10px; font-weight: 600;">Note : Please Select WorkDays</p> -->
 										<mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary" [ngModelOptions]="{standalone: true}"
@@ -395,7 +394,6 @@
 								<div fxLayout="row wrap" fxLayoutAlign="space-between center">
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Charge Rate (S$)</mat-label>
-										<!-- <span matPrefix style="font-size: 24px;">S&#x24; &nbsp;</span> -->
 										<span matPrefix>
 											<span style="font-size: 17px;">S</span>
 											<span style="font-size: 19px;">$ &nbsp;</span>

@@ -123,7 +123,7 @@
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
-										<mat-label></mat-label>
+										<mat-label>Working Environment</mat-label>
 										<mat-select placeholder="Working Environment" name="workingenvironment" multiple [(ngModel)]="jobDetails.workingenvironment">
 											<!-- <mat-option></mat-option> -->
 											<mat-option *ngFor="let WorkingEnvironment of WorkingEnvironments" [value]="WorkingEnvironment.Environment">{{
@@ -384,7 +384,6 @@
 								<div fxLayout="row wrap" fxLayoutAlign="space-between center">
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Charge Rate (S$)</mat-label>
-										<!-- <span matPrefix>&#x24; &nbsp;</span> -->
 										<span matPrefix>
 											<span style="font-size: 17px;">S</span>
 											<span style="font-size: 19px;">$ &nbsp;</span>
@@ -417,13 +416,13 @@
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
-										<mat-label></mat-label>
+										<mat-label>JobSeeker Salary/hr</mat-label>
 										<input matInput placeholder="JobSeeker Salary/hr" name="salary" autocomplete="off" [(ngModel)]="jobDetails.salary"
 										 pattern="([0-9]*[.])?[0-9]+" readonly required>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
-										<mat-label></mat-label>
+										<mat-label>Markup Rate In Currency(S$)</mat-label>
 										<input matInput placeholder="Markup Rate In Currency(S$)" name="markuprateincurrency" autocomplete="off"
 										 [(ngModel)]="jobDetails.markuprateincurrency" pattern="([0-9]*[.])?[0-9]+" readonly required>
 									</mat-form-field>
@@ -467,7 +466,7 @@
 						<mat-card fxLayout="row wrap" fxLayoutAlign="center stretch" class="action">
 							<button mat-raised-button color="primary" type="submit" [disabled]="!employerJobUpdateForm.form.valid">Update
 								Job</button>
-							<mat-error fxFlex="100" fxLayoutAlign="center center" style="margin-bottom: 10px;">(Update Function Not Done)</mat-error>
+							<!-- <mat-error fxFlex="100" fxLayoutAlign="center center" style="margin-bottom: 10px;">(Update Function Not Done)</mat-error> -->
 						</mat-card>
 					</form>
 				</mat-card-content>

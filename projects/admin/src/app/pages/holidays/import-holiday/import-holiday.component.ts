@@ -5,6 +5,7 @@ import { ApiCallService } from '../../../services/api-call.service';
 
 import * as XLSX from 'xlsx';
 import { DatePipe } from '@angular/common';
+import { JsonToCsvService } from '../../../services/json-to-csv.service';
 type AOA = any[][];
 
 @Component({
@@ -25,8 +26,8 @@ export class ImportHolidayComponent implements OnInit {
 	importedHolidaysDataSource = new MatTableDataSource(this.importedHolidays);
 	dublicateHolidaysDataSource = new MatTableDataSource(this.dublicateHolidays);
 
-	// displayedColumns = ['holiday_date', 'holiday_name', 'holiday_group_code', 'holiday_group_name', 'leave_type_code', 'leave_type'];
-	displayedColumns = ['holiday_date', 'holiday_name'];
+	// displayedColumns = ['holidaydate', 'holidayname', 'holiday_group_code', 'holiday_group_name', 'leave_type_code', 'leave_type'];
+	displayedColumns = ['holidaydate', 'holidayname'];
 
 	@ViewChild('chooseCsvFile') myCsvFileInputVariable: ElementRef;
 	@ViewChild('chooseXlFile') myXlsFileInputVariable: ElementRef;
@@ -41,11 +42,11 @@ export class ImportHolidayComponent implements OnInit {
 		title: 'Your title',
 		useBom: true,
 		noDownload: false,
-		headers: ['holiday_date', 'holiday_name']
-		// headers: ['holiday_date', 'holiday_name', 'holiday_group_code', 'holiday_group_name', 'leave_type_code', 'leave_type']
+		headers: ['holidaydate', 'holidayname']
+		// headers: ['holidaydate', 'holidayname', 'holiday_group_code', 'holiday_group_name', 'leave_type_code', 'leave_type']
 	};
 
-	constructor(private _httpService: ApiCallService, private datePipe: DatePipe) {
+	constructor(private _httpService: ApiCallService, private datePipe: DatePipe, public csv: JsonToCsvService, ) {
 		this.getAllPHHolidays();
 	}
 
@@ -72,18 +73,18 @@ export class ImportHolidayComponent implements OnInit {
 		this.dublicateHolidays = [];
 		this.allPhHolidays.map((item1) => {
 			this.importedHolidays = this.importedHolidays.filter((item2) => {
-				if (item2.holiday_date != item1.holidaydate) {
+				if (item2.holidaydate != item1.holidaydate) {
 					return true;
 				}
-				if (item2.holiday_date == item1.holidaydate) {
+				if (item2.holidaydate == item1.holidaydate) {
 					this.dublicateHolidays.push(item2);
 				}
 			})
 		})
 		this.importedHolidaysDataSource.data = this.importedHolidays;
 		this.dublicateHolidaysDataSource.data = this.dublicateHolidays;
-		// console.log(this.importedHolidays);
-		// console.log(this.dublicateHolidays);
+		console.log(this.importedHolidays);
+		console.log(this.dublicateHolidays);
 	}
 
 	public extractData(data) { // Input csv data to the function
@@ -91,9 +92,10 @@ export class ImportHolidayComponent implements OnInit {
 		let csvData = data;
 		let allTextLines = csvData.split(/\r\n|\n/);
 		let csvHeaders = allTextLines[0].split(',');
-
-		// let customHeader = ['holiday_date', 'holiday_name', 'holiday_group_code', 'holiday_group_name', 'leave_type_code', 'leave_type'];
-		let customHeader = ['holiday_date', 'holiday_name'];
+		console.log('csvHeaders', csvHeaders);
+		// let customHeader = ['holidaydate', 'holidayname', 'holiday_group_code', 'holiday_group_name', 'leave_type_code', 'leave_type'];
+		let customHeader = ['holidaydate', 'holidayname'];
+		console.log('customHeader', customHeader);
 		let isHeadersMatch = (csvHeaders.length == customHeader.length) && csvHeaders.every(function (element, index) {
 			return element === customHeader[index];
 		});
@@ -132,6 +134,7 @@ export class ImportHolidayComponent implements OnInit {
 				var csv = event.target.result; // Content of CSV file
 				this.myCsvFileInputVariable.nativeElement.value = "";
 				this.extractData(csv); //Here you can call the above function.
+				console.log(csv);
 			}
 		}
 	}
@@ -158,15 +161,39 @@ export class ImportHolidayComponent implements OnInit {
 			this.importedHolidays = this.data;
 			// this.importedHolidaysDataSource.data = this.importedHolidays;
 			this.importedHolidays = this.importedHolidays.map((item) => {
-				return { 'holiday_date': this.datePipe.transform(item.holiday_date, 'yyyy/MM/dd'), 'holiday_name': item.holiday_name }
+				// return { 'holidaydate': this.datePipe.transform(item.holidaydate, 'yyyy/MM/dd'), 'holidayname': item.holidayname }
+				return { 'holidaydate': this.datePipe.transform(this.ExcelDateToJSDate(item.holidaydate), 'yyyy/MM/dd'), 'holidayname': item.holidayname }
 			});
 			this.handleDuplicateDays();
 			// console.log(this.importedHolidays);
 		}
 	}
 
+	ExcelDateToJSDate(serial) {
+
+		return new Date(Math.round((serial - 25569) * 86400 * 1000));
+
+		// var utc_days = Math.floor(serial - 25569);
+		// var utc_value = utc_days * 86400;
+		// var date_info = new Date(utc_value * 1000);
+
+		// var fractional_day = serial - Math.floor(serial) + 0.0000001;
+
+		// var total_seconds = Math.floor(86400 * fractional_day);
+
+		// var seconds = total_seconds % 60;
+
+		// total_seconds -= seconds;
+
+		// var hours = Math.floor(total_seconds / (60 * 60));
+		// var minutes = Math.floor(total_seconds / 60) % 60;
+
+		// return new Date(date_info.getFullYear(), date_info.getMonth(), date_info.getDate(), hours, minutes, seconds);
+	}
+
 	downloadSampleCSV() {
 		// new Angular5Csv(this.csvdata, 'TimeSheet', this.csvOptions);
+		let csvData = this.csv.csvInit(this.csvdata, 'sampleholidaylist', this.csvOptions);
 	}
 
 	public onRowClicked(row) {

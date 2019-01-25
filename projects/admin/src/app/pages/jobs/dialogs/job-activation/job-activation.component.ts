@@ -52,7 +52,24 @@ export class JobActivationComponent implements OnInit {
 		payData = Object.assign(payData, callback);
 
 		// this.dialogRef.close(payData);
-		let snackBarRef = this.snackBar.open('This Function not Done.', 'Close', {
+		// let snackBarRef = this.snackBar.open('This Function not Done.', 'Close', {
+		// 	duration: 5000,
+		// });
+
+		// snackBarRef.onAction().subscribe(() => {
+		// 	snackBarRef.dismiss();
+		// 	console.log('The snack-bar action was triggered!');
+		// });
+
+		this._httpService.addPayInfoToJob(payData)
+			.subscribe(
+				response => {
+					if (response.success) {
+						console.log("Pay Info Added Successfully");
+
+						this.dialogRef.close();
+
+						let snackBarRef = this.snackBar.open('Pay Info Added Successfully.', 'Close', {
 							duration: 5000,
 						});
 
@@ -60,31 +77,14 @@ export class JobActivationComponent implements OnInit {
 							snackBarRef.dismiss();
 							console.log('The snack-bar action was triggered!');
 						});
-
-		this._httpService.addPayInfoToJob(payData)
-		// 	.subscribe(
-		// 		response => {
-		// 			if (response.success) {
-		// 				console.log("Pay Info Added Successfully");
-
-		// 				this.dialogRef.close();
-
-		// 				let snackBarRef = this.snackBar.open('Pay Info Added Successfully.', 'Close', {
-		// 					duration: 5000,
-		// 				});
-
-		// 				snackBarRef.onAction().subscribe(() => {
-		// 					snackBarRef.dismiss();
-		// 					console.log('The snack-bar action was triggered!');
-		// 				});
-		// 			} else if (!response.success) {
-		// 				console.log(response);
-		// 			}
-		// 		},
-		// 		error => {
-		// 			console.log(error);
-		// 		}
-		// 	);
+					} else if (!response.success) {
+						console.log(response);
+					}
+				},
+				error => {
+					console.log(error);
+				}
+			);
 
 		console.log(payData);
 	}

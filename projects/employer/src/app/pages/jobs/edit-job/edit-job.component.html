@@ -95,7 +95,7 @@
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
-										<mat-label></mat-label>
+										<mat-label>Working Environment</mat-label>
 										<mat-select placeholder="Working Environment" name="workingenvironment" multiple [(ngModel)]="jobDetails.workingenvironment">
 											<!-- <mat-option></mat-option> -->
 											<mat-option *ngFor="let WorkingEnvironment of WorkingEnvironments" [value]="WorkingEnvironment.Environment">{{
@@ -352,11 +352,10 @@
 								</div>
 							</mat-tab>
 
-							<mat-tab label="Pay">
+							<!-- <mat-tab label="Pay">
 								<div fxLayout="row wrap" fxLayoutAlign="space-between center">
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Charge Rate (S$)</mat-label>
-										<!-- <span matPrefix>&#x24; &nbsp;</span> -->
 										<span matPrefix>
 											<span style="font-size: 17px;">S</span>
 											<span style="font-size: 19px;">$ &nbsp;</span>
@@ -410,7 +409,7 @@
 										</a>
 									</mat-toolbar>
 								</div>
-							</mat-tab>
+							</mat-tab> -->
 
 							<mat-tab label="Others">
 								<div fxLayout="row wrap" fxLayoutAlign="space-between center">
@@ -427,7 +426,7 @@
 									</div>
 
 									<mat-toolbar class="next_action" style="margin-top:25px;">
-										<a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = 5">
+										<a mat-mini-fab color="primary" (click)="tabGroup.selectedIndex = 4">
 											<mat-icon>chevron_left</mat-icon>
 										</a>
 										<span class="fill-remaining-space"></span>

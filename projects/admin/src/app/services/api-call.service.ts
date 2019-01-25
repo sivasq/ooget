@@ -228,7 +228,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/job/addpayinfo', jobStatus, { headers: headers })
+		return this.http.post(this.baseUrl + '/job/updatejobstatuswithpayinfo', jobStatus, { headers: headers })
 	}
 
 	closeJobHiring(jobStatus): Observable<any> {

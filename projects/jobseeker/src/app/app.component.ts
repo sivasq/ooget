@@ -55,27 +55,30 @@ export class AppComponent implements OnInit, OnDestroy {
 		router.events.subscribe(
 			(event: RouterEvent): void => {
 				if (event instanceof RouteConfigLoadStart) {
-					asyncLoadCount++;
+					// asyncLoadCount++;
+					this.isShowingRouteLoadIndicator = true;
 				} else if (event instanceof RouteConfigLoadEnd) {
-					asyncLoadCount--;
+					// asyncLoadCount--;
+					this.isShowingRouteLoadIndicator = false;
 				}
-
 				// If there is at least one pending asynchronous config load request,
 				// then let's show the loading indicator.
 				// --
 				// CAUTION: I'm using CSS to include a small delay such that this loading
 				// indicator won't be seen by people with sufficiently fast connections.
-				this.isShowingRouteLoadIndicator = !!asyncLoadCount;
+
+				// this.isShowingRouteLoadIndicator = !!asyncLoadCount;
+
 			}
 		);
 		// Loading Indicator END
 
 		// Cancel Pending Requests START
-		router.events.subscribe(event => {
-			if (event instanceof ActivationEnd) {
-				httpCancelService.cancelPendingRequests()
-			}
-		})
+		// router.events.subscribe(event => {
+		// 	if (event instanceof ActivationEnd) {
+		// 		httpCancelService.cancelPendingRequests()
+		// 	}
+		// })
 		// Cancel Pending Requests END
 	}
 
