@@ -4,7 +4,7 @@ import { ApiCallService } from '../../../services/api-call.service';
 import { MatTabChangeEvent, MatSnackBar } from '@angular/material';
 import { Subscription, Observable } from 'rxjs';
 import { ConfigService } from '../../../services/config.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { MultipleSubLocationFilter } from '../../../pipes/custompipes.pipe';
 import { AsyncSubscriber } from '../../../services/async.service';
@@ -826,7 +826,7 @@ export class AddProfileNewComponent implements OnInit, OnDestroy {
 	mobileNoPattern: RegExp = /^[0-9]{1,}$/;
 	nricFinNoPattern: RegExp = /^[F,T,S,G,f,t,s,g]{1}[0-9]{7}[A-Za-z]{1}$/;
 
-	constructor(private fb: FormBuilder, private _httpService: ApiCallService, private urlconfig: ConfigService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe, private toUppercase: UpperCasePipe, private multiplesublocationfilter: MultipleSubLocationFilter, private asyncSubscriber: AsyncSubscriber) {
+	constructor(public router: Router, private fb: FormBuilder, private _httpService: ApiCallService, private urlconfig: ConfigService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe, private toUppercase: UpperCasePipe, private multiplesublocationfilter: MultipleSubLocationFilter, private asyncSubscriber: AsyncSubscriber) {
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 		this.imgBaseUrl = urlconfig.img_base_url;
 		this.buildJobSeekerProfileForm();
@@ -1618,7 +1618,8 @@ export class AddProfileNewComponent implements OnInit, OnDestroy {
 							localStorage.setItem('ogUserEmail', this.jobSeekerProfileForm.get('email').value);
 							// location.reload();
 							this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
-							this.getProfileDetails();
+							// this.getProfileDetails();
+							this.router.navigate(['main/jobs/list']);
 							let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
 								duration: 5000,
 							});
@@ -1663,7 +1664,9 @@ export class AddProfileNewComponent implements OnInit, OnDestroy {
 							localStorage.setItem('ogUserLogo', response.jobseekerimage);
 							this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
 							// location.reload();
-							this.getProfileDetails();
+							// this.getProfileDetails();
+
+							this.router.navigate(['main/jobs/list']);
 
 							let snackBarRef = this.snackBar.open('Profile and Documents Updated Successfully.', 'Close', {
 								duration: 5000,

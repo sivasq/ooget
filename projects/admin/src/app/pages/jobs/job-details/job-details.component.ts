@@ -312,14 +312,14 @@ export class JobDetailsComponent implements OnInit {
 		};
 		let dialogRef = this.dialog.open(JobActivationComponent, dialogConfig);
 
-		// dialogRef.afterClosed().subscribe(response => {
-		// 	if (response.callback) {
-		// 		this.getJobDetails({ jobid: jobId, companyid: employerId });
-		// 		},
-		// 		error => {
-		// 			console.log(error);
-		// 		}
-		// 	);
+		dialogRef.afterClosed().subscribe(response => {
+			// if (response.callback) {
+				this.getJobDetails({ jobid: jobId, companyid: employerId });
+				// },
+				// error => {
+				// 	console.log(error);
+				}
+			);
 	}
 
 	duplicateJobConfirm(companyid, jobid) {

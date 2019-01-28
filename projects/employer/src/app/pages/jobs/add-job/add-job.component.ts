@@ -971,6 +971,8 @@ export class AddJobComponent implements OnInit {
 							snackBarRef.dismiss();
 							console.log('The snack-bar action was triggered!');
 						});
+
+						this.router.navigate(['employer/jobs/list']);
 					} else if (!response.success) {
 						console.log(response);
 					}
