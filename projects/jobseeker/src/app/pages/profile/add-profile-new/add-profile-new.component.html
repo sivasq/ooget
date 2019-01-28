@@ -37,8 +37,7 @@
 				<mat-card-content [ngStyle.lt-md]="{'fontSize':'13px'}">
 					<form [formGroup]="jobSeekerProfileForm" (ngSubmit)="jobSeekerProfileUpdate()">
 						<mat-tab-group ngClass.gt-sm="vertical-tabs" ngClass.lt-md="horizontal-tabs" (selectedTabChange)="tabChanged($event)"
-						 [selectedIndex]="selectedIndex" #tabGroup dynamicHeight="true" (swipeleft)="tabGroup.selectedIndex = currentlyActiveIndexTab+1"
-						 (swiperight)="tabGroup.selectedIndex = currentlyActiveIndexTab-1">
+						 [selectedIndex]="selectedIndex" #tabGroup dynamicHeight="true">
 							<mat-tab label="Personal">
 								<div fxLayout="row wrap" fxLayoutAlign="space-between center">
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">

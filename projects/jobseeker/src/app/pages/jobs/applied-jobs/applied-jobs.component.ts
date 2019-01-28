@@ -372,10 +372,10 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 
 	jobSearch() {
 		setTimeout(() => {
-			if (this.search.parttime == false && this.search.fulltime == false) {
-				this.search.parttime = true;
-				this.search.fulltime = true;
-			}
+			// if (this.search.parttime == false && this.search.fulltime == false) {
+			// 	this.search.parttime = true;
+			// 	this.search.fulltime = true;
+			// }
 			this.applied_jobs_list = [];
 			this.applied_jobs_list = this.jobs.filter((jobs: any) => {
 				if (this.search.parttime && !this.search.fulltime) {
@@ -389,14 +389,20 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 				if (this.search.parttime && this.search.fulltime) {
 					return (jobs.jobdetails.employmenttype === "Full Time" || jobs.jobdetails.employmenttype === "Part Time") && (jobs.jobdetails.salary >= this.search.minsalary && jobs.jobdetails.salary <= this.search.maxsalary)
 				}
+
+				if (!this.search.parttime && !this.search.fulltime) {
+					return (jobs.employmenttype === "Full Time" || jobs.employmenttype === "Part Time") && (jobs.salary >= this.search.minsalary && jobs.salary <= this.search.maxsalary)
+				}
 			})
 
-			this.applied_jobs_list = this.applied_jobs_list.filter((job: any) => {
-				var newData = this.search.jobspecialization.filter(search => {
-					return job.jobdetails.jobspecialization === search;
+			if (this.search.jobspecialization.length > 0) {
+				this.applied_jobs_list = this.applied_jobs_list.filter((job: any) => {
+					var newData = this.search.jobspecialization.filter(search => {
+						return job.jobdetails.jobspecialization === search;
+					});
+					return job.jobdetails.jobspecialization === newData[0];
 				});
-				return job.jobdetails.jobspecialization === newData[0];
-			});
+			}
 		}, 0)
 	}
 
@@ -469,7 +475,37 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 	}
 
 	unSaveJob(jobId) {
+		console.log({ 'jobid': jobId });
+		this.busy = this._httpService.unSaveJob({ 'jobid': jobId })
+			.subscribe(
+				response => {
+					if (response.success) {
 
+						this.getAppliedJobsList();
+
+						let snackBarRef = this.snackBar.open('Job UnSaved Successfully.', 'Close', {
+							duration: 5000,
+						});
+
+						snackBarRef.onAction().subscribe(() => {
+							snackBarRef.dismiss();
+							console.log('The snack-bar action was triggered!');
+						});
+					} else if (!response.success) {
+						let snackBarRef = this.snackBar.open('Job Already UnSaved.', 'Close', {
+							duration: 5000,
+						});
+
+						snackBarRef.onAction().subscribe(() => {
+							snackBarRef.dismiss();
+							console.log('The snack-bar action was triggered!');
+						});
+					}
+				},
+				error => {
+					console.log(error);
+				}
+			);
 	}
 
 	ngOnInit() {

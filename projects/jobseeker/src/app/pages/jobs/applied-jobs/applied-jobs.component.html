@@ -45,7 +45,7 @@
 								| titlecase}}
 								( {{job.companydetails[0].companyname | titlecase}} )</h3>
 							<div>
-								<button mat-icon-button matTooltip="Saved" color="accent" matTooltipPosition="below" *ngIf="job.saved">
+								<button mat-icon-button matTooltip="Click to UnSave Job" color="accent" matTooltipPosition="below" *ngIf="job.saved" (click)="unSaveJob(job._id)">
 									<mat-icon>favorite</mat-icon>
 								</button>
 
@@ -59,7 +59,7 @@
 							</div>
 						</div>
 						<mat-menu #i="matMenu" xPosition="before">
-							<button mat-menu-item routerLink="/main/jobs/{{job.jobid}}/view">
+							<button mat-menu-item routerLink="/main/jobs/{{job._id}}/view">
 								<mat-icon>visibility</mat-icon>
 								<span>View Details</span>
 							</button>
@@ -198,7 +198,7 @@
 						 (selectionChange)="jobSearch()" #specSelect="ngModel" multiple>
 							<div style="padding:15px 15px;font-weight: 500;">
 								<mat-checkbox color="primary" (change)="$event ? masterToggle(checkAll.checked, specSelect) : null" [checked]="search.jobspecialization.length > 0 && isAllSelected()"
-								 [indeterminate]="search.jobspecialization.length > 0  && !isAllSelected()" #checkAll disabled>All
+								 [indeterminate]="search.jobspecialization.length > 0  && !isAllSelected()" #checkAll>All
 								</mat-checkbox>
 							</div>
 							<mat-option *ngFor="let Specialization of Specializations" [value]="Specialization.specialization">

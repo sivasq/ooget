@@ -10,13 +10,14 @@ import { MatchedJobsComponent } from './matched-jobs/matched-jobs.component';
 import { AppliedJobsComponent } from './applied-jobs/applied-jobs.component';
 import { JobOffersComponent } from './job-offers/job-offers.component';
 import { SavedJobsComponent } from './saved-jobs/saved-jobs.component';
+import { FilterJobsComponent } from './filter-jobs/filter-jobs.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    JobsRoutingModule,
-    SharedModule
-  ],
-  declarations: [JobsListComponent, JobDetailsComponent, MatchedJobsComponent, AppliedJobsComponent, JobOffersComponent, SavedJobsComponent]
+	imports: [
+		CommonModule,
+		JobsRoutingModule,
+		SharedModule
+	],
+	declarations: [JobsListComponent, JobDetailsComponent, MatchedJobsComponent, AppliedJobsComponent, JobOffersComponent, SavedJobsComponent, FilterJobsComponent]
 })
 export class JobsModule { }

@@ -17,6 +17,7 @@ import { AsyncSubscriber } from '../../../services/async.service';
 })
 export class AddProfileNewComponent implements OnInit, OnDestroy {
 	appearance$: Observable<any>;
+
 	public BankDetails: any = [
 		{
 			"_id": "432424",
@@ -861,9 +862,9 @@ export class AddProfileNewComponent implements OnInit, OnDestroy {
 			// nricfinno: ['', Validators.compose([Validators.required, Validators.pattern(this.nricFinNoPattern)]), this.isNricFinUnique.bind(this)],
 			age: ['', Validators.compose([Validators.pattern(this.agePattern)])],
 			dob_data: this.fb.group({
-				dob_day: [''],
-				dob_month: [''],
-				dob_year: [''],
+				dob_day: ['', Validators.compose([Validators.required])],
+				dob_month: ['', Validators.compose([Validators.required])],
+				dob_year: ['', Validators.compose([Validators.required])],
 			}),
 			dob: ['', Validators.compose([Validators.required])],
 			// dob: ['', Validators.compose([Validators.required])],

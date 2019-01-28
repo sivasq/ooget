@@ -421,7 +421,34 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 	}
 
 	unSaveJob(jobId) {
+		this.busy = this._httpService.unSaveJob({ 'jobid': jobId })
+			.subscribe(
+				response => {
+					if (response.success) {
+						this.getJobDetails({ 'jobid': jobId });
+						let snackBarRef = this.snackBar.open('Job UnSaved Successfully.', 'Close', {
+							duration: 5000,
+						});
 
+						snackBarRef.onAction().subscribe(() => {
+							snackBarRef.dismiss();
+							console.log('The snack-bar action was triggered!');
+						});
+					} else if (!response.success) {
+						let snackBarRef = this.snackBar.open('Job Already UnSaved.', 'Close', {
+							duration: 5000,
+						});
+
+						snackBarRef.onAction().subscribe(() => {
+							snackBarRef.dismiss();
+							console.log('The snack-bar action was triggered!');
+						});
+					}
+				},
+				error => {
+					console.log(error);
+				}
+			);
 	}
 
 	ngOnDestroy() {

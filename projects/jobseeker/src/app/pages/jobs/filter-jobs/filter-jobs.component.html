@@ -1,0 +1,67 @@
+<mat-card>
+	<div fxFlex="100" fxLayout="row wrap">
+		<div fxFlex="100" fxLayout="row wrap" style="padding: 10px 0px; margin-bottom: 15px;">
+			<div>
+				<h3 style="width:100%; color: gray; font-size: 15px;">FILTER BY JOB TYPE</h3>
+			</div>
+			<hr />
+		</div>
+
+		<mat-radio-group fxFlex="100" fxLayout="row wrap" fxLayoutGap="10px">
+			<mat-checkbox color="primary" [(ngModel)]="search.parttime" (ngModelChange)="jobSearch()" [checked]="search.parttime"
+			 value="Part Time">Part
+				Time</mat-checkbox>
+
+			<div fxFlex.gt-sm></div>
+
+			<mat-checkbox color="primary" [(ngModel)]="search.fulltime" (ngModelChange)="jobSearch()" [checked]="search.fulltime"
+			 value="Full Time">Full
+				Time</mat-checkbox>
+		</mat-radio-group>
+
+		<!-- <mat-form-field fxFlex="100" class="m-t-10">
+						<mat-label>Job Specialization</mat-label>
+						<mat-select placeholder="Job Specialization" name="jobspecialization" [(ngModel)]="search.jobspecialization"
+						 (ngModelChange)="makeSearch()" multiple>
+							<mat-option #allS  [value]="-1">All</mat-option>
+							<mat-option [disabled]="allS.selected" *ngFor="let Specialization of Specializations" [value]="Specialization.specialization">{{
+								Specialization.specialization }}</mat-option>
+							<mat-option value="Others">Others</mat-option>
+						</mat-select>
+					</mat-form-field> -->
+
+		<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center" style="padding: 10px 0px; margin-top: 15px;">
+			<div>
+				<h3 style="width:100%; color: gray; font-size: 15px;">FILTER BY JOB SPECIALIZATION</h3>
+			</div>
+			<hr />
+		</div>
+
+		<mat-form-field fxFlex="100" class="m-t-10" color="primary">
+			<mat-label>Job Specialization</mat-label>
+			<mat-select placeholder="Job Specialization" name="jobspecialization" [(ngModel)]="search.jobspecialization"
+			 (selectionChange)="jobSearch()" #specSelect="ngModel" multiple>
+				<div style="padding:15px 15px;font-weight: 500;">
+					<mat-checkbox color="primary" (change)="$event ? masterToggle(checkAll.checked, specSelect) : null" [checked]="search.jobspecialization.length > 0 && isAllSelected()"
+					 [indeterminate]="search.jobspecialization.length > 0  && !isAllSelected()" #checkAll>All
+					</mat-checkbox>
+				</div>
+				<mat-option *ngFor="let Specialization of Specializations" [value]="Specialization.specialization">
+					{{Specialization.specialization}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center" style="padding: 10px 0px; margin-top: 15px;">
+			<div>
+				<h3 style="width:100%; color: gray; font-size: 15px;">FILTER BY SALARY</h3>
+			</div>
+			<hr />
+		</div>
+
+		<div fxFlex="100" class="custom-slider">
+			<ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options" (userChangeEnd)="onUserChangeEnd($event)"></ng5-slider>
+		</div>
+
+	</div>
+</mat-card>

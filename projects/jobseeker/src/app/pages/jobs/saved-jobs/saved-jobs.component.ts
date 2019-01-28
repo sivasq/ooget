@@ -9,9 +9,9 @@ import { Options, ChangeContext } from 'ng5-slider';
 import { NgModel } from '@angular/forms';
 
 @Component({
-  selector: 'app-saved-jobs',
-  templateUrl: './saved-jobs.component.html',
-  styleUrls: ['./saved-jobs.component.scss']
+	selector: 'app-saved-jobs',
+	templateUrl: './saved-jobs.component.html',
+	styleUrls: ['./saved-jobs.component.scss']
 })
 export class SavedJobsComponent implements OnInit, OnDestroy {
 
@@ -363,16 +363,16 @@ export class SavedJobsComponent implements OnInit, OnDestroy {
 			);
 	}
 
-	saveJob(jobId) {
+	unSaveJob(jobId) {
 		// console.log({ 'jobid': jobId });
-		this.busy = this._httpService.saveJob({ 'jobid': jobId })
+		this.busy = this._httpService.unSaveJob({ 'jobid': jobId })
 			.subscribe(
 				response => {
 					if (response.success) {
 
 						this.getSavedJobsList();
 
-						let snackBarRef = this.snackBar.open('Job Saved Successfully.', 'Close', {
+						let snackBarRef = this.snackBar.open('Job UnSaved Successfully.', 'Close', {
 							duration: 5000,
 						});
 
@@ -381,7 +381,7 @@ export class SavedJobsComponent implements OnInit, OnDestroy {
 							console.log('The snack-bar action was triggered!');
 						});
 					} else if (!response.success) {
-						let snackBarRef = this.snackBar.open('Job Already Saved.', 'Close', {
+						let snackBarRef = this.snackBar.open('Job Already UnSaved.', 'Close', {
 							duration: 5000,
 						});
 
@@ -397,10 +397,6 @@ export class SavedJobsComponent implements OnInit, OnDestroy {
 			);
 	}
 
-	unSaveJob(jobId) {
-
-	}
-
 	onUserChangeEnd(changeContext: ChangeContext): void {
 		this.search.minsalary = changeContext.value;
 		this.search.maxsalary = changeContext.highValue;
@@ -410,10 +406,10 @@ export class SavedJobsComponent implements OnInit, OnDestroy {
 
 	jobSearch() {
 		setTimeout(() => {
-			if (this.search.parttime == false && this.search.fulltime == false) {
-				this.search.parttime = true;
-				this.search.fulltime = true;
-			}
+			// if (this.search.parttime == false && this.search.fulltime == false) {
+			// 	this.search.parttime = true;
+			// 	this.search.fulltime = true;
+			// }
 			this.jobs_list_all = [];
 			this.jobs_list_all = this.jobs.filter((jobs: any) => {
 				if (this.search.parttime && !this.search.fulltime) {
@@ -427,14 +423,20 @@ export class SavedJobsComponent implements OnInit, OnDestroy {
 				if (this.search.parttime && this.search.fulltime) {
 					return (jobs.employmenttype === "Full Time" || jobs.employmenttype === "Part Time") && (jobs.salary >= this.search.minsalary && jobs.salary <= this.search.maxsalary)
 				}
+
+				if (!this.search.parttime && !this.search.fulltime) {
+					return (jobs.employmenttype === "Full Time" || jobs.employmenttype === "Part Time") && (jobs.salary >= this.search.minsalary && jobs.salary <= this.search.maxsalary)
+				}
 			})
 
-			this.jobs_list_all = this.jobs_list_all.filter((job: any) => {
-				var newData = this.search.jobspecialization.filter(search => {
-					return job.jobspecialization === search;
+			if (this.search.jobspecialization.length > 0) {
+				this.jobs_list_all = this.jobs_list_all.filter((job: any) => {
+					var newData = this.search.jobspecialization.filter(search => {
+						return job.jobspecialization === search;
+					});
+					return job.jobspecialization === newData[0];
 				});
-				return job.jobspecialization === newData[0];
-			});
+			}
 		}, 0)
 	}
 
