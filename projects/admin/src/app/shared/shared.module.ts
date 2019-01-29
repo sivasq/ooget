@@ -49,6 +49,7 @@ import { ChargesToEmpTimesheetComponent } from '../reusable-components/charges-t
 import { PayslipComponent } from '../reusable-components/payslip/payslip.component';
 import { InvoiceTemp1Component } from '../reusable-components/invoice-temp1/invoice-temp1.component';
 import { InvoiceTemp2Component } from '../reusable-components/invoice-temp2/invoice-temp2.component';
+import { JobseekerTimesheetComponent } from '../reusable-components/jobseeker-timesheet/jobseeker-timesheet.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true,
@@ -103,6 +104,7 @@ export const MY_NATIVE_FORMATS = {
 		TopProfiledialogComponent,
 		TopShortcutdialogComponent,
 		ChargesToEmpTimesheetComponent,
+		JobseekerTimesheetComponent,
 		PayslipComponent,
 		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, SafeHtml, AgePipe,
 		ConfirmDialogComponent,
@@ -128,6 +130,7 @@ export const MY_NATIVE_FORMATS = {
 		TopProfiledialogComponent,
 		TopShortcutdialogComponent,
 		ChargesToEmpTimesheetComponent,
+		JobseekerTimesheetComponent,
 		PayslipComponent,
 		Ng2SearchPipeModule,
 		NgxPaginationModule,

@@ -39,7 +39,7 @@ export class ContractDetailsComponent implements OnInit {
 
 	dailyTimeSheetDataSource = new MatTableDataSource(this.timesheets);
 
-	displayedColumns = ['select', 'work_date', 'in_time', 'out_time', 'verifiedpunchintime', 'verifiedpunchouttime', 'normalworkhour', 'otworkhour', 'totalworkhour', 'normalsalary', 'otsalary', 'totalsalary', 'oogetscommission', 'lateinitimation', 'notedialogtrigger'];
+	displayedColumns = ['select', 'work_date', 'in_time', 'out_time', 'verifiedpunchintime', 'verifiedpunchouttime', 'normalworkhour', 'ot1workhour', 'ot2workhour', 'totalworkhour', 'normalsalary', 'ot1salary', 'ot2salary', 'totalsalary', 'oogetscommission', 'lateinitimation', 'notedialogtrigger'];
 
 	selection = new SelectionModel(true, []);
 
@@ -525,8 +525,21 @@ export class ContractDetailsComponent implements OnInit {
 		return hrs;
 	}
 
-	getSumOfOTWorkHrs() {
-		let totalMin = this.timesheets.map(t => t.otworkhour).reduce((previous, current) => {
+	getSumOfOT1point5WorkHrs() {
+		let totalMin = this.timesheets.filter(t => t.salarymultiplier == 1 || t.salarymultiplier == 1.5).map(t => t.otworkhour).reduce((previous, current) => {
+			let min = moment.duration(current).asMinutes();
+			return previous + min
+		}, 0);
+
+		let hrs = moment.duration(totalMin, "minutes").format("hh:mm", {
+			trim: false
+		});
+		// if (hrs == '0' || hrs == '00') return 'Nil';
+		return hrs;
+	}
+
+	getSumOfOT2WorkHrs() {
+		let totalMin = this.timesheets.filter(t => t.salarymultiplier == 2).map(t => t.otworkhour).reduce((previous, current) => {
 			let min = moment.duration(current).asMinutes();
 			return previous + min
 		}, 0);
@@ -557,8 +570,14 @@ export class ContractDetailsComponent implements OnInit {
 		}, 0);
 	}
 
-	getSumOfOTWorkHrSalary() {
-		return this.timesheets.map(t => t.otsalary).reduce((previous, current) => {
+	getSumOfOT1point5WorkHrSalary() {
+		return this.timesheets.filter(t => t.salarymultiplier == 1 || t.salarymultiplier == 1.5).map(t => t.otsalary).reduce((previous, current) => {
+			return previous + current
+		}, 0);
+	}
+
+	getSumOfOT2WorkHrSalary() {
+		return this.timesheets.filter(t => t.salarymultiplier == 2).map(t => t.otsalary).reduce((previous, current) => {
 			return previous + current
 		}, 0);
 	}

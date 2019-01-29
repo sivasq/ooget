@@ -26,7 +26,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'wocvr',
-		component: WorkOffdaysCalendarViewComponent,
+		component: CalendarReportComponent,
 	},
 	{
 		path: 'womvr',

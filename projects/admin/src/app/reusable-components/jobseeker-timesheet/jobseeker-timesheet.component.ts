@@ -1,18 +1,18 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
-import { ChargesToEmpTimesheetDataSource } from './charges-to-emp-timesheet-datasource';
+import { JobseekerTimesheetDataSource } from './jobseeker-timesheet-datasource';
 import * as moment from 'moment';
 import 'moment-duration-format';
 
 @Component({
-	selector: 'app-charges-to-emp-timesheet',
-	templateUrl: './charges-to-emp-timesheet.component.html',
-	styleUrls: ['./charges-to-emp-timesheet.component.scss'],
+  selector: 'app-jobseeker-timesheet',
+  templateUrl: './jobseeker-timesheet.component.html',
+  styleUrls: ['./jobseeker-timesheet.component.scss']
 })
-export class ChargesToEmpTimesheetComponent implements OnInit {
-	@ViewChild(MatPaginator) paginator: MatPaginator;
-	@ViewChild(MatSort) sort: MatSort;
-	dataSource: ChargesToEmpTimesheetDataSource;
+export class JobseekerTimesheetComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  dataSource: JobseekerTimesheetDataSource;
 
 	@Input() pageSize;
 	@Input() displayDatasource;
@@ -23,7 +23,7 @@ export class ChargesToEmpTimesheetComponent implements OnInit {
 	ngOnInit() {
 		// this.displayedColumns = this.columns.map(column => column.name);
 		this.displayedColumns = this.columns;
-		this.dataSource = new ChargesToEmpTimesheetDataSource(this.paginator, this.sort, this.displayDatasource);
+		this.dataSource = new JobseekerTimesheetDataSource(this.paginator, this.sort, this.displayDatasource);
 	}
 
 	getSumOfNormalWorkHrs() {
@@ -65,7 +65,6 @@ export class ChargesToEmpTimesheetComponent implements OnInit {
 		return hrs;
 	}
 
-	// Not used
 	getSumOfOTWorkHrs() {
 		let totalMin = this.displayDatasource.map(t => t.otworkhour).reduce((previous, current) => {
 			let min = moment.duration(current).asMinutes();

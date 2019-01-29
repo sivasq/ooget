@@ -72,7 +72,7 @@ export class ChargesToEmployerReportComponent implements OnInit {
 	// 	}
 	// ];
 
-	displayedColumns = ['work_date', 'in_time', 'out_time', 'verified', 'verifiedpunchintime', 'verifiedpunchouttime', 'normalworkhour', 'otworkhour', 'salarymultiplier', 'totalworkhour', 'normalsalary', 'otsalary', 'totalsalary', 'invoiceno'];
+	displayedColumns = ['work_date', 'in_time', 'out_time', 'verified', 'verifiedpunchintime', 'verifiedpunchouttime', 'normalworkhour', 'otworkhour1', 'otworkhour2', 'salarymultiplier', 'totalworkhour', 'normalsalary', 'ot1salary', 'ot2salary', 'totalsalary', 'invoiceno'];
 
 	employerDatas;
 
@@ -371,6 +371,7 @@ export class ChargesToEmployerReportComponent implements OnInit {
 							this.employerDatas = response.employerreport[0];
 							console.log(this.employerDatas);
 						} else {
+							this.employerDatas = [];
 							this.isEmployerAvailable = false;
 						}
 					} else if (!response.success) {

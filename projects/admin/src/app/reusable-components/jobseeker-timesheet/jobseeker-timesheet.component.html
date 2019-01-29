@@ -61,7 +61,8 @@
 		<!-- OT Work hr1 -->
 		<ng-container matColumnDef="otworkhour1">
 			<th mat-header-cell *matHeaderCellDef> OT1.5 Hr (Hr:Min) </th>
-			<td mat-cell *matCellDef="let row"> {{(row.salarymultiplier == 1 || row.salarymultiplier == 1.5) ? row.otworkhour : '00:00'}} </td>
+			<td mat-cell *matCellDef="let row"> {{(row.salarymultiplier == 1 || row.salarymultiplier == 1.5) ? row.otworkhour :
+				'00:00'}} </td>
 			<td mat-footer-cell *matFooterCellDef>{{getSumOfOT1point5WorkHrs()}}</td>
 		</ng-container>
 
@@ -96,7 +97,8 @@
 		<!-- OT1 Work hr Salary -->
 		<ng-container matColumnDef="ot1salary">
 			<th mat-header-cell *matHeaderCellDef> OT1.5 Hr Salary (S$)</th>
-			<td mat-cell *matCellDef="let row"> {{(row.salarymultiplier == 1 || row.salarymultiplier == 1.5) ? row.otsalary : 0}} </td>
+			<td mat-cell *matCellDef="let row"> {{(row.salarymultiplier == 1 || row.salarymultiplier == 1.5) ? row.otsalary : 0}}
+			</td>
 			<td mat-footer-cell *matFooterCellDef>{{getSumOfOT1point5WorkHrSalary() | number}}</td>
 		</ng-container>
 

@@ -1,6 +1,6 @@
 <div class="inner-sidenav-content transition-2" perfectScrollbar>
     <!-- Http Progress Bar -->
-    
+
 
     <!-- Breadcrumb Start -->
     <div fxLayout="row wrap">
@@ -205,12 +205,20 @@
                             <td mat-footer-cell *matFooterCellDef>{{getSumOfNormalWorkHrs()}}</td>
                         </ng-container>
 
-                        <!-- OT Work hr -->
-                        <ng-container matColumnDef="otworkhour">
-                            <th mat-header-cell *matHeaderCellDef> OT Hr (Hr:Min) </th>
-                            <td mat-cell *matCellDef="let row"> {{row.otworkhour}} </td>
-                            <td mat-footer-cell *matFooterCellDef>{{getSumOfOTWorkHrs()}}</td>
-                        </ng-container>
+						<!-- OT1 Work hr -->
+						<ng-container matColumnDef="ot1workhour">
+							<th mat-header-cell *matHeaderCellDef> OT1.5 Hr (Hr:Min) </th>
+							<td mat-cell *matCellDef="let row"> {{(row.salarymultiplier == 1 || row.salarymultiplier == 1.5) ?
+								row.otworkhour : '00:00'}} </td>
+							<td mat-footer-cell *matFooterCellDef>{{getSumOfOT1point5WorkHrs()}}</td>
+						</ng-container>
+
+						<!-- OT2 Work hr -->
+						<ng-container matColumnDef="ot2workhour">
+							<th mat-header-cell *matHeaderCellDef> OT2 Hr (Hr:Min) </th>
+							<td mat-cell *matCellDef="let row"> {{row.salarymultiplier == 2 ? row.otworkhour : '00:00'}} </td>
+							<td mat-footer-cell *matFooterCellDef>{{getSumOfOT2WorkHrs()}}</td>
+						</ng-container>
 
                         <!-- Total Work hr -->
                         <ng-container matColumnDef="totalworkhour">
@@ -226,12 +234,20 @@
                             <td mat-footer-cell *matFooterCellDef>{{getSumOfNormalWorkHrSalary() | number}}</td>
                         </ng-container>
 
-                        <!-- OT Work hr Salary -->
-                        <ng-container matColumnDef="otsalary">
-                            <th mat-header-cell *matHeaderCellDef> OT Hr Salary (S$)</th>
-                            <td mat-cell *matCellDef="let row"> {{row.otsalary}} </td>
-                            <td mat-footer-cell *matFooterCellDef>{{getSumOfOTWorkHrSalary() | number}}</td>
-                        </ng-container>
+						<!-- OT1 Work hr Salary -->
+						<ng-container matColumnDef="ot1salary">
+							<th mat-header-cell *matHeaderCellDef> OT1.5 Hr Salary (S$)</th>
+							<td mat-cell *matCellDef="let row">{{(row.salarymultiplier == 1 || row.salarymultiplier == 1.5) ? row.otsalary :
+								0}}</td>
+							<td mat-footer-cell *matFooterCellDef>{{getSumOfOT1point5WorkHrSalary() | number}}</td>
+						</ng-container>
+
+						<!-- OT2 Work hr Salary -->
+						<ng-container matColumnDef="ot2salary">
+							<th mat-header-cell *matHeaderCellDef> OT2 Hr Salary (S$)</th>
+							<td mat-cell *matCellDef="let row"> {{row.salarymultiplier == 2 ? row.otsalary : 0}} </td>
+							<td mat-footer-cell *matFooterCellDef>{{getSumOfOT2WorkHrSalary() | number}}</td>
+						</ng-container>
 
                         <!-- Total Salary -->
                         <ng-container matColumnDef="totalsalary">
