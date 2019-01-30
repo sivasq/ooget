@@ -1,18 +1,18 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
-import { ChargesToEmpTimesheetDataSource } from './charges-to-emp-timesheet-datasource';
+import { AdminPaymentDataSource } from './admin-payment-datasource';
 import * as moment from 'moment';
 import 'moment-duration-format';
 
 @Component({
-	selector: 'app-charges-to-emp-timesheet',
-	templateUrl: './charges-to-emp-timesheet.component.html',
-	styleUrls: ['./charges-to-emp-timesheet.component.scss'],
+	selector: 'app-admin-payment',
+	templateUrl: './admin-payment.component.html',
+	styleUrls: ['./admin-payment.component.scss']
 })
-export class ChargesToEmpTimesheetComponent implements OnInit {
+export class AdminPaymentComponent implements OnInit {
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
-	dataSource: ChargesToEmpTimesheetDataSource;
+	dataSource: AdminPaymentDataSource;
 
 	@Input() pageSize;
 	@Input() displayDatasource;
@@ -23,7 +23,7 @@ export class ChargesToEmpTimesheetComponent implements OnInit {
 	ngOnInit() {
 		// this.displayedColumns = this.columns.map(column => column.name);
 		this.displayedColumns = this.columns;
-		this.dataSource = new ChargesToEmpTimesheetDataSource(this.paginator, this.sort, this.displayDatasource);
+		this.dataSource = new AdminPaymentDataSource(this.paginator, this.sort, this.displayDatasource);
 	}
 
 	getSumOfNormalWorkHrs() {
@@ -93,24 +93,48 @@ export class ChargesToEmpTimesheetComponent implements OnInit {
 	}
 
 	getSumOfNormalWorkHrSalary() {
+		return this.displayDatasource.map(t => t.normalsalary).reduce((previous, current) => {
+			return previous + current
+		}, 0);
+	}
+
+	getSumOfEmpNormalWorkHrSalary() {
 		return this.displayDatasource.map(t => t.normalemployercharges).reduce((previous, current) => {
 			return previous + current
 		}, 0);
 	}
 
 	getSumOfOT1point5WorkHrSalary() {
+		return this.displayDatasource.filter(t => t.salarymultiplier == 1 || t.salarymultiplier == 1.5).map(t => t.otsalary).reduce((previous, current) => {
+			return previous + current
+		}, 0);
+	}
+
+	getSumOfEmpOT1point5WorkHrSalary() {
 		return this.displayDatasource.filter(t => t.salarymultiplier == 1 || t.salarymultiplier == 1.5).map(t => t.otemployercharges).reduce((previous, current) => {
 			return previous + current
 		}, 0);
 	}
 
 	getSumOfOT2WorkHrSalary() {
+		return this.displayDatasource.filter(t => t.salarymultiplier == 2).map(t => t.otsalary).reduce((previous, current) => {
+			return previous + current
+		}, 0);
+	}
+
+	getSumOfEmpOT2WorkHrSalary() {
 		return this.displayDatasource.filter(t => t.salarymultiplier == 2).map(t => t.otemployercharges).reduce((previous, current) => {
 			return previous + current
 		}, 0);
 	}
 
 	getSumOfTotalWorkHrSalary() {
+		return this.displayDatasource.map(t => t.totalsalary).reduce((previous, current) => {
+			return previous + current
+		}, 0);
+	}
+
+	getSumOfEmpTotalWorkHrSalary() {
 		return this.displayDatasource.map(t => t.totalemployercharges).reduce((previous, current) => {
 			return previous + current
 		}, 0);

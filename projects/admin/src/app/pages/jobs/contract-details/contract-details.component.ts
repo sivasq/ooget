@@ -26,6 +26,7 @@ import { LatereasonComponent } from '../dialogs/latereason/latereason.component'
 export class ContractDetailsComponent implements OnInit {
 
 	public today = new Date();
+	public tomorrow = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000);
 
 	public contract_id;
 	public contractDetails;

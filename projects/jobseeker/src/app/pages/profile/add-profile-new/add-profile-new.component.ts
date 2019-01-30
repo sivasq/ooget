@@ -1751,11 +1751,13 @@ export class AddProfileNewComponent implements OnInit, OnDestroy {
 	// Months Generate
 	generateMonths() {
 		for (let month = 1; month < 10; month++) {
-			this.months.push({ "monthValue": '0' + month, "monthName": this.monthLongValues[month - 1] });
+			this.months.push({ "monthValue": String('0' + month), "monthName": this.monthLongValues[month - 1] });
 		}
 		for (let month = 10; month <= 12; month++) {
-			this.months.push({ "monthValue": month, "monthName": this.monthLongValues[month - 1] });
+			this.months.push({ "monthValue": String(month), "monthName": this.monthLongValues[month - 1] });
 		}
+
+		console.log(this.months);
 	}
 
 	// Years Generate

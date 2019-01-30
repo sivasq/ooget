@@ -87,33 +87,76 @@
 			<td mat-footer-cell *matFooterCellDef>{{getSumOfTotalWorkHrs()}}</td>
 		</ng-container>
 
-		<!-- Normal Work hr Salary -->
-		<ng-container matColumnDef="normalsalary">
+		<!-- Js Normal Work hr Salary -->
+		<ng-container matColumnDef="jsnormalsalary">
 			<th mat-header-cell *matHeaderCellDef> Normal Hr Salary (S$) </th>
 			<td mat-cell *matCellDef="let row"> {{row.normalsalary}} </td>
 			<td mat-footer-cell *matFooterCellDef>{{getSumOfNormalWorkHrSalary() | number}}</td>
 		</ng-container>
 
-		<!-- OT1 Work hr Salary -->
-		<ng-container matColumnDef="ot1salary">
+		<!-- Js OT1 Work hr Salary -->
+		<ng-container matColumnDef="jsot1salary">
 			<th mat-header-cell *matHeaderCellDef> OT1.5 Hr Salary (S$)</th>
-			<td mat-cell *matCellDef="let row"> {{(row.salarymultiplier == 1 || row.salarymultiplier == 1.5) ? row.otsalary : 0}}
-			</td>
+			<td mat-cell *matCellDef="let row"> {{(row.salarymultiplier == 1 || row.salarymultiplier == 1.5) ? row.otsalary :
+				0}} </td>
 			<td mat-footer-cell *matFooterCellDef>{{getSumOfOT1point5WorkHrSalary() | number}}</td>
 		</ng-container>
 
-		<!-- OT2 Work hr Salary -->
-		<ng-container matColumnDef="ot2salary">
+		<!-- Js OT2 Work hr Salary -->
+		<ng-container matColumnDef="jsot2salary">
 			<th mat-header-cell *matHeaderCellDef> OT2 Hr Salary (S$)</th>
 			<td mat-cell *matCellDef="let row"> {{row.salarymultiplier == 2 ? row.otsalary : 0}} </td>
 			<td mat-footer-cell *matFooterCellDef>{{getSumOfOT2WorkHrSalary() | number}}</td>
 		</ng-container>
 
-		<!-- Total Salary -->
-		<ng-container matColumnDef="totalsalary">
+		<!-- Js Total Salary -->
+		<ng-container matColumnDef="jstotalsalary">
 			<th mat-header-cell *matHeaderCellDef> Total Salary (S$) </th>
 			<td mat-cell *matCellDef="let row"> {{row.totalsalary}} </td>
 			<td mat-footer-cell *matFooterCellDef>{{getSumOfTotalWorkHrSalary() | number}}</td>
+		</ng-container>
+
+		<!-- Emp Normal Work hr Salary -->
+		<ng-container matColumnDef="empnormalsalary">
+			<th mat-header-cell *matHeaderCellDef> Normal Hr Salary (S$) </th>
+			<td mat-cell *matCellDef="let row"> {{row.normalemployercharges}} </td>
+			<td mat-footer-cell *matFooterCellDef>{{getSumOfEmpNormalWorkHrSalary() | number}}</td>
+		</ng-container>
+
+		<!-- Emp OT1 Work hr Salary -->
+		<ng-container matColumnDef="empot1salary">
+			<th mat-header-cell *matHeaderCellDef> OT1.5 Hr Salary (S$)</th>
+			<td mat-cell *matCellDef="let row"> {{(row.salarymultiplier == 1 || row.salarymultiplier == 1.5) ? row.otemployercharges :
+				0}} </td>
+			<td mat-footer-cell *matFooterCellDef>{{getSumOfEmpOT1point5WorkHrSalary() | number}}</td>
+		</ng-container>
+
+		<!-- Emp OT2 Work hr Salary -->
+		<ng-container matColumnDef="empot2salary">
+			<th mat-header-cell *matHeaderCellDef> OT2 Hr Salary (S$)</th>
+			<td mat-cell *matCellDef="let row"> {{row.salarymultiplier == 2 ? row.otemployercharges : 0}} </td>
+			<td mat-footer-cell *matFooterCellDef>{{getSumOfEmpOT2WorkHrSalary() | number}}</td>
+		</ng-container>
+
+		<!-- Emp Total Salary -->
+		<ng-container matColumnDef="emptotalsalary">
+			<th mat-header-cell *matHeaderCellDef> Total Salary (S$) </th>
+			<td mat-cell *matCellDef="let row"> {{row.totalemployercharges}} </td>
+			<td mat-footer-cell *matFooterCellDef>{{getSumOfEmpTotalWorkHrSalary() | number}}</td>
+		</ng-container>
+
+		<!-- Ooget Commission -->
+		<ng-container matColumnDef="commission">
+			<th mat-header-cell *matHeaderCellDef> Commission(S$) </th>
+			<td mat-cell *matCellDef="let row"> {{row.oogetscommission}} </td>
+			<td mat-footer-cell *matFooterCellDef></td>
+		</ng-container>
+
+		<!-- Ooget Remarks -->
+		<ng-container matColumnDef="remarks">
+			<th mat-header-cell *matHeaderCellDef> Remarks </th>
+			<td mat-cell *matCellDef="let row"> {{row.remarks}} </td>
+			<td mat-footer-cell *matFooterCellDef></td>
 		</ng-container>
 
 		<!-- Invoice No -->
@@ -123,17 +166,25 @@
 			<td mat-footer-cell *matFooterCellDef></td>
 		</ng-container>
 
-		<!-- First header Samples -->
-		<!-- <ng-container matColumnDef="item-description">
-			<th colspan="4" mat-header-cell *matHeaderCellDef> Item  </th>
+		<!-- First Header Row -->
+		<ng-container matColumnDef="dummyfirst">
+			<th colspan="11" mat-header-cell *matHeaderCellDef> </th>
 		</ng-container>
 
-		<ng-container matColumnDef="cost-description">
-			<th colspan="4" mat-header-cell *matHeaderCellDef> Cost </th>
+		<ng-container matColumnDef="jobseeker">
+			<th colspan="4" mat-header-cell *matHeaderCellDef> JobSeeker </th>
 		</ng-container>
 
-		<tr mat-header-row *matHeaderRowDef="['item-description', 'cost-description']" class="example-second-header-row">
-		</tr> -->
+		<ng-container matColumnDef="employer">
+			<th colspan="4" mat-header-cell *matHeaderCellDef> Employer </th>
+		</ng-container>
+
+		<ng-container matColumnDef="dummylast">
+			<th colspan="3" mat-header-cell *matHeaderCellDef> </th>
+		</ng-container>
+
+		<tr mat-header-row *matHeaderRowDef="['dummyfirst', 'jobseeker', 'employer', 'dummylast']" class="example-first-header-row">
+		</tr>
 
 		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 		<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

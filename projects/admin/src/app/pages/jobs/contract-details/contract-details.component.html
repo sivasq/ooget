@@ -399,7 +399,7 @@
 						</mat-form-field>
 
 						<mat-form-field style="display: none">
-							<input matInput [min]="today" [matDatepicker]="dayoffpicker" placeholder="Choose a date" (dateChange)="addNewOffDay($event.value)">
+							<input matInput [min]="tomorrow" [matDatepicker]="dayoffpicker" placeholder="Choose a date" (dateChange)="addNewOffDay($event.value)">
 							<mat-datepicker #dayoffpicker touchUi></mat-datepicker>
 						</mat-form-field>
 
