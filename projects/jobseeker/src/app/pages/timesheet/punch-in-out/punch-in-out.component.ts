@@ -181,8 +181,8 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 							this.ispunchedIn = this.currentTimeSheetLayout.timesheet.punchedin;
 							this.ispunchedOut = this.currentTimeSheetLayout.timesheet.punchedout;
 
-							this.inTime = this.currentTimeSheetLayout.timesheet.verifiedpunchintime;
-							this.outTime = this.currentTimeSheetLayout.timesheet.verifiedpunchouttime;
+							this.inTime = this.currentTimeSheetLayout.timesheet.punchintime;
+							this.outTime = this.currentTimeSheetLayout.timesheet.punchouttime;
 						}
 					} else if (!response.success) {
 						console.log(response);
@@ -328,7 +328,8 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 								console.log('The snack-bar action was triggered!');
 							});
 						} else {
-							let inTime = new Date(response.verifiedpunchintime);
+							// let inTime = new Date(response.verifiedpunchintime);
+							let inTime = new Date(response.punchintime);
 							let waitTime = new Date(inTime.getTime() + 900000);
 							let parsedWaitTime = this.datePipe.transform(waitTime, 'dd/MM/yyyy HH:mm');
 							let snackBarRef = this.snackBar.open('Please Wait Until ' + parsedWaitTime + ' To PunchOut.', 'Close', {

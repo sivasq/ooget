@@ -38,7 +38,7 @@ export class AddProfileNewComponent implements OnInit, OnDestroy {
 			"fullName": "DBS Bank Ltd",
 			"shortName": "DBS",
 			"bankCode": "7171",
-			"hint": "<div>Usually the account number consists of 10 digits. Please use the first 3 digits of the account number as the ACH branch code.</div><br/><div>E.g. If the account number is 0290188891, the ACH branch code will be 029 and the account number 0290188891.</div>"
+			"hint": "<div>The account number consists of 10 digits. Please use the first 3 digits of the account number as the ACH branch code.</div><br/><div>E.g. If the account number is 0290188891, the ACH branch code will be 029 and the account number 0290188891.</div>"
 		},
 		{
 			"_id": "432424",

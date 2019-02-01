@@ -2003,8 +2003,8 @@ a {
 }
 
 ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px
+    width: 10px;
+    height: 10px
 }
 
 ::-webkit-scrollbar-button {
@@ -2023,7 +2023,7 @@ a {
 }
 
 ::-webkit-scrollbar-thumb:active {
-    background: #888
+    background: #b3b3b3
 }
 
 ::-webkit-scrollbar-track {
@@ -2037,7 +2037,7 @@ a {
 }
 
 ::-webkit-scrollbar-track:active {
-    background: #333
+    background: #e6e1e1
 }
 
 ::-webkit-scrollbar-corner {

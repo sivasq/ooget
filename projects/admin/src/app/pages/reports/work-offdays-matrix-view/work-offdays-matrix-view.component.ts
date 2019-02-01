@@ -8,6 +8,15 @@ import { Location } from '@angular/common';
 })
 export class WorkOffdaysMatrixViewComponent implements OnInit {
 
+	offDays = [
+		{
+			'name': 'name1',
+
+
+		}
+	]
+
+
 	constructor(private _location: Location) { }
 
 	backClicked() {
