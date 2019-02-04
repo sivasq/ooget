@@ -51,6 +51,7 @@ import { InvoiceTemp1Component } from '../reusable-components/invoice-temp1/invo
 import { InvoiceTemp2Component } from '../reusable-components/invoice-temp2/invoice-temp2.component';
 import { JobseekerTimesheetComponent } from '../reusable-components/jobseeker-timesheet/jobseeker-timesheet.component';
 import { AdminPaymentComponent } from '../reusable-components/admin-payment/admin-payment.component';
+import { OffdayMatrixTableComponent } from '../reusable-components/offday-matrix-table/offday-matrix-table.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true,
@@ -106,6 +107,7 @@ export const MY_NATIVE_FORMATS = {
 		TopShortcutdialogComponent,
 		ChargesToEmpTimesheetComponent,
 		JobseekerTimesheetComponent,
+		OffdayMatrixTableComponent,
 		AdminPaymentComponent,
 		PayslipComponent,
 		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, SafeHtml, AgePipe,
@@ -133,6 +135,7 @@ export const MY_NATIVE_FORMATS = {
 		TopShortcutdialogComponent,
 		ChargesToEmpTimesheetComponent,
 		JobseekerTimesheetComponent,
+		OffdayMatrixTableComponent,
 		AdminPaymentComponent,
 		PayslipComponent,
 		Ng2SearchPipeModule,

@@ -1,0 +1,48 @@
+<div class="mat-elevation-z8" style="overflow: overlay; overflow-y: hidden;">
+	<table mat-table class="full-width-table" [dataSource]="dataSource" matSort aria-label="Elements">
+
+		<!-- <ng-container matColumnDef="name">
+			<th mat-header-cell *matHeaderCellDef> Name </th>
+			<td mat-cell *matCellDef="let row"> {{row.name}} </td>
+		</ng-container>
+
+		<ng-container matColumnDef="day1">
+			<th mat-header-cell *matHeaderCellDef> day1 </th>
+			<td mat-cell *matCellDef="let row"> {{row.day1?.offday}} </td>
+		</ng-container>
+
+		<ng-container matColumnDef="day2">
+			<th mat-header-cell *matHeaderCellDef> day2 </th>
+			<td mat-cell *matCellDef="let row"> {{row.day2?.offday}} </td>
+		</ng-container>
+
+		<ng-container matColumnDef="day3">
+			<th mat-header-cell *matHeaderCellDef> day3 </th>
+			<td mat-cell *matCellDef="let row"> {{row.day3?.offday}} </td>
+		</ng-container>
+
+		<ng-container matColumnDef="day4">
+			<th mat-header-cell *matHeaderCellDef> day4 </th>
+			<td mat-cell *matCellDef="let row"> {{row.day4?.offday}} </td>
+		</ng-container>
+
+		<ng-container matColumnDef="day5">
+			<th mat-header-cell *matHeaderCellDef> day5 </th>
+			<td mat-cell *matCellDef="let row"> {{row.day5?.offday}} </td>
+		</ng-container> -->
+		<ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+			<th mat-header-cell *matHeaderCellDef> {{column}} </th>
+			<td mat-cell *matCellDef="let element">
+				<span *ngIf="column == 'name'">{{element[column]}}</span>
+				<!-- <span *ngIf="column != 'name'">{{element[column]?.offday}}</span> -->
+				<span *ngIf="column != 'name'">{{demo(element.timesheets,column)?.day}}</span>
+			</td>
+		</ng-container>
+
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+	</table>
+
+	<mat-paginator #paginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="pageSize" [pageSizeOptions]="[10, 25, 50, 100, 250]">
+	</mat-paginator>
+</div>

@@ -1,4 +1,4 @@
-<div class="inner-sidenav-content transition-2">
+<!-- <div class="inner-sidenav-content transition-2">
 	<div fxLayout="row wrap" fxFill>
 		<div fxFlex fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
 			<h1 style="color: #bbbbbb; text-transform: uppercase; text-align: center;">
@@ -8,6 +8,35 @@
 				<mat-icon>arrow_back</mat-icon>
 				Go Back
 			</button>
+		</div>
+	</div>
+</div> -->
+
+<div class="inner-sidenav-content transition-2">
+	<!-- Breadcrumb Start -->
+	<div fxLayout="row wrap">
+		<div class="flex-p" fxFlex="1 1 100%">
+			<mat-card class="mat-breadcrumb" fxLayout="row" fxFlexAlign="center">
+				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row" fxLayoutAlign="start center">
+					<mat-icon>home</mat-icon>
+					<span class="breadcrumb-title">Home</span>
+				</a>
+
+				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+					<span class="breadcrumb-title active">JobSeeker Timesheet Report</span>
+				</div>
+			</mat-card>
+		</div>
+	</div>
+	<!-- Breadcrumb End -->
+
+	<div [ngBusy]="{busy:busy}"></div>
+
+	<div fxLayout="row wrap">
+		<div class="flex-p" fxFlex="100">
+			<mat-card class="p-0">
+				<app-offday-matrix-table [displayDatasource]="offDays" [columns]="displayedColumns" [pageSize]="5"></app-offday-matrix-table>
+			</mat-card>
 		</div>
 	</div>
 </div>

@@ -8,3 +8,8 @@
     min-height: calc(100% - 80px);
     overflow: auto;
 }
+
+::-webkit-scrollbar {
+    width: 10x !important;
+    height: 10px !important;
+}
