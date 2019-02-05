@@ -33,9 +33,34 @@
 	<div [ngBusy]="{busy:busy}"></div>
 
 	<div fxLayout="row wrap">
+		<!-- Search Panel -->
+		<div class="flex-p" fxFlex="100" fxLayoutAlign="space-between center">
+			<mat-form-field fxFlex="50" fxFlex.gt-sm="30" [appearance]="appearance$ | async">
+				<mat-label>Month</mat-label>
+				<mat-select placeholder="Month" panelClass="dob-month-panel" name="month" [(ngModel)]="month" (ngModelChange)="changeSearch($event)"
+				 required>
+					<mat-option *ngFor="let month of months" [value]="month.monthValue">
+						{{ month.monthName }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+
+			<mat-form-field fxFlex="25" fxFlex.gt-sm="30" [appearance]="appearance$ | async">
+				<mat-label>Year</mat-label>
+				<mat-select placeholder="Year" panelClass="dob-year-panel" name="year" [(ngModel)]="year" (ngModelChange)="changeSearch($event)"
+				 required>
+					<mat-option *ngFor="let year of years" [value]="year">
+						{{ year }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+
+		<!-- Matrix Panel -->
 		<div class="flex-p" fxFlex="100">
 			<mat-card class="p-0">
-				<app-offday-matrix-table [displayDatasource]="offDays" [columns]="displayedColumns" [pageSize]="5"></app-offday-matrix-table>
+				<app-offday-matrix-table [displayDatasource]="offDays" [columns]="displayedColumns" [days]="displayedDates"
+				 [pageSize]="5"></app-offday-matrix-table>
 			</mat-card>
 		</div>
 	</div>
