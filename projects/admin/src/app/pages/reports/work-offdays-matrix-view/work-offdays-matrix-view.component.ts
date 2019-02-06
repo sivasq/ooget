@@ -12,318 +12,6 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 })
 export class WorkOffdaysMatrixViewComponent implements OnInit {
 
-	offDays = [
-		{
-			'name': 'name1',
-			// 'day1': { 'offday': true, 'publicoffday': true, 'verified': true },
-			// 'day2': { 'offday': false, 'publicoffday': true, 'verified': true },
-			// 'day3': { 'offday': true, 'publicoffday': false, 'verified': false },
-			// 'day4': { 'offday': false, 'publicoffday': false, 'verified': false },
-			'timesheets': [
-				{
-					'day': 'day1',
-					'date': "2019/02/01",
-					'punchedin': false,
-					'punchedout': false,
-					'punchintime': "2018/08/14 00:00",
-					'punchouttime': "2018/08/14 00:00",
-					'verified': true,
-					'_id': "5b71ab00249e740960d4ef2b",
-				},
-				{
-					'day': 'day2',
-					'date': "2019/02/02",
-					'punchedin': false,
-					'punchedout': false,
-					'punchintime': "2018/08/14 00:00",
-					'punchouttime': "2018/08/14 00:00",
-					'verified': true,
-					'_id': "5b71ab00249e740960d4ef2b",
-				},
-				{
-					'day': 'day3',
-					'date': "2019/02/03",
-					'punchedin': false,
-					'punchedout': false,
-					'punchintime': "2018/08/14 00:00",
-					'punchouttime': "2018/08/14 00:00",
-					'verified': true,
-					'_id': "5b71ab00249e740960d4ef2b",
-				},
-				{
-					'day': 'day4',
-					'date': "2019/02/04",
-					'punchedin': false,
-					'punchedout': false,
-					'punchintime': "2018/08/14 00:00",
-					'punchouttime': "2018/08/14 00:00",
-					'verified': true,
-					'_id': "5b71ab00249e740960d4ef2b",
-				},
-				{
-					'day': 'day5',
-					'date': "2019/02/05",
-					'punchedin': false,
-					'punchedout': false,
-					'punchintime': "2018/08/14 00:00",
-					'punchouttime': "2018/08/14 00:00",
-					'verified': true,
-					'_id': "5b71ab00249e740960d4ef2b",
-				},
-				{
-					'day': 'day6',
-					'date': "2019/02/06",
-					'punchedin': false,
-					'punchedout': false,
-					'punchintime': "2018/08/14 00:00",
-					'punchouttime': "2018/08/14 00:00",
-					'verified': true,
-					'_id': "5b71ab00249e740960d4ef2b",
-				},
-				{
-					'day': 'day7',
-					'date': "2019/02/07",
-					'punchedin': false,
-					'punchedout': false,
-					'punchintime': "2018/08/14 00:00",
-					'punchouttime': "2018/08/14 00:00",
-					'verified': true,
-					'_id': "5b71ab00249e740960d4ef2b",
-				},
-				{
-					'day': 'day8',
-					'date': "2019/02/08",
-					'punchedin': false,
-					'punchedout': false,
-					'punchintime': "2018/08/14 00:00",
-					'punchouttime': "2018/08/14 00:00",
-					'verified': true,
-					'_id': "5b71ab00249e740960d4ef2b",
-				}
-			]
-		},
-		{
-			'name': 'name2',
-			// 'day1': { 'offday': true, 'publicoffday': true, 'verified': true },
-			// 'day2': { 'offday': false, 'publicoffday': true, 'verified': true },
-			// 'day3': { 'offday': true, 'publicoffday': false, 'verified': false },
-			// 'day4': { 'offday': false, 'publicoffday': false, 'verified': false },
-			'timesheets': [
-				{
-					'day': 'day1',
-					'date': "2019/02/01",
-					'punchedin': false,
-					'punchedout': false,
-					'punchintime': "2018/08/14 00:00",
-					'punchouttime': "2018/08/14 00:00",
-					'verified': true,
-					'_id': "5b71ab00249e740960d4ef2b",
-				},
-				{
-					'day': 'day2',
-					'date': "2019/02/02",
-					'punchedin': false,
-					'punchedout': false,
-					'punchintime': "2018/08/14 00:00",
-					'punchouttime': "2018/08/14 00:00",
-					'verified': true,
-					'_id': "5b71ab00249e740960d4ef2b",
-				},
-				{
-					'day': 'day3',
-					'date': "2019/02/03",
-					'punchedin': false,
-					'punchedout': false,
-					'punchintime': "2018/08/14 00:00",
-					'punchouttime': "2018/08/14 00:00",
-					'verified': true,
-					'_id': "5b71ab00249e740960d4ef2b",
-				},
-				{
-					'day': 'day4',
-					'date': "2019/02/04",
-					'punchedin': false,
-					'punchedout': false,
-					'punchintime': "2018/08/14 00:00",
-					'punchouttime': "2018/08/14 00:00",
-					'verified': true,
-					'_id': "5b71ab00249e740960d4ef2b",
-				},
-				{
-					'day': 'day5',
-					'date': "2019/02/05",
-					'punchedin': false,
-					'punchedout': false,
-					'punchintime': "2018/08/14 00:00",
-					'punchouttime': "2018/08/14 00:00",
-					'verified': true,
-					'_id': "5b71ab00249e740960d4ef2b",
-				},
-				{
-					'day': 'day6',
-					'date': "2019/02/06",
-					'punchedin': false,
-					'punchedout': false,
-					'punchintime': "2018/08/14 00:00",
-					'punchouttime': "2018/08/14 00:00",
-					'verified': true,
-					'_id': "5b71ab00249e740960d4ef2b",
-				},
-				{
-					'day': 'day7',
-					'date': "2019/02/07",
-					'punchedin': false,
-					'punchedout': false,
-					'punchintime': "2018/08/14 00:00",
-					'punchouttime': "2018/08/14 00:00",
-					'verified': true,
-					'_id': "5b71ab00249e740960d4ef2b",
-				},
-				{
-					'day': 'day8',
-					'date': "2019/02/08",
-					'punchedin': false,
-					'punchedout': false,
-					'punchintime': "2018/08/14 00:00",
-					'punchouttime': "2018/08/14 00:00",
-					'verified': true,
-					'_id': "5b71ab00249e740960d4ef2b",
-				}
-			]
-		}
-	]
-
-	// offDays = [
-	// 	{
-	// 		'name': 'name1',
-	// 		// 'day1': { 'offday': true, 'publicoffday': true, 'verified': true },
-	// 		// 'day2': { 'offday': false, 'publicoffday': true, 'verified': true },
-	// 		// 'day3': { 'offday': true, 'publicoffday': false, 'verified': false },
-	// 		// 'day4': { 'offday': false, 'publicoffday': false, 'verified': false },
-	// 		'timesheets': [
-	// 			{
-	// 				'day': 'day1',
-	// 				'date': "2018/08/14",
-	// 				'late': false,
-	// 				'lateinhour': "00:00",
-	// 				'lateintimation': false,
-	// 				'normalsalary': 192,
-	// 				'normalworkhour': "07:30",
-	// 				'notes': "",
-	// 				'oogetscommission': 23.1,
-	// 				'otsalary': 230.4,
-	// 				'otworkhour': "06:00",
-	// 				'payrollgenerated': false,
-	// 				'punchedin': false,
-	// 				'punchedout': false,
-	// 				'punchintime': "2018/08/14 00:00",
-	// 				'punchouttime': "2018/08/14 00:00",
-	// 				'salarymultiplier': 1,
-	// 				'totalsalary': 422.4,
-	// 				'totalworkhour': "13:30",
-	// 				'verified': true,
-	// 				'verifiedpunchinedited': false,
-	// 				'verifiedpunchintime': "2018/08/14 09:00",
-	// 				'verifiedpunchoutedited': false,
-	// 				'verifiedpunchouttime': "2018/08/15 00:00",
-	// 				'_id': "5b71ab00249e740960d4ef2b",
-	// 			},
-	// 			{
-	// 				'day': 'day2',
-	// 				'date': "2018/08/14",
-	// 				'late': false,
-	// 				'lateinhour': "00:00",
-	// 				'lateintimation': false,
-	// 				'normalsalary': 193,
-	// 				'normalworkhour': "07:31",
-	// 				'notes': "",
-	// 				'oogetscommission': 23.1,
-	// 				'otsalary': 230.4,
-	// 				'otworkhour': "06:00",
-	// 				'payrollgenerated': false,
-	// 				'punchedin': false,
-	// 				'punchedout': false,
-	// 				'punchintime': "2018/08/14 00:00",
-	// 				'punchouttime': "2018/08/14 00:00",
-	// 				'salarymultiplier': 1,
-	// 				'totalsalary': 422.4,
-	// 				'totalworkhour': "13:30",
-	// 				'verified': true,
-	// 				'verifiedpunchinedited': false,
-	// 				'verifiedpunchintime': "2018/08/14 09:00",
-	// 				'verifiedpunchoutedited': false,
-	// 				'verifiedpunchouttime': "2018/08/15 00:00",
-	// 				'_id': "5b71ab00249e740960d4ef2b",
-	// 			}
-	// 		]
-	// 	},
-	// 	{
-	// 		'name': 'name2',
-	// 		// 'day1': { 'offday': true, 'publicoffday': true, 'verified': true },
-	// 		// 'day2': { 'offday': false, 'publicoffday': true, 'verified': true },
-	// 		// 'day3': { 'offday': true, 'publicoffday': false, 'verified': false },
-	// 		// 'day4': { 'offday': false, 'publicoffday': false, 'verified': false },
-	// 		'timesheets': [
-	// 			{
-	// 				'day': 'day1',
-	// 				'date': "2018/08/14",
-	// 				'late': false,
-	// 				'lateinhour': "00:00",
-	// 				'lateintimation': false,
-	// 				'normalsalary': 192,
-	// 				'normalworkhour': "07:30",
-	// 				'notes': "",
-	// 				'oogetscommission': 23.1,
-	// 				'otsalary': 230.4,
-	// 				'otworkhour': "06:00",
-	// 				'payrollgenerated': false,
-	// 				'punchedin': false,
-	// 				'punchedout': false,
-	// 				'punchintime': "2018/08/14 00:00",
-	// 				'punchouttime': "2018/08/14 00:00",
-	// 				'salarymultiplier': 1,
-	// 				'totalsalary': 422.4,
-	// 				'totalworkhour': "13:30",
-	// 				'verified': true,
-	// 				'verifiedpunchinedited': false,
-	// 				'verifiedpunchintime': "2018/08/14 09:00",
-	// 				'verifiedpunchoutedited': false,
-	// 				'verifiedpunchouttime': "2018/08/15 00:00",
-	// 				'_id': "5b71ab00249e740960d4ef2b",
-	// 			},
-	// 			{
-	// 				'day': 'day2',
-	// 				'date': "2018/08/14",
-	// 				'late': false,
-	// 				'lateinhour': "00:00",
-	// 				'lateintimation': false,
-	// 				'normalsalary': 193,
-	// 				'normalworkhour': "07:31",
-	// 				'notes': "",
-	// 				'oogetscommission': 23.1,
-	// 				'otsalary': 230.4,
-	// 				'otworkhour': "06:00",
-	// 				'payrollgenerated': false,
-	// 				'punchedin': false,
-	// 				'punchedout': false,
-	// 				'punchintime': "2018/08/14 00:00",
-	// 				'punchouttime': "2018/08/14 00:00",
-	// 				'salarymultiplier': 1,
-	// 				'totalsalary': 422.4,
-	// 				'totalworkhour': "13:30",
-	// 				'verified': true,
-	// 				'verifiedpunchinedited': false,
-	// 				'verifiedpunchintime': "2018/08/14 09:00",
-	// 				'verifiedpunchoutedited': false,
-	// 				'verifiedpunchouttime': "2018/08/15 00:00",
-	// 				'_id': "5b71ab00249e740960d4ef2b",
-	// 			}
-	// 		]
-	// 	}
-	// ]
-
-	//busy Config
-
 	offDays1 = [
 		{
 			'name': 'name1',
@@ -334,7 +22,7 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 			'timesheets': [
 				{
 					'day': 'day1',
-					'date': "2019/03/01",
+					'date': "2019/02/01",
 					'punchedin': false,
 					'punchedout': false,
 					'punchintime': "2018/08/14 00:00",
@@ -344,7 +32,7 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 				},
 				{
 					'day': 'day2',
-					'date': "2019/03/02",
+					'date': "2019/02/02",
 					'punchedin': false,
 					'punchedout': false,
 					'punchintime': "2018/08/14 00:00",
@@ -354,7 +42,7 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 				},
 				{
 					'day': 'day3',
-					'date': "2019/03/03",
+					'date': "2019/02/03",
 					'punchedin': false,
 					'punchedout': false,
 					'punchintime': "2018/08/14 00:00",
@@ -364,7 +52,7 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 				},
 				{
 					'day': 'day4',
-					'date': "2019/03/04",
+					'date': "2019/02/04",
 					'punchedin': false,
 					'punchedout': false,
 					'punchintime': "2018/08/14 00:00",
@@ -374,7 +62,7 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 				},
 				{
 					'day': 'day5',
-					'date': "2019/03/05",
+					'date': "2019/02/05",
 					'punchedin': false,
 					'punchedout': false,
 					'punchintime': "2018/08/14 00:00",
@@ -384,7 +72,7 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 				},
 				{
 					'day': 'day6',
-					'date': "2019/03/06",
+					'date': "2019/02/06",
 					'punchedin': false,
 					'punchedout': false,
 					'punchintime': "2018/08/14 00:00",
@@ -394,7 +82,7 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 				},
 				{
 					'day': 'day7',
-					'date': "2019/03/07",
+					'date': "2019/02/07",
 					'punchedin': false,
 					'punchedout': false,
 					'punchintime': "2018/08/14 00:00",
@@ -404,7 +92,7 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 				},
 				{
 					'day': 'day8',
-					'date': "2019/03/08",
+					'date': "2019/02/08",
 					'punchedin': false,
 					'punchedout': false,
 					'punchintime': "2018/08/14 00:00",
@@ -423,7 +111,7 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 			'timesheets': [
 				{
 					'day': 'day1',
-					'date': "2019/03/01",
+					'date': "2019/02/01",
 					'punchedin': false,
 					'punchedout': false,
 					'punchintime': "2018/08/14 00:00",
@@ -433,7 +121,7 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 				},
 				{
 					'day': 'day2',
-					'date': "2019/03/02",
+					'date': "2019/02/02",
 					'punchedin': false,
 					'punchedout': false,
 					'punchintime': "2018/08/14 00:00",
@@ -443,7 +131,7 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 				},
 				{
 					'day': 'day3',
-					'date': "2019/03/03",
+					'date': "2019/02/03",
 					'punchedin': false,
 					'punchedout': false,
 					'punchintime': "2018/08/14 00:00",
@@ -453,7 +141,7 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 				},
 				{
 					'day': 'day4',
-					'date': "2019/03/04",
+					'date': "2019/02/04",
 					'punchedin': false,
 					'punchedout': false,
 					'punchintime': "2018/08/14 00:00",
@@ -463,7 +151,7 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 				},
 				{
 					'day': 'day5',
-					'date': "2019/03/05",
+					'date': "2019/02/05",
 					'punchedin': false,
 					'punchedout': false,
 					'punchintime': "2018/08/14 00:00",
@@ -473,7 +161,7 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 				},
 				{
 					'day': 'day6',
-					'date': "2019/03/06",
+					'date': "2019/02/06",
 					'punchedin': false,
 					'punchedout': false,
 					'punchintime': "2018/08/14 00:00",
@@ -483,7 +171,7 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 				},
 				{
 					'day': 'day7',
-					'date': "2019/03/07",
+					'date': "2019/02/07",
 					'punchedin': false,
 					'punchedout': false,
 					'punchintime': "2018/08/14 00:00",
@@ -493,7 +181,7 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 				},
 				{
 					'day': 'day8',
-					'date': "2019/03/08",
+					'date': "2019/02/08",
 					'punchedin': false,
 					'punchedout': false,
 					'punchintime': "2018/08/14 00:00",
@@ -505,6 +193,214 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 		}
 	]
 
+	// contracts = [
+	// 	{
+	// 		"contractstatus": "closed",
+	// 		"offdays": [],
+	// 		"jobseekername": "Tee Chee",
+	// 		"timesheets": [
+	// 			{
+	// 				"date": "2019/01/09",
+	// 				"punchintime": "2019/01/09 11:30",
+	// 				"verifiedpunchintime": "2019/01/09 11:45",
+	// 				"punchouttime": "2019/01/09 14:14",
+	// 				"verifiedpunchouttime": "2019/01/09 14:14",
+	// 				"punchedin": true,
+	// 				"punchedout": true,
+	// 				"verifiedpunchinedited": false,
+	// 				"verifiedpunchoutedited": false,
+	// 				"notes": "",
+	// 				"late": false,
+	// 				"lateinhour": "00:00",
+	// 				"lateintimation": false,
+	// 				"normalworkhour": "01:29",
+	// 				"otworkhour": "00:00",
+	// 				"totalworkhour": "01:29",
+	// 				"normalsalary": 31.25,
+	// 				"otsalary": 0,
+	// 				"totalsalary": 31.25,
+	// 				"oogetscommission": 6.25,
+	// 				"salarymultiplier": 1,
+	// 				"verified": false,
+	// 				"payrollgenerated": false,
+	// 				"_id": "5c356ab807aa2e0dc4b37124"
+	// 			},
+	// 			{
+	// 				"date": "2019/01/10",
+	// 				"punchintime": "2019/01/10 00:00",
+	// 				"verifiedpunchintime": "2019/01/10 00:00",
+	// 				"punchouttime": "2019/01/10 00:00",
+	// 				"verifiedpunchouttime": "2019/01/10 00:00",
+	// 				"punchedin": false,
+	// 				"punchedout": false,
+	// 				"verifiedpunchinedited": false,
+	// 				"verifiedpunchoutedited": false,
+	// 				"notes": "",
+	// 				"late": false,
+	// 				"lateinhour": "00:00",
+	// 				"lateintimation": false,
+	// 				"normalworkhour": "00:00",
+	// 				"otworkhour": "00:00",
+	// 				"totalworkhour": "00:00",
+	// 				"normalsalary": 0,
+	// 				"otsalary": 0,
+	// 				"totalsalary": 0,
+	// 				"oogetscommission": 0,
+	// 				"salarymultiplier": 1,
+	// 				"verified": false,
+	// 				"payrollgenerated": false,
+	// 				"_id": "5c361a80e760ca0514defda6"
+	// 			}
+	// 		]
+	// 	},
+	// 	{
+	// 		"contractstatus": "closed",
+	// 		"offdays": [],
+	// 		"jobseekername": "Tee Yuan",
+	// 		"timesheets": [
+	// 			{
+	// 				"date": "2019/01/11",
+	// 				"punchintime": "2019/01/09 11:30",
+	// 				"verifiedpunchintime": "2019/01/09 11:45",
+	// 				"punchouttime": "2019/01/09 14:14",
+	// 				"verifiedpunchouttime": "2019/01/09 14:14",
+	// 				"punchedin": true,
+	// 				"punchedout": true,
+	// 				"verifiedpunchinedited": false,
+	// 				"verifiedpunchoutedited": false,
+	// 				"notes": "",
+	// 				"late": false,
+	// 				"lateinhour": "00:00",
+	// 				"lateintimation": false,
+	// 				"normalworkhour": "01:29",
+	// 				"otworkhour": "00:00",
+	// 				"totalworkhour": "01:29",
+	// 				"normalsalary": 31.25,
+	// 				"otsalary": 0,
+	// 				"totalsalary": 31.25,
+	// 				"oogetscommission": 6.25,
+	// 				"salarymultiplier": 1,
+	// 				"verified": false,
+	// 				"payrollgenerated": false,
+	// 				"_id": "5c356ab807aa2e0dc4b37124"
+	// 			},
+	// 			{
+	// 				"date": "2019/01/13",
+	// 				"punchintime": "2019/01/10 00:00",
+	// 				"verifiedpunchintime": "2019/01/10 00:00",
+	// 				"punchouttime": "2019/01/10 00:00",
+	// 				"verifiedpunchouttime": "2019/01/10 00:00",
+	// 				"punchedin": false,
+	// 				"punchedout": false,
+	// 				"verifiedpunchinedited": false,
+	// 				"verifiedpunchoutedited": false,
+	// 				"notes": "",
+	// 				"late": false,
+	// 				"lateinhour": "00:00",
+	// 				"lateintimation": false,
+	// 				"normalworkhour": "00:00",
+	// 				"otworkhour": "00:00",
+	// 				"totalworkhour": "00:00",
+	// 				"normalsalary": 0,
+	// 				"otsalary": 0,
+	// 				"totalsalary": 0,
+	// 				"oogetscommission": 0,
+	// 				"salarymultiplier": 1,
+	// 				"verified": false,
+	// 				"payrollgenerated": false,
+	// 				"_id": "5c361a80e760ca0514defda6"
+	// 			}
+	// 		]
+	// 	}
+	// ]
+
+	//busy Config
+
+	response1:any = {
+		"job": [
+			{
+				"workdays": {
+					"sunday": false,
+					"monday": true,
+					"tuesday": true,
+					"wednesday": true,
+					"thursday": true,
+					"friday": true,
+					"saturday": false
+				},
+				"workdaystype": "normal",
+				"contracts": [
+					{
+						"contractstatus": "closed",
+						"offdays": [],
+						"jobseekername": "Tee Yuan Chee",
+						"timesheets": [
+							{
+								"date": "2019/01/09",
+								"punchintime": "2019/01/09 11:30",
+								"verifiedpunchintime": "2019/01/09 11:45",
+								"punchouttime": "2019/01/09 14:14",
+								"verifiedpunchouttime": "2019/01/09 14:14",
+								"punchedin": true,
+								"punchedout": true,
+								"verifiedpunchinedited": false,
+								"verifiedpunchoutedited": false,
+								"notes": "",
+								"late": false,
+								"lateinhour": "00:00",
+								"lateintimation": false,
+								"normalworkhour": "01:29",
+								"otworkhour": "00:00",
+								"totalworkhour": "01:29",
+								"normalsalary": 31.25,
+								"otsalary": 0,
+								"totalsalary": 31.25,
+								"oogetscommission": 6.25,
+								"salarymultiplier": 1,
+								"verified": false,
+								"payrollgenerated": false,
+								"_id": "5c356ab807aa2e0dc4b37124"
+							},
+							{
+								"date": "2019/01/10",
+								"punchintime": "2019/01/10 00:00",
+								"verifiedpunchintime": "2019/01/10 00:00",
+								"punchouttime": "2019/01/10 00:00",
+								"verifiedpunchouttime": "2019/01/10 00:00",
+								"punchedin": false,
+								"punchedout": false,
+								"verifiedpunchinedited": false,
+								"verifiedpunchoutedited": false,
+								"notes": "",
+								"late": false,
+								"lateinhour": "00:00",
+								"lateintimation": false,
+								"normalworkhour": "00:00",
+								"otworkhour": "00:00",
+								"totalworkhour": "00:00",
+								"normalsalary": 0,
+								"otsalary": 0,
+								"totalsalary": 0,
+								"oogetscommission": 0,
+								"salarymultiplier": 1,
+								"verified": false,
+								"payrollgenerated": false,
+								"_id": "5c361a80e760ca0514defda6"
+							}
+						]
+					}
+				],
+				"_id": "5c35679a07aa2e0dc4b37116"
+			}
+		],
+		"holiday": [
+			"2018/08/09",
+			"2018/08/22",
+			"2018/08/20"
+		]
+	}
+
+	response:any = '';
 
 	busy: Subscription;
 	public employeeFilter: string = '';
@@ -517,9 +413,13 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 	employerDatas;
 
 	isEmployerAvailable: boolean;
+	isJobsAvailable: boolean;
 	employerCount;
-	employers_list;
-	SelectedEmployer;
+	jobCount;
+	employers_list = [];
+	jobs_list = [];
+	selectedEmployer;
+	selectedJob;
 
 	monthLongValues: any[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	months: any[] = [];
@@ -531,60 +431,42 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 
 	constructor(private datePipe: DatePipe, private _location: Location, private _httpService: ApiCallService, private asyncSubscriber: AsyncSubscriber, private fb: FormBuilder, ) {
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
-		// this.getAllEmployers();
+		this.getAllEmployers();
 		this.generateMonths();
 		this.generateYears();
 	}
 
-	// getAllEmployers() {
-	// 	this.busy = this._httpService.getAllEmployers()
-	// 		.subscribe(
-	// 			response => {
-	// 				if (response.success) {
-	// 					console.log(response.employers);
-	// 					if ((response.employers).length > 0) {
-	// 						this.isEmployerAvailable = true;
-	// 						this.employerCount = (response.employers).length;
-	// 						this.employers_list = response.employers;
-	// 					} else {
-	// 						this.isEmployerAvailable = false;
-	// 					}
-	// 				} else if (!response.success) {
-	// 					console.log(response);
-	// 				}
-	// 			},
-	// 			error => {
-	// 				console.log(error);
-	// 			}
-	// 		);
-	// }
+	getAllEmployers() {
+		this.busy = this._httpService.getAllEmployers()
+			.subscribe(
+				response => {
+					if (response.success) {
+						this.employers_list = response.employers;
+					} else if (!response.success) {
+						console.log(response);
+					}
+				},
+				error => {
+					console.log(error);
+				}
+			);
+	}
 
-	// getEmployerJobs(event) {
-	// 	console.log(event);
-	// 	this.busy = this._httpService.getEmployerJobs({ 'companyid': event })
-	// 		.subscribe(
-	// 			response => {
-	// 				if (response.success) {
-	// 					// console.log(response.employerreport);
-	// 					if ((response.employerreport).length > 0) {
-	// 						// this.isEmployerAvailable = true;
-	// 						// this.employerCount = (response.employerreport).length;
-	// 						// this.employers_list = response.employerreport;
-
-	// 						// this.employerDatas = response.employerreport[0];
-	// 						console.log(this.employerDatas);
-	// 					} else {
-	// 						this.isEmployerAvailable = false;
-	// 					}
-	// 				} else if (!response.success) {
-	// 					console.log(response);
-	// 				}
-	// 			},
-	// 			error => {
-	// 				console.log(error);
-	// 			}
-	// 		);
-	// }
+	getEmployerJobs(event) {
+		this.busy = this._httpService.getSingleEmployersJobsList({ 'companyid': event })
+			.subscribe(
+				response => {
+					if (response.success) {
+						this.jobs_list = response.jobs;
+					} else if (!response.success) {
+						console.log(response);
+					}
+				},
+				error => {
+					console.log(error);
+				}
+			);
+	}
 
 	// Months Generate
 	generateMonths() {
@@ -627,7 +509,25 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 	changeSearch(event) {
 		console.log(this.month);
 		console.log(this.year);
+		console.log(this.selectedJob);
 
+		this.busy = this._httpService.getMatrixOffDays({ 'jobid': this.selectedJob, 'fromdate': this.datePipe.transform(new Date(this.year, this.month, 1), 'yyyy/MM/dd'), 'todate': this.datePipe.transform(new Date(this.year, this.month + 1, 0), 'yyyy/MM/dd') })
+			.subscribe(
+				response => {
+					if (response.success) {
+						this.generateHeaderColumns();
+						this.response = response;
+					} else if (!response.success) {
+						console.log(response);
+					}
+				},
+				error => {
+					console.log(error);
+				}
+			);
+	}
+
+	generateHeaderColumns() {
 		let dates = this.getDates(new Date(this.year, this.month, 1), new Date(this.year, this.month + 1, 0));
 
 		let displayedColumns = [];
@@ -638,9 +538,6 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 		});
 		this.displayedColumns = displayedColumns;
 		this.displayedDates = displayedDates;
-		this.offDays = this.offDays1;
-		console.log(this.displayedColumns);
-		console.log(this.displayedDates);
 	}
 
 	ngOnInit() {

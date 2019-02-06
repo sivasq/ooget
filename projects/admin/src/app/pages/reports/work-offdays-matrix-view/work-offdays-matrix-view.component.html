@@ -34,6 +34,27 @@
 
 	<div fxLayout="row wrap">
 		<!-- Search Panel -->
+
+		<div fxFlex="100" class="flex-p" fxLayoutAlign="space-between start">
+			<mat-form-field fxFlex="100" fxFlex.gt-sm="{{employers_list.length > 0 ? '40' : '100'}}" appearance="outline">
+				<mat-label>Choose Employer</mat-label>
+				<mat-select placeholder="Choose Employer" name="selectedEmployer" [(ngModel)]="selectedEmployer" (ngModelChange)="getEmployerJobs($event)">
+					<mat-option *ngFor="let employer of employers_list" [value]="employer._id">
+						{{employer.companyname}} - {{employer.companycode}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+
+			<mat-form-field *ngIf="jobs_list.length > 0" fxFlex="100" fxFlex.gt-sm="40" appearance="outline">
+				<mat-label>Choose Job</mat-label>
+				<mat-select placeholder="Choose Job" name="selectedJob" [(ngModel)]="selectedJob" (ngModelChange)="changeSearch($event)">
+					<mat-option *ngFor="let job of jobs_list" [value]="job._id">
+						{{job.jobtitle}} - {{job.jobnumber}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+
 		<div class="flex-p" fxFlex="100" fxLayoutAlign="space-between center">
 			<mat-form-field fxFlex="50" fxFlex.gt-sm="30" [appearance]="appearance$ | async">
 				<mat-label>Month</mat-label>
@@ -57,10 +78,13 @@
 		</div>
 
 		<!-- Matrix Panel -->
-		<div class="flex-p" fxFlex="100">
-			<mat-card class="p-0">
-				<app-offday-matrix-table [displayDatasource]="offDays" [columns]="displayedColumns" [days]="displayedDates"
-				 [pageSize]="5"></app-offday-matrix-table>
+		<div class="flex-p" fxFlex="100" *ngIf="response">
+			<mat-card class="p-0" *ngIf="response.job[0]?.contracts?.length > 0">
+				<!-- <app-offday-matrix-table [displayDatasource]="offDays" [columns]="displayedColumns" [days]="displayedDates"
+				 [pageSize]="5"></app-offday-matrix-table> -->
+
+				<app-offday-matrix-table [setDisplayedColumns]="displayedColumns" [setDisplayedDates]="displayedDates"
+				 [setDataSource]="response" [pageSize]="5"></app-offday-matrix-table>
 			</mat-card>
 		</div>
 	</div>

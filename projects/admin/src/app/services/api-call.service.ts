@@ -666,4 +666,16 @@ export class ApiCallService {
 		return this.http.post(this.baseUrl + '/contract/generatereportforparticularemployer', data, { headers: headers })
 			.map(res => res)
 	}
+
+	getMatrixOffDays(args): Observable<any> {
+		// let employerIds = args;
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/contract/fetchoffdayssheetforparticularjob', args, { headers: headers })
+	}
 }

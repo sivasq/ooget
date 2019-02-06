@@ -42,43 +42,43 @@ export class OogetsidenavComponent implements OnInit {
 				}
 			]
 		},
-		{
-			displayName: 'Reports',
-			iconName: 'chrome_reader_mode',
-			children: [
-				{
-					displayName: 'JobSeeker Timesheet',
-					iconName: 'access_time',
-					route: '/admin/reports/jstr'
-				},
-				{
-					displayName: 'Employer Charges',
-					iconName: 'monetization_on',
-					route: '/admin/reports/cter'
-				},
-				{
-					displayName: 'Admin Payment',
-					iconName: 'monetization_on',
-					route: '/admin/reports/apr'
-				},
-				{
-					displayName: 'Work & Off Days',
-					iconName: 'work_off',
-					children: [
-						{
-							displayName: 'Calendar View',
-							iconName: 'calendar_today',
-							route: '/admin/reports/wocvr'
-						},
-						{
-							displayName: 'Matrix View',
-							iconName: 'table_chart',
-							route: '/admin/reports/womvr'
-						}
-					]
-				}
-			]
-		},
+		// {
+		// 	displayName: 'Reports',
+		// 	iconName: 'chrome_reader_mode',
+		// 	children: [
+		// 		{
+		// 			displayName: 'JobSeeker Timesheet',
+		// 			iconName: 'access_time',
+		// 			route: '/admin/reports/jstr'
+		// 		},
+		// 		{
+		// 			displayName: 'Employer Charges',
+		// 			iconName: 'monetization_on',
+		// 			route: '/admin/reports/cter'
+		// 		},
+		// 		{
+		// 			displayName: 'Admin Payment',
+		// 			iconName: 'monetization_on',
+		// 			route: '/admin/reports/apr'
+		// 		},
+		// 		{
+		// 			displayName: 'Work & Off Days',
+		// 			iconName: 'work_off',
+		// 			children: [
+		// 				{
+		// 					displayName: 'Calendar View',
+		// 					iconName: 'calendar_today',
+		// 					route: '/admin/reports/wocvr'
+		// 				},
+		// 				{
+		// 					displayName: 'Matrix View',
+		// 					iconName: 'table_chart',
+		// 					route: '/admin/reports/womvr'
+		// 				}
+		// 			]
+		// 		}
+		// 	]
+		// },
 		{
 			displayName: 'FAQ',
 			iconName: 'feedback',

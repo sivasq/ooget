@@ -7,7 +7,8 @@ import { ConfigService } from './config.service';
 
 @Injectable()
 export class DataService {
-	public API_URL = "http://104.197.80.225:3010/ooget/admin";
+	// public API_URL = "http://104.197.80.225:3010/ooget/admin";
+	public API_URL = "https://api.ooget.com.sg/ooget/admin";
 	headers;
 
 	dataChange: BehaviorSubject<Issue[]> = new BehaviorSubject<Issue[]>([]);
