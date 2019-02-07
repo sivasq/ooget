@@ -6,6 +6,7 @@ td.mat-cell,
 td.mat-footer-cell,
 th.mat-header-cell {
     text-align: center;
+    border: 1px solid #eee;
 }
 
 th.mat-header-cell {
@@ -13,4 +14,12 @@ th.mat-header-cell {
     background: #1c3e8e;
     font-weight: 600;
     padding: 0 5px;
+}
+
+.selectable {
+    cursor: pointer;
+}
+
+.unselectable {
+    cursor: not-allowed;
 }

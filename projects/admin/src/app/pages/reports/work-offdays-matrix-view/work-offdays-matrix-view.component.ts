@@ -316,57 +316,68 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 
 	//busy Config
 
-	response1:any = {
+	sampleResponse: any = {
+		"success": true,
+		"code": 200,
 		"job": [
 			{
 				"workdays": {
-					"sunday": false,
-					"monday": true,
-					"tuesday": true,
-					"wednesday": true,
-					"thursday": true,
-					"friday": true,
-					"saturday": false
+					'sunday': false,
+					'monday': true,
+					'tuesday': true,
+					'wednesday': true,
+					'thursday': true,
+					'friday': true,
+					'saturday': false,
 				},
-				"workdaystype": "normal",
+				"workdaystype": "flexible",
 				"contracts": [
 					{
 						"contractstatus": "closed",
-						"offdays": [],
-						"jobseekername": "Tee Yuan Chee",
+						"offdays": [
+							{
+								"date": "2018/08/29",
+								"_id": "5b7f62345ac6b313fc6b7144"
+							},
+							{
+								"date": "2018/08/31",
+								"_id": "5b7f62345ac6b313fc6b7144"
+							}
+						],
+						"jobseekername": "YYT",
 						"timesheets": [
 							{
-								"date": "2019/01/09",
-								"punchintime": "2019/01/09 11:30",
-								"verifiedpunchintime": "2019/01/09 11:45",
-								"punchouttime": "2019/01/09 14:14",
-								"verifiedpunchouttime": "2019/01/09 14:14",
-								"punchedin": true,
-								"punchedout": true,
+								"date": "2018/08/31",
+								"punchintime": "2018/08/31 00:00",
+								"verifiedpunchintime": "2018/08/31 00:00",
+								"punchouttime": "2018/08/31 00:00",
+								"verifiedpunchouttime": "2018/08/31 00:00",
+								"punchedin": false,
+								"punchedout": false,
 								"verifiedpunchinedited": false,
 								"verifiedpunchoutedited": false,
 								"notes": "",
 								"late": false,
 								"lateinhour": "00:00",
 								"lateintimation": false,
-								"normalworkhour": "01:29",
+								"normalworkhour": "00:00",
 								"otworkhour": "00:00",
-								"totalworkhour": "01:29",
-								"normalsalary": 31.25,
+								"totalworkhour": "00:00",
+								"normalsalary": 0,
 								"otsalary": 0,
-								"totalsalary": 31.25,
-								"oogetscommission": 6.25,
-								"salarymultiplier": 1,
-								"verified": false,
+								"totalsalary": 0,
+								"oogetscommission": 0,
+								"salarymultiplier": 1.5,
+								"verified": true,
 								"payrollgenerated": false,
-								"_id": "5c356ab807aa2e0dc4b37124"
+								"_id": "5b8814802348e217789a4932"
 							},
 							{
-								"date": "2019/01/10",
-								"punchintime": "2019/01/10 00:00",
-								"verifiedpunchintime": "2019/01/10 00:00",
-								"punchouttime": "2019/01/10 00:00",
-								"verifiedpunchouttime": "2019/01/10 00:00",
+								"date": "2018/08/27",
+								"punchintime": "2018/09/01 00:00",
+								"verifiedpunchintime": "2018/09/01 00:00",
+								"punchouttime": "2018/09/01 00:00",
+								"verifiedpunchouttime": "2018/09/01 00:00",
 								"punchedin": false,
 								"punchedout": false,
 								"verifiedpunchinedited": false,
@@ -385,12 +396,123 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 								"salarymultiplier": 1,
 								"verified": false,
 								"payrollgenerated": false,
-								"_id": "5c361a80e760ca0514defda6"
+								"_id": "5b8966002348e217789a4947"
+							},
+							{
+								"date": "2018/09/02",
+								"punchintime": "2018/09/02 00:00",
+								"verifiedpunchintime": "2018/09/02 00:00",
+								"punchouttime": "2018/09/02 00:00",
+								"verifiedpunchouttime": "2018/09/02 00:00",
+								"punchedin": false,
+								"punchedout": false,
+								"verifiedpunchinedited": false,
+								"verifiedpunchoutedited": false,
+								"notes": "",
+								"late": false,
+								"lateinhour": "00:00",
+								"lateintimation": false,
+								"normalworkhour": "00:00",
+								"otworkhour": "00:00",
+								"totalworkhour": "00:00",
+								"normalsalary": 0,
+								"otsalary": 0,
+								"totalsalary": 0,
+								"oogetscommission": 0,
+								"salarymultiplier": 1,
+								"verified": false,
+								"payrollgenerated": false,
+								"_id": "5b8ab7802348e217789a494a"
+							}
+						]
+					},
+					{
+						"contractstatus": "closed",
+						"offdays": [],
+						"jobseekername": "Bevin Yap ",
+						"timesheets": [
+							{
+								"date": "2018/08/31",
+								"punchintime": "2018/08/31 00:00",
+								"verifiedpunchintime": "2018/08/31 00:00",
+								"punchouttime": "2018/08/31 00:00",
+								"verifiedpunchouttime": "2018/08/31 00:00",
+								"punchedin": false,
+								"punchedout": false,
+								"verifiedpunchinedited": false,
+								"verifiedpunchoutedited": false,
+								"notes": "",
+								"late": false,
+								"lateinhour": "00:00",
+								"lateintimation": false,
+								"normalworkhour": "00:00",
+								"otworkhour": "00:00",
+								"totalworkhour": "00:00",
+								"normalsalary": 0,
+								"otsalary": 0,
+								"totalsalary": 0,
+								"oogetscommission": 0,
+								"salarymultiplier": 1,
+								"verified": false,
+								"payrollgenerated": false,
+								"_id": "5b8814802348e217789a4934"
+							},
+							{
+								"date": "2018/09/01",
+								"punchintime": "2018/09/01 00:00",
+								"verifiedpunchintime": "2018/09/01 00:00",
+								"punchouttime": "2018/09/01 00:00",
+								"verifiedpunchouttime": "2018/09/01 00:00",
+								"punchedin": false,
+								"punchedout": false,
+								"verifiedpunchinedited": false,
+								"verifiedpunchoutedited": false,
+								"notes": "",
+								"late": false,
+								"lateinhour": "00:00",
+								"lateintimation": false,
+								"normalworkhour": "00:00",
+								"otworkhour": "00:00",
+								"totalworkhour": "00:00",
+								"normalsalary": 0,
+								"otsalary": 0,
+								"totalsalary": 0,
+								"oogetscommission": 0,
+								"salarymultiplier": 1,
+								"verified": false,
+								"payrollgenerated": false,
+								"_id": "5b8966002348e217789a4949"
+							},
+							{
+								"date": "2018/09/02",
+								"punchintime": "2018/09/02 00:00",
+								"verifiedpunchintime": "2018/09/02 00:00",
+								"punchouttime": "2018/09/02 00:00",
+								"verifiedpunchouttime": "2018/09/02 00:00",
+								"punchedin": false,
+								"punchedout": false,
+								"verifiedpunchinedited": false,
+								"verifiedpunchoutedited": false,
+								"notes": "",
+								"late": false,
+								"lateinhour": "00:00",
+								"lateintimation": false,
+								"normalworkhour": "00:00",
+								"otworkhour": "00:00",
+								"totalworkhour": "00:00",
+								"normalsalary": 0,
+								"otsalary": 0,
+								"totalsalary": 0,
+								"oogetscommission": 0,
+								"salarymultiplier": 1,
+								"verified": false,
+								"payrollgenerated": false,
+								"_id": "5b8ab7802348e217789a494c"
 							}
 						]
 					}
 				],
-				"_id": "5c35679a07aa2e0dc4b37116"
+				"_id": "5b7b6f98b6508309e8984bb6"
 			}
 		],
 		"holiday": [
@@ -400,7 +522,7 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 		]
 	}
 
-	response:any = '';
+	response: any = '';
 
 	busy: Subscription;
 	public employeeFilter: string = '';
@@ -541,9 +663,10 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.month = 1;
-		this.year = 2019;
+		this.month = 7;
+		this.year = 2018;
 
+		this.response = this.sampleResponse;
 		// var firstDay = new Date(this.year, this.month, 1);
 		// var lastDay = new Date(this.year, this.month + 1, 0);
 

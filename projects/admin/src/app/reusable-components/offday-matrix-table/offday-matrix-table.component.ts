@@ -4,6 +4,7 @@ import { OffdayMatrixTableDataSource } from './offday-matrix-table-datasource';
 import * as moment from 'moment';
 import 'moment-duration-format';
 import { BehaviorSubject } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
 	selector: 'app-offday-matrix-table',
@@ -54,18 +55,50 @@ export class OffdayMatrixTableComponent implements OnInit {
 		return this._dataSource.getValue();
 	}
 
+	constructor(private datePipe: DatePipe) {
+
+	}
+
 	ngOnInit() {
 		this._displayedColumns.subscribe(x => { this.displayedColumns = this.getDisplayedColumns; });
 		this._displayedDates.subscribe(x => { this.displayedDates = this.getDisplayedDates; });
 		this._dataSource.subscribe(x => {
 			this.dataSource = new OffdayMatrixTableDataSource(this.paginator, this.sort, this.getDataSource.job[0].contracts);
 
-			this.publicHolidays = this.getDataSource.job[0].contracts;
+			this.publicHolidays = this.getDataSource.holiday;
+
+			this.jobWorkdays = this.getDataSource.job[0].workdays;
+
+			this.jobWorkdaysType = this.getDataSource.job[0].workdaystype;
 		});
 	}
 
-	demo(element, column) {
-		let elements = element.filter(item => item.date == column);
-		return elements[0];
+	checkIsHoliday(rowData, date, offdays): any {
+		// let elements = rowData.filter(row => row.date == date);
+		// return elements[0];
+		if (this.jobWorkdaysType == "flexible") {
+			let flexibleOffDays = offdays.filter(offday => offday.date == date);
+			if (flexibleOffDays.length > 0) {
+				return { 'response': 'flexibleoffday' };
+			}
+		}
+
+		if (this.jobWorkdaysType == "normal") {
+			let day = this.datePipe.transform(date, 'EEEE').toLowerCase();
+			// let normalOffDays = offdays.filter(offday => offday.date == date);
+			if (!this.jobWorkdays[day]) {
+				return { 'response': 'normaloffday' };
+			}
+		}
+	}
+
+	isPublicHoliday(date) {
+		return this.publicHolidays.includes(date);
+	}
+
+	checkVerified(rowData, date):any {
+		let row = rowData.filter(row => row.date == date);
+		return row[0];
+		// console.log(row[0]?.verified);
 	}
 }
