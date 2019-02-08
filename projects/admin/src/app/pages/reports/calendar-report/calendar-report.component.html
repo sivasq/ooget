@@ -19,17 +19,29 @@
 				<h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
 			</div>
 
-			<mat-button-toggle-group #group="matButtonToggleGroup" [value]="view">
-				<mat-button-toggle value="month" (click)="view = CalendarView.Month" [class.active]="view === CalendarView.Month">
-					<!-- <mat-icon>format_align_left</mat-icon> -->Month
+			<mat-button-toggle-group #group="matButtonToggleGroup">
+				<mat-button-toggle value="working" (click)="fetchEvents('working')" [class.active]="viewMode === 'working'">
+					Working
 				</mat-button-toggle>
-				<mat-button-toggle value="week" (click)="view = CalendarView.Week" [class.active]="view === CalendarView.Week">
-					<!-- <mat-icon>format_align_center</mat-icon> -->Week
+				<mat-button-toggle value="off" (click)="fetchEvents('off')" [class.active]="viewMode === 'off'">
+					Off
 				</mat-button-toggle>
-				<mat-button-toggle value="day" (click)="view = CalendarView.Day" [class.active]="view === CalendarView.Day">
-					<!-- <mat-icon>format_align_right</mat-icon> -->Day
+				<mat-button-toggle value="all" (click)="fetchEvents('all')" [class.active]="viewMode === 'all'">
+					All
 				</mat-button-toggle>
 			</mat-button-toggle-group>
+
+			<!-- <mat-button-toggle-group #group="matButtonToggleGroup" [value]="view"> -->
+				<!-- <mat-button-toggle value="month" (click)="view = CalendarView.Month" [class.active]="view === CalendarView.Month">
+					<mat-icon>format_align_left</mat-icon>Month
+				</mat-button-toggle> -->
+				<!-- <mat-button-toggle value="week" (click)="view = CalendarView.Week" [class.active]="view === CalendarView.Week">
+					<mat-icon>format_align_center</mat-icon>Week
+				</mat-button-toggle> -->
+				<!-- <mat-button-toggle value="day" (click)="view = CalendarView.Day" [class.active]="view === CalendarView.Day">
+					<mat-icon>format_align_right</mat-icon>Day
+				</mat-button-toggle> -->
+			<!-- </mat-button-toggle-group> -->
 		</div>
 
 		<ng-template #loading>
@@ -39,15 +51,26 @@
 			</div>
 		</ng-template>
 
+		<ng-template #customCellTemplate let-day="day" let-locale="locale">
+			<div class="cal-cell-top">
+				<span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
+				<span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+			</div>
+			<small style="margin: 3px; padding:2px; border-radius:3px; text-align:center;" *ngFor="let event of day.events" [style.backgroundColor]="event.color?.primary"  [style.color]="event.color ? '#ffffff' : '#000000'">{{event.title}} </small>
+		</ng-template>
+
 		<div fxFlex="100" style="margin-top: 25px;" *ngIf="events$ | async; else loading; let events">
 			<div [ngSwitch]="view">
 				<mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [activeDayIsOpen]="activeDayIsOpen"
-				 (dayClicked)="dayClicked($event.day)" (eventClicked)="eventClicked($event.event)">
+				 (dayClicked)="dayClicked($event.day)" (eventClicked)="eventClicked($event.event)" (beforeViewRender)="beforeMonthViewRender($event)" [cellTemplate]="customCellTemplate">
 				</mwl-calendar-month-view>
-				<mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" (eventClicked)="eventClicked($event.event)">
-				</mwl-calendar-week-view>
-				<mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" (eventClicked)="eventClicked($event.event)">
-				</mwl-calendar-day-view>
+				<!-- [cellTemplate]="customCellTemplate" -->
+
+				<!-- <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" (eventClicked)="eventClicked($event.event)">
+				</mwl-calendar-week-view> -->
+
+				<!-- <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" (eventClicked)="eventClicked($event.event)">
+				</mwl-calendar-day-view> -->
 			</div>
 		</div>
 	</div>

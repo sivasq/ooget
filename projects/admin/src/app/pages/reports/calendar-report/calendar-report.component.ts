@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { CalendarEvent, CalendarView } from 'angular-calendar';
+import { CalendarEvent, CalendarView, CalendarMonthViewDay } from 'angular-calendar';
 import {
 	isSameMonth,
 	isSameDay,
@@ -14,6 +14,7 @@ import {
 	format
 } from 'date-fns';
 import { Observable } from 'rxjs';
+import { ApiCallService } from '../../../services/api-call.service';
 // import { colors } from '../demo-utils/colors';
 
 interface Film {
@@ -44,6 +45,10 @@ export const colors: any = {
 	yellow: {
 		primary: '#e3bc08',
 		secondary: '#FDF1BA'
+	},
+	green: {
+		primary: '#027306',
+		secondary: '#C1D8C2'
 	}
 };
 
@@ -53,23 +58,112 @@ export const colors: any = {
 	styleUrls: ['./calendar-report.component.scss']
 })
 export class CalendarReportComponent implements OnInit {
+	responseData = {
+		"page": 1,
+		"total_results": 447,
+		"total_pages": 23,
+		"results": [
+			{
+				"name": "Alita: Battle Angel",
+				"daytype": "working",
+				"date": "2019-02-05"
+			}, {
+				"name": "Velvet Buzzsaw",
+				"daytype": "working",
+				"date": "2019-02-01"
+			}, {
+				"name": "What Men Want",
+				"daytype": "working",
+				"date": "2019-02-08"
+			}, {
+				"name": "Cold Pursuit",
+				"daytype": "working",
+				"date": "2019-02-07"
+			}, {
+				"name": "The Man Who Killed Hitler and Then the Bigfoot",
+				"daytype": "working",
+				"date": "2019-02-08"
+			}, {
+				"name": "The Prodigy",
+				"daytype": "working",
+				"date": "2019-02-07"
+			}, {
+				"name": "Lords of Chaos",
+				"daytype": "working",
+				"date": "2019-02-08"
+			}, {
+				"name": "Scooby-Doo! and the Curse of the 13th Ghost",
+				"daytype": "off",
+				"date": "2019-02-05"
+			}, {
+				"name": "Untogether",
+				"daytype": "off",
+				"date": "2019-02-08"
+			}, {
+				"name": "Berlin, I Love You",
+				"daytype": "working",
+				"date": "2019-02-08"
+			}, {
+				"name": "Under the Eiffel Tower",
+				"daytype": "off",
+				"date": "2019-02-08"
+			}, {
+				"name": "The Kindness of Strangers",
+				"daytype": "working",
+				"date": "2019-02-07"
+			}, {
+				"name": "Kumbalangi Nights",
+				"daytype": "off",
+				"date": "2019-02-07"
+			}, {
+				"name": "The Factory",
+				"daytype": "working",
+				"date": "2019-02-07"
+			}, {
+				"name": "Black Garden",
+				"daytype": "off",
+				"date": "2019-02-07"
+			}, {
+				"name": "Nicky Larson et le Parfum de Cupidon",
+				"daytype": "working",
+				"date": "2019-02-06"
+			}, {
+				"name": "Glück ist was für Weicheier",
+				"daytype": "working",
+				"date": "2019-02-07"
+			}, {
+				"name": "Copperman",
+				"daytype": "working",
+				"date": "2019-02-07"
+			}, {
+				"name": "Mødregruppen",
+				"daytype": "working",
+				"date": "2019-02-07"
+			}, {
+				"name": "The Day After I'm Gone",
+				"daytype": "working",
+				"date": "2019-02-07"
+			}
+		]
+	};
 
 	view: CalendarView = CalendarView.Month;
 	CalendarView = CalendarView;
+	viewMode = 'all';
 
 	// view: string = 'month';
 
 	viewDate: Date = new Date();
-	events$: Observable<Array<CalendarEvent<{ film: Film }>>>;
+	events$: Observable<Array<CalendarEvent<{ res: any }>>>;
 	activeDayIsOpen: boolean = false;
 
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient, private _httpService: ApiCallService) { }
 
 	ngOnInit(): void {
-		this.fetchEvents();
+		this.fetchEvents(this.viewMode);
 	}
 
-	fetchEvents(): void {
+	fetchEvents(viewmode): void {
 		const getStart: any = {
 			month: startOfMonth,
 			week: startOfWeek,
@@ -93,28 +187,48 @@ export class CalendarReportComponent implements OnInit {
 			)
 			.set('api_key', '0ec33936a68018857d727958dca1424f');
 
-		this.events$ = this.http
-			.get('https://api.themoviedb.org/3/discover/movie', { params })
-			.pipe(
-				map(({ results }: { results: Film[] }) => {
-					return results.map((film: Film) => {
+		this.events$ =
+			this.http
+				.get('https://api.themoviedb.org/3/discover/movie', { params })
+				// .pipe(
+				// .map(({ results }: { results: any[] }) => {
+				.map((response: any) => {
+					return this.responseData.results.map((res: any) => {
 						return {
-							title: film.title,
+							title: res.name,
 							start: new Date(
-								film.release_date + getTimezoneOffsetString(this.viewDate)
+								res.date + getTimezoneOffsetString(this.viewDate)
 							),
-							color: colors.yellow,
+							color: this.checkDayType(res.daytype),
 							allDay: true,
 							meta: {
-								film
+								res
 							}
 						};
 					});
 				})
-			);
+		// );
 	}
 
-	dayClicked({ date, events }: { date: Date; events: Array<CalendarEvent<{ film: Film }>>; }): void {
+	checkDayType(daytype) {
+		if (daytype == 'working') {
+			return colors.green
+		}
+		if (daytype == 'off') {
+			return colors.red
+		}
+	}
+
+	beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+		// console.log(body);
+		body.forEach(day => {
+			if (day.date.getDate() % 2 === 1 && day.inMonth) {
+				day.cssClass = 'odd-cell';
+			}
+		});
+	}
+
+	dayClicked({ date, events }: { date: Date; events: Array<CalendarEvent<{ film: any }>>; }): void {
 		if (isSameMonth(date, this.viewDate)) {
 			if (
 				(isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -128,7 +242,7 @@ export class CalendarReportComponent implements OnInit {
 		}
 	}
 
-	eventClicked(event: CalendarEvent<{ film: Film }>): void {
+	eventClicked(event: CalendarEvent<{ film: any }>): void {
 		window.open(
 			`https://www.themoviedb.org/movie/${event.meta.film.id}`,
 			'_blank'

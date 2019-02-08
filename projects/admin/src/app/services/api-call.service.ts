@@ -678,4 +678,5 @@ export class ApiCallService {
 			})
 		return this.http.post(this.baseUrl + '/contract/fetchoffdayssheetforparticularjob', args, { headers: headers })
 	}
+
 }
