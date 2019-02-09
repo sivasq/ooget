@@ -386,6 +386,18 @@ export class ApiCallService {
 		return this.http.post(this.baseUrl + '/job/fetchpendingjobs', employerIds, { headers: headers })
 	}
 
+	getLiveJobsList(): Observable<any> {
+		let employerIds = '';
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/job/fetchlivejobs', employerIds, { headers: headers })
+	}
+
 	jobAddToEmployer(employerJobData): Observable<any> {
 		//var authDatas = JSON.stringify(authData);
 		let userToken = localStorage.getItem('ogToken');

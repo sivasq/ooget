@@ -47,19 +47,19 @@ export class LivejobsComponent implements OnInit {
 		this.getLiveJobsList();
 	}
 
-	getPendingJobsList() {
-		this.busy = this._httpService.getPendingJobsList()
+	getLiveJobsList() {
+		this.busy = this._httpService.getLiveJobsList()
 			.subscribe(
 				response => {
 					if (response.success) {
-						if ((response.pendingjobs).length > 0) {
+						if ((response.livejobs).length > 0) {
 							this.isLiveJobAvailable = true;
 						} else {
 							this.isLiveJobAvailable = false;
 						}
 
 						// console.log(response.pendingjobs);
-						this.jobs_list_live = response.pendingjobs;
+						this.jobs_list_live = response.livejobs;
 
 					} else if (!response.success) {
 
@@ -72,7 +72,7 @@ export class LivejobsComponent implements OnInit {
 			);
 	}
 
-	getLiveJobsList(): any {
+	getLiveJobsList1(): any {
 		this.busy = this._httpService.getSingleEmployersJobsList({ companyid: '5c30634988c71614a016d064' })
 			.subscribe(
 				response => {
