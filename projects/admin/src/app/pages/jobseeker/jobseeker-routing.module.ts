@@ -6,42 +6,48 @@ import { AuthGuardService } from '../../services/auth-guard.service';
 import { JobseekerListComponent } from './jobseeker-list/jobseeker-list.component';
 import { JobseekerFullDetailsComponent } from './jobseeker-full-details/jobseeker-full-details.component';
 import { PendingJobseekersComponent } from './pending-jobseekers/pending-jobseekers.component';
+import { JsTermsAndConditionsComponent } from './js-terms-and-conditions/js-terms-and-conditions.component';
 
 const routes: Routes = [
-  {
-    path: 'list',
-    component: JobseekerListComponent,
-    canActivate: [AuthGuardService]
-  },
-  {
-    path: 'pending',
-    component: PendingJobseekersComponent,
-    canActivate: [AuthGuardService]
-  },
-  {
-    path: 'applied',
-    component: AppliedJobseekerListComponent,
-    canActivate: [AuthGuardService]
-  },
-  {
-    path: ':js_id/view',
-    component: JobseekerDetailsComponent,
-    canActivate: [AuthGuardService]
-  },
-  {
-    path: ':js_id/details',
-    component: JobseekerFullDetailsComponent,
-    canActivate: [AuthGuardService]
-  },
-  {
-    path: '',
-    redirectTo: 'applied',
-    pathMatch: 'full'
-  }
+	{
+		path: 'list',
+		component: JobseekerListComponent,
+		canActivate: [AuthGuardService]
+	},
+	{
+		path: 'pending',
+		component: PendingJobseekersComponent,
+		canActivate: [AuthGuardService]
+	},
+	{
+		path: 'applied',
+		component: AppliedJobseekerListComponent,
+		canActivate: [AuthGuardService]
+	},
+	{
+		path: ':js_id/view',
+		component: JobseekerDetailsComponent,
+		canActivate: [AuthGuardService]
+	},
+	{
+		path: ':js_id/details',
+		component: JobseekerFullDetailsComponent,
+		canActivate: [AuthGuardService]
+	},
+	{
+		path: 't&c',
+		component: JsTermsAndConditionsComponent,
+		canActivate: [AuthGuardService]
+	},
+	{
+		path: '',
+		redirectTo: 'applied',
+		pathMatch: 'full'
+	}
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+	imports: [RouterModule.forChild(routes)],
+	exports: [RouterModule]
 })
 export class JobseekerRoutingModule { }

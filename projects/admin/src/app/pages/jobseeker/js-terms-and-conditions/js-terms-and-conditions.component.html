@@ -1,0 +1,40 @@
+<div class="inner-sidenav-content transition-2">
+	<!-- Http Progress Bar -->
+	<ng-progress></ng-progress>
+
+	<!-- Breadcrumb Start -->
+	<div fxLayout="row wrap">
+		<div class="flex-p" fxFlex="1 1 100%">
+			<mat-card class="mat-breadcrumb" fxLayout="row">
+				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row"
+					fxLayoutAlign="flex-start center">
+					<mat-icon>home</mat-icon>
+					<span class="breadcrumb-title">Home</span>
+				</a>
+
+				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+					<span class="breadcrumb-title active">Jobseekers T&C</span>
+				</div>
+			</mat-card>
+		</div>
+	</div>
+	<!-- Breadcrumb End -->
+
+	<div [ngBusy]="{busy:busy}"></div>
+
+	<div fxLayout="row wrap">
+		<div class="flex-p" fxFlex="100">
+			<mat-card fxLayout="row wrap" style="padding: 25px;">
+				<div fxFlex fxLayoutAlign="end" class="m-b-10">
+					<button *ngIf="textMode=='view'" mat-raised-button color="accent"
+						(click)="textMode='edit'">Edit</button>
+					<button *ngIf="textMode=='edit'" mat-raised-button color="warn"
+						(click)="cancelEdit()">cancel</button> &nbsp;
+					<button *ngIf="textMode=='edit'" mat-raised-button color="primary" (click)="saveTC()">Save</button>
+				</div>
+				<div *ngIf="textMode=='view'" [froalaView]="terms"></div>
+				<div *ngIf="textMode=='edit'" [froalaEditor]="options" [(froalaModel)]="terms"></div>
+			</mat-card>
+		</div>
+	</div>
+</div>

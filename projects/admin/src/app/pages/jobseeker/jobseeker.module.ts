@@ -10,6 +10,7 @@ import { JobseekerDetailsComponent } from './jobseeker-details/jobseeker-details
 import { JobseekerListComponent } from './jobseeker-list/jobseeker-list.component';
 import { JobseekerFullDetailsComponent } from './jobseeker-full-details/jobseeker-full-details.component';
 import { PendingJobseekersComponent } from './pending-jobseekers/pending-jobseekers.component';
+import { JsTermsAndConditionsComponent } from './js-terms-and-conditions/js-terms-and-conditions.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { PendingJobseekersComponent } from './pending-jobseekers/pending-jobseek
     JobseekerRoutingModule,
     SharedModule
   ],
-  declarations: [AppliedJobseekerListComponent, JobseekerDetailsComponent, JobseekerListComponent, JobseekerFullDetailsComponent, PendingJobseekersComponent]
+  declarations: [AppliedJobseekerListComponent, JobseekerDetailsComponent, JobseekerListComponent, JobseekerFullDetailsComponent, PendingJobseekersComponent, JsTermsAndConditionsComponent]
 })
 export class JobseekerModule { }

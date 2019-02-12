@@ -183,6 +183,32 @@ export class ApiCallService {
 			.map(res => res)
 	}
 
+	getJobseekersTC(): Observable<any> {
+		let dummyData = '';
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/fetchjobseekerterms', dummyData, { headers: headers })
+			.map(res => res)
+	}
+
+	updateJobseekersTC(terms): Observable<any> {
+		let dummyData = '';
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/updatejobseekerterms', terms, { headers: headers })
+			.map(res => res)
+	}
+
 	uploadTermsDoc(formData, comapnyId): Observable<any> {
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(

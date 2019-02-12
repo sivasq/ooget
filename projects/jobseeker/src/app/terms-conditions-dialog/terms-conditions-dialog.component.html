@@ -1,5 +1,6 @@
 <h2 mat-dialog-title align="center" *ngIf="data.boxTitle" [innerHTML]="data.boxTitle"></h2>
+<div [ngBusy]="{busy:busy}"></div>
 <mat-dialog-content *ngIf="data.message" [innerHTML]="data.message"></mat-dialog-content>
 <mat-dialog-actions [attr.align]="data.actionalign">
-    <button mat-button (click)="dialogClose()" color="primary">{{data.okButtonText}}</button>
+	<button mat-button (click)="dialogClose()" color="primary">{{data.okButtonText}}</button>
 </mat-dialog-actions>

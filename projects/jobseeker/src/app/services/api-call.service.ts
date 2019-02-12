@@ -446,4 +446,17 @@ export class ApiCallService {
 			})
 		return this.http.post(this.baseUrl + '/job/unsavejob', ids, { headers: headers })
 	}
+
+	getJobseekersTC(): Observable<any> {
+		let dummyData = '';
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/fetchjobseekerterms', dummyData, { headers: headers })
+			.map(res => res)
+	}
 }

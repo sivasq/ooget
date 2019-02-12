@@ -12195,3 +12195,9 @@ body {
 .odd-cell {
     background-color: pink !important;
 }
+
+@media print {
+    .doNotPrint {
+        display: none !important;
+    }
+}

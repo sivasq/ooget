@@ -64,85 +64,85 @@ export class CalendarReportComponent implements OnInit {
 		"total_pages": 23,
 		"results": [
 			{
-				"name": "Alita: Battle Angel",
+				"name": "jobseeker 1",
 				"daytype": "working",
 				"date": "2019-02-05"
 			}, {
-				"name": "Velvet Buzzsaw",
+				"name": "jobseeker 2",
 				"daytype": "working",
 				"date": "2019-02-01"
 			}, {
-				"name": "What Men Want",
+				"name": "jobseeker 3",
 				"daytype": "working",
 				"date": "2019-02-08"
 			}, {
-				"name": "Cold Pursuit",
+				"name": "jobseeker 4",
 				"daytype": "working",
-				"date": "2019-02-07"
+				"date": "2019-02-13"
 			}, {
-				"name": "The Man Who Killed Hitler and Then the Bigfoot",
-				"daytype": "working",
-				"date": "2019-02-08"
-			}, {
-				"name": "The Prodigy",
-				"daytype": "working",
-				"date": "2019-02-07"
-			}, {
-				"name": "Lords of Chaos",
+				"name": "jobseeker 5",
 				"daytype": "working",
 				"date": "2019-02-08"
 			}, {
-				"name": "Scooby-Doo! and the Curse of the 13th Ghost",
+				"name": "jobseeker 6",
+				"daytype": "working",
+				"date": "2019-02-15"
+			}, {
+				"name": "jobseeker 7",
+				"daytype": "working",
+				"date": "2019-02-08"
+			}, {
+				"name": "jobseeker 8",
 				"daytype": "off",
-				"date": "2019-02-05"
+				"date": "2019-02-19"
 			}, {
-				"name": "Untogether",
-				"daytype": "off",
-				"date": "2019-02-08"
-			}, {
-				"name": "Berlin, I Love You",
-				"daytype": "working",
-				"date": "2019-02-08"
-			}, {
-				"name": "Under the Eiffel Tower",
+				"name": "jobseeker 9",
 				"daytype": "off",
 				"date": "2019-02-08"
 			}, {
-				"name": "The Kindness of Strangers",
+				"name": "jobseeker 10",
 				"daytype": "working",
-				"date": "2019-02-07"
+				"date": "2019-02-08"
 			}, {
-				"name": "Kumbalangi Nights",
+				"name": "jobseeker 11",
+				"daytype": "off",
+				"date": "2019-02-08"
+			}, {
+				"name": "jobseeker 12",
+				"daytype": "working",
+				"date": "2019-02-21"
+			}, {
+				"name": "jobseeker 13",
 				"daytype": "off",
 				"date": "2019-02-07"
 			}, {
-				"name": "The Factory",
+				"name": "jobseeker 14",
 				"daytype": "working",
-				"date": "2019-02-07"
+				"date": "2019-02-23"
 			}, {
-				"name": "Black Garden",
+				"name": "jobseeker 15",
 				"daytype": "off",
-				"date": "2019-02-07"
+				"date": "2019-02-25"
 			}, {
-				"name": "Nicky Larson et le Parfum de Cupidon",
+				"name": "jobseeker 16",
 				"daytype": "working",
 				"date": "2019-02-06"
 			}, {
-				"name": "Glück ist was für Weicheier",
+				"name": "jobseeker 17",
+				"daytype": "working",
+				"date": "2019-02-25"
+			}, {
+				"name": "jobseeker 18",
+				"daytype": "working",
+				"date": "2019-02-22"
+			}, {
+				"name": "jobseeker 19",
 				"daytype": "working",
 				"date": "2019-02-07"
 			}, {
-				"name": "Copperman",
+				"name": "jobseeker 20",
 				"daytype": "working",
-				"date": "2019-02-07"
-			}, {
-				"name": "Mødregruppen",
-				"daytype": "working",
-				"date": "2019-02-07"
-			}, {
-				"name": "The Day After I'm Gone",
-				"daytype": "working",
-				"date": "2019-02-07"
+				"date": "2019-02-04"
 			}
 		]
 	};
@@ -228,7 +228,7 @@ export class CalendarReportComponent implements OnInit {
 		});
 	}
 
-	dayClicked({ date, events }: { date: Date; events: Array<CalendarEvent<{ film: any }>>; }): void {
+	dayClicked({ date, events }: { date: Date; events: Array<CalendarEvent<{ res: any }>>; }): void {
 		if (isSameMonth(date, this.viewDate)) {
 			if (
 				(isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -242,11 +242,43 @@ export class CalendarReportComponent implements OnInit {
 		}
 	}
 
-	eventClicked(event: CalendarEvent<{ film: any }>): void {
+	eventClicked(event: CalendarEvent<{ res: any }>): void {
 		window.open(
-			`https://www.themoviedb.org/movie/${event.meta.film.id}`,
+			`https://www.themoviedb.org/movie/${event.meta.res.id}`,
 			'_blank'
 		);
 	}
 
+	print(): void {
+		let printContents, popupWin;
+		printContents = document.getElementById('print-section').innerHTML;
+		let stylesHtml = this.getTagsHtml('style');
+		let linksHtml = this.getTagsHtml('link');
+		popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+		popupWin.document.open();
+		popupWin.document.write(`
+    <html>
+        <head>
+		  <title>Off Days Calendar View</title>
+		  	${linksHtml}
+            ${stylesHtml}
+		  <link rel="stylesheet" type="text/css" href="style.css" />
+          <style>
+          //........Customized style.......
+          </style>
+        </head>
+    	<body onload="window.print();window.close()">${printContents}</body>
+    </html>`
+		);
+		popupWin.document.close();
+	}
+
+	private getTagsHtml(tagName: keyof HTMLElementTagNameMap): string {
+		const htmlStr: string[] = [];
+		const elements = document.getElementsByTagName(tagName);
+		for (let idx = 0; idx < elements.length; idx++) {
+			htmlStr.push(elements[idx].outerHTML);
+		}
+		return htmlStr.join('\r\n');
+	}
 }

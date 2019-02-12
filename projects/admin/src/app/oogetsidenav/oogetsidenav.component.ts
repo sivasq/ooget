@@ -39,6 +39,11 @@ export class OogetsidenavComponent implements OnInit {
 					displayName: 'Holidays',
 					iconName: 'work_off',
 					route: '/admin/holidays',
+				},
+				{
+					displayName: 'Jobseeker T&C',
+					iconName: 'contact_support',
+					route: '/admin/jobseekers/t&c',
 				}
 			]
 		},

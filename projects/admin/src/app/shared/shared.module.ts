@@ -23,7 +23,7 @@ import { NgBusyModule } from 'ng-busy';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { AuthGuardService } from '../services/auth-guard.service';
 import { EqualValidator, CompareDirective } from '../directives/custom-directive.directive';
-
+import { NgxPrintModule } from 'ngx-print';
 // import { AsyncLocalStorageModule } from 'angular-async-local-storage';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -40,6 +40,7 @@ import { NgProgressRouterModule } from '@ngx-progressbar/router';
 import { JsonToCsvService } from '../services/json-to-csv.service';
 import { JsonToTextService } from '../services/json-to-text.service';
 import { DynamicTableModule } from 'material-dynamic-table';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 
 // Calendar
 import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -98,6 +99,9 @@ export const MY_NATIVE_FORMATS = {
 			provide: DateAdapter,
 			useFactory: adapterFactory
 		}),
+		NgxPrintModule,
+		FroalaEditorModule.forRoot(),
+		FroalaViewModule.forRoot()
 	],
 	declarations: [
 		OogetsidenavComponent,
@@ -150,6 +154,9 @@ export const MY_NATIVE_FORMATS = {
 		MultipleDatePickerModule,
 		NgxMaskModule,
 		DynamicTableModule,
+		NgxPrintModule,
+		FroalaEditorModule,
+		FroalaViewModule,
 		EqualValidator, CompareDirective, NgPipesModule, InvoiceTemp1Component, InvoiceTemp2Component,
 		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, SafeHtml, AgePipe,
 	],

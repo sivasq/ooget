@@ -358,7 +358,7 @@ export class JobseekerTimesheetReportComponent implements OnInit {
 							// this.employerCount = (response.employerreport).length;
 							// this.employers_list = response.employerreport;
 
-							// this.employerDatas = response.employerreport[0];
+							this.employerDatas = response.employerreport[0];
 							console.log(this.employerDatas);
 						} else {
 							this.isEmployerAvailable = false;

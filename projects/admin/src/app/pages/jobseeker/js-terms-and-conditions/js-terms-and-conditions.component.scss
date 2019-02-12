@@ -1,0 +1,22 @@
+@import "../../../../variables.scss";
+.inner-sidenav-content {
+    position: absolute;
+    top: 64px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px;
+    min-height: calc(100% - 80px);
+    overflow: auto;
+}
+
+:host ::ng-deep .ng-busy-default-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+:host ::ng-deep .ng-busy-default-sign {
+    border: none;
+}
