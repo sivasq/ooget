@@ -183,6 +183,7 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 
 							this.inTime = this.currentTimeSheetLayout.timesheet.punchintime;
 							this.outTime = this.currentTimeSheetLayout.timesheet.punchouttime;
+							console.log(this.inTime);
 						}
 					} else if (!response.success) {
 						console.log(response);
@@ -218,23 +219,23 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 						console.log(this.isContractEnded);
 
 						//get matched object
-						let todaysheet = contract_jobs_timesheet.filter(item => item.date == this.datePipe.transform(Date.now(), 'y/MM/dd', '+0800'));
+						// let todaysheet = contract_jobs_timesheet.filter(item => item.date == this.datePipe.transform(Date.now(), 'y/MM/dd', '+0800'));
 
 						//set empty
-						this.inTime = '';
-						this.outTime = '';
+						// this.inTime = '';
+						// this.outTime = '';
 
-						if (todaysheet.length != 0) {
-							//check keys in object
-							this.isTimeInHide = Object.keys(todaysheet[0]).some(item => item == 'punchintime');
-							console.log(this.isTimeInHide);
-							if (this.isTimeInHide) { this.inTime = todaysheet[0].punchintime }
-							this.isTimeOutHide = Object.keys(todaysheet[0]).some(item => item == 'punchouttime');
-							if (this.isTimeOutHide) { this.outTime = todaysheet[0].punchouttime }
-						} else {
-							this.isTimeInHide = false;
-							this.isTimeOutHide = true;
-						}
+						// if (todaysheet.length != 0) {
+						// 	//check keys in object
+						// 	this.isTimeInHide = Object.keys(todaysheet[0]).some(item => item == 'punchintime');
+						// 	console.log(this.isTimeInHide);
+						// 	if (this.isTimeInHide) { this.inTime = todaysheet[0].punchintime }
+						// 	this.isTimeOutHide = Object.keys(todaysheet[0]).some(item => item == 'punchouttime');
+						// 	if (this.isTimeOutHide) { this.outTime = todaysheet[0].punchouttime }
+						// } else {
+						// 	this.isTimeInHide = false;
+						// 	this.isTimeOutHide = true;
+						// }
 					} else if (!response.success) {
 						console.log(response);
 					}

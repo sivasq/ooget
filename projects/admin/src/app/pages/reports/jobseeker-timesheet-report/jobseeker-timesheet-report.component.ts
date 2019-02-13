@@ -73,7 +73,7 @@ export class JobseekerTimesheetReportComponent implements OnInit {
 	// 	}
 	// ];
 
-	displayedColumns = ['work_date', 'in_time', 'out_time', 'verified', 'verifiedpunchintime', 'verifiedpunchouttime', 'normalworkhour', 'otworkhour1', 'otworkhour2', 'salarymultiplier', 'totalworkhour', 'normalsalary', 'ot1salary', 'ot2salary', 'totalsalary', 'invoiceno'];
+	displayedColumns = ['work_date', 'work_day', 'in_time', 'out_time', 'verified', 'verifiedpunchintime', 'verifiedpunchouttime', 'normalworkhour', 'otworkhour1', 'otworkhour2', 'totalworkhour', 'normalsalary', 'ot1salary', 'ot2salary', 'totalsalary', 'invoiceno'];
 
 	employerDatas;
 
@@ -117,7 +117,7 @@ export class JobseekerTimesheetReportComponent implements OnInit {
 						'_id': "5b71ab00249e740960d4ef2b",
 					},
 					{
-						'date': "2018/08/14",
+						'date': "2018/08/15",
 						'late': false,
 						'lateinhour': "00:00",
 						'lateintimation': false,
@@ -143,7 +143,7 @@ export class JobseekerTimesheetReportComponent implements OnInit {
 						'_id': "5b71ab00249e740960d4ef2b",
 					},
 					{
-						'date': "2018/08/14",
+						'date': "2018/08/16",
 						'late': false,
 						'lateinhour': "00:00",
 						'lateintimation': false,
@@ -169,7 +169,7 @@ export class JobseekerTimesheetReportComponent implements OnInit {
 						'_id': "5b71ab00249e740960d4ef2b",
 					},
 					{
-						'date': "2018/08/14",
+						'date': "2018/08/17",
 						'late': false,
 						'lateinhour': "00:00",
 						'lateintimation': false,
@@ -233,7 +233,7 @@ export class JobseekerTimesheetReportComponent implements OnInit {
 						'_id': "5b71ab00249e740960d4ef2b",
 					},
 					{
-						'date': "2018/08/14",
+						'date': "2018/08/15",
 						'late': false,
 						'lateinhour': "00:00",
 						'lateintimation': false,
@@ -259,7 +259,7 @@ export class JobseekerTimesheetReportComponent implements OnInit {
 						'_id': "5b71ab00249e740960d4ef2b",
 					},
 					{
-						'date': "2018/08/14",
+						'date': "2018/08/16",
 						'late': false,
 						'lateinhour': "00:00",
 						'lateintimation': false,
@@ -285,7 +285,7 @@ export class JobseekerTimesheetReportComponent implements OnInit {
 						'_id': "5b71ab00249e740960d4ef2b",
 					},
 					{
-						'date': "2018/08/14",
+						'date': "2018/08/17",
 						'late': false,
 						'lateinhour': "00:00",
 						'lateintimation': false,
