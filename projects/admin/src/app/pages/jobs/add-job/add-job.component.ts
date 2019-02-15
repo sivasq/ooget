@@ -684,10 +684,6 @@ export class AddJobComponent implements OnInit {
 		},
 		{
 			"_id": "432424",
-			"Environment": "Outdoor"
-		},
-		{
-			"_id": "432424",
 			"Environment": "Supermarket"
 		},
 		{

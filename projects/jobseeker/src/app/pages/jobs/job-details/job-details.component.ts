@@ -222,7 +222,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 					} else if (!response.success) {
 						console.log(response);
 						if (response.message == "conflictjob") {
-							let snackBarRef = this.snackBar.open('The Job you are applying is clashing with other job(Already you are under Contract) Timing', 'Close', {
+							let snackBarRef = this.snackBar.open('The job you are applying clashes with a job applied', 'Close', {
 								duration: 10000,
 							});
 
