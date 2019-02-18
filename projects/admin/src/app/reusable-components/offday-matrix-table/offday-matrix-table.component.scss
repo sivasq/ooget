@@ -6,14 +6,29 @@ td.mat-cell,
 td.mat-footer-cell,
 th.mat-header-cell {
     text-align: center;
-    border: 1px solid #eee;
+    padding: 0 10px;
 }
 
 th.mat-header-cell {
     color: #ffffff !important;
     background: #1c3e8e;
     font-weight: 600;
-    padding: 0 5px;
+}
+
+tr td:not(:last-child).mat-cell,
+tr td:not(:last-child).mat-footer-cell,
+tr th:not(:last-child).mat-header-cell {
+    border-right: 1px solid #ccc;
+}
+
+// tr.mat-header-row,
+// tr.mat-footer-row,
+// tr.mat-row {
+//     height: 48px;
+// }
+th,
+td {
+    white-space: nowrap;
 }
 
 .selectable {

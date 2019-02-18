@@ -1,6 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material';
 import { DatePipe } from '@angular/common';
+import { AsyncSubscriber } from '../../../../services/async.service';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-timesheet-notes',
@@ -8,8 +10,10 @@ import { DatePipe } from '@angular/common';
 	styleUrls: ['./timesheet-notes.component.scss']
 })
 export class TimesheetNotesComponent implements OnInit {
-
-	constructor(private bottomSheetRef: MatBottomSheetRef<TimesheetNotesComponent>, @Inject(MAT_BOTTOM_SHEET_DATA) public data: any, private datePipe: DatePipe) { }
+	appearance$: Observable<any>;
+	constructor(private bottomSheetRef: MatBottomSheetRef<TimesheetNotesComponent>, @Inject(MAT_BOTTOM_SHEET_DATA) public data: any, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber) {
+		this.appearance$ = asyncSubscriber.getAppearance.pipe();
+	}
 
 	public TimesheetNotes;
 	public editText = "Edit";
@@ -82,11 +86,10 @@ export class TimesheetNotesComponent implements OnInit {
 	toggleShowEditor() {
 		this.showNotesEditor = !this.showNotesEditor;
 		if (this.showNotesEditor) {
-			this.editText = "Cancel Edit";
+			this.editText = "Cancel";
 		} else {
 			this.editText = "Edit";
 		}
-		
 	}
 
 }

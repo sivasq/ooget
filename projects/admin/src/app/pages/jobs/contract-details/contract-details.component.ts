@@ -675,6 +675,7 @@ export class ContractDetailsComponent implements OnInit {
 			'notes': TimeSheetData.notes,
 			'date': TimeSheetData.date,
 		};
+		bottomSheetConfig.autoFocus = false;
 
 		let bottomSheetRef = this.bottomSheet.open(TimesheetNotesComponent, bottomSheetConfig);
 

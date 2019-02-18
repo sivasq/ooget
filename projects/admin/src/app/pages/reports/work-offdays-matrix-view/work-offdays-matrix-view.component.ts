@@ -663,8 +663,8 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.month = 7;
-		this.year = 2018;
+		this.month = 1;
+		this.year = 2019;
 
 		// this.response = this.sampleResponse;
 		// var firstDay = new Date(this.year, this.month, 1);

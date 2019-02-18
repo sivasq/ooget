@@ -1,12 +1,20 @@
 <div class="container">
 	<div fxLayout="row" fxLayoutAlign="space-between center">
-		<span mat-dialog-title style="font-size: 18px;">Notes for Timesheet {{data.date | date:'dd/MM/yyyy'}}</span>
-		<div>
-			<button *ngIf="haveNotes" mat-stroked-button color="accent" (click)="toggleShowEditor()">{{editText}}</button>
-			&nbsp;
-			<a mat-mini-fab color="warn" (click)="onNoClick()" tabindex="-1">
-				<mat-icon>close</mat-icon>
-			</a>
+		<button mat-mini-fab color="warn" (click)="onNoClick()" tabindex="-1"
+			style="position: absolute; top: 5px; right: 5px;">
+			<mat-icon>close</mat-icon>
+		</button>
+	</div>
+
+	<div fxLayout="row" fxLayoutAlign="center center">
+		<div mat-dialog-title>
+			<div fxLayout="column" fxLayoutAlign="center center">
+				<div style="font-size: 18px; font-weight: 600; text-decoration: underline;">Manage Notes for TimeSheet
+					{{data.date | date:'dd/MM/yyyy'}}
+				</div>
+				<button *ngIf="haveNotes && !showNotesEditor" color="primary" mat-stroked-button
+					(click)="toggleShowEditor()">{{editText}}</button>
+			</div>
 		</div>
 	</div>
 
@@ -14,15 +22,21 @@
 		<b>Notes : </b> {{data.notes}}
 	</div>
 
-	<form *ngIf="showNotesEditor" class="mat-dialog-content" style="padding-top:15px;" (ngSubmit)="submit()" #timesheetNotesForm="ngForm">
+	<form *ngIf="showNotesEditor" class="mat-dialog-content" style="padding-top:15px;" (ngSubmit)="submit()"
+		#timesheetNotesForm="ngForm">
 		<div class="form">
-			<mat-form-field fxFlex>
-				<textarea matInput placeholder="Notes" name="notes" [(ngModel)]="TimesheetNotes" required></textarea>
+			<mat-form-field fxFlex [appearance]="appearance$ | async">
+				<mat-label>Notes for {{data.date | date:'dd/MM/yyyy'}}</mat-label>
+				<textarea matInput matTextareaAutosize placeholder="Notes" name="notes" [(ngModel)]="TimesheetNotes"
+					required></textarea>
 			</mat-form-field>
 		</div>
 
-		<div mat-dialog-actions>
-			<button mat-button [type]="submit" [disabled]="!timesheetNotesForm.valid" (click)="stopEdit()">Save</button>
+		<div mat-dialog-actions *ngIf="timesheetNotesForm.valid" fxLayoutAlign="end">
+			<button *ngIf="haveNotes" mat-stroked-button color="warn"
+				(click)="toggleShowEditor()">{{editText}}</button>&nbsp;
+			<button mat-stroked-button color="primary" [type]="submit" [disabled]="!timesheetNotesForm.valid"
+				(click)="stopEdit()">Save</button>
 		</div>
 	</form>
 </div>

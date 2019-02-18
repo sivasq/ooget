@@ -1,10 +1,20 @@
 <div class="container">
+
 	<div fxLayout="row" fxLayoutAlign="space-between center">
-		<span mat-dialog-title style="font-size: 18px;">Late Reason Day {{data.date | date:'dd/MM/yyyy'}}</span>
+		<button mat-mini-fab color="warn" (click)="onNoClick()" tabindex="-1"
+			style="position: absolute; top: 5px; right: 5px;">
+			<mat-icon>close</mat-icon>
+		</button>
+	</div>
+
+	<div fxLayout="row" fxLayoutAlign="center center">
+		<span mat-dialog-title style="font-size: 18px; font-weight: 600; text-decoration: underline;"> Mange Late
+			Reason</span>
 	</div>
 
 	<div style="padding:25px 0 5px 0;">
-		<p style="padding-bottom: 10px; font-size: 14px;"><b>Late Reason : </b> {{data.latereason}}</p>
-		<p style="padding-bottom: 10px; font-size: 14px;"><b>Late Intimation at : </b> {{data.lateinitimatedat}}</p>
+		<p style="padding-bottom: 10px; font-size: 14px;"><b>Timesheet Date : </b> {{data.date | date:'dd/MM/yyyy'}}</p>
+		<p style="padding-bottom: 10px; font-size: 14px;"><b>Reason : </b> {{data.latereason}}</p>
+		<p style="padding-bottom: 10px; font-size: 14px;"><b>Intimation at : </b> {{data.lateinitimatedat}}</p>
 	</div>
 </div>
