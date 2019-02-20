@@ -40,6 +40,11 @@ const routes: Routes = [
 			{
 				path: 'reg',
 				component: RegisterComponent
+			},
+			{
+				path: '**',
+				redirectTo: 'login',
+				pathMatch: 'full'
 			}
 		]
 	},
@@ -50,23 +55,33 @@ const routes: Routes = [
 		children: [
 			{
 				path: 'dashboard',
-				loadChildren: './pages/dashboard/dashboard.module#DashboardModule'
+				redirectTo: 'profile',
+				pathMatch: 'full'
 			},
 			{
-				path: 'jobs',
-				loadChildren: './pages/jobs/jobs.module#JobsModule'
+				path: 'dashboard',
+				loadChildren: './pages/dashboard/dashboard.module#DashboardModule'
 			},
+			// {
+			// 	path: 'jobs',
+			// 	loadChildren: './pages/jobs/jobs.module#JobsModule'
+			// },
 			{
 				path: 'profile',
 				loadChildren: './pages/profile/profile.module#ProfileModule'
 			},
+			// {
+			// 	path: 'timesheet',
+			// 	loadChildren: './pages/timesheet/timesheet.module#TimesheetModule'
+			// },
+			// {
+			// 	path: 'faq',
+			// 	loadChildren: './pages/faq/faq.module#FaqModule'
+			// },
 			{
-				path: 'timesheet',
-				loadChildren: './pages/timesheet/timesheet.module#TimesheetModule'
-			},
-			{
-				path: 'faq',
-				loadChildren: './pages/faq/faq.module#FaqModule'
+				path: '**',
+				redirectTo: 'profile',
+				pathMatch: 'full'
 			}
 		]
 	},

@@ -66,10 +66,11 @@ export class AuthloginComponent implements OnInit, OnDestroy {
 
 						// If Successfull Validation redirect to Dashboard or Profile
 						if (response.firsttime == "true") {
+							console.log("load1");
 							await this.router.navigate(['main/profile']);
 
 						} else if (response.firsttime == "false") {
-
+							console.log("load2");
 							await this.router.navigate(['main/profile']);
 							// this.router.navigate(['main/dashboard']);
 						}
