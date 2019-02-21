@@ -54,7 +54,7 @@
 		</a>
 	</div>
 
-	<div class="menu-item">
+	<div class="menu-item" *ngxPermissionsOnly="['superemployer']">
 		<a mat-button routerLink="/employer/jobs/candidates/pendingapplication" routerLinkActive="active-link" fxLayout="row"
 		 fxLayoutAlign="flex-start center">
 			<mat-icon>all_out</mat-icon>

@@ -1,0 +1,107 @@
+.user-search {
+    width: 0;
+    overflow: hidden;
+    -webkit-transition: .3s;
+    transition: .3s;
+}
+
+.user-search.show {
+    width: 100%;
+    overflow: visible;
+}
+
+.user-search .mat-form-field {
+    width: 100% !important;
+    text-align: center !important;
+    height: 36px;
+}
+
+::ng-deep .user-search .mat-form-field-infix {
+    padding: 5px;
+}
+
+/* Data Search End */
+
+/* Data Listing Start */
+
+.user-name {
+    padding: 0 12px;
+    font-weight: 400;
+    font-size: 1.17em;
+    margin: 0px;
+}
+
+.user-content {
+    padding: 10px;
+}
+
+.user-content .user-img {
+    position: relative;
+}
+
+.user-content .user-img img {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+}
+
+.user-content .mat-slide-toggle {
+    margin-top: 15px;
+}
+
+.user-content .user-details .mat-icon {
+    padding: 2px 10px;
+}
+
+.user-content .user-details span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+}
+
+.user-details p {
+    margin: 0;
+}
+
+.muted-text {
+    color: rgba(0, 0, 0, .54);
+}
+
+:host ::ng-deep .mat-tab-labels {
+    flex-direction: row;
+    justify-content: space-between !important;
+}
+
+.mat-tab-labels .mat-tab-label-content {
+    font-weight: 600;
+}
+
+/* Data Listing End */
+
+/* Mat Menu Start */
+
+.mat-menu-item {
+    line-height: 34px;
+    height: 34px;
+    font-size: 14px;
+}
+
+::ng-deep .mat-menu-panel {
+    border-radius: 0 !important;
+}
+
+/* Mat Menu End */
+
+.p-10 {
+    padding: 10px !important;
+}
+
+.mat-tab-group {
+    margin: 0 8px !important;
+    border: 1px solid #eef;
+}
+
+.no-data {
+    min-height: 25vh;
+}

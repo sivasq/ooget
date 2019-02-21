@@ -6,12 +6,14 @@
 	<div fxLayout="row wrap">
 		<div class="flex-p" fxFlex="1 1 100%">
 			<mat-card class="mat-breadcrumb" fxLayout="row">
-				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row"
+					fxLayoutAlign="flex-start center">
 					<mat-icon>home</mat-icon>
 					<span class="breadcrumb-title">Home</span>
 				</a>
 
-				<a class="breadcrumb-item" routerLink="/admin/employers/list" fxLayout="row" fxLayoutAlign="center center">
+				<a class="breadcrumb-item" routerLink="/admin/employers/list" fxLayout="row"
+					fxLayoutAlign="center center">
 					<span class="breadcrumb-title">Employers</span>
 				</a>
 
@@ -53,10 +55,12 @@
 
 	<!-- Data Lists Start -->
 	<div fxLayout="row wrap" *ngIf="isPendingJobAvailable">
-		<div class="flex-p" fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50" *ngFor="let job of pending_jobs_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
+		<div class="flex-p" fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50"
+			*ngFor="let job of pending_jobs_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
 			<mat-card class="p-0">
 				<div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
-					<h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below" routerLink="/admin/employers/{{job.companyid._id}}/jobs/{{job._id}}/view">{{job.jobtitle}}</h3>
+					<h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below"
+						routerLink="/admin/employers/{{job.companyid._id}}/jobs/{{job._id}}/view">{{job.jobtitle}}</h3>
 					<button mat-icon-button [matMenuTriggerFor]=i>
 						<mat-icon>more_vert</mat-icon>
 					</button>
@@ -75,16 +79,54 @@
 				<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
 					<div class="user-details transition-2" fxFlex="100" fxLayout="column">
 						<p fxLayout="row" fxLayoutAlign="start center">
-							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">event_seat</mat-icon>
-							<span matTooltip="Department" matTooltipPosition="right">Dept : {{job.department}}</span>
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">book
+							</mat-icon>
+							<span matTooltip="Job Title" matTooltipPosition="right">
+								<span class="key">Job Title : </span>
+								<span class="value">{{job.jobtitle | titlecase}}</span>
+							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
-							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">pan_tool</mat-icon>
-							<span matTooltip="PAX" matTooltipPosition="right">PAX : {{job.numberofpax}}</span>
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+								event_seat</mat-icon>
+							<span matTooltip="Department" matTooltipPosition="right">
+								<span class="key">Dept : </span>
+								<span class="value">{{job.department}}</span>
+							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
-							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">security</mat-icon>
-							<span matTooltip="Job Status" matTooltipPosition="right">Status : {{job.jobstatus}}</span>
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">rowing
+							</mat-icon>
+							<span matTooltip="PAX" matTooltipPosition="right">
+								<span class="key">Vacancies / PAX Required : </span>
+								<span class="value">{{job.numberofpax-job.numberofcontracts}} /
+									{{job.numberofpax}}</span>
+							</span>
+						</p>
+						<p fxLayout="row" fxLayoutAlign="start center">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">gavel
+							</mat-icon>
+							<span matTooltip="Job Type" matTooltipPosition="right">
+								<span class="key">Job Type : </span>
+								<span class="value">{{job.employmenttype}}</span>
+							</span>
+						</p>
+						<p fxLayout="row" fxLayoutAlign="start center">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+								date_range</mat-icon>
+							<span matTooltip="Job Period" matTooltipPosition="right">
+								<span class="key">Job Period : </span>
+								<span class="value">{{job.jobperiodfrom | date:'dd/MM/yyyy'}} -
+									{{job.jobperiodto | date:'dd/MM/yyyy'}}</span>
+							</span>
+						</p>
+						<p fxLayout="row" fxLayoutAlign="start center">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">security
+							</mat-icon>
+							<span matTooltip="Job Status" matTooltipPosition="right">
+								<span class="key">Status : </span>
+								<span class="value">{{job.jobstatus | titlecase}}</span>
+							</span>
 						</p>
 					</div>
 				</div>
@@ -103,7 +145,8 @@
 							Items per page:
 						</div>
 						<mat-form-field class="mat-paginator-page-size-select mat-form-field-hide-placeholder">
-							<mat-select placeholder="" [(ngModel)]="tab1PaginateConfig.itemsPerPage" name="itemsPerPage">
+							<mat-select placeholder="" [(ngModel)]="tab1PaginateConfig.itemsPerPage"
+								name="itemsPerPage">
 								<mat-option *ngFor="let pageSizeOption of pageSizeOptions" [value]="pageSizeOption">
 									{{pageSizeOption}}
 								</mat-option>
@@ -111,8 +154,9 @@
 						</mat-form-field>
 					</div>
 					<div class="mat-paginator-range-actions">
-						<pagination-controls class="ooget-pagination" [id]="tab1PaginateConfig.id" [maxSize]="tab1PaginateControlMaxSize"
-						 [autoHide]="tab1PaginateControlAutoHide" (pageChange)="tab1PaginateConfig.currentPage = $event"></pagination-controls>
+						<pagination-controls class="ooget-pagination" [id]="tab1PaginateConfig.id"
+							[maxSize]="tab1PaginateControlMaxSize" [autoHide]="tab1PaginateControlAutoHide"
+							(pageChange)="tab1PaginateConfig.currentPage = $event"></pagination-controls>
 					</div>
 				</div>
 			</mat-card>
@@ -120,7 +164,8 @@
 	</div>
 	<!-- Pagination End -->
 
-	<div *ngIf="!isPendingJobAvailable" fxLayout="column" fxLayoutAlign="center center" class="no-data" style="border: 2px solid #eee; margin:8px;">
+	<div *ngIf="!isPendingJobAvailable" fxLayout="column" fxLayoutAlign="center center" class="no-data"
+		style="border: 2px solid #eee; margin:8px;">
 		<p>Currently No Pending Jobs Found.</p>
 	</div>
 

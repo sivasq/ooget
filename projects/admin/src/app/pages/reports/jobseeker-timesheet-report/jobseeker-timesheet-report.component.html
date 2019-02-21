@@ -1,17 +1,3 @@
-<!-- <div class="inner-sidenav-content transition-2">
-	<div fxLayout="row wrap" fxFill>
-		<div fxFlex fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
-			<h1 style="color: #bbbbbb; text-transform: uppercase; text-align: center;">
-				Working Here
-			</h1>
-			<button mat-stroked-button (click)="backClicked()">
-				<mat-icon>arrow_back</mat-icon>
-				Go Back
-			</button>
-		</div>
-	</div>
-</div> -->
-
 <div class="inner-sidenav-content transition-2">
 	<!-- Breadcrumb Start -->
 	<div fxLayout="row wrap">
@@ -35,64 +21,38 @@
 	<div fxLayout="row wrap">
 
 		<div class="flex-p" fxFlex="100">
-			<p style="color:red; text-align: center; text-transform: capitalize">This is the sample report</p>
+			<!-- <p style="color:red; text-align: center; text-transform: capitalize">This is the sample report</p> -->
 			<mat-card fxLayout="row wrap">
-				<!-- <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start">
-					<mat-form-field fxFlex="100" fxFlex.gt-sm="{{employerDatas ? '40' : '100'}}" appearance="outline">
+				<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start">
+					<mat-form-field fxFlex="100" fxFlex.gt-sm="{{jobseekers.length > 0 ? '40' : '100'}}"
+						appearance="outline">
 						<mat-label>Choose Jobseeker</mat-label>
-						<mat-select placeholder="Choose Employer" name="SelectedEmployer" [(ngModel)]="SelectedEmployer" (ngModelChange)="getEmployerJobs($event)">
-							<mat-option *ngFor="let employer of employers_list" [value]="employer._id">
-								{{employer.companyname}} - {{employer.companycode}}
+						<mat-select placeholder="Choose Employer" name="SelectedJobseeker"
+							[(ngModel)]="SelectedJobseeker" (ngModelChange)="getJobseekerContracts()">
+							<mat-option *ngFor="let jobseeker of jobseekers" [value]="jobseeker._id">
+								{{jobseeker.username}} - {{jobseeker.email}}
 							</mat-option>
 						</mat-select>
 					</mat-form-field>
 
-					<mat-form-field *ngIf="employerDatas" fxFlex="100" fxFlex.gt-sm="40" appearance="outline">
-						<mat-label>Search Jobs</mat-label>
-						<input matInput name="jobFilter" [(ngModel)]="jobFilter" placeholder="Search Jobs...">
-					</mat-form-field>
-				</div> -->
+					<mat-card class="contractor p-0 m-b-15" *ngFor="let contractor of employerDatas;">
+						<div style="padding: 10px;">
+							<p style="padding: 5px;"> <span class="key">Comapny : </span>{{contractor.companyname}} </p>
+							<p style="padding: 5px;"> <span class="key">Work Time : </span>{{contractor.job.starttime}}
+								to
+								{{contractor.job.endtime}} </p>
+							<p style="padding: 5px;"> <span class="key">Rate : </span>${{contractor.job.salary}}/hour
+							</p>
 
-				<!-- <mat-accordion *ngIf="employerDatas" class="accordion-reports" fxFlex="100">
-					<mat-expansion-panel *ngFor="let job of employerDatas.jobs | filter:jobFilter; let i = index" #expPanel>
-						<mat-expansion-panel-header fxAlignLayout="space-between center" style="height: 100px!important;">
-							<mat-panel-title fxFlex>
-								Job No: {{job.jobnumber}}
-							</mat-panel-title>
-							<mat-panel-description fxFlex *ngIf="expPanel.expanded">
-								<mat-form-field class="no-padding" (click)="$event.stopPropagation()" appearance="outline" fxFlex="100">
-									<mat-label>Search Employees</mat-label>
-									<input matInput name="employeeFilter" [(ngModel)]="employeeFilter" placeholder="Search Employees...">
-								</mat-form-field>
-							</mat-panel-description>
-						</mat-expansion-panel-header> -->
-
-				<!-- <mat-accordion fxFlex="100"> -->
-				<!-- <mat-expansion-panel class="contractor" *ngFor="let contractor of DemoemployerDatas.contracts;"> -->
-
-				<mat-card class="contractor p-0 m-b-15" *ngFor="let contractor of DemoemployerDatas.contracts;">
-					<!-- <mat-expansion-panel-header fxAlignLayout="space-between center">
-									<mat-panel-title fxFlex fxLayout="column"> -->
-					<div style="padding: 10px;">
-						<p style="padding: 5px;"> <span class="key">Comapny : </span>{{contractor.company}} </p>
-						<p style="padding: 5px;"> <span class="key">Work Time : </span>{{contractor.worktime}} </p>
-						<p style="padding: 5px;"> <span class="key">Rate : </span>${{contractor.rate}}/hour</p>
-						<!-- </mat-panel-title>
-									<mat-panel-description fxFlex> -->
-						<p style="padding: 5px;"> <span class="key">Break Time : </span>
-							<span *ngFor="let break of contractor.breaks;"> {{break.breakname }} {{break.start}} {{break.end}}</span>
-						</p>
-					</div>
-					<!-- </mat-panel-description>
-								</mat-expansion-panel-header> -->
-
-					<app-jobseeker-timesheet [displayDatasource]="contractor.timesheets" [columns]="displayedColumns" [pageSize]="5"></app-jobseeker-timesheet>
-				</mat-card>
-				<!-- </mat-expansion-panel>
-						</mat-accordion> -->
-
-				<!-- </mat-expansion-panel>
-				</mat-accordion> -->
+							<p style="padding: 5px;"> <span class="key">Break Time : </span>
+								<span *ngFor="let break of contractor.job.breaktime;"> {{break.breakname }}
+									{{break.breakstart}} {{break.breakend}},</span>
+							</p>
+						</div>
+						<app-jobseeker-timesheet [setDataSource]="contractor.timesheet" [columns]="displayedColumns"
+							[pageSize]="5"></app-jobseeker-timesheet>
+					</mat-card>
+				</div>
 			</mat-card>
 		</div>
 	</div>

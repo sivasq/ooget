@@ -42,7 +42,7 @@ export class LivejobsComponent implements OnInit {
 
 	//set pending jobs array
 	public jobs_list_live: any[];
-
+	// public jobs_list_lives = "demo";
 	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public datePipe: DatePipe, public toUpperCase: UpperCasePipe, public texts: JsonToTextService, public payroll: PayrollProcessService, private _location: Location) {
 		this.getLiveJobsList();
 	}

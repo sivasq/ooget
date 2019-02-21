@@ -89,3 +89,5 @@ const routes: Routes = [
 	exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
+// RouterModule.forRoot([ routes, { enableTracing: true } ])

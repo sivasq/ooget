@@ -3,27 +3,43 @@ import { MatPaginator, MatSort } from '@angular/material';
 import { JobseekerTimesheetDataSource } from './jobseeker-timesheet-datasource';
 import * as moment from 'moment';
 import 'moment-duration-format';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
-  selector: 'app-jobseeker-timesheet',
-  templateUrl: './jobseeker-timesheet.component.html',
-  styleUrls: ['./jobseeker-timesheet.component.scss']
+	selector: 'app-jobseeker-timesheet',
+	templateUrl: './jobseeker-timesheet.component.html',
+	styleUrls: ['./jobseeker-timesheet.component.scss']
 })
 export class JobseekerTimesheetComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  dataSource: JobseekerTimesheetDataSource;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
+	@ViewChild(MatSort) sort: MatSort;
+	dataSource: JobseekerTimesheetDataSource;
+
+	private _dataSource = new BehaviorSubject<any>([]);
+
+	@Input()
+	set setDataSource(value) {
+		this._dataSource.next(value);
+	};
+
+	get getDataSource() {
+		return this._dataSource.getValue();
+	}
 
 	@Input() pageSize;
-	@Input() displayDatasource;
-	/** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
 	@Input() columns;
 	displayedColumns: string[];
+	displayDatasource: any[];
 
 	ngOnInit() {
 		// this.displayedColumns = this.columns.map(column => column.name);
 		this.displayedColumns = this.columns;
-		this.dataSource = new JobseekerTimesheetDataSource(this.paginator, this.sort, this.displayDatasource);
+		// this.dataSource = new JobseekerTimesheetDataSource(this.paginator, this.sort, this.displayDatasource);
+		this._dataSource.subscribe(x => {
+			this.dataSource = new JobseekerTimesheetDataSource(this.paginator, this.sort, this.getDataSource);
+			this.displayDatasource = this.getDataSource;
+			console.log(this.displayDatasource);
+		});
 	}
 
 	getSumOfNormalWorkHrs() {

@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, HostListener } from '@angular/core';
 import { MatSnackBar, MatDatepickerInputEvent } from '@angular/material';
 import { ApiCallService } from '../../../services/api-call.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
 import { DatePipe } from '@angular/common';
 import { Subscription, Observable } from 'rxjs';
@@ -717,7 +717,7 @@ export class MakeDuplicateJobComponent implements OnInit {
 		}
 	]
 
-	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber) {
+	constructor(public router: Router, private _httpService: ApiCallService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber) {
 
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
@@ -985,6 +985,8 @@ export class MakeDuplicateJobComponent implements OnInit {
 							snackBarRef.dismiss();
 							console.log('The snack-bar action was triggered!');
 						});
+
+						this.router.navigate(['employer/jobs/list']);
 					} else if (!response.success) {
 						console.log(response);
 					}
