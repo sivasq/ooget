@@ -16,6 +16,17 @@ body {
     overflow-x: hidden;
 }
 
+.inner-sidenav-content {
+    position: absolute;
+    top: 64px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px;
+    min-height: calc(100% - 80px);
+    overflow: auto;
+}
+
 .mat-button.text-wrap {
     white-space: normal; // line-height: 2;
 }

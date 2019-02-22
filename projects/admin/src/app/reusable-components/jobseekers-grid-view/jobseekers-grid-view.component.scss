@@ -68,15 +68,6 @@
     color: rgba(0, 0, 0, .54);
 }
 
-::ng-deep .mat-tab-labels {
-    flex-direction: row;
-    justify-content: space-between !important;
-}
-
-.mat-tab-labels .mat-tab-label-content {
-    font-weight: 600;
-}
-
 /* Data Listing End */
 
 /* Mat Menu Start */
@@ -93,15 +84,32 @@
 
 /* Mat Menu End */
 
-.p-10 {
-    padding: 10px !important;
-}
-
-.mat-tab-group {
-    margin: 0 8px !important;
-    border: 1px solid #eef;
-}
-
 .no-data {
     min-height: 25vh;
+}
+
+// :host ::ng-deep .ng-busy-default-wrapper {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     height: 100%;
+// }
+// :host ::ng-deep .ng-busy-default-sign {
+//     border: none;
+// }
+.user-content .user-img .mat-icon {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    font-size: 96px;
+    height: 96px;
+    width: 96px;
+}
+
+.user-content .user-details.blocked {
+    opacity: .7;
+}
+
+.user-content .user-details .nulled {
+    opacity: .7;
 }

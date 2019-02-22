@@ -13,61 +13,61 @@ import { ConfirmDialogComponent } from '../../../confirm-dialog/confirm-dialog.c
 })
 export class JobsListComponent implements OnInit {
 
-	public pageSizeOptions = [3, 6, 12, 24, 48, 96];
+	// public pageSizeOptions = [3, 6, 12, 24, 48, 96];
 
 	//Mat Menu Configuration
-	@Input() xPosition: MenuPositionX
-	@Input() overlapTrigger: boolean
+	// @Input() xPosition: MenuPositionX
+	// @Input() overlapTrigger: boolean
 
 	// Tab1 Pagination config
-	public tab1PaginateConfig: PaginationInstance = {
-		id: 'tab1',
-		itemsPerPage: 6,
-		currentPage: 1
-	};
-	public tab1search;
-	public tab1Filter: string = '';
-	public tab1PaginateControlMaxSize: number = 5;
-	public tab1PaginateControlAutoHide: boolean = true;
+	// public tab1PaginateConfig: PaginationInstance = {
+	// 	id: 'tab1',
+	// 	itemsPerPage: 6,
+	// 	currentPage: 1
+	// };
+	// public tab1search;
+	// public tab1Filter: string = '';
+	// public tab1PaginateControlMaxSize: number = 5;
+	// public tab1PaginateControlAutoHide: boolean = true;
 
 	// Tab2 Pagination config
-	public tab2PaginateConfig: PaginationInstance = {
-		id: 'tab2',
-		itemsPerPage: 6,
-		currentPage: 1
-	};
-	public tab2search;
-	public tab2Filter: string = '';
-	public tab2PaginateControlMaxSize: number = 5;
-	public tab2PaginateControlAutoHide: boolean = true;
+	// public tab2PaginateConfig: PaginationInstance = {
+	// 	id: 'tab2',
+	// 	itemsPerPage: 6,
+	// 	currentPage: 1
+	// };
+	// public tab2search;
+	// public tab2Filter: string = '';
+	// public tab2PaginateControlMaxSize: number = 5;
+	// public tab2PaginateControlAutoHide: boolean = true;
 
 	// Tab3 Pagination config
-	public tab3PaginateConfig: PaginationInstance = {
-		id: 'tab3',
-		itemsPerPage: 6,
-		currentPage: 1
-	};
-	public tab3search;
-	public tab3Filter: string = '';
-	public tab3PaginateControlMaxSize: number = 5;
-	public tab3PaginateControlAutoHide: boolean = true;
+	// public tab3PaginateConfig: PaginationInstance = {
+	// 	id: 'tab3',
+	// 	itemsPerPage: 6,
+	// 	currentPage: 1
+	// };
+	// public tab3search;
+	// public tab3Filter: string = '';
+	// public tab3PaginateControlMaxSize: number = 5;
+	// public tab3PaginateControlAutoHide: boolean = true;
 
 	// Tab4 Pagination config
-	public tab4PaginateConfig: PaginationInstance = {
-		id: 'tab4',
-		itemsPerPage: 6,
-		currentPage: 1
-	};
-	public tab4search;
-	public tab4Filter: string = '';
-	public tab4PaginateControlMaxSize: number = 5;
-	public tab4PaginateControlAutoHide: boolean = true;
+	// public tab4PaginateConfig: PaginationInstance = {
+	// 	id: 'tab4',
+	// 	itemsPerPage: 6,
+	// 	currentPage: 1
+	// };
+	// public tab4search;
+	// public tab4Filter: string = '';
+	// public tab4PaginateControlMaxSize: number = 5;
+	// public tab4PaginateControlAutoHide: boolean = true;
 
 	//set filtered jobs
-	public jobs_list_all: any[] = [];
-	public jobs_list_pending: any[] = [];
-	public jobs_list_live: any[] = [];
-	public jobs_list_closed: any[] = [];
+	public allJobs: any[] = [];
+	public pendingJobs: any[] = [];
+	public liveJobs: any[] = [];
+	public closedJobs: any[] = [];
 
 	//set Job Lists
 	public isJobsAvailable: boolean;
@@ -89,17 +89,23 @@ export class JobsListComponent implements OnInit {
 						this.companyDetails = response.company;
 						if (response.jobs.length > 0) {
 							this.isJobsAvailable = true;
+
+							// let jobs = response.jobs;
+							response.jobs.map(job => {
+								return Object.assign(job, { "companyid": this.companyDetails });
+							});
+
 							//get all jobs
-							this.jobs_list_all = response.jobs;
+							this.allJobs = response.jobs;
 
 							//filter pending Jobs
-							this.jobs_list_pending = response.jobs.filter((book: any) => book.jobstatus === "pending");
+							this.pendingJobs = response.jobs.filter((book: any) => book.jobstatus === "pending");
 
 							//filter live jobs
-							this.jobs_list_live = response.jobs.filter((book: any) => book.jobstatus === "live");
+							this.liveJobs = response.jobs.filter((book: any) => book.jobstatus === "live");
 
 							//filter closed jobs
-							this.jobs_list_closed = response.jobs.filter((book: any) => book.jobstatus === "closed");
+							this.closedJobs = response.jobs.filter((book: any) => book.jobstatus === "closed");
 						} else {
 							this.isJobsAvailable = false;
 						}
@@ -113,7 +119,7 @@ export class JobsListComponent implements OnInit {
 			);
 	}
 
-	closeJob(employerId, jobId) {
+	closeJob(event) {
 		let dialogConfig = new MatDialogConfig();
 
 		dialogConfig.disableClose = true;
@@ -130,7 +136,7 @@ export class JobsListComponent implements OnInit {
 		dialogref.afterClosed().subscribe(
 			data => {
 				if (data == 'yes') {
-					this.ConfirmCloseJob(employerId, jobId)
+					this.ConfirmCloseJob(event.employerId, event.jobId)
 				} else if (data == 'no') {
 					console.log('Dont Close');
 				}

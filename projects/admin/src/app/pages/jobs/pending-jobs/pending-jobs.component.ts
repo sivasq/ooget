@@ -18,31 +18,10 @@ export class PendingJobsComponent implements OnInit {
 	//busy Config
 	busy: Subscription;
 
-	//Mat Menu Configuration
-	@Input() xPosition: MenuPositionX
-	@Input() overlapTrigger: boolean
-
-	public pageSizeOptions = [3, 6, 12, 24, 48, 96];
-
-	// Tab1 Pagination config
-	public tab1PaginateConfig: PaginationInstance = {
-		id: 'tab1',
-		itemsPerPage: 6,
-		currentPage: 1
-	};
-	public tab1search;
-	public tab1Filter: string = '';
-	public tab1PaginateControlMaxSize: number = 10;
-	public tab1PaginateControlAutoHide: boolean = true;
-
-	//set pending jobs availability
-	public isPendingJobAvailable: boolean = false;
-	public pendingJobCount: Number;
-
 	//set pending jobs array
-	public pending_jobs_list: any[];
+	public pendingJobs: any[] = [];
 
-	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public datePipe: DatePipe, public toUpperCase: UpperCasePipe, public texts: JsonToTextService, public payroll: PayrollProcessService) {
+	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public datePipe: DatePipe, public toUpperCase: UpperCasePipe, public texts: JsonToTextService) {
 		this.getPendingJobsList();
 	}
 
@@ -51,14 +30,8 @@ export class PendingJobsComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						if ((response.pendingjobs).length > 0) {
-							this.isPendingJobAvailable = true;
-						} else {
-							this.isPendingJobAvailable = false;
-						}
 
-						// console.log(response.pendingjobs);
-						this.pending_jobs_list = response.pendingjobs;
+						this.pendingJobs = response.pendingjobs;
 
 					} else if (!response.success) {
 

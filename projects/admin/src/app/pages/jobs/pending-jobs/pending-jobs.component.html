@@ -32,7 +32,7 @@
 	<div [ngBusy]="{busy:busy}"></div>
 
 	<!-- Search Data and More.. Start -->
-	<div class="flex-p" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="isPendingJobAvailable">
+	<!-- <div class="flex-p" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="isPendingJobAvailable">
 		<div fxLayout="row">
 			<mat-button-toggle (click)="tab1search=!tab1search">
 				<mat-icon>search</mat-icon>
@@ -44,17 +44,11 @@
 				<input matInput name="tab1Filter" [(ngModel)]="tab1Filter" placeholder="Search Pending Jobs...">
 			</mat-form-field>
 		</form>
-
-		<!-- <div fxLayout="row">
-			<mat-button-toggle>
-				<mat-icon>person_add</mat-icon>
-			</mat-button-toggle>
-		</div> -->
-	</div>
+	</div> -->
 	<!-- Search Data and More.. End -->
 
 	<!-- Data Lists Start -->
-	<div fxLayout="row wrap" *ngIf="isPendingJobAvailable">
+	<!-- <div fxLayout="row wrap" *ngIf="isPendingJobAvailable">
 		<div class="flex-p" fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50"
 			*ngFor="let job of pending_jobs_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
 			<mat-card class="p-0">
@@ -66,10 +60,6 @@
 					</button>
 				</div>
 				<mat-menu #i="matMenu" xPosition="before">
-					<!-- <button mat-menu-item routerLink="/admin/employers/{{job.companyid}}/jobs/{{job._id}}/edit">
-									<mat-icon>mode_edit</mat-icon>
-									<span>Edit</span>
-								</button> -->
 					<button mat-menu-item routerLink="/admin/employers/{{job.companyid._id}}/jobs/{{job._id}}/view">
 						<mat-icon>visibility</mat-icon>
 						<span>details</span>
@@ -132,11 +122,11 @@
 				</div>
 			</mat-card>
 		</div>
-	</div>
+	</div> -->
 	<!-- Data Lists End -->
 
 	<!-- Pagination Start -->
-	<div fxLayout="row wrap" *ngIf="isPendingJobAvailable">
+	<!-- <div fxLayout="row wrap" *ngIf="isPendingJobAvailable">
 		<div class="flex-p" fxFlex="100">
 			<mat-card class="p-0 mat-paginator">
 				<div class="mat-paginator-container">
@@ -161,12 +151,15 @@
 				</div>
 			</mat-card>
 		</div>
-	</div>
+	</div> -->
 	<!-- Pagination End -->
 
-	<div *ngIf="!isPendingJobAvailable" fxLayout="column" fxLayoutAlign="center center" class="no-data"
+	<app-jobs-grid-view [setJobs]="pendingJobs"></app-jobs-grid-view>
+	<!-- <app-jobs-grid-view [setJobs]="pendingJobs"></app-jobs-grid-view> -->
+
+	<!-- <div *ngIf="!isPendingJobAvailable" fxLayout="column" fxLayoutAlign="center center" class="no-data"
 		style="border: 2px solid #eee; margin:8px;">
 		<p>Currently No Pending Jobs Found.</p>
-	</div>
+	</div> -->
 
 </div>

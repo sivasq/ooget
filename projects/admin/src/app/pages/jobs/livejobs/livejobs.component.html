@@ -16,10 +16,6 @@
 					<span class="breadcrumb-title">Employers</span>
 				</a>
 
-				<!-- <a class="breadcrumb-item" routerLink="/admin/employers/jobs/pending" fxLayout="row" fxLayoutAlign="center center">
-						<span class="breadcrumb-title">Jobs</span>
-					</a> -->
-
 				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
 					<span class="breadcrumb-title active">Live Jobs List</span>
 				</div>
@@ -31,7 +27,7 @@
 	<div [ngBusy]="{busy:busy}"></div>
 
 	<!-- Search Data and More.. Start -->
-	<!-- <div class="flex-p" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="isLiveJobAvailable">
+	<!-- <div class="flex-p" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="jobs.length > 0">
 		<div fxLayout="row">
 			<mat-button-toggle (click)="tab1search=!tab1search">
 				<mat-icon>search</mat-icon>
@@ -46,13 +42,10 @@
 	</div> -->
 	<!-- Search Data and More.. End -->
 
-	<app-jobs-grid-view [setJobs]="jobs_list_live"></app-jobs-grid-view>
-	<app-jobs-grid-view [setJobs]="jobs_list_live"></app-jobs-grid-view>
-
 	<!-- Data Lists Start -->
-	<!-- <div fxLayout="row wrap" *ngIf="isLiveJobAvailable">
+	<!-- <div fxLayout="row wrap" *ngIf="jobs.length > 0">
 		<div class="flex-p" fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50"
-			*ngFor="let job of jobs_list_live | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
+			*ngFor="let job of liveJobs | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
 			<mat-card class="p-0">
 				<div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
 					<h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below"
@@ -128,7 +121,7 @@
 	<!-- Data Lists End -->
 
 	<!-- Pagination Start -->
-	<!-- <div fxLayout="row wrap" *ngIf="isLiveJobAvailable">
+	<!-- <div fxLayout="row wrap" *ngIf="jobs.length > 0">
 		<div class="flex-p" fxFlex="100">
 			<mat-card class="p-0 mat-paginator">
 				<div class="mat-paginator-container">
@@ -155,22 +148,11 @@
 	</div> -->
 	<!-- Pagination End -->
 
-	<div *ngIf="!isLiveJobAvailable" fxLayout="column" fxLayoutAlign="center center" class="no-data"
+	<app-jobs-grid-view [setJobs]="liveJobs"></app-jobs-grid-view>
+	<!-- <app-jobs-grid-view [setJobs]="liveJobs"></app-jobs-grid-view> -->
+
+	<!-- <div *ngIf="liveJobs.length == 0" fxLayout="column" fxLayoutAlign="center center" class="no-data"
 		style="border: 2px solid #eee; margin:8px;">
 		<p>Currently No Live Jobs Found.</p>
-	</div>
+	</div> -->
 </div>
-
-<!-- <div class="inner-sidenav-content transition-2">
-	<div fxLayout="row wrap" fxFill>
-		<div fxFlex fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
-			<h1 style="color: #bbbbbb; text-transform: uppercase; text-align: center;">
-				Working Here
-			</h1>
-			<button mat-stroked-button (click)="backClicked()">
-				<mat-icon>arrow_back</mat-icon>
-				Go Back
-			</button>
-		</div>
-	</div>
-</div> -->

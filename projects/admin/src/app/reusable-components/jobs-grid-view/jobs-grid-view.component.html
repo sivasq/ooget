@@ -1,122 +1,154 @@
-<!-- Search Data and More.. Start -->
-<div class="flex-p" fxLayout="row" fxLayoutAlign="space-between center">
-	<div fxLayout="row">
-		<mat-button-toggle (click)="toggleSearch=!toggleSearch">
-			<mat-icon>search</mat-icon>
-		</mat-button-toggle>
+<!-- If Datas Found -->
+<div *ngIf="jobs.length > 0">
+	<!-- Search Data and More.. Start -->
+	<div class="flex-p" fxLayout="row" fxLayoutAlign="space-between center">
+		<div fxLayout="row">
+			<mat-button-toggle matTooltip="Search" matTooltipPosition="right"
+				(click)="toggleShowSearch=!toggleShowSearch">
+				<mat-icon>search</mat-icon>
+			</mat-button-toggle>
+		</div>
+
+		<form class="user-search" #search [ngClass]="toggleShowSearch ? 'show' : ''">
+			<mat-form-field>
+				<input matInput #dataFilter name="Filter" placeholder="Search Jobs...">
+			</mat-form-field>
+		</form>
+
+		<div fxLayout="row" *ngIf="companyDetails">
+			<mat-button-toggle matTooltip="Add New Job" matTooltipPosition="right"
+				routerLink="/admin/employers/{{companyDetails._id}}/jobs/add">
+				<mat-icon>playlist_add</mat-icon>
+			</mat-button-toggle>
+		</div>
 	</div>
+	<!-- Search Data and More.. End -->
 
-	<form class="user-search" #search [ngClass]="toggleSearch ? 'show' : ''">
-		<mat-form-field>
-			<input matInput #dataFilter name="Filter" placeholder="Search Jobs...">
-		</mat-form-field>
-	</form>
-</div>
-<!-- Search Data and More.. End -->
-
-<!-- Data Lists Start -->
-<div fxLayout="row wrap">
-	<div class="flex-p" fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50"
-		*ngFor="let job of jobs | filter:dataFilter.value | paginate: PaginateConfig; let i=index;">
-		<mat-card class="p-0">
-			<div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
-				<h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below"
-					routerLink="/admin/employers/{{job.companyid._id}}/jobs/{{job._id}}/view">{{job.jobtitle}}</h3>
-				<button mat-icon-button [matMenuTriggerFor]=i>
-					<mat-icon>more_vert</mat-icon>
-				</button>
-			</div>
-			<mat-menu #i="matMenu" xPosition="before">
-				<button mat-menu-item routerLink="/admin/employers/{{job.companyid._id}}/jobs/{{job._id}}/view">
-					<mat-icon>visibility</mat-icon>
-					<span>details</span>
-				</button>
-			</mat-menu>
-
-			<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
-				<div class="user-details transition-2" fxFlex="100" fxLayout="column">
-					<p fxLayout="row" fxLayoutAlign="start center">
-						<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">book
-						</mat-icon>
-						<span matTooltip="Job Title" matTooltipPosition="right">
-							<span class="key">Job Title : </span>
-							<span class="value">{{job.jobtitle | titlecase}}</span>
-						</span>
-					</p>
-					<p fxLayout="row" fxLayoutAlign="start center">
-						<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
-							event_seat</mat-icon>
-						<span matTooltip="Department" matTooltipPosition="right">
-							<span class="key">Dept : </span>
-							<span class="value">{{job.department}}</span>
-						</span>
-					</p>
-					<p fxLayout="row" fxLayoutAlign="start center">
-						<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">rowing
-						</mat-icon>
-						<span matTooltip="PAX" matTooltipPosition="right">
-							<span class="key">Vacancies / PAX Required : </span>
-							<span class="value">{{job.numberofpax-job.numberofcontracts}} /
-								{{job.numberofpax}}</span>
-						</span>
-					</p>
-					<p fxLayout="row" fxLayoutAlign="start center">
-						<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">gavel
-						</mat-icon>
-						<span matTooltip="Job Type" matTooltipPosition="right">
-							<span class="key">Job Type : </span>
-							<span class="value">{{job.employmenttype}}</span>
-						</span>
-					</p>
-					<p fxLayout="row" fxLayoutAlign="start center">
-						<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
-							date_range</mat-icon>
-						<span matTooltip="Job Period" matTooltipPosition="right">
-							<span class="key">Job Period : </span>
-							<span class="value">{{job.jobperiodfrom | date:'dd/MM/yyyy'}} -
-								{{job.jobperiodto | date:'dd/MM/yyyy'}}</span>
-						</span>
-					</p>
-					<p fxLayout="row" fxLayoutAlign="start center">
-						<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">security
-						</mat-icon>
-						<span matTooltip="Job Status" matTooltipPosition="right">
-							<span class="key">Status : </span>
-							<span class="value">{{job.jobstatus | titlecase}}</span>
-						</span>
-					</p>
-				</div>
-			</div>
-		</mat-card>
-	</div>
-</div>
-<!-- Data Lists End -->
-
-<!-- Pagination Start -->
-<div fxLayout="row wrap">
-	<div class="flex-p" fxFlex="100">
-		<mat-card class="p-0 mat-paginator">
-			<div class="mat-paginator-container">
-				<div class="mat-paginator-page-size">
-					<div class="mat-paginator-page-size-label">
-						Items per page:
+	<!-- Data Lists Start -->
+	<div fxLayout="row wrap">
+		<div class="flex-p" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50"
+			*ngFor="let job of jobs | filter:dataFilter.value | paginate: PaginateConfig; let i=index;">
+			<mat-card class="p-0">
+				<div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
+					<div style="line-height: 40px; width: 100%;">
+						<h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below"
+							routerLink="/admin/employers/{{job.companyid._id}}/jobs/{{job._id}}/view">{{job.jobnumber}}
+						</h3>
 					</div>
-					<mat-form-field class="mat-paginator-page-size-select mat-form-field-hide-placeholder">
-						<mat-select placeholder="" [(ngModel)]="PaginateConfig.itemsPerPage" name="itemsPerPage">
-							<mat-option *ngFor="let pageSizeOption of pageSizeOptions" [value]="pageSizeOption">
-								{{pageSizeOption}}
-							</mat-option>
-						</mat-select>
-					</mat-form-field>
+					<button mat-icon-button [matMenuTriggerFor]=i>
+						<mat-icon>more_vert</mat-icon>
+					</button>
 				</div>
-				<div class="mat-paginator-range-actions">
-					<pagination-controls class="ooget-pagination" [id]="PaginateConfig.id"
-						[maxSize]="PaginateControlMaxSize" responsive="true" [autoHide]="PaginateControlAutoHide"
-						(pageChange)="PaginateConfig.currentPage = $event">
-					</pagination-controls>
+				<mat-menu #i="matMenu" xPosition="before" overlapTrigger=true>
+					<button mat-menu-item routerLink="/admin/employers/{{job.companyid._id}}/jobs/{{job._id}}/view">
+						<mat-icon>description</mat-icon>
+						<span>View Job Details</span>
+					</button>
+
+					<button *ngIf="job.jobstatus != 'pending'" mat-menu-item
+						routerLink="/admin/employers/{{job.companyid._id}}/jobs/{{job._id}}/candidates/applied">
+						<mat-icon>list</mat-icon>
+						<span>Applied Candidates</span>
+					</button>
+
+					<button *ngIf="job.jobstatus == 'live' && job.hiringstatus == 'open'" mat-menu-item
+						(click)="closeJob(job.companyid._id, job._id)">
+						<mat-icon>remove_circle</mat-icon>
+						<span>Close This Job</span>
+					</button>
+				</mat-menu>
+
+				<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
+					<div class="user-details transition-2" fxFlex="100" fxLayout="column">
+						<p fxLayout="row" fxLayoutAlign="start center">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">book
+							</mat-icon>
+							<span matTooltip="Job Title" matTooltipPosition="right">
+								<span class="key">Job Title : </span>
+								<span class="value">{{job.jobtitle | titlecase}}</span>
+							</span>
+						</p>
+						<p fxLayout="row" fxLayoutAlign="start center">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+								event_seat</mat-icon>
+							<span matTooltip="Department" matTooltipPosition="right">
+								<span class="key">Dept : </span>
+								<span class="value">{{job.department}}</span>
+							</span>
+						</p>
+						<p fxLayout="row" fxLayoutAlign="start center">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">rowing
+							</mat-icon>
+							<span matTooltip="PAX" matTooltipPosition="right">
+								<span class="key">Vacancies / PAX Required : </span>
+								<span class="value">{{job.numberofpax-job.numberofcontracts}} /
+									{{job.numberofpax}}</span>
+							</span>
+						</p>
+						<p fxLayout="row" fxLayoutAlign="start center">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">gavel
+							</mat-icon>
+							<span matTooltip="Job Type" matTooltipPosition="right">
+								<span class="key">Job Type : </span>
+								<span class="value">{{job.employmenttype}}</span>
+							</span>
+						</p>
+						<p fxLayout="row" fxLayoutAlign="start center">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+								date_range</mat-icon>
+							<span matTooltip="Job Period" matTooltipPosition="right">
+								<span class="key">Job Period : </span>
+								<span class="value">{{job.jobperiodfrom | date:'dd/MM/yyyy'}} to
+									{{job.jobperiodto | date:'dd/MM/yyyy'}}</span>
+							</span>
+						</p>
+						<p fxLayout="row" fxLayoutAlign="start center">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">security
+							</mat-icon>
+							<span matTooltip="Job Status" matTooltipPosition="right">
+								<span class="key">Status : </span>
+								<span class="value">{{job.jobstatus | titlecase}}</span>
+							</span>
+						</p>
+					</div>
 				</div>
-			</div>
-		</mat-card>
+			</mat-card>
+		</div>
 	</div>
+	<!-- Data Lists End -->
+
+	<!-- Pagination Start -->
+	<div fxLayout="row wrap">
+		<div class="flex-p" fxFlex="100">
+			<mat-card class="p-0 mat-paginator">
+				<div class="mat-paginator-container">
+					<div class="mat-paginator-page-size">
+						<div class="mat-paginator-page-size-label">
+							Items per page:
+						</div>
+						<mat-form-field class="mat-paginator-page-size-select mat-form-field-hide-placeholder">
+							<mat-select placeholder="" [(ngModel)]="PaginateConfig.itemsPerPage" name="itemsPerPage">
+								<mat-option *ngFor="let pageSizeOption of pageSizeOptions" [value]="pageSizeOption">
+									{{pageSizeOption}}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+					<div class="mat-paginator-range-actions">
+						<pagination-controls class="ooget-pagination" [id]="PaginateConfig.id"
+							[maxSize]="PaginateControlMaxSize" responsive="true" [autoHide]="PaginateControlAutoHide"
+							(pageChange)="PaginateConfig.currentPage = $event">
+						</pagination-controls>
+					</div>
+				</div>
+			</mat-card>
+		</div>
+	</div>
+	<!-- Pagination End -->
 </div>
-<!-- Pagination End -->
+
+<!-- If No Datas Found -->
+<div *ngIf="jobs.length == 0" fxLayout="column" fxLayoutAlign="center center" class="no-data"
+	style="border: 2px solid #eee; margin:8px;">
+	<p>No Jobs Found</p>
+</div>

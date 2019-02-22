@@ -1,133 +1,29 @@
 <div class="inner-sidenav-content transition-2">
-    <!-- Http Progress Bar -->
-    <ng-progress></ng-progress>
+	<!-- Http Progress Bar -->
+	<ng-progress></ng-progress>
 
-    <!-- Breadcrumb Start -->
-    <div fxLayout="row wrap">
-        <!-- <div [ngBusy]="{busy: busyB, template:'loading', minDuration: 800000}"></div> -->
-        <div class="flex-p" fxFlex="1 1 100%">
-            <mat-card class="mat-breadcrumb" fxLayout="row">
-                <a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
-                    <mat-icon>home</mat-icon>
-                    <span class="breadcrumb-title">Home</span>
-                </a>
+	<!-- Breadcrumb Start -->
+	<div fxLayout="row wrap">
+		<!-- <div [ngBusy]="{busy: busyB, template:'loading', minDuration: 800000}"></div> -->
+		<div class="flex-p" fxFlex="1 1 100%">
+			<mat-card class="mat-breadcrumb" fxLayout="row">
+				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row"
+					fxLayoutAlign="flex-start center">
+					<mat-icon>home</mat-icon>
+					<span class="breadcrumb-title">Home</span>
+				</a>
 
-                <div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
-                    <span class="breadcrumb-title active">Jobseekers List</span>
-                </div>
-            </mat-card>
-        </div>
-    </div>
-    <!-- Breadcrumb End -->
+				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+					<span class="breadcrumb-title active">Jobseekers List</span>
+				</div>
+			</mat-card>
+		</div>
+	</div>
+	<!-- Breadcrumb End -->
 
-    <div [ngBusy]="{busy:busy}"></div>
+	<div [ngBusy]="{busy:busy}"></div>
 
-    <div *ngIf="isJobseekerAvailable">
-        <!-- Search Data and More.. Start -->
-        <div class="flex-p" fxLayout="row" fxLayoutAlign="space-between center">
-            <div fxLayout="row">
-                <mat-button-toggle matTooltip="Search" matTooltipPosition="right" (click)="tab1search=!tab1search">
-                    <mat-icon>search</mat-icon>
-                </mat-button-toggle>
-            </div>
-
-            <form class="user-search" [ngClass]="tab1search ? 'show' : ''">
-                <mat-form-field>
-                    <input matInput name="tab1Filter" [(ngModel)]="tab1Filter" placeholder="Search JobSeekers...">
-                </mat-form-field>
-            </form>
-
-            <!-- <div fxLayout="row">
-        <mat-button-toggle matTooltip="Add New Employer" matTooltipPosition="left" routerLink="/admin/employers/add">
-          <mat-icon>person_add</mat-icon>
-        </mat-button-toggle>
-      </div> -->
-        </div>
-        <!-- Search Data and More.. End -->
-
-        <!-- Data Lists Start -->
-        <div fxLayout="row wrap">
-            <div class="flex-p" fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50" *ngFor="let jobseeker of jobseekers_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
-                <mat-card class="p-0">
-                    <div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
-                        <h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below" routerLink="/admin/jobseekers/{{jobseeker._id}}/details">{{jobseeker.username | uppercase}}</h3>
-                        <button mat-icon-button [matMenuTriggerFor]=i>
-                            <mat-icon>more_vert</mat-icon>
-                        </button>
-                    </div>
-                    <mat-menu #i="matMenu" xPosition="before" overlapTrigger=true>
-                        <button mat-menu-item routerLink="/admin/jobseekers/{{jobseeker._id}}/details">
-                            <mat-icon>visibility</mat-icon>
-                            <span>View Details</span>
-                        </button>
-                    </mat-menu>
-
-                    <div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
-                        <div fxFlex="1 1 30%" fxLayout="column" fxLayoutAlign="center center">
-                            <div class="user-img" *ngIf="jobseeker.jobseekerimage">
-                                <img class="transition-2 ng-star-inserted" src="{{imgBaseUrl}}/jobseeker/{{jobseeker.jobseekerimage}}">
-                            </div>
-                            <div class="user-img" *ngIf="!jobseeker.jobseekerimage">
-                                <img class="transition-2 ng-star-inserted" src="assets/img/avatars/profile-placeholder.png">
-                            </div>
-                            <div class="user-social">
-                                <mat-slide-toggle color="primary" (change)="changeJobseekerStatus($event,jobseeker._id)" [checked]=jobseeker.activestatus></mat-slide-toggle>
-                            </div>
-                        </div>
-
-                        <div class="user-details transition-2" fxFlex="70" fxLayout="column">
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">perm_identity</mat-icon>
-                                <span>{{jobseeker.username}}</span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">mail_outline</mat-icon>
-                                <span>{{jobseeker.email}}</span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">phone</mat-icon>
-                                <span>{{jobseeker.mobileno}}</span>
-                            </p>
-                            <p fxLayout="row" fxLayoutAlign="start center">
-                                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">location_city</mat-icon>
-                                <span>{{jobseeker.country}}</span>
-                            </p>
-                        </div>
-                    </div>
-                </mat-card>
-            </div>
-        </div>
-        <!-- Data Lists End -->
-
-        <!-- Pagination Start -->
-        <div fxLayout="row wrap">
-            <div class="flex-p" fxFlex="100">
-                <mat-card class="p-0 mat-paginator">
-                    <div class="mat-paginator-container">
-                        <div class="mat-paginator-page-size">
-                            <div class="mat-paginator-page-size-label">
-                                Items per page:
-                            </div>
-                            <mat-form-field class="mat-paginator-page-size-select mat-form-field-hide-placeholder">
-                                <mat-select placeholder="" [(ngModel)]="tab1PaginateConfig.itemsPerPage" name="itemsPerPage">
-                                    <mat-option *ngFor="let pageSizeOption of pageSizeOptions" [value]="pageSizeOption">
-                                        {{pageSizeOption}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <div class="mat-paginator-range-actions">
-                            <pagination-controls class="ooget-pagination" [id]="tab1PaginateConfig.id" [maxSize]="tab1PaginateControlMaxSize" [autoHide]="tab1PaginateControlAutoHide"
-                                (pageChange)="tab1PaginateConfig.currentPage = $event"></pagination-controls>
-                        </div>
-                    </div>
-                </mat-card>
-            </div>
-        </div>
-        <!-- Pagination End -->
-    </div>
-
-    <div *ngIf="!isJobseekerAvailable" fxLayout="row" fxLayoutAlign="center center" class="no-data" style="height:100px; border: 2px solid #eee; margin:8px;">
-        <p>Currently No Jobseekers Found.</p>
-    </div>
+	<app-jobseekers-grid-view [setJobSeekers]="jobseekers_list"
+		(emitToggleJobseekerStatus)="toggleJobseekerStatus($event)">
+	</app-jobseekers-grid-view>
 </div>
