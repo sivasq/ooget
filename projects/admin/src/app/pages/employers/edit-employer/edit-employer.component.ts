@@ -7,6 +7,8 @@ import { Subscription, Observable, config } from 'rxjs';
 import { ApiCallService } from '../../../services/api-call.service';
 import { ConfigService } from '../../../services/config.service';
 import { AsyncSubscriber } from '../../../services/async.service';
+import { Industry } from '../../../classes/industry';
+import { MockDataService } from '../../../services/mock-data.service';
 
 @Component({
 	selector: 'app-edit-employer',
@@ -31,11 +33,13 @@ export class EditEmployerComponent implements OnInit {
 
 	public busy: Subscription;
 
+	public Industries: Industry[];
+
 	employerUpdateForm: FormGroup;
 	@ViewChild(FormGroupDirective) resetEmployerUpdateForm;
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private route: ActivatedRoute, public router: Router, private config: ConfigService, private asyncSubscriber: AsyncSubscriber) {
+	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private route: ActivatedRoute, public router: Router, private config: ConfigService, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
 
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
@@ -61,6 +65,7 @@ export class EditEmployerComponent implements OnInit {
 			companyid: this.route.snapshot.params['emp_id'],
 		}
 		this.getEmployerDetails(employerId);
+		this.getIndustries();
 	}
 
 	/* setAppearanceNext1() {
@@ -73,64 +78,11 @@ export class EditEmployerComponent implements OnInit {
 		console.log(this.asyncSubscriber.appearance.getValue());
 	} */
 
-	public Industries: any = [
-		{
-			"_id": "432424",
-			"IndustryName": "Aerospace"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Creative Industries"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Energy & Chemicals"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Logistics & Supply Chain Mangement"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Medical Technology"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Pharmaceutical & Biotechnology"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Professional Services"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Consumer Business"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Electronics"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Information & Communications Technology"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Oil & Gas Equipment and Services"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Natural Resources"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Precision Engineering"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Urban Solutions & Sustainability"
-		},
-	]
+	getIndustries(): void {
+		// this.Industries = this.mockDataService.getIndustries();
+		this.mockDataService.getIndustries()
+			.subscribe(Industries => this.Industries = Industries);
+	}
 
 	// Build Employer Add Form
 	buildEmployerUpdateForm(): void {

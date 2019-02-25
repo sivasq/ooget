@@ -176,7 +176,7 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 						this.isContractDetails = true;
 						this.currentTimeSheetLayout = response;
 						this.waitUntillInMin = response.waittill;
-						this.contractId = response.contractid
+						this.contractId = response.contractid;
 						if (this.currentTimeSheetLayout.contractstatus == 'open' && this.currentTimeSheetLayout.timesheet) {
 							this.ispunchedIn = this.currentTimeSheetLayout.timesheet.punchedin;
 							this.ispunchedOut = this.currentTimeSheetLayout.timesheet.punchedout;

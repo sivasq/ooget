@@ -62,22 +62,22 @@ const routes: Routes = [
 				path: 'dashboard',
 				loadChildren: './pages/dashboard/dashboard.module#DashboardModule'
 			},
-			// {
-			// 	path: 'jobs',
-			// 	loadChildren: './pages/jobs/jobs.module#JobsModule'
-			// },
+			{
+				path: 'jobs',
+				loadChildren: './pages/jobs/jobs.module#JobsModule'
+			},
 			{
 				path: 'profile',
 				loadChildren: './pages/profile/profile.module#ProfileModule'
 			},
-			// {
-			// 	path: 'timesheet',
-			// 	loadChildren: './pages/timesheet/timesheet.module#TimesheetModule'
-			// },
-			// {
-			// 	path: 'faq',
-			// 	loadChildren: './pages/faq/faq.module#FaqModule'
-			// },
+			{
+				path: 'timesheet',
+				loadChildren: './pages/timesheet/timesheet.module#TimesheetModule'
+			},
+			{
+				path: 'faq',
+				loadChildren: './pages/faq/faq.module#FaqModule'
+			},
 			{
 				path: '**',
 				redirectTo: 'profile',

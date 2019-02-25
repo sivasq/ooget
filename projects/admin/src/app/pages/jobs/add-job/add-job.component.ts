@@ -8,6 +8,11 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { DatePipe } from '@angular/common';
 import { Subscription, Observable } from 'rxjs';
 import { AsyncSubscriber } from '../../../services/async.service';
+import { JobLocation } from '../../../classes/jobLocation';
+import { Specialization } from '../../../classes/specialization';
+import { WorkingEnvironment } from '../../../classes/workingEnvironment';
+import { EmploymentType } from '../../../classes/employmentType';
+import { MockDataService } from '../../../services/mock-data.service';
 
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
@@ -101,623 +106,61 @@ export class AddJobComponent implements OnInit {
 	public isPartTimeJob: boolean;
 	public companyDetails: any = [];
 
-	public maxpax = _.range(50);
-	public graceperiods = [0, 5, 10, 15];
-	public overtimeroundings = [0, 5, 10, 15];
-
 	//busy Config
 	busy: Subscription;
 
-	public Specializations: any = [
-		{
-			"_id": "432424",
-			"specialization": "Actuarial Science/Statistics"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Advertising/Media Planning"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Agriculture/Forestry/Fisheries"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Architecture/Interior Design"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Arts/Creative/Graphics Design"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Aviation/Aircraft Maintenance"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Banking/Financial Services"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Biotechnology"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Chemistry"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Clerical/Administrative Support"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Corporate Strategy/Top Management"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Customer Service"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Education"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Engineering - Chemical"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Engineering - Civil/Construction/Structural"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Engineering - Electrical"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Engineering - Electronics/Communication"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Engineering - Environmental/Health/Safety"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Engineering - Industrial"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Engineering - Mechanical/Automotive"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Engineering - Oil/Gas"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Entertainment/Performing Arts"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Finance - Audit/Taxation"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Finance - Corporate Finance/Investment/Merchant Banking"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Finance - General/Cost Accounting"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Food Technology/Nutritionist"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Food/Beverage/Restaurant Service"
-		},
-		{
-			"_id": "432424",
-			"specialization": "General Worker (Housekeeper, Driver, Dispatch, Messenger, etc)"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Geology/Geophysics"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Healthcare - Doctor/Diagnosis"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Healthcare - Nurse/Medical Support & Assistant"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Healthcare - Pharmacy"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Hotel Management/Tourism Services"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Human Resources"
-		},
-		{
-			"_id": "432424",
-			"specialization": "IT/Computer - Hardware"
-		},
-		{
-			"_id": "432424",
-			"specialization": "IT/Computer - Network/System/Database Admin"
-		},
-		{
-			"_id": "432424",
-			"specialization": "IT/Computer - Software"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Journalist/Editor"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Law/Legal Services"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Logistics/Supply Chain"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Maintenance/Repair (Facilities & Machinery)"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Manufacturing/Productions Operations"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Marketing/Business Development"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Merchandising"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Personal Care/Beauty/Fitness Service"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Process Design & Control/Instrumentation"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Property/Real Estate"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Public Relations/Communications"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Publishing/Printing"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Purchasing/Inventory/Material & Warehouse Management"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Quality Control/Assurance"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Quantity Surveying"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Sales - Corporate"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Sales - Engineering/Technical/IT"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Sales - Finance Services (Insurance, Unit Trust, etc)"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Sales - Retail/General"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Sales - Telesales/Telemarketing"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Science & Technology/Laboratory"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Secretarial/Executive & Personal Assistant"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Security/Armed Forces/Protective Services"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Social & Counselling Service"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Technical & Helpdesk Support"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Training & Development"
-		}
-	]
+	public maxpax: number[];
+	public graceperiods: number[];
+	public overtimeroundings: number[];
+	public Specializations: Specialization[];
+	public Locations: JobLocation[];
+	public WorkingEnvironments: WorkingEnvironment[];
+	public EmploymentTypes: EmploymentType[];
 
-	public Locations: any = [
-		{
-			"_id": "432424",
-			"mainlocation": "North",
-			"sublocation": "Central Water Catchment"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North",
-			"sublocation": "Lim Chu Kang"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North",
-			"sublocation": "Mandai"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North",
-			"sublocation": "Sembawang"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North",
-			"sublocation": "Simpang"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North",
-			"sublocation": "Sungei Kadut"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North",
-			"sublocation": "Woodlands"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North",
-			"sublocation": "Yishun"
-		},
-
-		{
-			"_id": "432424",
-			"mainlocation": "North East",
-			"sublocation": "Ang Mo Kio"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North East",
-			"sublocation": "Hougang"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North East",
-			"sublocation": "North Eastern Islands"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North East",
-			"sublocation": "Punggol"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North East",
-			"sublocation": "Seletar"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North East",
-			"sublocation": "Sengkang"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North East",
-			"sublocation": "Serangoon"
-		},
-
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Boon Lay"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Bukit Batok"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Bukit Panjang"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Choa Chu Kang"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Clementi"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Jurong East"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Jurong West"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Pioneer"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Tengah"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Tuas"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Western Islands"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Western Water"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Catchment"
-		},
-
-		{
-			"_id": "432424",
-			"mainlocation": "East",
-			"sublocation": "Bedok"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "East",
-			"sublocation": "Changi"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "East",
-			"sublocation": "Changi Bay"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "East",
-			"sublocation": "Pasir Ris"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "East",
-			"sublocation": "Paya Lebar"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "East",
-			"sublocation": "Tampines"
-		},
-
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Bishan"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Bukit Merah"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Bukit Timah"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Downtown Core"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Geylang"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Kallang"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Marina East"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Marina South"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Marine Parade"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Museum"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Newton"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Novena"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Orchard"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Outram"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Queenstown"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "River Valley"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Rochor"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Singapore River"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Southern Islands"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Straits View"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Tanglin"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Toa Payoh"
-		}
-	]
-
-	public jobPriorityLists: any = [
-		{
-			"_id": "432424",
-			"PriorityType": "normal"
-		},
-		{
-			"_id": "432424",
-			"PriorityType": "special"
-		}
-	]
-
-	public WorkingEnvironments: any = [
-		{
-			"_id": "432424",
-			"Environment": "Office"
-		},
-		{
-			"_id": "432424",
-			"Environment": "Factory"
-		},
-		{
-			"_id": "432424",
-			"Environment": "Restaurant"
-		},
-		{
-			"_id": "432424",
-			"Environment": "Hotel"
-		},
-		{
-			"_id": "432424",
-			"Environment": "Warehouse"
-		},
-		{
-			"_id": "432424",
-			"Environment": "Supermarket"
-		},
-		{
-			"_id": "432424",
-			"Environment": "Retail"
-		},
-		{
-			"_id": "432424",
-			"Environment": "Aircon"
-		},
-		{
-			"_id": "432424",
-			"Environment": "Non Aircon"
-		}
-	]
-
-	public EmploymentTypes: any = [
-		{
-			"_id": "432424",
-			"EmploymentType": "Part Time"
-		},
-		{
-			"_id": "432424",
-			"EmploymentType": "Full Time"
-		}
-	]
-
-	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber) {
+	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
 
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
 		this.companyid = this.route.snapshot.params['emp_id'];
 
 		this.getEmployerDetails({ companyid: this.companyid });
+
+		this.getEmploymentTypes();
+		this.getWorkingEnvironments();
+		this.getJobLocations();
+		this.getSpecializations();
+		this.getGracePeriods();
+		this.getOverTimeRoundings();
+		this.getPaxs();
+	}
+
+	getEmploymentTypes(): void {
+		this.mockDataService.getEmploymentTypes()
+			.subscribe(EmploymentTypes => this.EmploymentTypes = EmploymentTypes);
+	}
+	getWorkingEnvironments(): void {
+		this.mockDataService.getWorkingEnvironments()
+			.subscribe(WorkingEnvironments => this.WorkingEnvironments = WorkingEnvironments);
+	}
+	getJobLocations(): void {
+		this.mockDataService.getJobLocations()
+			.subscribe(Locations => this.Locations = Locations);
+	}
+	getSpecializations(): void {
+		this.mockDataService.getSpecializations()
+			.subscribe(Specializations => this.Specializations = Specializations);
+	}
+	getGracePeriods(): void {
+		this.mockDataService.getGracePeriods()
+			.subscribe(graceperiods => this.graceperiods = graceperiods);
+	}
+	getOverTimeRoundings(): void {
+		this.mockDataService.getOverTimeRoundings()
+			.subscribe(overtimeroundings => this.overtimeroundings = overtimeroundings);
+	}
+	getPaxs(): void {
+		this.mockDataService.getPaxs()
+			.subscribe(pax => this.maxpax = pax);
 	}
 
 	startTimeChange(event) {

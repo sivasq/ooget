@@ -12,7 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 //   }
 // }
 
-// Filter Main Location by Unique 
+// Filter Main Location by Unique
 @Pipe({
 	name: 'uniquemainlocation',
 	pure: false
@@ -140,5 +140,14 @@ export class AgePipe implements PipeTransform {
 // 			return item.toLowerCase().includes(searchText);
 // 		});
 
+// 	}
+// }
+
+// @Pipe({
+// 	name: 'highlightSearch'
+// })
+// export class HighlightSearchPipe implements PipeTransform {
+// 	transform(value: string, search: string): string {
+// 		return value.replace(new RegExp('(?![^&;]+;)(?!<[^<>]*)(' + search + ')(?![^<>]*>)(?![^&;]+;)', 'gi'), '<strong class="your-class">$1</strong>');
 // 	}
 // }

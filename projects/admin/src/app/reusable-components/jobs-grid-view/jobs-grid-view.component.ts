@@ -42,7 +42,10 @@ export class JobsGridViewComponent implements OnInit {
 
 	ngOnInit() {
 		this._jobs.subscribe(x => {
-			this.jobs = this.getJobs;
+			this.jobs = this.getJobs.sort((val1, val2) => {
+				return <any>new Date(val1.jobperiodfrom) - <any>new Date(val2.jobperiodfrom)
+				// return new Date(val2.jobperiodfrom).getTime() - new Date(val1.jobperiodfrom).getTime()
+			})
 			console.log(x);
 		});
 	}
