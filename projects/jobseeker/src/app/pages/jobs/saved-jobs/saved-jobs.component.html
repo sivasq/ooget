@@ -18,7 +18,7 @@
 	</div>
 	<!-- Breadcrumb End -->
 
-	<div fxLayout="row wrap">
+	<div *ngIf="busy.closed" fxLayout="row wrap">
 		<div fxFlex="100" fxFlex.gt-sm="75" [fxFlexOrder.lt-md]=2>
 			<!-- Search Data and More.. Start -->
 			<div class="flex-p" fxLayout="row" fxLayoutAlign="start end" *ngIf="jobs_list_all.length > 0">

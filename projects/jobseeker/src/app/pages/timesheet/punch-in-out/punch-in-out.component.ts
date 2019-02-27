@@ -17,6 +17,7 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 	defaultActiveContract = 5;
 	showActiveContract = 5;
 	busy: Subscription;//busy Config
+	busyA: Subscription;
 
 	public contract_jobs_list: any[] = [];
 	public isContractJobsAvailable: boolean;
@@ -125,7 +126,7 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 	});
 
 	getContractJobsList() {
-		this.busy = this._httpService.getContractJobsList()
+		this.busyA = this._httpService.getContractJobsList()
 			.subscribe(
 				response => {
 					if (response.success) {

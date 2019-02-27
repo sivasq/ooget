@@ -10,45 +10,6 @@
     overflow: auto;
 }
 
-/* Breadcrump Start */
-
-.m-t-10 {
-    margin-top: 10px;
-}
-
-.mat-breadcrumb {
-    padding: 8px;
-}
-
-.mat-breadcrumb a {
-    color: $primary;
-}
-
-.mat-breadcrumb .mat-icon {
-    font-size: 20px;
-    height: 100%;
-    width: 100%;
-    padding: 0 6px;
-}
-
-.mat-breadcrumb .breadcrumb-item+.breadcrumb-item:before {
-    display: inline-block;
-    padding-right: .5rem;
-    padding-left: .5rem;
-    content: "/";
-}
-
-.mat-breadcrumb .breadcrumb-item+.breadcrumb-item:before {
-    color: rgba(0, 0, 0, .87);
-}
-
-.mat-breadcrumb .breadcrumb-title.active {
-    text-transform: uppercase;
-    font-weight: 500;
-}
-
-/* Breadcrump End */
-
 .mat-card {
     background: #fff;
     color: rgba(0, 0, 0, .87);
@@ -80,22 +41,28 @@
     flex-direction: row; // height: 460px;
 }
 
-::ng-deep .vertical-tabs .mat-tab-body-wrapper {
+::ng-deep .vertical-tabs.mat-tab-group .mat-tab-body-wrapper {
+    padding: 25px;
+    width: 100%; // margin-left: 7px;
+    // height: 500px;
+}
+
+::ng-deep .horizontal-tabs.mat-tab-group .mat-tab-body-wrapper {
     padding: 25px;
     width: 100%; // margin-left: 7px;
     // height: 500px;
 }
 
 ::ng-deep .vertical-tabs .mat-tab-header {
-    display: flex;
-    overflow: hidden;
-    position: relative;
-    flex-shrink: 0;
     margin-right: 7px;
     box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
 }
 
 ::ng-deep .vertical-tabs .mat-tab-body-wrapper {
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+::ng-deep .horizontal-tabs .mat-tab-body-wrapper {
     box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
 }
 
@@ -177,4 +144,14 @@
 
 mat-icon {
     cursor: pointer;
+}
+
+::ng-deep .dob-month-panel.mat-select-panel {
+    max-height: none;
+}
+
+::ng-deep .dob-month-panel.mat-select-panel .mat-optgroup-label,
+::ng-deep .dob-month-panel.mat-select-panel .mat-option {
+    line-height: 2.1em !important;
+    height: 2.1em !important;
 }

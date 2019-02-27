@@ -1,6 +1,6 @@
 import { Specialization } from '../classes/specialization';
 
-export const Specializations: Specialization[] = [
+export const FullTimeSpecializations: Specialization[] = [
 	{
 		"_id": "432424",
 		"specialization": "Actuarial Science/Statistics"

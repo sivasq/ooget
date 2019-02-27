@@ -104,6 +104,9 @@ export class EditJobComponent implements OnInit {
 	public markuprateincurrency: string;
 
 	public isPartTimeJob: boolean;
+	public showfulltimespeccilization: boolean;
+	public showparttimespeccilization: boolean;
+
 	public companyDetails: any = [];
 
 	//busy Config
@@ -112,7 +115,8 @@ export class EditJobComponent implements OnInit {
 	public maxpax: number[];
 	public graceperiods: number[];
 	public overtimeroundings: number[];
-	public Specializations: Specialization[];
+	public FullTimeSpecializations: Specialization[];
+	public PartTimeSpecializations: Specialization[];
 	public Locations: JobLocation[];
 	public WorkingEnvironments: WorkingEnvironment[];
 	public EmploymentTypes: EmploymentType[];
@@ -136,7 +140,8 @@ export class EditJobComponent implements OnInit {
 		this.getEmploymentTypes();
 		this.getWorkingEnvironments();
 		this.getJobLocations();
-		this.getSpecializations();
+		this.getFullTimeSpecializations();
+		this.getPartTimeSpecializations();
 		this.getGracePeriods();
 		this.getOverTimeRoundings();
 		this.getPaxs();
@@ -154,9 +159,13 @@ export class EditJobComponent implements OnInit {
 		this.mockDataService.getJobLocations()
 			.subscribe(Locations => this.Locations = Locations);
 	}
-	getSpecializations(): void {
-		this.mockDataService.getSpecializations()
-			.subscribe(Specializations => this.Specializations = Specializations);
+	getFullTimeSpecializations(): void {
+		this.mockDataService.getFullTimeSpecializations()
+			.subscribe(Specializations => this.FullTimeSpecializations = Specializations);
+	}
+	getPartTimeSpecializations(): void {
+		this.mockDataService.getPartTimeSpecializations()
+			.subscribe(Specializations => this.PartTimeSpecializations = Specializations);
 	}
 	getGracePeriods(): void {
 		this.mockDataService.getGracePeriods()
@@ -243,8 +252,23 @@ export class EditJobComponent implements OnInit {
 
 		if (this.isInArray(event, "Full Time")) {
 			this.isPartTimeJob = false;
+			console.log('Full Time');
 		} else {
 			this.isPartTimeJob = true;
+			console.log('Part Time');
+		}
+
+		if (this.isInArray(event, "Full Time")) {
+			this.showfulltimespeccilization = true;
+		} else {
+			this.showfulltimespeccilization = false;
+		}
+
+		if (this.isInArray(event, "Part Time")) {
+			this.showparttimespeccilization = true;
+		}
+		else {
+			this.showparttimespeccilization = false;
 		}
 	}
 
@@ -301,6 +325,8 @@ export class EditJobComponent implements OnInit {
 						this.jobDetails.employmenttype = response.job.employmenttype;
 						this.jobDetails.jobtitle = response.job.jobtitle;
 						this.jobDetails.jobdescription = response.job.jobdescription;
+
+						this.employmenttypeChange(response.job.employmenttype);
 
 						this.jobDetails.jobspecialization = response.job.jobspecialization;
 						this.jobDetails.otherjobspecialization = response.job.otherjobspecialization;

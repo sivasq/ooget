@@ -204,7 +204,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 
 							snackBarRef.onAction().subscribe(() => {
 								snackBarRef.dismiss();
-								this.router.navigate(['main/timesheet/punch']);
+								this.router.navigate(['main/timesheet']);
 								console.log('The snack-bar action was triggered!');
 							});
 

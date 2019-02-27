@@ -13,56 +13,6 @@ import { ConfirmDialogComponent } from '../../../confirm-dialog/confirm-dialog.c
 })
 export class JobsListComponent implements OnInit {
 
-	// public pageSizeOptions = [3, 6, 12, 24, 48, 96];
-
-	//Mat Menu Configuration
-	// @Input() xPosition: MenuPositionX
-	// @Input() overlapTrigger: boolean
-
-	// Tab1 Pagination config
-	// public tab1PaginateConfig: PaginationInstance = {
-	// 	id: 'tab1',
-	// 	itemsPerPage: 6,
-	// 	currentPage: 1
-	// };
-	// public tab1search;
-	// public tab1Filter: string = '';
-	// public tab1PaginateControlMaxSize: number = 5;
-	// public tab1PaginateControlAutoHide: boolean = true;
-
-	// Tab2 Pagination config
-	// public tab2PaginateConfig: PaginationInstance = {
-	// 	id: 'tab2',
-	// 	itemsPerPage: 6,
-	// 	currentPage: 1
-	// };
-	// public tab2search;
-	// public tab2Filter: string = '';
-	// public tab2PaginateControlMaxSize: number = 5;
-	// public tab2PaginateControlAutoHide: boolean = true;
-
-	// Tab3 Pagination config
-	// public tab3PaginateConfig: PaginationInstance = {
-	// 	id: 'tab3',
-	// 	itemsPerPage: 6,
-	// 	currentPage: 1
-	// };
-	// public tab3search;
-	// public tab3Filter: string = '';
-	// public tab3PaginateControlMaxSize: number = 5;
-	// public tab3PaginateControlAutoHide: boolean = true;
-
-	// Tab4 Pagination config
-	// public tab4PaginateConfig: PaginationInstance = {
-	// 	id: 'tab4',
-	// 	itemsPerPage: 6,
-	// 	currentPage: 1
-	// };
-	// public tab4search;
-	// public tab4Filter: string = '';
-	// public tab4PaginateControlMaxSize: number = 5;
-	// public tab4PaginateControlAutoHide: boolean = true;
-
 	//set filtered jobs
 	public allJobs: any[] = [];
 	public pendingJobs: any[] = [];
@@ -78,7 +28,8 @@ export class JobsListComponent implements OnInit {
 	//busy Config
 	busy: Subscription;
 
-	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar, public dialog: MatDialog) { }
+	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar, public dialog: MatDialog) {
+	}
 
 	//get employers jobs list
 	getSingleEmployersJobsList(employerId): any {

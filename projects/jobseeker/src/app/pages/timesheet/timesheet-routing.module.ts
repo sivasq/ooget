@@ -4,13 +4,8 @@ import { PunchInOutComponent } from './punch-in-out/punch-in-out.component';
 
 const routes: Routes = [
   {
-    path: 'punch',
-    component: PunchInOutComponent
-  },
-  {
     path: '',
-    redirectTo: 'punch',
-    pathMatch: 'full'
+    component: PunchInOutComponent
   }
 ];
 

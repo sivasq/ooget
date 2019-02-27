@@ -46,7 +46,7 @@ export class JobsGridViewComponent implements OnInit {
 				return <any>new Date(val1.jobperiodfrom) - <any>new Date(val2.jobperiodfrom)
 				// return new Date(val2.jobperiodfrom).getTime() - new Date(val1.jobperiodfrom).getTime()
 			})
-			console.log(x);
+			// console.log(x);
 		});
 	}
 

@@ -18,7 +18,7 @@
 	</div>
 	<!-- Breadcrumb End -->
 
-	<div class="flex-p">
+	<div *ngIf="busy.closed" class="flex-p">
 		<mat-toolbar color="primary">{{title}}</mat-toolbar>
 		<mat-accordion *ngIf="faqList.length > 0" [displayMode]="displayMode" [multi]="multi">
 			<mat-expansion-panel *ngFor="let faqItem of faqList">
@@ -29,8 +29,8 @@
 			</mat-expansion-panel>
 		</mat-accordion>
 
-		<div *ngIf="faqList.length == 0">
-			<div fxFlex fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+		<div *ngIf="faqList.length == 0" style="min-height: 100px;">
+			<div fxFlex fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px" >
 				<h1 style="color: #bbbbbb; text-transform: uppercase; text-align: center;">
 					No FAQ Found
 				</h1>

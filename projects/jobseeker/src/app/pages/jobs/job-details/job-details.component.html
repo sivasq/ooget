@@ -22,7 +22,7 @@
 	</div>
 	<!-- Breadcrumb End -->
 
-	<div fxLayout="row wrap">
+	<div *ngIf="busy.closed" fxLayout="row wrap">
 		<div class="flex-p" fxFlex="1 1 100%">
 			<mat-card class="p-10" fxLayout="row" fxLayoutAlign="start center" fxLayoutAlign="space-between center">
 
