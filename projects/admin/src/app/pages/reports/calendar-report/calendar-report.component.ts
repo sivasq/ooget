@@ -13,7 +13,7 @@ import {
 	endOfDay,
 	format
 } from 'date-fns';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ApiCallService } from '../../../services/api-call.service';
 // import { colors } from '../demo-utils/colors';
 
@@ -188,10 +188,11 @@ export class CalendarReportComponent implements OnInit {
 			.set('api_key', '0ec33936a68018857d727958dca1424f');
 
 		this.events$ =
-			this.http
-				.get('https://api.themoviedb.org/3/discover/movie', { params })
+			// this.http
+				// .get('https://api.themoviedb.org/3/discover/movie', { params })
 				// .pipe(
 				// .map(({ results }: { results: any[] }) => {
+			of(this.responseData)
 				.map((response: any) => {
 					return this.responseData.results.map((res: any) => {
 						return {

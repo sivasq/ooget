@@ -6,12 +6,14 @@
 	<div fxLayout="row wrap">
 		<div class="flex-p" fxFlex="1 1 100%">
 			<mat-card class="mat-breadcrumb" fxLayout="row">
-				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row"
+					fxLayoutAlign="flex-start center">
 					<mat-icon>home</mat-icon>
 					<span class="breadcrumb-title">Home</span>
 				</a>
 
-				<a class="breadcrumb-item" routerLink="/admin/employers/list" fxLayout="row" fxLayoutAlign="center center">
+				<a class="breadcrumb-item" routerLink="/admin/employers/list" fxLayout="row"
+					fxLayoutAlign="center center">
 					<span class="breadcrumb-title">Employers</span>
 				</a>
 
@@ -31,23 +33,30 @@
 		<div class="flex-p" fxFlex="1 1 100%">
 			<mat-card class="p-0" fxLayout="row" fxLayoutAlign="space-between center">
 				<div>
-					<button mat-mini-fab color="primary" matTooltip="Add New Job" matTooltipPosition="right" style="border-radius: 0"
-					 routerLink="/admin/employers/{{employerDetails._id}}/jobs/add">
+					<button mat-mini-fab color="primary" matTooltip="Add New Job" matTooltipPosition="right"
+						style="border-radius: 0" routerLink="/admin/employers/{{employerDetails._id}}/jobs/add">
 						<mat-icon>playlist_add</mat-icon>
 					</button>
 					&nbsp;
-					<button mat-mini-fab color="primary" matTooltip="Edit" matTooltipPosition="right" style="border-radius: 0"
-					 routerLink="/admin/employers/{{employerDetails._id}}/edit">
+					<button mat-mini-fab color="primary" matTooltip="Edit Company" matTooltipPosition="right"
+						style="border-radius: 0" routerLink="/admin/employers/{{employerDetails._id}}/edit">
 						<mat-icon>edit</mat-icon>
 					</button>
 				</div>
 
 				<h3>Company Details</h3>
 
-				<button mat-mini-fab color="primary" matTooltip="View Jobs" matTooltipPosition="left" style="border-radius: 0"
-				 routerLink="/admin/employers/{{employerDetails._id}}/jobs/list">
-					<mat-icon>list</mat-icon>
-				</button>
+				<div>
+					<button mat-mini-fab color="primary" matTooltip="Supervisors" matTooltipPosition="left"
+						style="border-radius: 0" routerLink="/admin/employers/{{employerDetails._id}}/users">
+						<mat-icon>supervised_user_circle</mat-icon>
+					</button>
+					&nbsp;
+					<button mat-mini-fab color="primary" matTooltip="View Jobs" matTooltipPosition="left"
+						style="border-radius: 0" routerLink="/admin/employers/{{employerDetails._id}}/jobs/list">
+						<mat-icon>list</mat-icon>
+					</button>
+				</div>
 			</mat-card>
 
 			<mat-card class="p-10 mt-1" fxLayout="row wrap">
@@ -91,18 +100,22 @@
 
 					<mat-list-item *ngIf="!employerDetails.companycode" class="dynamic-height">
 						<span class="title" style="white-space: nowrap;">Company Code : </span>
-						<button *ngIf="!companyCodeGenerator" mat-button style="background-color: green; color: #ffffff;" class="text-wrap"
-						 (click)="toggleCompanyCodeGenerator()">
+						<button *ngIf="!companyCodeGenerator" mat-button
+							style="background-color: green; color: #ffffff;" class="text-wrap"
+							(click)="toggleCompanyCodeGenerator()">
 							<span class="text-wrap">Click here to Create Company Code</span>
 						</button>
 
 						<div *ngIf="companyCodeGenerator" class="flex-p dynamic-height" style="width: 100%;">
-							<div style="width: 100%;" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+							<div style="width: 100%;" fxLayout="row wrap" fxLayoutAlign="start center"
+								fxLayoutGap="10px">
 								<mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="40">
 									<mat-label>Employer Company Code</mat-label>
-									<input matInput placeholder="Employer Company Code" autocomplete="off" #companycode="ngModel" minlength="7"
-									 maxlength="7" [(ngModel)]="companyCodes.companycode" required>
-									<mat-hint *ngIf="companycode?.errors?.required" [hidden]="companycode.valid || companycode.pristine">
+									<input matInput placeholder="Employer Company Code" autocomplete="off"
+										#companycode="ngModel" minlength="7" maxlength="7"
+										[(ngModel)]="companyCodes.companycode" required>
+									<mat-hint *ngIf="companycode?.errors?.required"
+										[hidden]="companycode.valid || companycode.pristine">
 										Employer Code Required
 									</mat-hint>
 									<mat-hint *ngIf="companycode?.errors?.minlength">
@@ -112,9 +125,11 @@
 										Maximum 7 characters only Allowed
 									</mat-hint>
 								</mat-form-field>
-								<button mat-stroked-button color="primary" [disabled]="!companycode.valid" (click)="updateCompanyCode()">Submit
+								<button mat-stroked-button color="primary" [disabled]="!companycode.valid"
+									(click)="updateCompanyCode()">Submit
 									Code</button>
-								<button mat-stroked-button color="primary" (click)="toggleCompanyCodeGenerator()">Close</button>
+								<button mat-stroked-button color="primary"
+									(click)="toggleCompanyCodeGenerator()">Close</button>
 							</div>
 						</div>
 					</mat-list-item>
@@ -145,15 +160,20 @@
 						<span class="title" style="white-space: nowrap;">Terms &amp; Conditions : </span>
 
 						<div fxFlex fxLayout="row wrap" fxLayoutAlign="start center">
-							<span *ngIf="employerDetails.termsandconditions" style="margin-right: 15px; text-align: center;">
-								<a class="text-wrap" href="{{imgBaseUrl}}/company/{{employerDetails.termsandconditions}}" target="_blank" style="color: blue; font-weight: bold; font-size: 16px;">Click
+							<span *ngIf="employerDetails.termsandconditions"
+								style="margin-right: 15px; text-align: center;">
+								<a class="text-wrap"
+									href="{{imgBaseUrl}}/company/{{employerDetails.termsandconditions}}" target="_blank"
+									style="color: blue; font-weight: bold; font-size: 16px;">Click
 									here</a> to Download Terms and Conditions</span>
 
 							<input hidden type="file" #docFileInput name="termsDoc" (change)="getDoc($event)" />
 
 							<div *ngIf="showUpload">
-								<div fxFlex fxLayout="row" fxlayoutAlign="center" class="td-file-upload text-wrap text-center" style="background-color:#1c3e8e; color:#ffffff; border-radius:4px; padding:8px; cursor:pointer;" mat-raised-button
-								 color="primary" (click)="docFileInput.click()">
+								<div fxFlex fxLayout="row" fxlayoutAlign="center"
+									class="td-file-upload text-wrap text-center"
+									style="background-color:#1c3e8e; color:#ffffff; border-radius:4px; padding:8px; cursor:pointer;"
+									mat-raised-button color="primary" (click)="docFileInput.click()">
 									<mat-icon fxFlexAlign="center">attach_file</mat-icon>
 									<span>Upload New (or) Modified Terms &amp; Conditions Document</span>
 								</div>
@@ -164,7 +184,8 @@
 									<mat-icon>file_upload</mat-icon>{{docName}}
 								</button>
 
-								<button type="button" class="td-file-upload-cancel" mat-icon-button color="warn" (click)="removeDoc()">
+								<button type="button" class="td-file-upload-cancel" mat-icon-button color="warn"
+									(click)="removeDoc()">
 									<mat-icon>cancel</mat-icon>
 								</button>
 

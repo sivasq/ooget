@@ -8,6 +8,11 @@ import { TermsConditionsDialogComponent } from '../../../terms-conditions-dialog
 import { ConfirmDialogComponent } from '../../../confirm-dialog/confirm-dialog.component';
 import { Subscription, Observable } from 'rxjs';
 import { AsyncSubscriber } from '../../../services/async.service';
+import { Specialization } from '../../../classes/specialization';
+import { JobLocation } from '../../../classes/jobLocation';
+import { WorkingEnvironment } from '../../../classes/workingEnvironment';
+import { EmploymentType } from '../../../classes/employmentType';
+import { MockDataService } from '../../../services/mock-data.service';
 
 @Component({
 	selector: 'app-add-job',
@@ -80,695 +85,75 @@ export class AddJobComponent implements OnInit {
 	public markuprateincurrency: string;
 
 	public isPartTimeJob: boolean;
+	public showfulltimespeccilization: boolean;
+	public showparttimespeccilization: boolean;
+
 	public companyDetails: any = [];
 
-	public maxpax = _.range(50);
-	public graceperiods = [0, 5, 10, 15];
-	public overtimeroundings = [0, 5, 10, 15];
+	public maxpax: number[];
+	public graceperiods: number[];
+	public overtimeroundings: number[];
+	public FullTimeSpecializations: Specialization[];
+	public PartTimeSpecializations: Specialization[];
+	public Locations: JobLocation[];
+	public WorkingEnvironments: WorkingEnvironment[];
+	public EmploymentTypes: EmploymentType[];
 
 	//busy Config
 	busy: Subscription;
 
-	public Specializations: any = [
-		{
-			"_id": "432424",
-			"specialization": "Actuarial Science/Statistics",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Advertising/Media Plannning",
-			"defaultpay": "11.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Agriculture/Forestry/Fisheries",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Architecture/Interior Design",
-			"defaultpay": "11.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Arts/Creative/Graphics Design",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Aviation/Aircraft Maintenance",
-			"defaultpay": "13.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Banking/Financial Services",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Biotechnology",
-			"defaultpay": "11.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Chemistry",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Clerical/Administrative Support",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Corporate Strategy/Top Management",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Customer Service",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Education",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Engineering - Chemical",
-			"defaultpay": "18.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Engineering - Civil/Construction/Structural",
-			"defaultpay": "17.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Engineering - Electrical",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Engineering - Electronics/Communication",
-			"defaultpay": "14.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Engineering - Environmental/Health/Safety",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Engineering - Industrial",
-			"defaultpay": "13.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Engineering - Mechanical/Automotive",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Engineering - Oil/Gas",
-			"defaultpay": "15.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Entertainment/Performing Arts",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Finance - Audit/Taxation",
-			"defaultpay": "10.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Finance - Corporate Finance/Investment/Merchant Banking",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Finance - General/Cost Accounting",
-			"defaultpay": "10.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Food Technology/Nutritionist",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Food/Beverage/Restaurant Service",
-			"defaultpay": "11.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "General Worker (Housekeeper, Driver, Dispatch, Messenger, etc)",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Geology/Geophysics",
-			"defaultpay": "11.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Healthcare - Doctor/Diagnosis",
-			"defaultpay": "11.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Healthcare - Nurse/Medical Support & Assistant",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Healthcare - Pharmacy",
-			"defaultpay": "11.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Hotel Managament/Tourism Services",
-			"defaultpay": "11.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Human Resouces",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "IT/Computer - Hardware",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "IT/Computer - Network/System/Database Admin",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "IT/Computer - Software",
-			"defaultpay": "10.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Journalist/Editor",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Law/Legal Services",
-			"defaultpay": "10.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Logisitcs/Supply Chain",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Maintenance/Repair (Facilities & Machinery)",
-			"defaultpay": "10.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Manufacturing/Productions Operations",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Marketing/Business Development",
-			"defaultpay": "10.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Merchandising",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Others/Category not available",
-			"defaultpay": "10.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Personal Care/Beauty/Finess Service",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Process Design & Control/Instrumentation",
-			"defaultpay": "10.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Property/Real Estate",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Public Relations/Communications",
-			"defaultpay": "11.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Pubulishing/Printing",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Purchasing/Inventory/Material & Warehouse Managament",
-			"defaultpay": "13.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Quality Control/Assurance",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Quantity Surveying",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Sales - Corporate",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Sales - Engineering/Technical/IT",
-			"defaultpay": "14.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Sales - Finance Services (Insurnace, Unit Trust, etc)",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Sales - Retail/General",
-			"defaultpay": "10.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Sales - Telesales/Telemarketing",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Science & Technology/Laboratory",
-			"defaultpay": "11.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Secretarial/Executive & Personal Assistant",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Security/Armed Forces/Protective Services",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Social & Counselling Service",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Technical & Helpdesk Support",
-			"defaultpay": "12.00"
-		},
-		{
-			"_id": "432424",
-			"specialization": "Training & Development",
-			"defaultpay": "12.00"
-		}
-	]
-
-	public Locations: any = [
-		{
-			"_id": "432424",
-			"mainlocation": "North",
-			"sublocation": "Central Water Catchment"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North",
-			"sublocation": "Lim Chu Kang"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North",
-			"sublocation": "Mandai"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North",
-			"sublocation": "Sembawang"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North",
-			"sublocation": "Simpang"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North",
-			"sublocation": "Sungei Kadut"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North",
-			"sublocation": "Woodlands"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North",
-			"sublocation": "Yishun"
-		},
-
-		{
-			"_id": "432424",
-			"mainlocation": "North East",
-			"sublocation": "Ang Mo Kio"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North East",
-			"sublocation": "Hougang"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North East",
-			"sublocation": "North Eastern Islands"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North East",
-			"sublocation": "Punggol"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North East",
-			"sublocation": "Seletar"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North East",
-			"sublocation": "Sengkang"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "North East",
-			"sublocation": "Serangoon"
-		},
-
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Boon Lay"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Bukit Batok"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Bukit Panjang"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Choa Chu Kang"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Clementi"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Jurong East"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Jurong West"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Pioneer"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Tengah"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Tuas"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Western Islands"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Western Water"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "West",
-			"sublocation": "Catchment"
-		},
-
-		{
-			"_id": "432424",
-			"mainlocation": "East",
-			"sublocation": "Bedok"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "East",
-			"sublocation": "Changi"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "East",
-			"sublocation": "Changi Bay"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "East",
-			"sublocation": "Pasir Ris"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "East",
-			"sublocation": "Paya Lebar"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "East",
-			"sublocation": "Tampines"
-		},
-
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Bishan"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Bukit Merah"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Bukit Timah"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Downtown Core"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Geylang"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Kallang"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Marina East"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Marina South"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Marine Parade"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Museum"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Newton"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Novena"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Orchard"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Outram"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Queenstown"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "River Valley"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Rochor"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Singapore River"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Southern Islands"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Straits View"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Tanglin"
-		},
-		{
-			"_id": "432424",
-			"mainlocation": "Central",
-			"sublocation": "Toa Payoh"
-		}
-	]
-
-	public jobPriorityLists: any = [
-		{
-			"_id": "432424",
-			"PriorityType": "normal"
-		}
-	]
-
-	public WorkingEnvironments: any = [
-		{
-			"_id": "432424",
-			"Environment": "Office"
-		},
-		{
-			"_id": "432424",
-			"Environment": "Factory"
-		},
-		{
-			"_id": "432424",
-			"Environment": "Restaurant"
-		},
-		{
-			"_id": "432424",
-			"Environment": "Hotel"
-		},
-		{
-			"_id": "432424",
-			"Environment": "Warehouse"
-		},
-		{
-			"_id": "432424",
-			"Environment": "Outdoor"
-		},
-		{
-			"_id": "432424",
-			"Environment": "Supermarket"
-		},
-		{
-			"_id": "432424",
-			"Environment": "Retail"
-		},
-		{
-			"_id": "432424",
-			"Environment": "Aircon"
-		},
-		{
-			"_id": "432424",
-			"Environment": "Non Aircon"
-		}
-	]
-
-	public EmploymentTypes: any = [
-		{
-			"_id": "432424",
-			"EmploymentType": "Part Time"
-		},
-		{
-			"_id": "432424",
-			"EmploymentType": "Full Time"
-		}
-	]
-
-	constructor(private _httpService: ApiCallService, public dialog: MatDialog, public snackBar: MatSnackBar, private route: ActivatedRoute, public router: Router, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber) {
+	constructor(private _httpService: ApiCallService, public dialog: MatDialog, public snackBar: MatSnackBar, private route: ActivatedRoute, public router: Router, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
 
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
 		this.companyid = localStorage.getItem('ogCompanyObjID');
 
 		// this.openTermsConditionsDialog('fileName');
-		this.getTermsAcceptanceStatus({ 'companyid': this.companyid })
+		this.getTermsAcceptanceStatus({ 'companyid': this.companyid });
+
+		this.getEmploymentTypes();
+		this.getWorkingEnvironments();
+		this.getJobLocations();
+		this.getFullTimeSpecializations();
+		this.getPartTimeSpecializations();
+		this.getGracePeriods();
+		this.getOverTimeRoundings();
+		this.getPaxs();
 	}
+
+	getEmploymentTypes(): void {
+		this.mockDataService.getEmploymentTypes()
+			.subscribe(EmploymentTypes => this.EmploymentTypes = EmploymentTypes);
+	}
+	getWorkingEnvironments(): void {
+		this.mockDataService.getWorkingEnvironments()
+			.subscribe(WorkingEnvironments => this.WorkingEnvironments = WorkingEnvironments);
+	}
+	getJobLocations(): void {
+		this.mockDataService.getJobLocations()
+			.subscribe(Locations => this.Locations = Locations);
+	}
+	getFullTimeSpecializations(): void {
+		this.mockDataService.getFullTimeSpecializations()
+			.subscribe(Specializations => this.FullTimeSpecializations = Specializations);
+	}
+	getPartTimeSpecializations(): void {
+		this.mockDataService.getPartTimeSpecializations()
+			.subscribe(Specializations => this.PartTimeSpecializations = Specializations);
+	}
+	getGracePeriods(): void {
+		this.mockDataService.getGracePeriods()
+			.subscribe(graceperiods => this.graceperiods = graceperiods);
+	}
+	getOverTimeRoundings(): void {
+		this.mockDataService.getOverTimeRoundings()
+			.subscribe(overtimeroundings => this.overtimeroundings = overtimeroundings);
+	}
+	getPaxs(): void {
+		this.mockDataService.getPaxs()
+			.subscribe(pax => this.maxpax = pax);
+	}
+
 	//==========================
 	getTermsAcceptanceStatus(employerData) {
 		this.busy = this._httpService.getTermsAcceptanceStatus(employerData)
@@ -889,6 +274,18 @@ export class AddJobComponent implements OnInit {
 			this.isPartTimeJob = false;
 		} else {
 			this.isPartTimeJob = true;
+		}
+
+		if (this.isInArray(event, "Full Time")) {
+			this.showfulltimespeccilization = true;
+		} else {
+			this.showfulltimespeccilization = false;
+		}
+
+		if (this.isInArray(event, "Part Time")) {
+			this.showparttimespeccilization = true;
+		} else {
+			this.showparttimespeccilization = false;
 		}
 	}
 

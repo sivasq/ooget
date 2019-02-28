@@ -23,6 +23,7 @@ export class EditUserComponent implements OnInit {
 	public hide = true;
 	public rehide = true;
 	public passwordPatternError;
+	public employerDetails;
 
 	public userProfile: any = {
 		username: '',
@@ -48,6 +49,7 @@ export class EditUserComponent implements OnInit {
 		this.buildUserUpdateForm();
 
 		this.getProfileDetails(this.route.snapshot.params['userId']);
+		this.getEmployerDetails(this.route.snapshot.params['emp_id']);
 
 		this.getUserRoles();
 	}
@@ -233,30 +235,46 @@ export class EditUserComponent implements OnInit {
 			formData.append('userimage', profileImage.files[0]);
 		}
 
-		if (profileImage.files[0]) {
-			this.busy = this._httpService.uploadUserProfilePic(formData)
-				.subscribe(
-					response => {
-						if (response.success) {
-							localStorage.setItem('ogProfileimage', response.adminimage);
-							// location.reload();
-							this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
+		// if (profileImage.files[0]) {
+		// 	this.busy = this._httpService.uploadUserProfilePic(formData)
+		// 		.subscribe(
+		// 			response => {
+		// 				if (response.success) {
+		// 					localStorage.setItem('ogProfileimage', response.adminimage);
+		// 					// location.reload();
+		// 					this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
 
-							let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
-								duration: 5000,
-							});
-							snackBarRef.onAction().subscribe(() => {
-								snackBarRef.dismiss();
-								// console.log('The snack-bar action was triggered!');
-							});
-						}
-					},
-					error => {
-						// console.log(error);
+		// 					let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
+		// 						duration: 5000,
+		// 					});
+		// 					snackBarRef.onAction().subscribe(() => {
+		// 						snackBarRef.dismiss();
+		// 						// console.log('The snack-bar action was triggered!');
+		// 					});
+		// 				}
+		// 			},
+		// 			error => {
+		// 				// console.log(error);
+		// 			}
+		// 		);
+		// }
+
+	}
+
+	getEmployerDetails(employerId) {
+		this.busy = this._httpService.getEmployerDetails({ 'companyid': employerId })
+			.subscribe(
+				response => {
+					if (response.success) {
+						this.employerDetails = response.employer;
+					} else if (!response.success) {
+						console.log(response);
 					}
-				);
-		}
-
+				},
+				error => {
+					console.log(error);
+				}
+			);
 	}
 
 	ngOnInit() { }

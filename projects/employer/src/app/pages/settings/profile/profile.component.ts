@@ -6,6 +6,8 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } f
 import { Observable, Subscription } from 'rxjs';
 import { AsyncSubscriber } from '../../../services/async.service';
 import { ConfigService } from '../../../services/config.service';
+import { UserRole } from '../../../classes/userRole';
+import { MockDataService } from '../../../services/mock-data.service';
 
 @Component({
 	selector: 'app-profile',
@@ -15,7 +17,7 @@ import { ConfigService } from '../../../services/config.service';
 export class ProfileComponent implements OnInit {
 
 	appearance$: Observable<any>;
-
+	public Roles: UserRole[];
 	busy: Subscription; //busy Config
 	public hide = true;
 	public rehide = true;
@@ -28,33 +30,23 @@ export class ProfileComponent implements OnInit {
 		password: ''
 	}
 
-	public Roles: any = [
-		{
-			"RoleView": "Super Admin",
-			"RoleValue": "superemployer"
-		},
-		{
-			"RoleView": "Admin",
-			"RoleValue": "normalemployer"
-		},
-		{
-			"RoleView": "Verifier",
-			"RoleValue": "verifier"
-		}
-	]
-
-
 	public profileImage: any = 'assets/img/avatars/profile-placeholder.png';
 	@ViewChild('imgFileInput') myProfileImageInputVariable: ElementRef;
 
 	UserUpdateForm: FormGroup;
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber, private urlconfig: ConfigService, ) {
+	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber, private urlconfig: ConfigService, private mockDataService: MockDataService) {
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 		this.imgBaseUrl = urlconfig.img_base_url;
 		this.buildUserUpdateForm();
 		this.getProfileDetails();
+		this.getUserRoles();
+	}
+
+	getUserRoles(): void {
+		this.mockDataService.getUserRoles()
+			.subscribe(UserRoles => this.Roles = UserRoles);
 	}
 
 	// Build Employer Add Form

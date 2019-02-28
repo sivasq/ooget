@@ -3,10 +3,11 @@ import { MatSnackBar } from '@angular/material';
 
 import { ApiCallService } from '../../../services/api-call.service';
 import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AsyncSubscriber } from '../../../services/async.service';
 import { MockDataService } from '../../../services/mock-data.service';
 import { UserRole } from '../../../classes/userRole';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-add-user',
@@ -20,16 +21,20 @@ export class AddUserComponent implements OnInit {
 	public hide = true;
 	public rehide = true;
 	public passwordPatternError;
+	public employerId;
+	public employerDetails;
+	busy: Subscription;
 
 	UserAddForm: FormGroup;
 	@ViewChild(FormGroupDirective) resetUserAddForm;
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
+	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService, private route: ActivatedRoute) {
 		this.buildUserAddForm();
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
-
+		this.employerId = this.route.snapshot.params['emp_id']
 		this.getUserRoles();
+		this.getEmployerDetails(this.employerId);
 	}
 
 	getUserRoles(): void {
@@ -40,13 +45,14 @@ export class AddUserComponent implements OnInit {
 	// Build Employer Add Form
 	buildUserAddForm(): void {
 		this.UserAddForm = this.fb.group({
+			companyid: [this.route.snapshot.params['emp_id']],
 			username: ['', [Validators.required]],
 			employerrole: ['', [Validators.required]],
 			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(8)]), this.isPatternMatch.bind(this)],
 			verify: ['', [Validators.required]],
 			activestatus: ['true'],
-			registeredby: ['Employer'],
+			registeredby: ['Admin'],
 		})
 	}
 
@@ -114,7 +120,7 @@ export class AddUserComponent implements OnInit {
 	public userAddSubmit() {
 		if (!this.UserAddForm.valid) return false;
 
-		this._httpService.createsupervisor(this.UserAddForm.value)
+		this.busy = this._httpService.createsupervisor(this.UserAddForm.value)
 			.subscribe(
 				response => {
 					// Response is success
@@ -131,6 +137,22 @@ export class AddUserComponent implements OnInit {
 							console.log('The snack-bar action was triggered!');
 						});
 						// Response is failed
+					} else if (!response.success) {
+						console.log(response);
+					}
+				},
+				error => {
+					console.log(error);
+				}
+			);
+	}
+
+	getEmployerDetails(employerId) {
+		this.busy = this._httpService.getEmployerDetails({ 'companyid': employerId })
+			.subscribe(
+				response => {
+					if (response.success) {
+						this.employerDetails = response.employer;
 					} else if (!response.success) {
 						console.log(response);
 					}

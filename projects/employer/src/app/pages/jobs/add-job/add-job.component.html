@@ -81,9 +81,25 @@
 										<mat-label>Job Specialization</mat-label>
 										<mat-select placeholder="Job Specialization" name="jobspecialization" [(ngModel)]="jobDetails.jobspecialization"
 										 required>
-											<mat-option *ngFor="let Specialization of Specializations" [value]="Specialization.specialization">{{
+											<!-- <mat-option *ngFor="let Specialization of Specializations" [value]="Specialization.specialization">{{
 												Specialization.specialization }}</mat-option>
-											<mat-option value="Others">Others</mat-option>
+											<mat-option value="Others">Others</mat-option> -->
+											<div *ngIf="showfulltimespeccilization">
+												<p style="padding:10px 20px;font-weight: 500; background: #eee;">FULL
+													TIME</p>
+												<mat-option *ngFor="let Specialization of FullTimeSpecializations"
+													[value]="Specialization.specialization">{{
+													Specialization.specialization }}</mat-option>
+												<mat-option value="Others">Others</mat-option>
+											</div>
+											<div *ngIf="showparttimespeccilization">
+												<p style="padding:10px 20px;font-weight: 500; background: #eee;">PART
+													TIME</p>
+												<mat-option *ngFor="let Specialization of PartTimeSpecializations"
+													[value]="Specialization.specialization">{{
+													Specialization.specialization }}</mat-option>
+												<mat-option value="Others">Others</mat-option>
+											</div>
 										</mat-select>
 									</mat-form-field>
 

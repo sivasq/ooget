@@ -743,4 +743,68 @@ export class ApiCallService {
 		return this.http.post(this.baseUrl + '/contract/fetchoffdayssheetforparticularjob', args, { headers: headers })
 	}
 
+	getListOfUsers(comapnyid): Observable<any> {
+		let dummyData = '';
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/employer/listsupervisors', comapnyid, { headers: headers })
+			.map(res => res)
+	}
+
+	getExtraUserProfileDetails(userid): Observable<any> {
+		let dummyData = '';
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/employer/fetchsupervisor', userid, { headers: headers })
+			.map(res => res)
+	}
+
+	updateUserProfile(employerData): Observable<any> {
+		let dummyData = '';
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/employer/updatesupervisor', employerData, { headers: headers })
+			.map(res => res)
+	}
+
+	createsupervisor(employerData): Observable<any> {
+		let dummyData = '';
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/employer/createsupervisor', employerData, { headers: headers })
+			.map(res => res)
+	}
+
+	deleteUserProfile(employerData): Observable<any> {
+		let dummyData = '';
+		let userToken = localStorage.getItem('ogToken');
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			})
+		return this.http.post(this.baseUrl + '/employer/deletesupervisor', employerData, { headers: headers })
+			.map(res => res)
+	}
 }

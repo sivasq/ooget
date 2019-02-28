@@ -15,12 +15,13 @@ import { Specialization } from '../classes/Specialization';
 import { FullTimeSpecializations } from '../mock-datas/fullTimeSpecializations';
 import { PartTimeSpecializations } from '../mock-datas/partTimeSpecializations';
 
+import { UserRole } from '../classes/userRole';
+import { UserRoles } from '../mock-datas/userRoles';
+
 import { graceperiods, overtimeroundings } from '../mock-datas/simpleDatas';
 
 import { Observable, of } from 'rxjs';
 import * as _ from 'lodash';
-import { UserRole } from '../classes/userRole';
-import { UserRoles } from '../mock-datas/userRoles';
 
 @Injectable({
 	providedIn: 'root'
