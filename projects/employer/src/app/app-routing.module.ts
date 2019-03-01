@@ -9,6 +9,7 @@ import { Layout2Component } from './layouts/layout2/layout2.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 import { NgxPermissionsGuard } from 'ngx-permissions';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
 	{
@@ -26,6 +27,10 @@ const routes: Routes = [
 			{
 				path: 'reg',
 				component: RegisterComponent
+			},
+			{
+				path: 'change_pass/:userId',
+				component: ResetPasswordComponent
 			},
 		]
 	},

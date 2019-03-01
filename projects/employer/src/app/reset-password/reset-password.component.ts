@@ -12,7 +12,8 @@ import { AsyncSubscriber } from '../services/async.service';
 	templateUrl: './reset-password.component.html',
 	styleUrls: ['./reset-password.component.scss']
 })
-export class ResetPasswordComponent implements OnInit, OnDestroy {
+export class ResetPasswordComponent implements OnInit {
+	public homePageUrl;
 	appearance$: Observable<any>;
 
 	public hide = true;
@@ -24,25 +25,27 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 	//busy Config
 	busy: Subscription;
 
-	jobseekerPassResetForm: FormGroup;
-	@ViewChild(FormGroupDirective) resetJobseekerPassResetForm;
+	employerPassResetForm: FormGroup;
+	@ViewChild(FormGroupDirective) resetemployerPassResetForm;
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 	constructor(public router: Router, private _httpService: ApiCallService, private config: ConfigService, private fb: FormBuilder, public snackBar: MatSnackBar, private route: ActivatedRoute, private asyncSubscriber: AsyncSubscriber) {
 
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
-		this.buildjobseekerPassResetForm();
+		this.homePageUrl = config.homePageUrl;
+
+		this.buildEmployerPassResetForm();
 
 		this.getUserDetails({ jobseekerid: this.route.snapshot.params['userId'] });
 	}
 
 	// Build JobSeeker Auth Form
-	buildjobseekerPassResetForm(): void {
-		this.jobseekerPassResetForm = this.fb.group({
-			employerid: ['', [Validators.required]],
+	buildEmployerPassResetForm(): void {
+		this.employerPassResetForm = this.fb.group({
+			jobseekerid: ['', [Validators.required]],
 			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)])],
-			password: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+			password: ['', Validators.compose([Validators.required, Validators.minLength(8)]), this.isPatternMatch.bind(this)],
 			verify: ['', [Validators.required]],
 		})
 	}
@@ -97,8 +100,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.jobseekerPassResetForm.patchValue({
-							employerid: response.jobseeker._id,
+						this.employerPassResetForm.patchValue({
+							jobseekerid: response.jobseeker._id,
 							email: response.jobseeker.email,
 						})
 
@@ -113,12 +116,12 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 	}
 
 	onResetPassword() {
-		if (!this.jobseekerPassResetForm.valid) return false;
-		this.busy = this._httpService.resetPassword(this.jobseekerPassResetForm.value)
+		if (!this.employerPassResetForm.valid) return false;
+		this.busy = this._httpService.resetPassword(this.employerPassResetForm.value)
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.resetJobseekerPassResetForm.resetForm();
+						this.resetemployerPassResetForm.resetForm();
 						setTimeout(() => {
 							this.router.navigate(['auth/login']);
 						}, 2000);
@@ -134,14 +137,14 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 					} else if (!response.success) {
 
 						setTimeout(() => {
-							this.resetJobseekerPassResetForm.resetForm();
+							this.resetemployerPassResetForm.resetForm();
 						}, 3000);
 					}
 				},
 				error => {
 					console.log(error);
 					setTimeout(() => {
-						this.resetJobseekerPassResetForm.resetForm();
+						this.resetemployerPassResetForm.resetForm();
 					}, 3000);
 				}
 			);
@@ -154,4 +157,5 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 			this.busy.unsubscribe();
 		}
 	}
+
 }

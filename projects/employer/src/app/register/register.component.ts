@@ -7,6 +7,8 @@ import { MatSnackBar } from '@angular/material';
 import { Subscription, Observable } from 'rxjs';
 import { ConfigService } from '../services/config.service';
 import { AsyncSubscriber } from '../services/async.service';
+import { Industry } from '../classes/industry';
+import { MockDataService } from '../services/mock-data.service';
 
 @Component({
 	selector: 'app-register',
@@ -23,76 +25,25 @@ export class RegisterComponent implements OnInit {
 	public rehide = true;
 	public passwordPatternError;
 
+	public Industries: Industry[];
+
 	employerRegForm: FormGroup;
 	@ViewChild(FormGroupDirective) resetEmployerRegForm;
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	constructor(public router: Router, private _httpService: ApiCallService, private config: ConfigService, public snackBar: MatSnackBar, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber) {
+	constructor(public router: Router, private _httpService: ApiCallService, private config: ConfigService, public snackBar: MatSnackBar, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
 
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
 		this.homePageUrl = config.homePageUrl;
+		this.getIndustries();
 		this.buildEmployerRegForm();
 	}
 
-	public Industries: any = [
-		{
-			"_id": "432424",
-			"IndustryName": "Aerospace"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Creative Industries"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Energy & Chemicals"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Logistics & Supply Chain Mangement"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Medical Technology"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Pharmaceutical & Biotechnology"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Professional Services"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Consumer Business"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Electronics"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Information & Communications Technology"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Oil & Gas Equipment and Services"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Natural Resources"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Precision Engineering"
-		},
-		{
-			"_id": "432424",
-			"IndustryName": "Urban Solutions & Sustainability"
-		},
-	]
+	getIndustries(): void {
+		this.mockDataService.getIndustries()
+			.subscribe(Industries => this.Industries = Industries);
+	}
 
 	// Build Employer Add Form
 	buildEmployerRegForm(): void {

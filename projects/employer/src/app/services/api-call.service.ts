@@ -12,6 +12,24 @@ export class ApiCallService {
 		this.baseUrl = config.base_url;
 	}
 
+	getUserDetails(userId): Observable<any> {
+		let headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+			})
+
+		return this.http.post(this.baseUrl + '/fetchemailwithidnoauth', userId, { headers: headers })
+	}
+
+	resetPassword(data): Observable<any> {
+		//var authDatas = JSON.stringify(authData);
+		let headers = new HttpHeaders()
+			.append('Content-Type', 'application/json')
+			.append('Access-Control-Allow-Origin', '*');
+		return this.http.post(this.baseUrl + '/changepasswordnoauth', data, { headers: headers })
+	}
+
 	checkUEN(uen) {
 		let dummyData = '';
 		let userToken = localStorage.getItem('ogToken');

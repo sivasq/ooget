@@ -16,6 +16,7 @@ import { Layout1Component } from './layouts/layout1/layout1.component';
 import { Layout2Component } from './layouts/layout2/layout2.component';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 // import { TopProfiledialogComponent } from './top-profiledialog/top-profiledialog.component';
 // import { TopShortcutdialogComponent } from './top-shortcutdialog/top-shortcutdialog.component';
 
@@ -28,6 +29,7 @@ import { NotAuthorizedComponent } from './not-authorized/not-authorized.componen
 		Layout1Component,
 		Layout2Component,
 		NotAuthorizedComponent,
+		ResetPasswordComponent,
 	],
 	imports: [
 		BrowserModule,
