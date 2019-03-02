@@ -18,7 +18,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 	public hide = true;
 	public rehide = true;
 	public passwordPatternError;
-
+	isAuthMsg;
 	// isValidUrl: boolean;
 
 	//busy Config

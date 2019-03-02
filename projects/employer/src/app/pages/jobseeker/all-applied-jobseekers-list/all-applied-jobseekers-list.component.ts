@@ -62,12 +62,8 @@ export class AllAppliedJobseekersListComponent implements OnInit {
 						} else {
 							this.isCandidatesAvailable = false;
 						}
-
-						// console.log(response.job.candidatesapplied);
 						this.candidates_list = response.appliedjobseekers;
-						this.companyDetails = response.companydetails[0];
-						this.jobDetails = response.jobdetails;
-						// console.log(this.companyDetails);
+						this.companyDetails = response.company;
 
 					} else if (!response.success) {
 						console.log(response);

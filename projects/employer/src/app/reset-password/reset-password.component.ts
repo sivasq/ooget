@@ -19,7 +19,7 @@ export class ResetPasswordComponent implements OnInit {
 	public hide = true;
 	public rehide = true;
 	public passwordPatternError;
-
+	isAuthMsg;
 	// isValidUrl: boolean;
 
 	//busy Config
