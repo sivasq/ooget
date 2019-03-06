@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { CalendarEvent, CalendarView, CalendarMonthViewDay } from 'angular-calendar';
+import { CalendarEvent, CalendarView, CalendarMonthViewDay, CalendarEventAction } from 'angular-calendar';
 import {
 	isSameMonth,
 	isSameDay,
@@ -157,7 +157,30 @@ export class CalendarReportComponent implements OnInit {
 	events$: Observable<Array<CalendarEvent<{ res: any }>>>;
 	activeDayIsOpen: boolean = false;
 
+	actions: CalendarEventAction[] = [
+		{
+			label: '<i class="fa fa-fw fa-pencil"></i>',
+			onClick: ({ event }: { event: CalendarEvent }): void => {
+				this.handleEvent('Edited', event);
+			}
+		},
+		{
+			label: '<i class="fa fa-fw fa-times"></i>',
+			onClick: ({ event }: { event: CalendarEvent }): void => {
+				// this.events = this.events.filter(iEvent => iEvent !== event);
+				this.handleEvent('Deleted', event);
+			}
+		}
+	];
+
 	constructor(private http: HttpClient, private _httpService: ApiCallService) { }
+
+	handleEvent(action: string, event: CalendarEvent): void {
+		console.log('event', event);
+		console.log('action', action);
+		// this.modalData = { event, action };
+		// this.modal.open(this.modalContent, { size: 'lg' });
+	}
 
 	ngOnInit(): void {
 		this.fetchEvents(this.viewMode);
@@ -189,9 +212,9 @@ export class CalendarReportComponent implements OnInit {
 
 		this.events$ =
 			// this.http
-				// .get('https://api.themoviedb.org/3/discover/movie', { params })
-				// .pipe(
-				// .map(({ results }: { results: any[] }) => {
+			// .get('https://api.themoviedb.org/3/discover/movie', { params })
+			// .pipe(
+			// .map(({ results }: { results: any[] }) => {
 			of(this.responseData)
 				.map((response: any) => {
 					return this.responseData.results.map((res: any) => {
@@ -204,7 +227,8 @@ export class CalendarReportComponent implements OnInit {
 							allDay: true,
 							meta: {
 								res
-							}
+							},
+							actions: this.actions
 						};
 					});
 				})
