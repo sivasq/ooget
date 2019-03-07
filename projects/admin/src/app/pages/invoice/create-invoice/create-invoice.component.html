@@ -1,0 +1,57 @@
+<div class="inner-sidenav-content transition-2">
+	<!-- Breadcrumb Start -->
+	<div fxLayout="row wrap">
+		<div class="flex-p" fxFlex="1 1 100%">
+			<mat-card class="mat-breadcrumb" fxLayout="row" fxFlexAlign="center">
+				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row" fxLayoutAlign="start center">
+					<mat-icon>home</mat-icon>
+					<span class="breadcrumb-title">Home</span>
+				</a>
+
+				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+					<span class="breadcrumb-title active">Invoice</span>
+				</div>
+			</mat-card>
+		</div>
+	</div>
+	<!-- Breadcrumb End -->
+
+	<div [ngBusy]="{busy:busy}"></div>
+
+	<div fxLayout="row wrap">
+		<div fxFlex="100" class="flex-p" fxLayoutAlign="space-between start">
+			<mat-form-field fxFlex="100" fxFlex.gt-sm="{{employers_list.length > 0 ? '40' : '100'}}"
+				appearance="outline">
+				<mat-label>Choose Employer</mat-label>
+				<mat-select placeholder="Choose Employer" name="selectedEmployer" [(ngModel)]="selectedEmployer"
+					(ngModelChange)="getEmployerJobs($event)">
+					<mat-option *ngFor="let employer of employers_list" [value]="employer._id">
+						{{employer.companyname}} - {{employer.companycode}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+
+			<mat-form-field *ngIf="jobs_list.length > 0" fxFlex="100" fxFlex.gt-sm="40" appearance="outline">
+				<mat-label>Choose Job</mat-label>
+				<mat-select placeholder="Choose Job" name="selectedJob" [(ngModel)]="selectedJob"
+					(ngModelChange)="changeSearch($event)">
+					<mat-option *ngFor="let job of jobs_list" [value]="job._id">
+						{{job.jobtitle}} - {{job.jobnumber}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+
+		<div fxFlex="100" class="flex-p" fxLayoutAlign="space-between start">
+			<mat-radio-group>
+				<mat-radio-button value="auto">Auto Invoice</mat-radio-button>
+				<mat-radio-button value="manual">Manual Invoice</mat-radio-button>
+			</mat-radio-group>
+
+			<mat-checkbox>Include GST</mat-checkbox>
+		</div>
+
+		<div fxFlex="100" class="flex-p" fxLayoutAlign="center">
+			<app-invoice-temp1></app-invoice-temp1>
+		</div>
+	</div>

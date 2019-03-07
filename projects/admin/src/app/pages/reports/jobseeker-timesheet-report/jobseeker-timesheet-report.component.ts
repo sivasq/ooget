@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+import { Location, DatePipe } from '@angular/common';
 import { ApiCallService } from '../../../services/api-call.service';
 import { Subscription } from 'rxjs';
 
@@ -21,7 +21,6 @@ export class JobseekerTimesheetReportComponent implements OnInit {
 	busy: Subscription;
 	public employeeFilter: string = '';
 	public jobFilter: string = '';
-
 	// displayedColumns: any[] = [
 	// 	{
 	// 		name: 'date',
@@ -745,17 +744,20 @@ export class JobseekerTimesheetReportComponent implements OnInit {
 	employerCount;
 	jobseekers = '';
 	SelectedJobseeker;
+	SelectedDateRange;
 
-	constructor(private _location: Location, private _httpService: ApiCallService) {
+	constructor(private _location: Location, private _httpService: ApiCallService, private datePipe: DatePipe) {
 		this.getAllJobseekersList();
 	}
-
+	getDateChange(event) {
+		console.log('event', event);
+		console.log('SelectedDateRange', this.SelectedDateRange);
+	}
 	getAllJobseekersList() {
 		this.busy = this._httpService.getAllJobseekersList()
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log(response.employers);
 						this.jobseekers = response.jobseekers;
 
 					} else if (!response.success) {
@@ -769,11 +771,13 @@ export class JobseekerTimesheetReportComponent implements OnInit {
 	}
 
 	getJobseekerContracts() {
-		this.busy = this._httpService.getJobseekerContracts({ 'jobseekerid': this.SelectedJobseeker, 'fromdate': '2019/02/01', 'todate': '2019/02/28' })
+		if (!this.SelectedDateRange) return false;
+		if (!this.SelectedJobseeker) return false;
+
+		this.busy = this._httpService.getJobseekerContracts({ 'jobseekerid': this.SelectedJobseeker, 'fromdate': this.datePipe.transform(this.SelectedDateRange.begin, 'yyyy/MM/dd'), 'todate': this.datePipe.transform(this.SelectedDateRange.end, 'yyyy/MM/dd') })
 			.subscribe(
 				response => {
 					if (response.success) {
-						// console.log(response.employerreport);
 						this.employerDatas = response.timesheetreport;
 						console.log(this.employerDatas);
 
@@ -794,5 +798,4 @@ export class JobseekerTimesheetReportComponent implements OnInit {
 	ngOnInit() {
 		// this.employerDatas = this.DemoemployerDatas;
 	}
-
 }

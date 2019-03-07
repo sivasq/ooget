@@ -41,7 +41,6 @@ import { JsonToCsvService } from '../services/json-to-csv.service';
 import { JsonToTextService } from '../services/json-to-text.service';
 import { DynamicTableModule } from 'material-dynamic-table';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
-
 // Calendar
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -55,7 +54,7 @@ import { AdminPaymentComponent } from '../reusable-components/admin-payment/admi
 import { OffdayMatrixTableComponent } from '../reusable-components/offday-matrix-table/offday-matrix-table.component';
 import { JobsGridViewComponent } from '../reusable-components/jobs-grid-view/jobs-grid-view.component';
 import { JobseekersGridViewComponent } from '../reusable-components/jobseekers-grid-view/jobseekers-grid-view.component';
-
+import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true,
 	wheelPropagation: true,
@@ -103,7 +102,8 @@ export const MY_NATIVE_FORMATS = {
 		}),
 		NgxPrintModule,
 		FroalaEditorModule.forRoot(),
-		FroalaViewModule.forRoot()
+		FroalaViewModule.forRoot(),
+		SatDatepickerModule, SatNativeDateModule
 	],
 	declarations: [
 		OogetsidenavComponent,
@@ -161,6 +161,7 @@ export const MY_NATIVE_FORMATS = {
 		NgxPrintModule,
 		FroalaEditorModule,
 		FroalaViewModule,
+		SatDatepickerModule, SatNativeDateModule,
 		EqualValidator, CompareDirective, NgPipesModule, InvoiceTemp1Component, InvoiceTemp2Component,
 		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, SafeHtml, AgePipe,
 	],

@@ -35,6 +35,14 @@
 						</mat-select>
 					</mat-form-field>
 
+					<mat-form-field fxFlex="100" fxFlex.gt-sm="{{jobseekers.length > 0 ? '40' : '100'}}" appearance="outline">
+						<mat-label>Choose Date Range</mat-label>
+						<input matInput placeholder="Choose a date" [satDatepicker]="rangePicker" [(ngModel)]="SelectedDateRange" (ngModelChange)="getJobseekerContracts()">
+						<sat-datepicker #rangePicker [rangeMode]="true">
+						</sat-datepicker>
+						<sat-datepicker-toggle matSuffix [for]="rangePicker"></sat-datepicker-toggle>
+					</mat-form-field>
+
 					<mat-card class="contractor p-0 m-b-15" *ngFor="let contractor of employerDatas;">
 						<div style="padding: 10px;">
 							<p style="padding: 5px;"> <span class="key">Comapny : </span>{{contractor.companyname}} </p>

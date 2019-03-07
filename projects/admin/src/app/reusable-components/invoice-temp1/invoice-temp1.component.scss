@@ -1,10 +1,10 @@
 .invoice-box {
-    max-width: 800px;
+    width: 800px;
     margin: auto;
     padding: 30px;
     border: 1px solid #eee;
     box-shadow: 0 0 10px rgba(0, 0, 0, .15);
-    font-size: 16px;
+    font-size: 14px;
     line-height: 24px;
     font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
     color: #555;
@@ -21,8 +21,27 @@
     vertical-align: top;
 }
 
-.invoice-box table tr td:nth-child(2) {
+.invoice-box table.no-padding td {
+    padding: 0px;
+    vertical-align: top;
+}
+
+.invoice-box table tr.signed td {
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.invoice-box table tr.heading td,
+.invoice-box table tr.item td,
+.invoice-box table tr.total td,
+.invoice-box table tr.information td:nth-child(2) {
     text-align: right;
+}
+
+.invoice-box table tr.heading td:nth-child(1),
+.invoice-box table tr.item td:nth-child(1) {
+    text-align: left;
 }
 
 .invoice-box table tr.top table td {
@@ -41,7 +60,7 @@
 
 .invoice-box table tr.heading td {
     background: #eee;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 2px solid #999;
     font-weight: bold;
 }
 
@@ -50,16 +69,31 @@
 }
 
 .invoice-box table tr.item td {
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #ccc;
 }
 
 .invoice-box table tr.item.last td {
-    border-bottom: none;
+    // border-bottom: none;
 }
 
-.invoice-box table tr.total td:nth-child(2) {
+.invoice-box table tr.total>td:nth-child(2) {
+    // border-top: 2px solid #eee;
+    font-weight: bold;
+}
+
+.invoice-box table tr.total td table tr:last-child td {
     border-top: 2px solid #eee;
     font-weight: bold;
+}
+
+.invoice-box table tr.footer table td {
+    font-size: 12px;
+    line-height: 14px;
+    color: #333;
+}
+
+.invoice-box table tr.signed td {
+    padding-top: 50px;
 }
 
 @media only screen and (max-width: 600px) {

@@ -57,6 +57,11 @@ const routes: Routes = [
 		canActivate: [AuthGuardService]
 	},
 	{
+		path: ':job_id/invoice',
+		loadChildren: '../../pages/invoice/invoice.module#InvoiceModule',
+		canActivate: [AuthGuardService]
+	},
+	{
 		path: '',
 		redirectTo: 'add',
 		pathMatch: 'full'
