@@ -475,7 +475,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 	// If Employment Type Change
 	employmenttypeChange(event) {
-		// console.log(event);
+		console.log(event);
 		if (this.isInArray(event, "Full Time")) {
 			this.isPartTimeJob = false;
 		} else {
@@ -785,6 +785,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 						this.myProfile.branchcode = response.message.branchcode ? response.message.branchcode : '';
 						// Job preferences
 						this.myProfile.employmenttype = response.message.employmenttype ? response.message.employmenttype : '';
+						this.employmenttypeChange(this.myProfile.employmenttype);
 						this.myProfile.preferredregion = response.message.preferredregion ? response.message.preferredregion : '';
 						this.myProfile.preferredlocation = response.message.preferredlocation ? response.message.preferredlocation : '';
 						this.myProfile.preferredspecialization = response.message.preferredspecialization ? response.message.preferredspecialization : '';

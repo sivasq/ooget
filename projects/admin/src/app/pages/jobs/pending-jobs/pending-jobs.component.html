@@ -154,7 +154,8 @@
 	</div> -->
 	<!-- Pagination End -->
 
-	<app-jobs-grid-view [setJobs]="pendingJobs"></app-jobs-grid-view>
+	<app-jobs-grid-view [setJobs]="pendingJobs" (emitActivateJob)="activateJobConfirm($event)"></app-jobs-grid-view>
+
 	<!-- <app-jobs-grid-view [setJobs]="pendingJobs"></app-jobs-grid-view> -->
 
 	<!-- <div *ngIf="!isPendingJobAvailable" fxLayout="column" fxLayoutAlign="center center" class="no-data"

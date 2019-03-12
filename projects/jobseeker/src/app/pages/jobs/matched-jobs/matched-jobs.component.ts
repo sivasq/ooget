@@ -16,7 +16,7 @@ import { NgModel } from '@angular/forms';
 export class MatchedJobsComponent implements OnInit, OnDestroy {
 	options: Options = {
 		floor: 0,
-		ceil: 200,
+		ceil: 100,
 		translate: (value: number): string => {
 			return '' + value;
 		}
@@ -29,7 +29,7 @@ export class MatchedJobsComponent implements OnInit, OnDestroy {
 		parttime: true,
 		fulltime: true,
 		minsalary: 0,
-		maxsalary: 10000,
+		maxsalary: 100,
 		jobspecialization: []
 	}
 
@@ -71,6 +71,10 @@ export class MatchedJobsComponent implements OnInit, OnDestroy {
 		{
 			"_id": "432424",
 			"specialization": "Biotechnology"
+		},
+		{
+			"_id": "432424",
+			"specialization": "Beautician  Wellness"
 		},
 		{
 			"_id": "432424",
@@ -340,14 +344,14 @@ export class MatchedJobsComponent implements OnInit, OnDestroy {
 							this.isJobsListAllAvailable = true;
 
 							// Create Salary Arr
-							let salaryArr = response.matches.map(x => x.salary);
-							let minValue = Math.min(...salaryArr);
-							let maxValue = Math.max(...salaryArr);
+							// let salaryArr = response.matches.map(x => x.salary);
+							// let minValue = Math.min(...salaryArr);
+							// let maxValue = Math.max(...salaryArr);
 							// Update range slider
-							this.setNewCeil(minValue, maxValue);
+							// this.setNewCeil(minValue, maxValue);
 
-							this.search.minsalary = minValue;
-							this.search.maxsalary = maxValue;
+							// this.search.minsalary = minValue;
+							// this.search.maxsalary = maxValue;
 
 						} else {
 							console.log("ok");

@@ -47,10 +47,6 @@ export const FullTimeSpecializations: Specialization[] = [
 	},
 	{
 		"_id": "432424",
-		"specialization": "Customer Service"
-	},
-	{
-		"_id": "432424",
 		"specialization": "Education"
 	},
 	{

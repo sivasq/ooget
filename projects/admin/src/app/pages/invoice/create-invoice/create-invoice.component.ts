@@ -17,6 +17,17 @@ export class CreateInvoiceComponent implements OnInit {
 	jobs_list = [];
 	selectedEmployer;
 	selectedJob;
+	terms;
+	attentionTO;
+
+	public options: Object = {
+		placeholderText: 'Invoice Terms Goes Here!',
+		charCounterCount: true,
+		toolbarButtons: ['undo', 'redo', '|', 'fontSize', '|', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', '|', 'html'],
+		toolbarButtonsXS: ['undo', 'redo', '|', 'fontSize', '|', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', '|', 'html'],
+		toolbarButtonsSM: ['undo', 'redo', '|', 'fontSize', '|', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', '|', 'html'],
+		toolbarButtonsMD: ['undo', 'redo', '|', 'fontSize', '|', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', '|', 'html'],
+	}
 
 	constructor(private router: Router, private activatedRoute: ActivatedRoute, private _httpService: ApiCallService) {
 		this.selectedJob = this.activatedRoute.snapshot.params['job_id'];

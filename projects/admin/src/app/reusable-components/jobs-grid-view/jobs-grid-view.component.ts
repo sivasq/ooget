@@ -12,6 +12,7 @@ export class JobsGridViewComponent implements OnInit {
 	private _jobs = new BehaviorSubject<any[]>([]);
 
 	@Output() emitCloseJob = new EventEmitter<{}>();
+	@Output() emitActivateJob = new EventEmitter<{}>();
 
 	@Input() companyDetails: any;
 
@@ -38,6 +39,10 @@ export class JobsGridViewComponent implements OnInit {
 
 	closeJob(employerId, jobId) {
 		this.emitCloseJob.emit({ 'employerId': employerId, 'jobId': jobId });
+	}
+
+	ActivateJob(event, employerId, jobId) {
+		this.emitActivateJob.emit({ 'employerId': employerId, 'jobId': jobId, 'status': event.checked });
 	}
 
 	ngOnInit() {

@@ -7,7 +7,7 @@ export const PartTimeSpecializations: Specialization[] = [
 	},
 	{
 		"_id": "432424",
-		"specialization": "Beautician  Wellness"
+		"specialization": "Beautician Wellness"
 	},
 	{
 		"_id": "432424",

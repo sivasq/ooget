@@ -42,13 +42,23 @@
 			</mat-form-field>
 		</div>
 
-		<div fxFlex="100" class="flex-p" fxLayoutAlign="space-between start">
+		<div fxFlex="100" class="flex-p" fxLayoutAlign="space-between center">
 			<mat-radio-group>
 				<mat-radio-button value="auto">Auto Invoice</mat-radio-button>
 				<mat-radio-button value="manual">Manual Invoice</mat-radio-button>
 			</mat-radio-group>
 
 			<mat-checkbox>Include GST</mat-checkbox>
+
+			<mat-form-field appearance="outline">
+				<mat-label>Attention TO</mat-label>
+				<input matInput placeholder="Attention To" name="attentionTO" autocomplete="off" [(ngModel)]="attentionTO"
+					required>
+			</mat-form-field>
+		</div>
+
+		<div fxFlex="100" class="flex-p" fxLayoutAlign="space-between start">
+			<div [froalaEditor]="options" [(froalaModel)]="terms"></div>
 		</div>
 
 		<div fxFlex="100" class="flex-p" fxLayoutAlign="center">

@@ -17,7 +17,7 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 
 	options: Options = {
 		floor: 0,
-		ceil: 200,
+		ceil: 100,
 		translate: (value: number): string => {
 			return '' + value;
 		}
@@ -30,7 +30,7 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 		parttime: true,
 		fulltime: true,
 		minsalary: 0,
-		maxsalary: 10000,
+		maxsalary: 100,
 		jobspecialization: []
 	}
 
@@ -38,7 +38,7 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 	busy: Subscription;
 	public imgBaseUrl;
 
-	jobs = [];
+	jobs: any = [];
 
 	public Specializations: any = [
 		{
@@ -72,6 +72,10 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 		{
 			"_id": "432424",
 			"specialization": "Biotechnology"
+		},
+		{
+			"_id": "432424",
+			"specialization": "Beautician  Wellness"
 		},
 		{
 			"_id": "432424",
@@ -342,14 +346,14 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 							this.isJobsListAllAvailable = true;
 
 							// Create Salary Arr
-							let salaryArr = response.appliedjobs.map(x => x.salary);
-							let minValue = Math.min(...salaryArr);
-							let maxValue = Math.max(...salaryArr);
+							// let salaryArr = response.appliedjobs.map(x => x.salary);
+							// let minValue = Math.min(...salaryArr);
+							// let maxValue = Math.max(...salaryArr);
 							// Update range slider
-							this.setNewCeil(minValue, maxValue);
+							// this.setNewCeil(minValue, maxValue);
 
-							this.search.minsalary = minValue;
-							this.search.maxsalary = maxValue;
+							// this.search.minsalary = minValue;
+							// this.search.maxsalary = maxValue;
 						} else {
 							this.isJobsListAllAvailable = false;
 						}
@@ -376,18 +380,20 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 			// 	this.search.parttime = true;
 			// 	this.search.fulltime = true;
 			// }
+			// console.log('this.jobs', this.jobs);
+
 			this.applied_jobs_list = [];
 			this.applied_jobs_list = this.jobs.filter((jobs: any) => {
 				if (this.search.parttime && !this.search.fulltime) {
-					return jobs.jobdetails.employmenttype === "Part Time" && (jobs.jobdetails.salary >= this.search.minsalary && jobs.jobdetails.salary <= this.search.maxsalary)
+					return jobs.employmenttype === "Part Time" && (jobs.salary >= this.search.minsalary && jobs.salary <= this.search.maxsalary)
 				}
 
 				if (!this.search.parttime && this.search.fulltime) {
-					return jobs.jobdetails.employmenttype === "Full Time" && (jobs.jobdetails.salary >= this.search.minsalary && jobs.jobdetails.salary <= this.search.maxsalary)
+					return jobs.employmenttype === "Full Time" && (jobs.salary >= this.search.minsalary && jobs.salary <= this.search.maxsalary)
 				}
 
 				if (this.search.parttime && this.search.fulltime) {
-					return (jobs.jobdetails.employmenttype === "Full Time" || jobs.jobdetails.employmenttype === "Part Time") && (jobs.jobdetails.salary >= this.search.minsalary && jobs.jobdetails.salary <= this.search.maxsalary)
+					return (jobs.employmenttype === "Full Time" || jobs.employmenttype === "Part Time") && (jobs.salary >= this.search.minsalary && jobs.salary <= this.search.maxsalary)
 				}
 
 				if (!this.search.parttime && !this.search.fulltime) {
@@ -398,12 +404,13 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 			if (this.search.jobspecialization.length > 0) {
 				this.applied_jobs_list = this.applied_jobs_list.filter((job: any) => {
 					var newData = this.search.jobspecialization.filter(search => {
-						return job.jobdetails.jobspecialization === search;
+						return job.jobspecialization === search;
 					});
-					return job.jobdetails.jobspecialization === newData[0];
+					return job.jobspecialization === newData[0];
 				});
 			}
 		}, 0)
+		// console.log('this.applied_jobs_list', this.applied_jobs_list);
 	}
 
 	isAllSelected() {

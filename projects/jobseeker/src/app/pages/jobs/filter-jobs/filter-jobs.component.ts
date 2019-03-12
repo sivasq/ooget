@@ -16,8 +16,8 @@ export class FilterJobsComponent implements OnInit {
 	@Input() maxValue: number;
 
 	options: Options = {
-		floor: 0,
-		ceil: 200,
+		floor: 1,
+		ceil: 100,
 		translate: (value: number): string => {
 			return '' + value;
 		}
@@ -29,8 +29,8 @@ export class FilterJobsComponent implements OnInit {
 	search = {
 		parttime: true,
 		fulltime: true,
-		minsalary: 0,
-		maxsalary: 10000,
+		minsalary: 1,
+		maxsalary: 100,
 		jobspecialization: []
 	}
 

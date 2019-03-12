@@ -1,12 +1,13 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { ApiCallService } from '../../../services/api-call.service';
 import { ActivatedRoute } from '@angular/router';
-import { MenuPositionX } from '@angular/material';
+import { MenuPositionX, MatDialog, MatDialogConfig } from '@angular/material';
 import { PaginationInstance } from 'ngx-pagination';
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { JsonToTextService } from '../../../services/json-to-text.service';
 import { PayrollProcessService } from '../../../services/payroll-process.service';
 import { Subscription } from 'rxjs';
+import { JobActivationComponent } from '../dialogs/job-activation/job-activation.component';
 
 @Component({
 	selector: 'app-pending-jobs',
@@ -21,7 +22,7 @@ export class PendingJobsComponent implements OnInit {
 	//set pending jobs array
 	public pendingJobs: any[] = [];
 
-	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public datePipe: DatePipe, public toUpperCase: UpperCasePipe, public texts: JsonToTextService) {
+	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public datePipe: DatePipe, public toUpperCase: UpperCasePipe, public texts: JsonToTextService, public dialog: MatDialog) {
 		this.getPendingJobsList();
 	}
 
@@ -42,6 +43,25 @@ export class PendingJobsComponent implements OnInit {
 					console.log(error);
 				}
 			);
+	}
+
+	// Job Activation with Pay Info
+	activateJobConfirm(event) {
+		if (!event.status) return false;
+
+		let dialogConfig = new MatDialogConfig();
+
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+		dialogConfig.data = {
+			'jobid': event.jobId,
+			'companyid': event.employerId,
+		};
+		let dialogRef = this.dialog.open(JobActivationComponent, dialogConfig);
+
+		dialogRef.afterClosed().subscribe(response => {
+			this.getPendingJobsList();
+		});
 	}
 
 	ngOnInit() {

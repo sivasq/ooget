@@ -17,7 +17,7 @@ export class JobsListComponent implements OnInit, OnDestroy {
 
 	options: Options = {
 		floor: 0,
-		ceil: 200,
+		ceil: 100,
 		translate: (value: number): string => {
 			return '' + value;
 		}
@@ -30,7 +30,7 @@ export class JobsListComponent implements OnInit, OnDestroy {
 		parttime: true,
 		fulltime: true,
 		minsalary: 0,
-		maxsalary: 10000,
+		maxsalary: 100,
 		jobspecialization: []
 	}
 
@@ -72,6 +72,10 @@ export class JobsListComponent implements OnInit, OnDestroy {
 		{
 			"_id": "432424",
 			"specialization": "Biotechnology"
+		},
+		{
+			"_id": "432424",
+			"specialization": "Beautician  Wellness"
 		},
 		{
 			"_id": "432424",
@@ -343,14 +347,14 @@ export class JobsListComponent implements OnInit, OnDestroy {
 							this.isJobsListAllAvailable = true;
 
 							// Create Salary Arr
-							let salaryArr = response.jobs.map(x => x.salary);
-							let minValue = Math.min(...salaryArr);
-							let maxValue = Math.max(...salaryArr);
+							// let salaryArr = response.jobs.map(x => x.salary);
+							// let minValue = Math.min(...salaryArr);
+							// let maxValue = Math.max(...salaryArr);
 							// Update range slider
-							this.setNewCeil(minValue, maxValue);
+							// this.setNewCeil(minValue, maxValue);
 
-							this.search.minsalary = minValue;
-							this.search.maxsalary = maxValue;
+							// this.search.minsalary = minValue;
+							// this.search.maxsalary = maxValue;
 
 						} else {
 							this.isJobsListAllAvailable = false;
@@ -447,7 +451,7 @@ export class JobsListComponent implements OnInit, OnDestroy {
 			// 	this.search.parttime = true;
 			// 	this.search.fulltime = true;
 			// }
-
+			console.log(this.search);
 			this.jobs_list_all = [];
 			this.jobs_list_all = this.jobs.filter((jobs: any) => {
 				if (this.search.parttime && !this.search.fulltime) {
@@ -468,14 +472,19 @@ export class JobsListComponent implements OnInit, OnDestroy {
 			})
 
 			if (this.search.jobspecialization.length > 0) {
+				console.log(this.jobs_list_all);
 				this.jobs_list_all = this.jobs_list_all.filter((job: any) => {
 					var newData = this.search.jobspecialization.filter(search => {
+						console.log(search);
 						return job.jobspecialization === search;
 					});
 					return job.jobspecialization === newData[0];
 				});
+				console.log(this.jobs_list_all);
+				return this.jobs_list_all;
 			}
 		}, 0)
+
 	}
 
 	isAllSelected() {

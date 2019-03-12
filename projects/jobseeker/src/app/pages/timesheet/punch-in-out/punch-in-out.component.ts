@@ -281,7 +281,16 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 							console.log('The snack-bar action was triggered!');
 						});
 					} else if (!response.success) {
-						console.log(response);
+						if (response.message == 'verifiedalready') {
+							let snackBarRef = this.snackBar.open('You Cannot Punch In, Please check with your Employer', 'Close', {
+								duration: 5000,
+							});
+
+							snackBarRef.onAction().subscribe(() => {
+								snackBarRef.dismiss();
+								console.log('The snack-bar action was triggered!');
+							});
+						}
 					}
 				},
 				error => {
@@ -320,7 +329,16 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 							console.log('The snack-bar action was triggered!');
 						});
 					} else if (!response.success) {
-						if (response.message == 'punchinfirst') {
+						if (response.message == 'verifiedalready') {
+							let snackBarRef = this.snackBar.open('You Cannot Punch Out, Please check with your Employer', 'Close', {
+								duration: 5000,
+							});
+
+							snackBarRef.onAction().subscribe(() => {
+								snackBarRef.dismiss();
+								console.log('The snack-bar action was triggered!');
+							});
+						} else if (response.message == 'punchinfirst') {
 							let snackBarRef = this.snackBar.open('You are not yet Punched In', 'Close', {
 								duration: 5000,
 							});

@@ -59,6 +59,15 @@
 				</mat-menu>
 
 				<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
+					<div fxFlex="30" fxLayout="column" fxLayoutAlign="center center" *ngIf="job.jobstatus == 'pending'">
+						<div class="user-img" *ngIf="!job.companylogo">
+							<img class="transition-2 ng-star-inserted" src="assets/img/avatars/logo-placeholder.png">
+						</div>
+						<div class="user-social">
+							<mat-slide-toggle color="primary" (change)="ActivateJob($event, job.companyid._id, job._id)"
+								[checked]="job.jobstatus == 'pending' ? false : true"></mat-slide-toggle>
+						</div>
+					</div>
 					<div class="user-details transition-2" fxFlex="100" fxLayout="column">
 						<p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">book

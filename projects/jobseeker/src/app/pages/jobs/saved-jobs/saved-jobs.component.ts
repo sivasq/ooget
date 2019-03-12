@@ -16,8 +16,8 @@ import { NgModel } from '@angular/forms';
 export class SavedJobsComponent implements OnInit, OnDestroy {
 
 	options: Options = {
-		floor: 0,
-		ceil: 200,
+		floor: 1,
+		ceil: 100,
 		translate: (value: number): string => {
 			return '' + value;
 		}
@@ -29,8 +29,8 @@ export class SavedJobsComponent implements OnInit, OnDestroy {
 	search = {
 		parttime: true,
 		fulltime: true,
-		minsalary: 0,
-		maxsalary: 10000,
+		minsalary: 1,
+		maxsalary: 100,
 		jobspecialization: []
 	}
 
@@ -72,6 +72,10 @@ export class SavedJobsComponent implements OnInit, OnDestroy {
 		{
 			"_id": "432424",
 			"specialization": "Biotechnology"
+		},
+		{
+			"_id": "432424",
+			"specialization": "Beautician  Wellness"
 		},
 		{
 			"_id": "432424",
@@ -339,14 +343,14 @@ export class SavedJobsComponent implements OnInit, OnDestroy {
 							this.isJobsListAllAvailable = true;
 
 							// Create Salary Arr
-							let salaryArr = response.savedjobs.map(x => x.salary);
-							let minValue = Math.min(...salaryArr);
-							let maxValue = Math.max(...salaryArr);
+							// let salaryArr = response.savedjobs.map(x => x.salary);
+							// let minValue = Math.min(...salaryArr);
+							// let maxValue = Math.max(...salaryArr);
 							// Update range slider
-							this.setNewCeil(minValue, maxValue);
+							// this.setNewCeil(minValue, maxValue);
 
-							this.search.minsalary = minValue;
-							this.search.maxsalary = maxValue;
+							// this.search.minsalary = minValue;
+							// this.search.maxsalary = maxValue;
 
 						} else {
 							this.isJobsListAllAvailable = false;

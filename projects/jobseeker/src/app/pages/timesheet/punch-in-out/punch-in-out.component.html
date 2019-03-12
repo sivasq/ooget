@@ -146,8 +146,11 @@
 				<div *ngIf="currentTimeSheetLayout?.contractstatus == 'open' && !currentTimeSheetLayout?.timesheet && currentTimeSheetLayout?.waittill"
 					class="flex-p" fxLayout="row wrap" fxLayoutAlign="center center">
 					<!-- <span style="font-weight: 600; color:orangered;"> Please Wait Sometime, Job Will Start at {{currentTimeSheetLayout.starttime}}</span> -->
-					<span style="font-weight: 600; color:orangered;"> Please Wait {{ waitTime | async }}<br />(You can
-						PUNCH IN 15 min before of job start time)</span>
+					<span style="font-weight: 600; color:orangered; text-align:center;">
+						<span>Please Wait {{ waitTime | async }}</span>
+						<br>
+						<span style="font-weight: 600; color:red; text-align:center; font-size: 12px;">(You can PUNCH IN
+							15 min before of job start time)</span></span>
 				</div>
 
 				<div *ngIf="currentTimeSheetLayout?.contractstatus == 'notstarted'" class="flex-p" fxLayout="row"
