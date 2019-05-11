@@ -60,6 +60,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	wheelPropagation: true,
 };
 
+import { AccordionAnchorDirective } from '../menu-accordion/accordionanchor.directive';
+import { AccordionLinkDirective } from '../menu-accordion/accordionlink.directive';
+import { AccordionDirective } from '../menu-accordion/accordion.directive';
+
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat
 export const MY_NATIVE_FORMATS = {
 	fullPickerInput: { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },
@@ -118,7 +122,10 @@ export const MY_NATIVE_FORMATS = {
 		PayslipComponent,
 		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, SafeHtml, AgePipe,
 		ConfirmDialogComponent,
-		EqualValidator, CompareDirective, InvoiceTemp1Component, InvoiceTemp2Component, JobsGridViewComponent, JobseekersGridViewComponent
+		EqualValidator, CompareDirective, InvoiceTemp1Component, InvoiceTemp2Component, JobsGridViewComponent, JobseekersGridViewComponent, 
+		AccordionAnchorDirective,
+  AccordionLinkDirective,
+  AccordionDirective
 	],
 	entryComponents: [
 		TopProfiledialogComponent,
@@ -164,6 +171,9 @@ export const MY_NATIVE_FORMATS = {
 		SatDatepickerModule, SatNativeDateModule,
 		EqualValidator, CompareDirective, NgPipesModule, InvoiceTemp1Component, InvoiceTemp2Component,
 		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, SafeHtml, AgePipe,
+		AccordionAnchorDirective,
+  AccordionLinkDirective,
+  AccordionDirective
 	],
 	providers: [
 		ConfigService,

@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
 	isSuccessMsg: string;
 	isErrorMsg: string;
-
+	public readonly siteKey = '6Lc2L6IUAAAAAG0I8PuARFQibZcDRuU9vM8NPrG1';
 	constructor(public router: Router, public dialog: MatDialog, public snackBar: MatSnackBar, private _httpService: ApiCallService, private config: ConfigService, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber) {
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 		this.buildJobSeekerRegForm();
@@ -56,6 +56,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 			// docName: ['', Validators.compose([Validators.required])],
 			accept_terms: ['true', Validators.compose([Validators.required])],
 			activestatus: ['false'],
+			recaptcha: ['', Validators.required]
 		})
 	}
 
@@ -188,7 +189,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
 	}
 
 	onSubmitReg() {
-		// console.log(this.jobSeekerRegForm.status);
+		console.log(this.jobSeekerRegForm.value);
+
+		console.log(this.jobSeekerRegForm.valid);
+
+		return false;
+
 		if (!this.jobSeekerRegForm.valid) return false;
 
 		this.busy = this._httpService.postRegData(this.jobSeekerRegForm.value)
