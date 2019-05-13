@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthloginComponent } from './authlogin/authlogin.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { RegisterComponent } from './register/register.component';
-import { Layout1Component } from './layouts/layout1/layout1.component';
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { Layout2Component } from './layouts/layout2/layout2.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
@@ -14,7 +14,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 const routes: Routes = [
 	{
 		path: 'auth',
-		component: Layout1Component,
+		component: AuthLayoutComponent,
 		children: [
 			{
 				path: 'login',

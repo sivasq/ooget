@@ -54,15 +54,14 @@ import { AdminPaymentComponent } from '../reusable-components/admin-payment/admi
 import { OffdayMatrixTableComponent } from '../reusable-components/offday-matrix-table/offday-matrix-table.component';
 import { JobsGridViewComponent } from '../reusable-components/jobs-grid-view/jobs-grid-view.component';
 import { JobseekersGridViewComponent } from '../reusable-components/jobseekers-grid-view/jobseekers-grid-view.component';
+
+import { AccordionAnchorDirective, AccordionLinkDirective, AccordionDirective } from '../directives/menu-accordion';
+
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true,
 	wheelPropagation: true,
 };
-
-import { AccordionAnchorDirective } from '../menu-accordion/accordionanchor.directive';
-import { AccordionLinkDirective } from '../menu-accordion/accordionlink.directive';
-import { AccordionDirective } from '../menu-accordion/accordion.directive';
 
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat
 export const MY_NATIVE_FORMATS = {
@@ -122,10 +121,10 @@ export const MY_NATIVE_FORMATS = {
 		PayslipComponent,
 		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, SafeHtml, AgePipe,
 		ConfirmDialogComponent,
-		EqualValidator, CompareDirective, InvoiceTemp1Component, InvoiceTemp2Component, JobsGridViewComponent, JobseekersGridViewComponent, 
+		EqualValidator, CompareDirective, InvoiceTemp1Component, InvoiceTemp2Component, JobsGridViewComponent, JobseekersGridViewComponent,
 		AccordionAnchorDirective,
-  AccordionLinkDirective,
-  AccordionDirective
+		AccordionLinkDirective,
+		AccordionDirective
 	],
 	entryComponents: [
 		TopProfiledialogComponent,
@@ -172,8 +171,8 @@ export const MY_NATIVE_FORMATS = {
 		EqualValidator, CompareDirective, NgPipesModule, InvoiceTemp1Component, InvoiceTemp2Component,
 		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, SafeHtml, AgePipe,
 		AccordionAnchorDirective,
-  AccordionLinkDirective,
-  AccordionDirective
+		AccordionLinkDirective,
+		AccordionDirective
 	],
 	providers: [
 		ConfigService,

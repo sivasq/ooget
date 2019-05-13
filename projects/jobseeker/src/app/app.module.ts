@@ -12,7 +12,7 @@ import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { RegisterComponent } from './register/register.component';
-import { Layout1Component } from './layouts/layout1/layout1.component';
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { Layout2Component } from './layouts/layout2/layout2.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
@@ -46,7 +46,7 @@ export class MyHammerConfig extends HammerGestureConfig {
 		AuthloginComponent,
 		ForgotPasswordComponent,
 		RegisterComponent,
-		Layout1Component,
+		AuthLayoutComponent,
 		Layout2Component,
 		HomepageComponent,
 		ResetPasswordComponent,

@@ -19,7 +19,7 @@ import { TermsConditionsDialogComponent } from '../terms-conditions-dialog/terms
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { ConfigService } from '../services/config.service';
 import { ApiCallService, HttpCancelService, InternetInterceptor, HttpCancelInterceptor } from '../services/api-call.service';
-import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { EqualValidatorDirective, Collapse, CompareDirective } from '../directives/equal-validator.directive';
 import { UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, MultipleSubLocationFilter, SafeHtml } from '../pipes/custompipes.pipe';
 
@@ -37,7 +37,6 @@ import { NgProgressHttpModule } from '@ngx-progressbar/http';
 import { NgProgressRouterModule } from '@ngx-progressbar/router';
 import { Ng5SliderModule } from 'ng5-slider';
 import { NgxCaptchaModule } from 'ngx-captcha';
-import { Recaptchav2Component } from '../recaptchav2/recaptchav2.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true,
@@ -69,7 +68,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		NgProgressHttpModule,
 		NgProgressRouterModule,
 		Ng5SliderModule,
-		NgxCaptchaModule,
+		NgxCaptchaModule
 	],
 	declarations: [
 		OogetsidenavComponent,
@@ -79,7 +78,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		TermsConditionsDialogComponent,
 		ConfirmDialogComponent,
 		EqualValidatorDirective, Collapse, CompareDirective,
-		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, MultipleSubLocationFilter, SafeHtml, Recaptchav2Component,
+		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, MultipleSubLocationFilter, SafeHtml
 	],
 	entryComponents: [
 		TopProfiledialogComponent,
@@ -99,7 +98,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		ReactiveFormsModule,
 		TopProfiledialogComponent,
 		TopShortcutdialogComponent,
-		Recaptchav2Component,
 		Ng2SearchPipeModule,
 		NgxPaginationModule,
 		TermsConditionsDialogComponent,

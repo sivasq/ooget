@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatRadioChange, MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
+import { MatRadioChange, MatCheckboxChange, MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
 import { TermsConditionsDialogComponent } from '../terms-conditions-dialog/terms-conditions-dialog.component';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { ApiCallService } from '../services/api-call.service';
@@ -8,6 +8,7 @@ import { Subscription, Observable } from 'rxjs';
 import { FormGroupDirective, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ConfigService } from '../services/config.service';
 import { AsyncSubscriber } from '../services/async.service';
+import { ReCaptcha2Component } from 'ngx-captcha';
 
 @Component({
 	selector: 'app-register',
@@ -54,7 +55,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 			verify: ['', [Validators.required]],
 			country: ['', Validators.compose([Validators.required])],
 			// docName: ['', Validators.compose([Validators.required])],
-			accept_terms: ['true', Validators.compose([Validators.required])],
+			accept_terms: [false, Validators.compose([Validators.required])],
 			activestatus: ['false'],
 			recaptcha: ['', Validators.required]
 		})
@@ -140,8 +141,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
 	// 	});
 	// }
 
-	radioChange(event: MatRadioChange) {
-		if (event.value == 'false') {
+	radioChange(event: MatCheckboxChange) {
+		// console.log(event.checked);
+		// MatCheckboxChange
+		// if (event.value == 'false') {
+		if (event.checked == false) {
 			let dialogConfig = new MatDialogConfig();
 
 			dialogConfig.disableClose = true;

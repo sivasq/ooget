@@ -19,10 +19,10 @@ export class AuthloginComponent implements OnInit {
 	public homePageUrl;
 	// Password visibility set
 	public hide = true;
-	//Error Message
+	// Error Message
 	isAuthMsg: string;
 
-	//busy Config
+	// busy Config
 	busy: Subscription;
 
 	adminAuthForm: FormGroup;

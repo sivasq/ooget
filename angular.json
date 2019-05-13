@@ -33,7 +33,7 @@
 							"projects/admin/src/theme.scss",
 							"./node_modules/froala-editor/css/froala_editor.pkgd.min.css",
 							"./node_modules/froala-editor/css/froala_style.min.css",
-							"./node_modules/font-awesome/css/font-awesome.css"							
+							"./node_modules/font-awesome/css/font-awesome.css"
 						],
 						"scripts": [
 							"./node_modules/jquery/dist/jquery.min.js",
@@ -170,6 +170,7 @@
 							"projects/jobseeker/src/assets"
 						],
 						"styles": [
+							"projects/jobseeker/src/assets/styles/app.scss",
 							"projects/jobseeker/src/styles.scss",
 							"projects/jobseeker/src/theme.scss"
 						],
@@ -304,6 +305,7 @@
 							"projects/employer/src/assets"
 						],
 						"styles": [
+							"projects/employer/src/assets/styles/app.scss",
 							"projects/employer/src/styles.scss",
 							"projects/employer/src/theme.scss"
 						],

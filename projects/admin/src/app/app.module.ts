@@ -12,7 +12,7 @@ import { AuthloginComponent } from './authlogin/authlogin.component';
 import { SharedModule } from './shared/shared.module';
 
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { Layout1Component } from './layouts/layout1/layout1.component';
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { Layout2Component } from './layouts/layout2/layout2.component';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { EmployersModule } from './pages/employers/employers.module';
@@ -22,7 +22,7 @@ import { EmployersModule } from './pages/employers/employers.module';
 		AppComponent,
 		AuthloginComponent,
 		ForgotPasswordComponent,
-		Layout1Component,
+		AuthLayoutComponent,
 		Layout2Component,
 	],
 	imports: [

@@ -1,28 +1,23 @@
-<mat-sidenav-container class="main-container">
-	<mat-sidenav-content>
-		<div class="h-100 p-15" fxLayout="row" fxLayoutAlign="center center">
-			<mat-card class="p-0 box m-y-10" fxFlex="95" fxFlex.gt-sm="40" fxFlex.sm="60">
-				<div class="bg-primary box-header" fxLayout="column" fxLayoutAlign="center center">
-					<a mat-button>
-						<img style="height:auto; width: 50%;" alt="Logo" src="assets/img/logo/ooget.png">
-					</a>
-				</div>
+<div class="session">
+	<div class="session-content">
+		<div class="session-wrapper" style="max-width: 600px;">
+			<mat-card>
+				<mat-card-content>
+					<form [formGroup]="jobSeekerRegForm" (ngSubmit)="onSubmitReg()">
+						<div class="text-xs-center pb-1">
+							<img style="height:100%; width: 30%;" alt="Logo" src="assets/img/logo/ooget-white-bg.png">
+						</div>
 
-				<div [ngBusy]="{busy:busy}"></div>
+						<div class="text-xs-center pb-1">
+							<h2 class="text-uppercase f-w-600">JobSeeker Registration</h2>
+						</div>
 
-				<form [formGroup]="jobSeekerRegForm" (ngSubmit)="onSubmitReg()">
-					<mat-card-content class="box-content mat-card-content" fxLayout="column" fxLayoutAlign="end center">
-						<mat-card ngClass="box-content-inner no-shadow" fxLayout="row wrap" fxLayoutAlign="center center"
-						 [style.fontSize.px]="13">
-							<span class="box-content-header f-w-600 m-b-15">JobSeeker
-								Registration</span>
-						</mat-card>
-
-						<mat-card fxLayout="row wrap" fxLayoutAlign="center center" [style.fontSize.px]="13" class="m-t-10 p-b-35">
+						<div fxLayout="row wrap" fxLayoutAlign="center center">
 							<!-- JobSeeker Name -->
 							<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 								<mat-label>Name</mat-label>
-								<input matInput placeholder="Name" name="username" autocomplete="off" formControlName="username" required>
+								<input matInput placeholder="Name" name="username" autocomplete="off"
+									formControlName="username" required>
 								<mat-error *ngIf="jobSeekerRegForm.get('username').hasError('required')" align="start">
 									JobSeeker Name Required
 								</mat-error>
@@ -31,45 +26,61 @@
 							<!-- JobSeeker Email -->
 							<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 								<mat-label>Login Email</mat-label>
-								<input matInput type="email" placeholder="Login Email" name="email" autocomplete="off" formControlName="email"
-								 required>
+								<input matInput type="email" placeholder="Login Email" name="email" autocomplete="off"
+									formControlName="email" required>
 								<mat-error *ngIf="jobSeekerRegForm.get('email').hasError('required')" align="start">
 									Email Required
 								</mat-error>
 								<mat-error *ngIf="jobSeekerRegForm.get('email').hasError('pattern')" align="start">
 									Invalid Email Format
 								</mat-error>
-								<mat-error *ngIf="jobSeekerRegForm.get('email').hasError('isEmailUnique')" align="start">
+								<mat-error *ngIf="jobSeekerRegForm.get('email').hasError('isEmailUnique')"
+									align="start">
 									This Email Already Registered
 								</mat-error>
 							</mat-form-field>
 
+							<!-- Country -->
+							<mat-form-field class="w-100" [appearance]="appearance$ | async">
+								<mat-label>Country</mat-label>
+								<input matInput placeholder="JobSeeker Country" name="country" autocomplete="off"
+									formControlName="country" readonly required>
+								<mat-error *ngIf="jobSeekerRegForm.get('country').hasError('required')" align="start">
+									Country Required
+								</mat-error>
+							</mat-form-field>
+
 							<!--- Password -->
-							<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
+							<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 								<mat-label>Password</mat-label>
-								<input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" name="password" autocomplete="off"
-								 formControlName="password" advs-compare="verify" parent='true' required>
-								<mat-icon matSuffix style="cursor: pointer;" (click)="hide = !hide">{{hide ? 'visibility_off'
-									: 'visibility'}}</mat-icon>
-								<mat-hint>Min 8 characters with Alphanumeric &amp; special character</mat-hint>
+								<input matInput [type]="hide ? 'password' : 'text'" placeholder="Password"
+									name="password" autocomplete="off" formControlName="password" advs-compare="verify"
+									parent='true' required>
+								<mat-icon matSuffix style="cursor: pointer;" (click)="hide = !hide">
+									{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+								<mat-hint>Min 8 chars with Alphanumeric &amp; special character</mat-hint>
 								<mat-error *ngIf="jobSeekerRegForm.get('password').hasError('required')" align="start">
 									Password is Required
 								</mat-error>
 								<mat-error *ngIf="jobSeekerRegForm.get('password').hasError('minlength')" align="start">
 									Min 8 chars Required
 								</mat-error>
-								<mat-error *ngIf="jobSeekerRegForm.get('password').hasError('isPatternMatch')" align="start">
+								<mat-error *ngIf="jobSeekerRegForm.get('password').hasError('isPatternMatch')"
+									align="start">
 									{{passwordPatternError}}
 								</mat-error>
 							</mat-form-field>
 
+							<div fxFlex></div>
+
 							<!-- Verify Password -->
-							<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
+							<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 								<mat-label>Confirm Password</mat-label>
-								<input matInput [type]="rehide ? 'password' : 'text'" placeholder="Confirm Password" name="verify" autocomplete="off"
-								 formControlName="verify" advs-compare="password" parent='false' required>
-								<mat-icon matSuffix style="cursor: pointer;" (click)="rehide = !rehide">{{rehide ? 'visibility_off'
-									: 'visibility'}}</mat-icon>
+								<input matInput [type]="rehide ? 'password' : 'text'" placeholder="Confirm Password"
+									name="verify" autocomplete="off" formControlName="verify" advs-compare="password"
+									parent='false' required>
+								<mat-icon matSuffix style="cursor: pointer;" (click)="rehide = !rehide">
+									{{rehide ? 'visibility_off' : 'visibility'}}</mat-icon>
 								<mat-error *ngIf="jobSeekerRegForm.get('verify').hasError('required')" align="start">
 									Verify Password is required
 								</mat-error>
@@ -78,73 +89,79 @@
 								</mat-error>
 							</mat-form-field>
 
-							<!-- Country -->
-							<mat-form-field class="w-100" [appearance]="appearance$ | async">
-								<mat-label>Country</mat-label>
-								<input matInput placeholder="JobSeeker Country" name="country" autocomplete="off" formControlName="country"
-								 readonly required>
-								<mat-error *ngIf="jobSeekerRegForm.get('country').hasError('required')" align="start">
-									Country Required
-								</mat-error>
-							</mat-form-field>
-
 							<!-- Doc Upload -->
 							<!-- <div style="width:100%; " fxLayout="row" fxLayoutAlign="center">
-                                <input type="hidden" placeholder="ID Proof" name="docName" formControlName="docName" required readonly>
+								<input type="hidden" placeholder="ID Proof" name="docName" formControlName="docName"
+									required readonly>
 
-                                <input hidden type="file" #docFileInput name="idProof" (change)="getDoc($event)" required/>
+								<input hidden type="file" #docFileInput name="idProof" (change)="getDoc($event)"
+									required />
 
-                                <div *ngIf="showUpload" fxFlex fxLayoutAlign="center">
-                                    <button type="button" style="width:90%; overflow: hidden;" class="td-file-upload" mat-raised-button color="primary" (click)="docFileInput.click()">
-                                        <mat-icon>attach_file</mat-icon>Upload ID Proof</button>
-                                </div>
+								<div *ngIf="showUpload" fxFlex fxLayoutAlign="center">
+									<button type="button" style="width:90%; overflow: hidden;" class="td-file-upload"
+										mat-raised-button color="primary" (click)="docFileInput.click()">
+										<mat-icon>attach_file</mat-icon>Upload ID Proof
+									</button>
+								</div>
 
-                                <div *ngIf="uploaded" fxFlex fxLayoutAlign="center">
-                                    <button type="button" style="width:90%; overflow: hidden;" class="td-file-upload" mat-raised-button color="accent">
-                                        <mat-icon>file_upload</mat-icon>{{docName}}
-                                    </button>
+								<div *ngIf="uploaded" fxFlex fxLayoutAlign="center">
+									<button type="button" style="width:90%; overflow: hidden;" class="td-file-upload"
+										mat-raised-button color="accent">
+										<mat-icon>file_upload</mat-icon>{{docName}}
+									</button>
 
-                                    <button type="button" class="td-file-upload-cancel" mat-icon-button color="warn" (click)="removeDoc()">
-                                        <mat-icon>cancel</mat-icon>
-                                    </button>
-                                </div>
-                            </div> -->
+									<button type="button" class="td-file-upload-cancel" mat-icon-button color="warn"
+										(click)="removeDoc()">
+										<mat-icon>cancel</mat-icon>
+									</button>
+								</div>
+							</div> -->
 
-							<a fxFlex="100" mat-button style="color: blue;" (click)="openTermsConditionsDialog()">Click to
-								read Terms and Conditions</a>
+							<mat-checkbox fxFlex="100" formControlName="accept_terms" (change)="radioChange($event)">I
+								accept the
+								<a style="color: blue;" (click)="openTermsConditionsDialog()"> Terms and Conditions </a>
+							</mat-checkbox>
 
-							<mat-radio-group name="accept_terms" formControlName="accept_terms" (change)="radioChange($event)" fxLayoutGap="10px"
-							 required>
-								<mat-radio-button value="true">Accept</mat-radio-button>
-								<mat-radio-button value="false">Do not accept</mat-radio-button>
-							</mat-radio-group>
-							<mat-error *ngIf="jobSeekerRegForm.get('accept_terms').hasError('required')" align="start">
-								Please Accept Terms
-							</mat-error>
+							<!-- <a fxFlex="100" mat-button style="color: blue;" class="pt-1" (click)="openTermsConditionsDialog()"> Click
+								to read Terms and Conditions </a>
 
-							<div class="successmsg" *ngIf="isSuccessMsg" style="padding-top:25px">{{isSuccessMsg}}</div>
+							<div fxFlex="100" class="text-xs-center pb-1">
+								<mat-radio-group name="accept_terms" formControlName="accept_terms"
+									(change)="radioChange($event)" fxLayoutGap="10px" required>
+									<mat-radio-button value="true">Accept</mat-radio-button>
+									<mat-radio-button value="false">Do not accept</mat-radio-button>
+								</mat-radio-group>
+								<mat-error *ngIf="jobSeekerRegForm.get('accept_terms').hasError('required')"
+									align="start">
+									Please Accept Terms
+								</mat-error>
+							</div> -->
 
-							<div class="errormsg" *ngIf="isErrorMsg" style="padding-top:25px">{{isErrorMsg}}</div>
-						</mat-card>
+							<ngx-recaptcha2 [siteKey]="siteKey"> </ngx-recaptcha2>
 
-						<button type="submit" mat-raised-button color="primary" ngClass="box-button-mobile" ngClass.gt-xs="box-button" >
-							REGISTER
-						</button>
+							<div class="text-xs-center pb-1 successmsg" *ngIf="isSuccessMsg"> {{isSuccessMsg}} </div>
 
-						<app-recaptchav2 name="recaptcha" formControlName="recaptcha"></app-recaptchav2>
+							<div class="text-xs-center pb-1 errormsg" *ngIf="isErrorMsg"> {{isErrorMsg}} </div>
 
-						<div fxLayout="row wrap" fxLayoutAlign="space-between center" style="margin-bottom: 10px; width: 100%;">
+							<div class="w-100 pt-1">
+								<button mat-raised-button color="primary" type="submit"
+									[disabled]="!jobSeekerRegForm.valid">REGISTER</button>
+							</div>
+						</div>
+
+						<div fxLayout="row wrap" fxLayoutAlign="space-between center" class="mt-1 w-100">
 							<div>
-								<a style="color: #696666;" class="f-w-600" mat-button routerLink="/">Home Page</a>
+								<a style="color: #696666;" class="f-w-500" mat-button [routerLink]="['/']">Home Page</a>
 							</div>
 							<div fxFlex></div>
 							<div>
-								<a style="color: #696666;" class="f-w-600" mat-button routerLink="/auth/login">Click to Login</a>
+								<a style="color: #696666;" class="f-w-500" mat-button
+									[routerLink]="['/auth/login']">Click to Login</a>
 							</div>
 						</div>
-					</mat-card-content>
-				</form>
+					</form>
+				</mat-card-content>
 			</mat-card>
 		</div>
-	</mat-sidenav-content>
-</mat-sidenav-container>
+	</div>
+</div>

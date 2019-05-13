@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthloginComponent } from './authlogin/authlogin.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { Layout1Component } from './layouts/layout1/layout1.component';
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { Layout2Component } from './layouts/layout2/layout2.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { InvoiceTemp1Component } from './reusable-components/invoice-temp1/invoice-temp1.component';
@@ -20,7 +20,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'auth',
-		component: Layout1Component,
+		component: AuthLayoutComponent,
 		children: [
 			{
 				path: 'login',
