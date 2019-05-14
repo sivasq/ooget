@@ -41,7 +41,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 	buildjobseekerPassResetForm(): void {
 		this.jobseekerPassResetForm = this.fb.group({
 			employerid: ['', [Validators.required]],
-			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)])],
+			email: [{ value: '', disabled: true }, Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), true],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
 			verify: ['', [Validators.required]],
 		})

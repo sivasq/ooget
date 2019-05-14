@@ -12,11 +12,11 @@ export class ApiCallService {
 	}
 
 	postLoginData(authData): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
+		// var authDatas = JSON.stringify(authData);
 		let headers = new HttpHeaders()
 			.append('Content-Type', 'application/json')
 			.append('Access-Control-Allow-Origin', '*');
-		return this.http.post(this.baseUrl + '/login', authData, { headers: headers })
+		return this.http.post(this.baseUrl + '/login?module=Users&mode=Login', authData, { headers: headers })
 	}
 
 	checkUEN(uen) {
@@ -46,7 +46,7 @@ export class ApiCallService {
 	}
 
 	adminProfileUpdate(adminProfileData): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
+		// var authDatas = JSON.stringify(authData);
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
 			{
@@ -107,7 +107,7 @@ export class ApiCallService {
 	}
 
 	homePageContentUpdate(homePageContent): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
+		// var authDatas = JSON.stringify(authData);
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
 			{
@@ -307,7 +307,7 @@ export class ApiCallService {
 	}
 
 	employerAdd(employerData): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
+		// var authDatas = JSON.stringify(authData);
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
 			{
@@ -320,7 +320,7 @@ export class ApiCallService {
 	}
 
 	employerUpdate(employerData): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
+		// var authDatas = JSON.stringify(authData);
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
 			{
@@ -333,7 +333,7 @@ export class ApiCallService {
 	}
 
 	updateCompanyCode(companyCode): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
+		// var authDatas = JSON.stringify(authData);
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
 			{
@@ -438,7 +438,7 @@ export class ApiCallService {
 	}
 
 	jobAddToEmployer(employerJobData): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
+		// var authDatas = JSON.stringify(authData);
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
 			{
@@ -451,7 +451,7 @@ export class ApiCallService {
 	}
 
 	jobUpdateToEmployer(employerJobData): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
+		// var authDatas = JSON.stringify(authData);
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
 			{
@@ -577,7 +577,7 @@ export class ApiCallService {
 	}
 
 	timesheetAdjust(verifiedTime): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
+		// var authDatas = JSON.stringify(authData);
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
 			{
@@ -590,7 +590,7 @@ export class ApiCallService {
 	}
 
 	updatePunchin(verifiedTime): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
+		// var authDatas = JSON.stringify(authData);
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
 			{
@@ -603,7 +603,7 @@ export class ApiCallService {
 	}
 
 	updatePunchout(verifiedTime): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
+		// var authDatas = JSON.stringify(authData);
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
 			{
@@ -616,7 +616,7 @@ export class ApiCallService {
 	}
 
 	timesheetNotesUpdate(notesData): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
+		// var authDatas = JSON.stringify(authData);
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
 			{
@@ -653,7 +653,7 @@ export class ApiCallService {
 	}
 
 	faqAdd(faqData): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
+		// var authDatas = JSON.stringify(authData);
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
 			{
@@ -666,7 +666,7 @@ export class ApiCallService {
 	}
 
 	getAllFaqItems(): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
+		// var authDatas = JSON.stringify(authData);
 		let dummy;
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
@@ -680,7 +680,7 @@ export class ApiCallService {
 	}
 
 	faqUpdate(faqData): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
+		// var authDatas = JSON.stringify(authData);
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
 			{
@@ -693,7 +693,7 @@ export class ApiCallService {
 	}
 
 	faqDelete(faqId): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
+		// var authDatas = JSON.stringify(authData);
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
 			{

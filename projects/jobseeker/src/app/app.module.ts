@@ -19,14 +19,17 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
 import { ProfileModule } from './pages/profile/profile.module';
 
+import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
+import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
+
 // This is fixing verical scroll not working while using swipe
 // Method 1
 @NgModule()
 export class MyHammerConfig extends HammerGestureConfig {
-  overrides = <any>{
-    'pinch': { enable: false },
-    'rotate': { enable: false }
-  }
+	overrides = <any>{
+		'pinch': { enable: false },
+		'rotate': { enable: false }
+	};
 }
 
 // Method 2
@@ -57,9 +60,19 @@ export class MyHammerConfig extends HammerGestureConfig {
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		SharedModule,
-		ProfileModule
+		ProfileModule,
+		RecaptchaModule,
+		RecaptchaFormsModule,
 	],
-	providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig }],
+	providers: [
+		{ provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig },
+		{
+			provide: RECAPTCHA_SETTINGS,
+			useValue: {
+				siteKey: '6Lc2L6IUAAAAAG0I8PuARFQibZcDRuU9vM8NPrG1',
+			} as RecaptchaSettings,
+		}
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

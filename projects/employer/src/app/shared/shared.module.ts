@@ -47,8 +47,6 @@ import { SidemenuComponent } from '../sidemenu/sidemenu.component';
 
 import { NgxPermissionsModule } from 'ngx-permissions';
 
-import { NgxCaptchaModule } from 'ngx-captcha';
-
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true,
 	wheelPropagation: true,
@@ -83,7 +81,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 			useFactory: adapterFactory
 		}),
 		NgxPermissionsModule,
-		NgxCaptchaModule
 	],
 	declarations: [
 		OogetsidenavComponent,
@@ -131,7 +128,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		NgProgressRouterModule,
 		NgPipesModule,
 		NgxMaskModule,
-		NgxCaptchaModule,
 		EqualValidator, CompareDirective,
 		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, AgePipe, NgxPermissionsModule
 	],

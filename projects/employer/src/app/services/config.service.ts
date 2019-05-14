@@ -4,15 +4,15 @@ import { Injectable } from '@angular/core';
 export class ConfigService {
 
 	// Testing Server Config
-	public homePageUrl = "http://www.passafaila.com/ooget/";
-	public base_url = "http://localhost:3051/ooget/admin";
-	public img_base_url = 'http://localhost:3051/ooget/media';
+	// public homePageUrl = "http://www.passafaila.com/ooget/";
+	// public base_url = "http://localhost:3051/ooget/admin";
+	// public img_base_url = 'http://localhost:3051/ooget/media';
 
 
   // Cloud Testing Server Config
-//   public homePageUrl = "http://www.passafaila.com/ooget/"
-//   public base_url = "http://104.197.80.225:3010/ooget/employer";
-//   public img_base_url = "http://104.197.80.225:3010/ooget/media";
+  public homePageUrl = "http://www.passafaila.com/ooget/"
+  public base_url = "http://104.197.80.225:3010/ooget/employer";
+  public img_base_url = "http://104.197.80.225:3010/ooget/media";
 
   // Main Server Config
   // public homePageUrl = "https://ooget.com.sg"

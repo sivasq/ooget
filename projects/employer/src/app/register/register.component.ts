@@ -18,7 +18,7 @@ import { MockDataService } from '../services/mock-data.service';
 export class RegisterComponent implements OnInit {
 	public homePageUrl;
 	appearance$: Observable<any>;
-	//busy Config
+	// busy Config
 	busy: Subscription;
 
 	public hide = true;
@@ -59,8 +59,9 @@ export class RegisterComponent implements OnInit {
 			verify: ['', [Validators.required]],
 			activestatus: ['true'],
 			registeredby: ['self'],
-			termsaccepted: ['false']
-		})
+			termsaccepted: ['false'],
+			recaptcha: ['', Validators.required]
+		});
 	}
 
 	// Check Password Pattern Match
@@ -68,39 +69,39 @@ export class RegisterComponent implements OnInit {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
 
-				let regAll = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\^&*)(+=._-])/;
+				const regAll = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\^&*)(+=._-])/;
 				if (!regAll.test(control.value)) {
-					this.passwordPatternError = "at least one number, one lowercase and one uppercase letter, one special charcter";
+					this.passwordPatternError = 'at least one number, one lowercase and one uppercase letter, one special charcter';
 					resolve({ 'isPatternMatch': true });
 				}
 
-				let regNumber = /[0-9]/;
+				const regNumber = /[0-9]/;
 				if (!regNumber.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one number (0-9)";
+					this.passwordPatternError = 'password must contain at least one number (0-9)';
 					resolve({ 'isPatternMatch': true });
 				}
 
-				let regSmallAlp = /[a-z]/;
+				const regSmallAlp = /[a-z]/;
 				if (!regSmallAlp.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one lowercase letter(a - z)";
+					this.passwordPatternError = 'password must contain at least one lowercase letter(a - z)';
 					resolve({ 'isPatternMatch': true });
 				}
 
-				let regCapsAlp = /[A-Z]/;
+				const regCapsAlp = /[A-Z]/;
 				if (!regCapsAlp.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one uppercase letter (A-Z)";
+					this.passwordPatternError = 'password must contain at least one uppercase letter (A-Z)';
 					resolve({ 'isPatternMatch': true });
 				}
 
-				let regSpecChar = /[!@#$%\^&*)(+=._-]/;
+				const regSpecChar = /[!@#$%\^&*)(+=._-]/;
 				if (!regSpecChar.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one Special character (!@#$%\^&*)(+=._-)";
+					this.passwordPatternError = 'password must contain at least one Special character (!@#$%\^&*)(+=._-)';
 					resolve({ 'isPatternMatch': true });
 				}
 
-				var regSpace = /\s/;
+				const regSpace = /\s/;
 				if (regSpace.test(control.value)) {
-					this.passwordPatternError = "space not allowed";
+					this.passwordPatternError = 'space not allowed';
 					resolve({ 'isPatternMatch': true });
 				}
 				resolve(null);
@@ -140,7 +141,8 @@ export class RegisterComponent implements OnInit {
 
 	// Submit handler for Employer Add
 	public onSubmitReg() {
-		if (!this.employerRegForm.valid) return false;
+		if (!this.employerRegForm.valid) { return false; }
+
 		this.busy = this._httpService.postRegData(this.employerRegForm.value)
 			.subscribe(
 				response => {
@@ -149,7 +151,7 @@ export class RegisterComponent implements OnInit {
 						// Reset form
 						this.resetEmployerRegForm.resetForm();
 						// Show Success Snackbar
-						let snackBarRef = this.snackBar.open('You Have Registered Successfully.', 'Close', {
+						const snackBarRef = this.snackBar.open('You Have Registered Successfully.', 'Close', {
 							duration: 2000,
 						});
 						// Snackbar action

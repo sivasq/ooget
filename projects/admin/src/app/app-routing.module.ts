@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthloginComponent } from './authlogin/authlogin.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-import { Layout2Component } from './layouts/layout2/layout2.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { InvoiceTemp1Component } from './reusable-components/invoice-temp1/invoice-temp1.component';
 import { InvoiceTemp2Component } from './reusable-components/invoice-temp2/invoice-temp2.component';
@@ -34,7 +34,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'admin',
-		component: Layout2Component,
+		component: AdminLayoutComponent,
 		canActivate: [AuthGuardService],
 		children: [
 			{

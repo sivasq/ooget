@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit {
       { date: moment().date(25).valueOf(), css: 'off', selectable: false, title: 'We don\'t work today' },
       { date: moment().date(30).valueOf(), css: 'birthday', selectable: true, title: 'I\'m thir... i\'m 28, seriously, I mean ...' }
     ];
-    console.log(this.highlightDays);
+    // console.log(this.highlightDays);
     // console.log(new Date(1532522820921));
     // examples to work with
     // console.log('date: moment().date(19).valueOf() ', moment().date(19).valueOf());
@@ -68,7 +68,7 @@ export class DashboardComponent implements OnInit {
     if (DateRangeHelper.dateRangeDaysCalculator(endDate, startDate) >= 0) {
       let days = DateRangeHelper.dateRangeDaysCalculator(endDate, startDate);
       this.datesArray = DateRangeHelper.getDates(new Date(startDate), (new Date(startDate)).addDays(days)); // date object used not moment in this case
-      console.log('this.datesArray ', this.datesArray);
+    //   console.log('this.datesArray ', this.datesArray);
     }
 
     // takes array dates from daterangehelper and adds them to highlighted days for date picker day highlights
@@ -81,7 +81,7 @@ export class DashboardComponent implements OnInit {
         let stayNames = 'Christian Smith' // should be set to variable
         for (let i in daysArray) {
           if (true) {
-            console.log(daysArray);
+            // console.log(daysArray);
             // this.highlightDays.push({ date: daysArray[i], css: 'stay-dates', selectable: true, title: `days off for ${stayNames}` });  // set strings
             this.highlightDays.push({ date: daysArray[i], css: 'stay-dates', selectable: true, title: 'OFF' });  // set strings
           }
@@ -100,12 +100,12 @@ export class DashboardComponent implements OnInit {
   }
 
   logMonthChanged(newMonth, oldMonth) {
-    console.log(newMonth);
+    // console.log(newMonth);
   }
 
   oneDaySelectionOnly(event, date) {
-    console.log(event);
+    // console.log(event);
     this.highlightDays.push({ date: date.date._d, css: 'stay-dates', selectable: true, title: 'days off for' });
-    console.log(this.highlightDays);
+    // console.log(this.highlightDays);
   }
 }

@@ -7,6 +7,12 @@ import { ConfigService } from '../services/config.service';
 import { NgxRolesService, NgxPermissionsService } from 'ngx-permissions';
 import { AsyncSubscriber } from '../services/async.service';
 
+// export class Book {
+// 	public constructor(init?: Partial<Book>) {
+// 		Object.assign(this, init);
+// 	}
+// }
+
 @Component({
 	selector: 'app-authlogin',
 	templateUrl: './authlogin.component.html',
@@ -17,8 +23,10 @@ export class AuthloginComponent implements OnInit {
 	appearance$: Observable<any>;
 
 	public homePageUrl;
+
 	// Password visibility set
 	public hide = true;
+
 	// Error Message
 	isAuthMsg: string;
 
@@ -42,17 +50,18 @@ export class AuthloginComponent implements OnInit {
 		this.adminAuthForm = this.fb.group({
 			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)])],
 			password: ['', Validators.compose([Validators.required])],
-		})
+		});
 	}
 
 	onAuthCheck() {
-		if (!this.adminAuthForm.valid) return false;
+		if (!this.adminAuthForm.valid) { return false; }
+
 		this.busy = this._httpService.postLoginData(this.adminAuthForm.value)
 			.subscribe(
 				async response => {
 					if (response.success) {
 						// Set local storages
-						localStorage.setItem('isLoggedIn', "true");
+						localStorage.setItem('isLoggedIn', 'true');
 						localStorage.setItem('ogToken', response.token);
 						localStorage.setItem('ogUserName', response.admin.username);
 						localStorage.setItem('ogUserEmail', response.admin.email);
@@ -70,7 +79,7 @@ export class AuthloginComponent implements OnInit {
 
 					} else if (!response.success) {
 
-						this.isAuthMsg = "Sorry! Invalid Login Credentials";
+						this.isAuthMsg = 'Sorry! Invalid Login Credentials';
 						setTimeout(() => {
 							this.isAuthMsg = '';
 							// this.resetAdminAuthForm.resetForm();
@@ -79,7 +88,7 @@ export class AuthloginComponent implements OnInit {
 				},
 				error => {
 					console.log(error);
-					this.isAuthMsg = "Server Errors Occured! Please Try Again";
+					this.isAuthMsg = 'Server Errors Occured! Please Try Again';
 					setTimeout(() => {
 						this.isAuthMsg = '';
 						// this.resetAdminAuthForm.resetForm();
@@ -89,5 +98,4 @@ export class AuthloginComponent implements OnInit {
 	}
 
 	ngOnInit() { }
-
 }

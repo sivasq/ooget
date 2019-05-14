@@ -147,8 +147,12 @@
 								{{isAuthMsg}}
 							</div> -->
 
-							<button mat-raised-button color="primary" type="submit"
-								[disabled]="!employerRegForm.valid">REGISTER</button>
+							<re-captcha formControlName="recaptcha"></re-captcha>
+
+							<div class="w-100 pt-1 text-xs-center">
+								<button mat-raised-button color="primary" type="submit"
+									[disabled]="!employerRegForm.valid">REGISTER</button>
+							</div>
 						</div>
 
 						<div fxLayout="row wrap" fxLayoutAlign="space-between center" class="mt-1 w-100">

@@ -13,7 +13,7 @@ import { SharedModule } from './shared/shared.module';
 
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-import { Layout2Component } from './layouts/layout2/layout2.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { EmployersModule } from './pages/employers/employers.module';
 
@@ -23,7 +23,7 @@ import { EmployersModule } from './pages/employers/employers.module';
 		AuthloginComponent,
 		ForgotPasswordComponent,
 		AuthLayoutComponent,
-		Layout2Component,
+		AdminLayoutComponent,
 	],
 	imports: [
 		CommonModule,

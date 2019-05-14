@@ -17,6 +17,8 @@ import { Layout2Component } from './layouts/layout2/layout2.component';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
+import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 // import { TopProfiledialogComponent } from './top-profiledialog/top-profiledialog.component';
 // import { TopShortcutdialogComponent } from './top-shortcutdialog/top-shortcutdialog.component';
 
@@ -37,9 +39,18 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		SharedModule,
-		NgxPermissionsModule.forRoot()
+		NgxPermissionsModule.forRoot(),
+		RecaptchaModule,
+		RecaptchaFormsModule,
 	],
-	providers: [],
+	providers: [
+		{
+			provide: RECAPTCHA_SETTINGS,
+			useValue: {
+				siteKey: '6Lc2L6IUAAAAAG0I8PuARFQibZcDRuU9vM8NPrG1',
+			} as RecaptchaSettings,
+		}
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }
