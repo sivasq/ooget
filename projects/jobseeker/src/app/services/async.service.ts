@@ -41,13 +41,12 @@ export class AsyncSubscriber {
 	appearance = new BehaviorSubject<string>('outline');
 	getAppearance = this.appearance.asObservable();
 
-	public setAppearance() {
-		this.appearance.next("standard");
-	}
-
-	//
 	profileDetails = new Subject<any>();
 	getProfileDetails = this.profileDetails.asObservable();
+
+	public setAppearance() {
+		this.appearance.next('standard');
+	}
 
 	public setProfileDetails(profileData) {
 		this.profileDetails.next(profileData);

@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
 
 	appearance$: Observable<any>;
 
-	busy: Subscription; //busy Config
+	busy: Subscription; // busy Config
 	public hide = true;
 	public rehide = true;
 	public passwordPatternError;

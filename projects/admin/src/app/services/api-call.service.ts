@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Rx';
+import { HttpClient, HttpHeaders, HttpResponse, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import { ConfigService } from './config.service';
 
@@ -11,12 +11,26 @@ export class ApiCallService {
 		this.baseUrl = config.base_url;
 	}
 
+	createAuthorizationHeader(headers: HttpHeaders) {
+		const userToken = localStorage.getItem('ogToken');
+		headers.set('Content-Type', 'application/json');
+		headers.set('Access-Control-Allow-Origin', '*');
+		headers.set('Accept', 'application/json');
+		headers.set('token', userToken);
+	}
+
+	createUrl(params: HttpParams, module, mode) {
+		params.set('module', module);
+		params.set('mode', mode);
+	}
+
 	postLoginData(authData): Observable<any> {
-		// var authDatas = JSON.stringify(authData);
-		let headers = new HttpHeaders()
-			.append('Content-Type', 'application/json')
-			.append('Access-Control-Allow-Origin', '*');
-		return this.http.post(this.baseUrl + '/login?module=Users&mode=Login', authData, { headers: headers })
+		const headers = new HttpHeaders();
+		this.createAuthorizationHeader(headers);
+
+		const params = new HttpParams();
+		this.createUrl(params, 'Users', 'Login');
+		return this.http.post(this.baseUrl, authData, { headers: headers, params: params });
 	}
 
 	checkUEN(uen) {
@@ -27,9 +41,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post<any>(this.baseUrl + '/employer/unqiuecompany', uen, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	getAdminProfileDetails(): Observable<any> {
@@ -40,9 +54,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/fetchprofiledetails', dummyData, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	adminProfileUpdate(adminProfileData): Observable<any> {
@@ -53,8 +67,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/updateprofiledetails', adminProfileData, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/updateprofiledetails', adminProfileData, { headers: headers });
 	}
 
 	uploadAdminProfilePic(formData): Observable<any> {
@@ -63,8 +77,8 @@ export class ApiCallService {
 			{
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken,
-			})
-		return this.http.post(this.baseUrl + '/updateprofileimage', formData, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/updateprofileimage', formData, { headers: headers });
 	}
 
 	getHomePageContents(): Observable<any> {
@@ -75,9 +89,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/fetchoogethome', dummyData, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	getFeaturedEmployers(): Observable<any> {
@@ -88,9 +102,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/fetchfeaturedimages', dummyData, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	removeFeaturedEmployer(imageId): Observable<any> {
@@ -101,9 +115,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/deletefeaturedimage', imageId, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	homePageContentUpdate(homePageContent): Observable<any> {
@@ -114,8 +128,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/updateoogethome', homePageContent, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/updateoogethome', homePageContent, { headers: headers });
 	}
 
 	checkAdminEmail(email) {
@@ -126,9 +140,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post<any>(this.baseUrl + '/uniqueadminemail', email, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	checkEmail(email) {
@@ -139,9 +153,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post<any>(this.baseUrl + '/employer/unqiueemployer', email, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	getAllEmployers(): Observable<any> {
@@ -152,9 +166,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/employer/employerslist', dummyData, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	getAllJobseekersList(): Observable<any> {
@@ -165,9 +179,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/jobseeker/fetchalljobseekersnew', dummyData, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	getAllJobseekers(): Observable<any> {
@@ -178,9 +192,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/jobseeker/fetchalljobseekers', dummyData, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	getPendingJobseekers(): Observable<any> {
@@ -191,9 +205,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/jobseeker/fetchpendingjobseekers', dummyData, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	getJobseekersTC(): Observable<any> {
@@ -204,9 +218,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/fetchjobseekerterms', dummyData, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	updateJobseekersTC(terms): Observable<any> {
@@ -217,9 +231,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/updatejobseekerterms', terms, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	uploadTermsDoc(formData, comapnyId): Observable<any> {
@@ -229,9 +243,9 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken,
 				'companyid': comapnyId
-			})
+			});
 		return this.http.post(this.baseUrl + '/employer/updatetermsandconditions', formData, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	getEmployerDetails(employerId): Observable<any> {
@@ -242,8 +256,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/employer/viewparticularemployer', employerIds, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/employer/viewparticularemployer', employerIds, { headers: headers });
 	}
 
 	activateJob(jobStatus): Observable<any> {
@@ -254,8 +268,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/job/changejobstatus', jobStatus, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/job/changejobstatus', jobStatus, { headers: headers });
 	}
 
 	addPayInfoToJob(jobStatus): Observable<any> {
@@ -266,8 +280,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/job/updatejobstatuswithpayinfo', jobStatus, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/job/updatejobstatuswithpayinfo', jobStatus, { headers: headers });
 	}
 
 	closeJobHiring(jobStatus): Observable<any> {
@@ -278,8 +292,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/job/changehiringstatus', jobStatus, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/job/changehiringstatus', jobStatus, { headers: headers });
 	}
 
 	changeEmployerStatus(jobStatus): Observable<any> {
@@ -290,8 +304,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/employer/updateactivestatus', jobStatus, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/employer/updateactivestatus', jobStatus, { headers: headers });
 	}
 
 	changeJobseekerStatus(jobseekerStatus): Observable<any> {
@@ -302,8 +316,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/jobseeker/updateactivestatus', jobseekerStatus, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/jobseeker/updateactivestatus', jobseekerStatus, { headers: headers });
 	}
 
 	employerAdd(employerData): Observable<any> {
@@ -314,9 +328,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/employer/createemployer', employerData, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	employerUpdate(employerData): Observable<any> {
@@ -327,9 +341,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/employer/updatecompanydetails', employerData, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	updateCompanyCode(companyCode): Observable<any> {
@@ -340,9 +354,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/employer/updatecompanycode', companyCode, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	getSingleEmployersJobsList(employerId): Observable<any> {
@@ -353,8 +367,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/job/jobslistbyemployer', employerIds, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/job/jobslistbyemployer', employerIds, { headers: headers });
 	}
 
 	getAppliedCandidates(jobId): Observable<any> {
@@ -364,8 +378,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/job/fetchparticularjobappliedjobseekers', jobId, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/job/fetchparticularjobappliedjobseekers', jobId, { headers: headers });
 	}
 
 	selectApplication(ids): Observable<any> {
@@ -376,8 +390,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/job/offerjob', ids, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/job/offerjob', ids, { headers: headers });
 	}
 
 	getJobSeekerDetails(jobseekerId): Observable<any> {
@@ -387,8 +401,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/job/fetchparticularjobseeker', jobseekerId, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/job/fetchparticularjobseeker', jobseekerId, { headers: headers });
 	}
 
 	toggleIdProofEditable(data): Observable<any> {
@@ -398,8 +412,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/jobseeker/updateidproofeditable', data, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/jobseeker/updateidproofeditable', data, { headers: headers });
 	}
 
 	toggleNricFinEditable(data): Observable<any> {
@@ -409,8 +423,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/jobseeker/updatenriceditable', data, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/jobseeker/updatenriceditable', data, { headers: headers });
 	}
 
 	getPendingJobsList(): Observable<any> {
@@ -421,8 +435,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/job/fetchpendingjobs', employerIds, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/job/fetchpendingjobs', employerIds, { headers: headers });
 	}
 
 	getLiveJobsList(): Observable<any> {
@@ -433,8 +447,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/job/fetchlivejobs', employerIds, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/job/fetchlivejobs', employerIds, { headers: headers });
 	}
 
 	jobAddToEmployer(employerJobData): Observable<any> {
@@ -445,9 +459,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/job/createjob', employerJobData, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	jobUpdateToEmployer(employerJobData): Observable<any> {
@@ -458,9 +472,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/job/updatejob', employerJobData, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	getJobDetails(jobId): Observable<any> {
@@ -471,8 +485,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/job/fetchparticularjob', jobIds, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/job/fetchparticularjob', jobIds, { headers: headers });
 	}
 
 	getContractDetails(contractId): Observable<any> {
@@ -482,8 +496,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/contract/fetchparticularcontract', contractId, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/contract/fetchparticularcontract', contractId, { headers: headers });
 	}
 
 	getTimesheetDetails(contractId): Observable<any> {
@@ -493,8 +507,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/contract/fetchtimesheetdetails', contractId, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/contract/fetchtimesheetdetails', contractId, { headers: headers });
 	}
 
 	getAllOffDays(contractId): Observable<any> {
@@ -504,8 +518,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/contract/fetchoffdays', contractId, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/contract/fetchoffdays', contractId, { headers: headers });
 	}
 
 	getAllPayrollsInContract(contractId): Observable<any> {
@@ -515,8 +529,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/contract/fetchpayrollforparticularcontract', contractId, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/contract/fetchpayrollforparticularcontract', contractId, { headers: headers });
 	}
 
 	addOffDay(Data): Observable<any> {
@@ -526,8 +540,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/contract/addoffday', Data, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/contract/addoffday', Data, { headers: headers });
 	}
 
 	removeOffDay(Data): Observable<any> {
@@ -537,8 +551,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/contract/removeoffday', Data, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/contract/removeoffday', Data, { headers: headers });
 	}
 
 	removeContractorFromJob(Data): Observable<any> {
@@ -548,8 +562,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/contract/removeoffday', Data, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/contract/removeoffday', Data, { headers: headers });
 	}
 
 	getAllPHHolidays(): Observable<any> {
@@ -560,8 +574,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/fetchholidaylist', dummydata, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/fetchholidaylist', dummydata, { headers: headers });
 	}
 
 	getJobContractors(jobId): Observable<any> {
@@ -572,8 +586,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/contract/contractslist', jobIds, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/contract/contractslist', jobIds, { headers: headers });
 	}
 
 	timesheetAdjust(verifiedTime): Observable<any> {
@@ -584,9 +598,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/contract/verifypunch', verifiedTime, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	updatePunchin(verifiedTime): Observable<any> {
@@ -597,9 +611,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/contract/verifypunchin', verifiedTime, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	updatePunchout(verifiedTime): Observable<any> {
@@ -610,9 +624,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/contract/verifypunchout', verifiedTime, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	timesheetNotesUpdate(notesData): Observable<any> {
@@ -623,9 +637,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/contract/updatenotes', notesData, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	verifyTimeSheets(timesheetIds): Observable<any> {
@@ -635,9 +649,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/contract/verifytimesheet', timesheetIds, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	generatepayroll(contractid): Observable<any> {
@@ -647,9 +661,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/contract/generatepayroll', contractid, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	faqAdd(faqData): Observable<any> {
@@ -660,9 +674,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/addfaq', faqData, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	getAllFaqItems(): Observable<any> {
@@ -674,9 +688,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/fetchfaqs', dummy, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	faqUpdate(faqData): Observable<any> {
@@ -687,9 +701,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/updatefaq', faqData, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	faqDelete(faqId): Observable<any> {
@@ -700,9 +714,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/deletefaq', faqId, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	getEmployerJobs(data): Observable<any> {
@@ -713,9 +727,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/contract/generatereportforparticularemployer', data, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	getJobseekerContracts(data): Observable<any> {
@@ -726,9 +740,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/contract/generatetimesheetreportforparticularjobseeker', data, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	getMatrixOffDays(args): Observable<any> {
@@ -739,8 +753,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/contract/fetchoffdayssheetforparticularjob', args, { headers: headers })
+			});
+		return this.http.post(this.baseUrl + '/contract/fetchoffdayssheetforparticularjob', args, { headers: headers });
 	}
 
 	getListOfUsers(comapnyid): Observable<any> {
@@ -751,9 +765,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/employer/listsupervisors', comapnyid, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	getExtraUserProfileDetails(userid): Observable<any> {
@@ -764,9 +778,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/employer/fetchsupervisor', userid, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	updateUserProfile(employerData): Observable<any> {
@@ -777,9 +791,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/employer/updatesupervisor', employerData, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	createsupervisor(employerData): Observable<any> {
@@ -790,9 +804,9 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/employer/createsupervisor', employerData, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 
 	deleteUserProfile(employerData): Observable<any> {
@@ -803,8 +817,8 @@ export class ApiCallService {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 		return this.http.post(this.baseUrl + '/employer/deletesupervisor', employerData, { headers: headers })
-			.map(res => res)
+			.map(res => res);
 	}
 }

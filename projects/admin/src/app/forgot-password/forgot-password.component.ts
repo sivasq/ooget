@@ -15,10 +15,10 @@ export class ForgotPasswordComponent implements OnInit {
 	public homePageUrl;
 	appearance$: Observable<any>;
 
-	//Error Message
+	// Error Message
 	isAuthMsg: string;
 
-	//busy Config
+	// busy Config
 	busy: Subscription;
 
 	adminPassResetForm: FormGroup;
@@ -41,8 +41,8 @@ export class ForgotPasswordComponent implements OnInit {
 	}
 
 	onAuthCheck() {
-		if (!this.adminPassResetForm.valid) return false;
-		this.isAuthMsg = "Sorry! Invalid Login Credentials";
+		if (!this.adminPassResetForm.valid) { return false; }
+		this.isAuthMsg = 'Sorry! Invalid Login Credentials';
 		setTimeout(() => {
 			this.isAuthMsg = '';
 			this.resetAdminPassResetForm.resetForm();
