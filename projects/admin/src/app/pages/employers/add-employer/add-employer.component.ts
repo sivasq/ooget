@@ -37,7 +37,7 @@ export class AddEmployerComponent implements OnInit {
 	getIndustries(): void {
 		// this.Industries = this.mockDataService.getIndustries();
 		this.mockDataService.getIndustries()
-			.subscribe(Industries => this.Industries = Industries);
+			.subscribe(IndustriesList => this.Industries = IndustriesList);
 	}
 
 	// Build Employer Add Form
@@ -64,39 +64,39 @@ export class AddEmployerComponent implements OnInit {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
 
-				let regAll = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\^&*)(+=._-])/;
+				const regAll = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\^&*)(+=._-])/;
 				if (!regAll.test(control.value)) {
-					this.passwordPatternError = "at least one number, one lowercase and one uppercase letter, one special charcter";
+					this.passwordPatternError = 'at least one number, one lowercase and one uppercase letter, one special charcter';
 					resolve({ 'isPatternMatch': true });
 				}
 
-				let regNumber = /[0-9]/;
+				const regNumber = /[0-9]/;
 				if (!regNumber.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one number (0-9)";
+					this.passwordPatternError = 'password must contain at least one number (0-9)';
 					resolve({ 'isPatternMatch': true });
 				}
 
-				let regSmallAlp = /[a-z]/;
+				const regSmallAlp = /[a-z]/;
 				if (!regSmallAlp.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one lowercase letter(a - z)";
+					this.passwordPatternError = 'password must contain at least one lowercase letter(a - z)';
 					resolve({ 'isPatternMatch': true });
 				}
 
-				let regCapsAlp = /[A-Z]/;
+				const regCapsAlp = /[A-Z]/;
 				if (!regCapsAlp.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one uppercase letter (A-Z)";
+					this.passwordPatternError = 'password must contain at least one uppercase letter (A-Z)';
 					resolve({ 'isPatternMatch': true });
 				}
 
-				let regSpecChar = /[!@#$%\^&*)(+=._-]/;
+				const regSpecChar = /[!@#$%\^&*)(+=._-]/;
 				if (!regSpecChar.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one Special character (!@#$%\^&*)(+=._-)";
+					this.passwordPatternError = 'password must contain at least one Special character (!@#$%\^&*)(+=._-)';
 					resolve({ 'isPatternMatch': true });
 				}
 
-				var regSpace = /\s/;
+				const regSpace = /\s/;
 				if (regSpace.test(control.value)) {
-					this.passwordPatternError = "space not allowed";
+					this.passwordPatternError = 'space not allowed';
 					resolve({ 'isPatternMatch': true });
 				}
 				resolve(null);
@@ -108,7 +108,7 @@ export class AddEmployerComponent implements OnInit {
 	isUENUnique(control: FormControl) {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
-				this._httpService.checkUEN({ 'uennumber': control.value.toUpperCase() }).subscribe((response) => {
+				this._httpService.checkUENExists({ 'uen': control.value.toUpperCase() }).subscribe((response) => {
 					if (response.success) {
 						resolve(null);
 					} else {
@@ -123,7 +123,7 @@ export class AddEmployerComponent implements OnInit {
 	isEmailUnique(control: FormControl) {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
-				this._httpService.checkEmail({ 'email': control.value }).subscribe((response) => {
+				this._httpService.checkEmailExists({ 'email': control.value }).subscribe((response) => {
 					if (response.success) {
 						resolve(null);
 					} else {
@@ -136,7 +136,7 @@ export class AddEmployerComponent implements OnInit {
 
 	// Submit handler for Employer Add
 	public employerAddSubmit() {
-		if (!this.employerAddForm.valid) return false;
+		if (!this.employerAddForm.valid) { return false; }
 
 		this._httpService.employerAdd(this.employerAddForm.value)
 			.subscribe(
@@ -146,7 +146,7 @@ export class AddEmployerComponent implements OnInit {
 						// Reset form
 						this.resetEmployerAddForm.resetForm();
 						// Show Success Snackbar
-						let snackBarRef = this.snackBar.open('Employer Added Successfully.', 'Close', {
+						const snackBarRef = this.snackBar.open('Employer Added Successfully.', 'Close', {
 							duration: 5000,
 						});
 						// Snackbar action

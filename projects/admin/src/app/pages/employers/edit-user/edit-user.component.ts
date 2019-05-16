@@ -121,7 +121,7 @@ export class EditUserComponent implements OnInit {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
 				if (this.userProfile.email != control.value) {
-					this._httpService.checkEmail({ 'email': control.value }).subscribe((response) => {
+					this._httpService.checkEmailExists({ 'email': control.value }).subscribe((response) => {
 						if (response.success) {
 							resolve(null);
 						} else {

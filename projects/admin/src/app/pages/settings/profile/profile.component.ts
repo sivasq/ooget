@@ -24,12 +24,7 @@ export class ProfileComponent implements OnInit {
 	@Input() selectedIndex: number | null;
 	currentlyActiveIndexTab: number | null = 0;
 
-	public adminProfile: any = {
-		username: '',
-		email: '',
-		password: ''
-	}
-	public imgBaseUrl;
+	public baseUrl;
 
 	public homePageContent: any = {
 		title: '',
@@ -38,7 +33,7 @@ export class ProfileComponent implements OnInit {
 		list2: '',
 		list3: '',
 		list4: ''
-	}
+	};
 
 	public featuredEmployers: any[] = [];
 
@@ -54,7 +49,7 @@ export class ProfileComponent implements OnInit {
 
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
-		this.imgBaseUrl = urlconfig.img_base_url;
+		this.baseUrl = urlconfig.base_url;
 
 		this.buildAdminProfileForm();
 		this.buildHomePageContentForm();
@@ -71,7 +66,7 @@ export class ProfileComponent implements OnInit {
 			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(8)]), this.isPatternMatch.bind(this)],
 			verify: ['', [Validators.required]],
-		})
+		});
 	}
 
 	buildHomePageContentForm(): void {
@@ -83,7 +78,7 @@ export class ProfileComponent implements OnInit {
 			list2: [''],
 			list3: [''],
 			list4: [''],
-		})
+		});
 	}
 
 	// Check Password Pattern Match
@@ -91,39 +86,39 @@ export class ProfileComponent implements OnInit {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
 
-				let regAll = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\^&*)(+=._-])/;
+				const regAll = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\^&*)(+=._-])/;
 				if (!regAll.test(control.value)) {
-					this.passwordPatternError = "at least one number, one lowercase and one uppercase letter, one special charcter";
+					this.passwordPatternError = 'at least one number, one lowercase and one uppercase letter, one special charcter';
 					resolve({ 'isPatternMatch': true });
 				}
 
-				let regNumber = /[0-9]/;
+				const regNumber = /[0-9]/;
 				if (!regNumber.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one number (0-9)";
+					this.passwordPatternError = 'password must contain at least one number (0-9)';
 					resolve({ 'isPatternMatch': true });
 				}
 
-				let regSmallAlp = /[a-z]/;
+				const regSmallAlp = /[a-z]/;
 				if (!regSmallAlp.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one lowercase letter(a - z)";
+					this.passwordPatternError = 'password must contain at least one lowercase letter(a - z)';
 					resolve({ 'isPatternMatch': true });
 				}
 
-				let regCapsAlp = /[A-Z]/;
+				const regCapsAlp = /[A-Z]/;
 				if (!regCapsAlp.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one uppercase letter (A-Z)";
+					this.passwordPatternError = 'password must contain at least one uppercase letter (A-Z)';
 					resolve({ 'isPatternMatch': true });
 				}
 
-				let regSpecChar = /[!@#$%\^&*)(+=._-]/;
+				const regSpecChar = /[!@#$%\^&*)(+=._-]/;
 				if (!regSpecChar.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one Special character (!@#$%\^&*)(+=._-)";
+					this.passwordPatternError = 'password must contain at least one Special character (!@#$%\^&*)(+=._-)';
 					resolve({ 'isPatternMatch': true });
 				}
 
-				var regSpace = /\s/;
+				const regSpace = /\s/;
 				if (regSpace.test(control.value)) {
-					this.passwordPatternError = "space not allowed";
+					this.passwordPatternError = 'space not allowed';
 					resolve({ 'isPatternMatch': true });
 				}
 				resolve(null);
@@ -135,8 +130,8 @@ export class ProfileComponent implements OnInit {
 	isEmailUnique(control: FormControl) {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
-				if (this.adminProfile.email != control.value) {
-					this._httpService.checkAdminEmail({ 'email': control.value }).subscribe((response) => {
+				if (this.adminProfile.email !== control.value) {
+					this._httpService.checkEmailExists({ 'email': control.value }).subscribe((response) => {
 						if (response.success) {
 							resolve(null);
 						} else {
@@ -167,31 +162,31 @@ export class ProfileComponent implements OnInit {
 				this.profileImage = event.target.result;
 				// console.log(event.target.result);
 				// this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage })
-			}
+			};
 		}
 	}
 
 	// Get Admin Profile Details
 	getProfileDetails() {
-		this.busy = this._httpService.getAdminProfileDetails()
+		this.busy = this._httpService.getCurrentUserProfileDetails()
 			.subscribe(
 				response => {
 					// console.log(response);
 					if (response.success) {
 						// Profile Tab
-						this.adminProfile.username = response.message.username ? response.message.username : '';
-						this.adminProfile.email = response.message.email ? response.message.email : '';
-						this.adminProfile.password = response.message.password ? response.message.password : '';
+						const firstname = response.message.firstname ? response.message.firstname : '';
+						const lastname = response.message.lastname ? response.message.lastname : '';
+						const email = response.message.email ? response.message.email : '';
 						// Documents
-						this.profileImage = response.message.adminimage ? this.imgBaseUrl + '/admin/' + response.message.adminimage : 'assets/img/avatars/profile-placeholder.png';
+						this.profileImage = response.message.imgpath ? this.baseUrl + response.message.imgpath : 'assets/img/avatars/profile-placeholder.png';
 
 						// Patch Form Value
 						this.adminProfileForm.patchValue({
-							'username': this.adminProfile.username,
-							'email': this.adminProfile.email,
-							'password': this.adminProfile.password,
-							'verify': this.adminProfile.password,
-						})
+							'username': `${firstname} ${lastname}`,
+							'email': email,
+							// 'password': '',
+							// 'verify': '',
+						});
 
 					} else if (!response.success) {
 						// console.log(response);
@@ -205,14 +200,14 @@ export class ProfileComponent implements OnInit {
 
 	// Update Admin Profile Datas
 	adminProfileUpdate() {
-		if (!this.adminProfileForm.valid) return false;
+		if (!this.adminProfileForm.valid) { return false; }
 		console.log(this.adminProfileForm.value);
 
 		this.busy = this._httpService.adminProfileUpdate(this.adminProfileForm.value)
 			.subscribe(
 				response => {
 					if (response.success) {
-						let profileImage = this.myProfileImageInputVariable.nativeElement;
+						const profileImage = this.myProfileImageInputVariable.nativeElement;
 
 						if (profileImage.files[0]) {
 							localStorage.setItem('ogUserName', this.adminProfileForm.get('username').value);
@@ -222,9 +217,9 @@ export class ProfileComponent implements OnInit {
 							localStorage.setItem('ogUserName', this.adminProfileForm.get('username').value);
 							localStorage.setItem('ogUserEmail', this.adminProfileForm.get('email').value);
 							// location.reload();
-							this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
+							this.asyncSubscriber.setProfileDetails({ 'Image': this.profileImage });
 
-							let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
+							const snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
 								duration: 5000,
 							});
 
@@ -248,19 +243,19 @@ export class ProfileComponent implements OnInit {
 		const formData: FormData = new FormData();
 
 		if (profileImage.files && profileImage.files[0]) {
-			formData.append('adminimage', profileImage.files[0]);
+			formData.append('fileToUpload', profileImage.files[0]);
 		}
 
 		if (profileImage.files[0]) {
-			this.busy = this._httpService.uploadAdminProfilePic(formData)
+			this.busy = this._httpService.uploadCurrentUserProfilePic(formData)
 				.subscribe(
 					response => {
 						if (response.success) {
 							localStorage.setItem('ogProfileimage', response.adminimage);
 							// location.reload();
-							this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
+							this.asyncSubscriber.setProfileDetails({ 'Image': this.profileImage });
 
-							let snackBarRef = this.snackBar.open('Profile and Documents Updated Successfully.', 'Close', {
+							const snackBarRef = this.snackBar.open('Profile and Documents Updated Successfully.', 'Close', {
 								duration: 5000,
 							});
 							snackBarRef.onAction().subscribe(() => {
@@ -300,7 +295,7 @@ export class ProfileComponent implements OnInit {
 							'list2': this.homePageContent.list2,
 							'list3': this.homePageContent.list3,
 							'list4': this.homePageContent.list4,
-						})
+						});
 
 					} else if (!response.success) {
 						// console.log(response);
@@ -315,7 +310,7 @@ export class ProfileComponent implements OnInit {
 	// Update Home Page Contents
 	homePageContentUpdate() {
 		// Check Employment Type And process Past Exp
-		if (!this.homePageContentForm.valid) return false;
+		if (!this.homePageContentForm.valid) { return false; }
 
 		console.log(this.adminProfileForm.value);
 
@@ -324,7 +319,7 @@ export class ProfileComponent implements OnInit {
 				response => {
 					if (response.success) {
 
-						let snackBarRef = this.snackBar.open('Home Page Contents Updated Successfully.', 'Close', {
+						const snackBarRef = this.snackBar.open('Home Page Contents Updated Successfully.', 'Close', {
 							duration: 5000,
 						});
 
@@ -362,7 +357,7 @@ export class ProfileComponent implements OnInit {
 	// Remove Featured Employer
 	removeFeaturedEmployer(featuredEmployerId, itemindex) {
 		// console.log(featuredEmployerId);
-		this.busy = this._httpService.removeFeaturedEmployer({ "featuredimageid": featuredEmployerId })
+		this.busy = this._httpService.removeFeaturedEmployer({ 'featuredimageid': featuredEmployerId })
 			.subscribe(
 				response => {
 					// console.log(response);

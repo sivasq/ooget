@@ -124,6 +124,9 @@
 									<mat-hint *ngIf="companycode?.errors?.maxlength">
 										Maximum 7 characters only Allowed
 									</mat-hint>
+									<!-- <mat-error *ngIf="companycode?.errors?.isCompanycodeUnique" align="start">
+										This Company Code Already Registered
+									</mat-error> -->
 								</mat-form-field>
 								<button mat-stroked-button color="primary" [disabled]="!companycode.valid"
 									(click)="updateCompanyCode()">Submit

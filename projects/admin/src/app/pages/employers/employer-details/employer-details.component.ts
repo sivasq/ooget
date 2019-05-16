@@ -6,6 +6,7 @@ import { ConfigService } from '../../../services/config.service';
 import { Subscription } from 'rxjs';
 // import { Angular5Csv } from 'angular5-csv/Angular5-csv';
 import { DatePipe } from '@angular/common';
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'app-employer-details',
@@ -31,7 +32,7 @@ export class EmployerDetailsComponent implements OnInit {
 	public companyCodes = {
 		companyid: '',
 		companycode: ''
-	}
+	};
 	showUpload = true;
 	uploaded = false;
 
@@ -78,7 +79,7 @@ export class EmployerDetailsComponent implements OnInit {
 		this.companyid = this.route.snapshot.params['emp_id'];
 		let employerId = {
 			companyid: this.route.snapshot.params['emp_id'],
-		}
+		};
 		this.getEmployerDetails(employerId);
 	}
 
@@ -182,7 +183,7 @@ export class EmployerDetailsComponent implements OnInit {
 					'T01 Record Type': 'TRAILER',
 					'T02 Total No. of Transactions': oldData[i].TotalNoofTransactions ? oldData[i].TotalNoofTransactions : '',
 					'T03 Total Transaction Amount': oldData[i].TotalTransactionAmount ? oldData[i].TotalTransactionAmount : '',
-				})
+				});
 			}
 			// this.NewData = newData;
 		}
@@ -213,6 +214,21 @@ export class EmployerDetailsComponent implements OnInit {
 					console.log(error);
 				}
 			);
+	}
+
+	// Check Company code Unique
+	isCompanycodeUnique(control: FormControl) {
+		return new Promise((resolve, reject) => {
+			setTimeout(() => {
+				this._httpService.checkCompanyCodeExists({ 'companycode': control.value.toUpperCase() }).subscribe((response) => {
+					if (response.success) {
+						resolve(null);
+					} else {
+						resolve({ 'isCompanycodeUnique': true });
+					}
+				}, () => { resolve({ 'isCompanycodeUnique': false }); });
+			}, 50);
+		});
 	}
 
 	updateCompanyCode() {

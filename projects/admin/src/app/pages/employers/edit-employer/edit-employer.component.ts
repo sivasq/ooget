@@ -155,7 +155,7 @@ export class EditEmployerComponent implements OnInit {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
 				if (this.employerOldUen != control.value) {
-					this._httpService.checkUEN({ 'uennumber': control.value.toUpperCase() }).subscribe((response) => {
+					this._httpService.checkUENExists({ 'uen': control.value.toUpperCase() }).subscribe((response) => {
 						if (response.success) {
 							resolve(null);
 						} else {
@@ -176,7 +176,7 @@ export class EditEmployerComponent implements OnInit {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
 				if (this.employerOldEmail != control.value) {
-					this._httpService.checkEmail({ 'email': control.value }).subscribe((response) => {
+					this._httpService.checkEmailExists({ 'email': control.value }).subscribe((response) => {
 						if (response.success) {
 							resolve(null);
 						} else {

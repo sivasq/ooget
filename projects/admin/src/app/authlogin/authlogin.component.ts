@@ -52,7 +52,7 @@ export class AuthloginComponent implements OnInit {
 	onAuthCheck() {
 		if (!this.adminAuthForm.valid) { return false; }
 
-		this.busy = this._httpService.postLoginData(this.adminAuthForm.value)
+		this.busy = this._httpService.authLogin(this.adminAuthForm.value)
 			.subscribe(
 				async response => {
 					if (response.success) {
