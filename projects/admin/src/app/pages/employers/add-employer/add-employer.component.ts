@@ -45,18 +45,15 @@ export class AddEmployerComponent implements OnInit {
 		this.employerAddForm = this.fb.group({
 			companyname: ['', Validators.compose([Validators.required])],
 			profile: ['', Validators.compose([Validators.required])],
-			uennumber: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]{7,9}[A-Za-z]{1}$')]), this.isUENUnique.bind(this)],
+			uen: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]{7,9}[A-Za-z]{1}$')]), this.isUENUnique.bind(this)],
 			industry: ['', Validators.compose([Validators.required])],
 			country: ['', Validators.compose([Validators.required])],
 			companycode: ['', Validators.compose([Validators.required])],
 			username: ['', Validators.compose([Validators.required])],
-			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],
+			useremail: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(8)]), this.isPatternMatch.bind(this)],
-			verify: ['', [Validators.required]],
-			activestatus: ['true'],
-			registeredby: ['ooget-team'],
-			termsaccepted: ['false'],
-		})
+			verify: ['', [Validators.required]]
+		});
 	}
 
 	// Check Password Pattern Match
@@ -138,7 +135,7 @@ export class AddEmployerComponent implements OnInit {
 	public employerAddSubmit() {
 		if (!this.employerAddForm.valid) { return false; }
 
-		this._httpService.employerAdd(this.employerAddForm.value)
+		this._httpService.createEmployer(this.employerAddForm.value)
 			.subscribe(
 				response => {
 					// Response is success
@@ -166,11 +163,11 @@ export class AddEmployerComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.employerAddForm.get('uennumber').valueChanges
+		this.employerAddForm.get('uen').valueChanges
 			.subscribe(x => {
 				if (x != null) {
-					console.log(x);
-					this.employerAddForm.patchValue({ uennumber: x.toUpperCase() }, { emitEvent: false });
+					// console.log(x);
+					this.employerAddForm.patchValue({ uen: x.toUpperCase() }, { emitEvent: false });
 				}
 			});
 	}

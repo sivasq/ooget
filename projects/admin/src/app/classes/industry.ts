@@ -1,4 +1,4 @@
 export class Industry {
-	_id: string;
-	IndustryName: string;
+	id: Number;
+	name: string;
 }

@@ -6,7 +6,8 @@
 	<div fxLayout="row wrap">
 		<div class="flex-p" fxFlex="1 1 100%">
 			<mat-card class="mat-breadcrumb" fxLayout="row">
-				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row"
+					fxLayoutAlign="flex-start center">
 					<mat-icon>home</mat-icon>
 					<span class="breadcrumb-title">Home</span>
 				</a>
@@ -28,70 +29,99 @@
 					<h3>Settings</h3>
 				</mat-card>
 				<mat-card-content>
-					<mat-tab-group class="vertical-tabs" (selectedTabChange)="tabChanged($event)" [selectedIndex]="selectedIndex"
-					 #tabGroup>
+					<mat-tab-group class="vertical-tabs" (selectedTabChange)="tabChanged($event)"
+						[selectedIndex]="selectedIndex" #tabGroup>
 						<mat-tab label="My Profile">
 							<div style="padding:25px;">
 								<!-- <div class="view"> </div> -->
 								<div class="edit">
-									<form fxLayout="row wrap" [formGroup]="adminProfileForm" (ngSubmit)="adminProfileUpdate()">
-										<div fxFlex="100" fxLayout="row" fxLayoutAlign="center center" style="margin-top: 25px;">
-											<div class="drop-zone content" (change)="logochange($event)" (click)="imgFileInput.click() " style="cursor: pointer; ">
+									<form fxLayout="row wrap" [formGroup]="adminProfileForm"
+										(ngSubmit)="adminProfileUpdate()">
+										<div fxFlex="100" fxLayout="row" fxLayoutAlign="center center"
+											style="margin-top: 25px;">
+											<div class="drop-zone content" (change)="logochange($event)"
+												(click)="imgFileInput.click() " style="cursor: pointer; ">
 												<input hidden type="file" #imgFileInput>
-												<img style="height:100%; width:100%; border-radius: 50px;" alt="" [src]="profileImage">
+												<img style="height:100%; width:100%; border-radius: 50px;" alt=""
+													[src]="profileImage">
 											</div>
 										</div>
 
-										<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" style="margin-top:25px;">
-											<mat-form-field fxFlex="100" fxFlex.gt-sm="75" [appearance]="appearance$ | async">
+										<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center"
+											style="margin-top:25px;">
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="75"
+												[appearance]="appearance$ | async">
 												<mat-label>Name</mat-label>
-												<input matInput type="text" placeholder="Name" name="username" formControlName="username" required>
-												<mat-error *ngIf="adminProfileForm.get('username').hasError('required')" align="start">
+												<input matInput type="text" placeholder="Name" name="username"
+													formControlName="username" required>
+												<mat-error *ngIf="adminProfileForm.get('username').hasError('required')"
+													align="start">
 													Your Name Required
 												</mat-error>
 											</mat-form-field>
 
-											<mat-form-field fxFlex="100" fxFlex.gt-sm="75" [appearance]="appearance$ | async">
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="75"
+												[appearance]="appearance$ | async">
 												<mat-label>Email</mat-label>
-												<input matInput type="email" placeholder="Email" name="email" formControlName="email" required>
-												<mat-error *ngIf="adminProfileForm.get('email').hasError('required')" align="start">
+												<input matInput type="email" placeholder="Email" name="email"
+													formControlName="email" required>
+												<mat-error *ngIf="adminProfileForm.get('email').hasError('required')"
+													align="start">
 													Email Required
 												</mat-error>
-												<mat-error *ngIf="adminProfileForm.get('email').hasError('pattern')" align="start">
+												<mat-error *ngIf="adminProfileForm.get('email').hasError('pattern')"
+													align="start">
 													Invalid Email Format
 												</mat-error>
-												<mat-error *ngIf="adminProfileForm.get('email').hasError('isEmailUnique')" align="start">
+												<mat-error
+													*ngIf="adminProfileForm.get('email').hasError('isEmailUnique')"
+													align="start">
 													This Email Already Registered
 												</mat-error>
 											</mat-form-field>
 
 											<!--- Password -->
-											<mat-form-field fxFlex="100" fxFlex.gt-sm="75" [appearance]="appearance$ | async">
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="75"
+												[appearance]="appearance$ | async">
 												<mat-label>Password</mat-label>
-												<input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" name="password" autocomplete="off"
-												 formControlName="password" advs-compare="verify" parent='true' required>
-												<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-												<mat-error *ngIf="adminProfileForm.get('password').hasError('required')" align="start">
+												<input matInput [type]="hide ? 'password' : 'text'"
+													placeholder="Password" name="password" autocomplete="off"
+													formControlName="password" advs-compare="verify" parent='true'
+													required>
+												<mat-icon matSuffix (click)="hide = !hide">
+													{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+												<mat-error *ngIf="adminProfileForm.get('password').hasError('required')"
+													align="start">
 													Password is Required
 												</mat-error>
-												<mat-error *ngIf="adminProfileForm.get('password').hasError('minlength')" align="start">
+												<mat-error
+													*ngIf="adminProfileForm.get('password').hasError('minlength')"
+													align="start">
 													Min 8 chars Required
 												</mat-error>
-												<mat-error *ngIf="adminProfileForm.get('password').hasError('isPatternMatch')" align="start">
+												<mat-error
+													*ngIf="adminProfileForm.get('password').hasError('isPatternMatch')"
+													align="start">
 													{{passwordPatternError}}
 												</mat-error>
 											</mat-form-field>
 
 											<!-- Verify Password -->
-											<mat-form-field fxFlex="100" fxFlex.gt-sm="75" [appearance]="appearance$ | async">
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="75"
+												[appearance]="appearance$ | async">
 												<mat-label>Confirm Password</mat-label>
-												<input matInput [type]="rehide ? 'password' : 'text'" placeholder="Confirm Password" name="verify"
-												 autocomplete="off" formControlName="verify" advs-compare="password" parent='false' required>
-												<mat-icon matSuffix (click)="rehide = !rehide">{{rehide ? 'visibility_off' : 'visibility'}}</mat-icon>
-												<mat-error *ngIf="adminProfileForm.get('verify').hasError('required')" align="start">
+												<input matInput [type]="rehide ? 'password' : 'text'"
+													placeholder="Confirm Password" name="verify" autocomplete="off"
+													formControlName="verify" advs-compare="password" parent='false'
+													required>
+												<mat-icon matSuffix (click)="rehide = !rehide">
+													{{rehide ? 'visibility_off' : 'visibility'}}</mat-icon>
+												<mat-error *ngIf="adminProfileForm.get('verify').hasError('required')"
+													align="start">
 													Verify Password is required
 												</mat-error>
-												<mat-error *ngIf="adminProfileForm.get('verify').hasError('compare')" align="start">
+												<mat-error *ngIf="adminProfileForm.get('verify').hasError('compare')"
+													align="start">
 													Password Mismatch
 												</mat-error>
 											</mat-form-field>
@@ -111,26 +141,36 @@
 								<div class="edit">
 									<form [formGroup]="homePageContentForm" (ngSubmit)="homePageContentUpdate()">
 										<div fxLayout="row wrap" fxLayoutAlign="center center" style="margin-top:25px;">
-											<mat-form-field fxFlex="100" fxFlex.gt-sm="90" [appearance]="appearance$ | async">
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="90"
+												[appearance]="appearance$ | async">
 												<mat-label>Main Title</mat-label>
-												<input matInput type="text" placeholder="Main Title" name="title" formControlName="title" required>
-												<mat-error *ngIf="homePageContentForm.get('title').hasError('required')" align="start">
+												<input matInput type="text" placeholder="Main Title" name="title"
+													formControlName="title" required>
+												<mat-error *ngIf="homePageContentForm.get('title').hasError('required')"
+													align="start">
 													Main Title Required
 												</mat-error>
 											</mat-form-field>
 
-											<mat-form-field fxFlex="100" fxFlex.gt-sm="90" [appearance]="appearance$ | async">
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="90"
+												[appearance]="appearance$ | async">
 												<mat-label>Sub Title</mat-label>
-												<textarea matInput placeholder="Sub Title" name="subtitle" formControlName="subtitle" required></textarea>
-												<mat-error *ngIf="homePageContentForm.get('subtitle').hasError('required')" align="start">
+												<textarea matInput placeholder="Sub Title" name="subtitle"
+													formControlName="subtitle" required></textarea>
+												<mat-error
+													*ngIf="homePageContentForm.get('subtitle').hasError('required')"
+													align="start">
 													Sub Title Required
 												</mat-error>
 											</mat-form-field>
 
-											<mat-form-field fxFlex="100" fxFlex.gt-sm="90" [appearance]="appearance$ | async">
+											<mat-form-field fxFlex="100" fxFlex.gt-sm="90"
+												[appearance]="appearance$ | async">
 												<mat-label>Content</mat-label>
-												<textarea matInput placeholder="Content" name="list1" formControlName="list1" matTextareaAutosize ></textarea>
-												<mat-error *ngIf="homePageContentForm.get('list1').hasError('required')" align="start">
+												<textarea matInput placeholder="Content" name="list1"
+													formControlName="list1" matTextareaAutosize></textarea>
+												<mat-error *ngIf="homePageContentForm.get('list1').hasError('required')"
+													align="start">
 													Content Required
 												</mat-error>
 											</mat-form-field>
@@ -171,21 +211,24 @@
 								<div class="edit">
 									<div style="text-align:center">
 										<div *ngIf="this.featuredEmployers" style="margin-bottom: 25px;">
-											<div *ngFor="let featuredEmployer of featuredEmployers; let itemindex=index;">
+											<div
+												*ngFor="let featuredEmployer of featuredEmployers; let itemindex=index;">
 												<div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
-													<img style="width:100px;height: 100px;" src="{{imgBaseUrl}}/featured/{{featuredEmployer.featuredimage}}">
-													<button mat-raised-button color="warn" (click)="removeFeaturedEmployer(featuredEmployer._id, itemindex)">Remove</button>
+													<img style="width:100px;height: 100px;"
+														src="{{baseUrl}}/featured/{{featuredEmployer.featuredimage}}">
+													<button mat-raised-button color="warn"
+														(click)="removeFeaturedEmployer(featuredEmployer._id, itemindex)">Remove</button>
 												</div>
 												<mat-divider></mat-divider>
 											</div>
 										</div>
 
-										<app-featured-employers (complete)="onFileComplete($event)"></app-featured-employers>
+										<app-featured-employers (complete)="onFileComplete($event)">
+										</app-featured-employers>
 									</div>
 								</div>
 							</div>
 						</mat-tab>
-
 					</mat-tab-group>
 				</mat-card-content>
 			</mat-card>

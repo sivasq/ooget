@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { ApiCallService } from '../../../services/api-call.service';
 import { ConfigService } from '../../../services/config.service';
 import { MatSnackBar, MatTabChangeEvent } from '@angular/material';
@@ -20,6 +20,7 @@ export class ProfileComponent implements OnInit {
 	public hide = true;
 	public rehide = true;
 	public passwordPatternError;
+	public currentEmail;
 
 	@Input() selectedIndex: number | null;
 	currentlyActiveIndexTab: number | null = 0;
@@ -55,8 +56,8 @@ export class ProfileComponent implements OnInit {
 		this.buildHomePageContentForm();
 
 		this.getProfileDetails();
-		this.getHomePageContents();
-		this.getFeaturedEmployers();
+		// this.getHomePageContents();
+		// this.getFeaturedEmployers();
 	}
 
 	buildAdminProfileForm(): void {
@@ -130,7 +131,7 @@ export class ProfileComponent implements OnInit {
 	isEmailUnique(control: FormControl) {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
-				if (this.adminProfile.email !== control.value) {
+				if (this.currentEmail !== control.value) {
 					this._httpService.checkEmailExists({ 'email': control.value }).subscribe((response) => {
 						if (response.success) {
 							resolve(null);
@@ -174,11 +175,13 @@ export class ProfileComponent implements OnInit {
 					// console.log(response);
 					if (response.success) {
 						// Profile Tab
-						const firstname = response.message.firstname ? response.message.firstname : '';
-						const lastname = response.message.lastname ? response.message.lastname : '';
-						const email = response.message.email ? response.message.email : '';
+						const firstname = response.result.firstname ? response.result.firstname : '';
+						const lastname = response.result.lastname ? response.result.lastname : '';
+						const email = response.result.email ? response.result.email : '';
+
+						this.currentEmail = response.result.email ? response.result.email : '';
 						// Documents
-						this.profileImage = response.message.imgpath ? this.baseUrl + response.message.imgpath : 'assets/img/avatars/profile-placeholder.png';
+						this.profileImage = response.result.imgpath ? this.baseUrl + response.result.imgpath : 'assets/img/avatars/profile-placeholder.png';
 
 						// Patch Form Value
 						this.adminProfileForm.patchValue({

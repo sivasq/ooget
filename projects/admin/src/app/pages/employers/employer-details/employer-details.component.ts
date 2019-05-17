@@ -6,7 +6,7 @@ import { ConfigService } from '../../../services/config.service';
 import { Subscription } from 'rxjs';
 // import { Angular5Csv } from 'angular5-csv/Angular5-csv';
 import { DatePipe } from '@angular/common';
-import { FormControl } from '@angular/forms';
+import { FormControl, AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
 	selector: 'app-employer-details',
@@ -37,6 +37,8 @@ export class EmployerDetailsComponent implements OnInit {
 	uploaded = false;
 
 	busy: Subscription;
+
+	companyCodeForm: FormGroup;
 
 	public serverResponseData = [
 		{
@@ -72,7 +74,7 @@ export class EmployerDetailsComponent implements OnInit {
 		headers: ["H01 Record Type", "H02 File Creation Date", "H03 Organization ID", "H04 Sender Name", "D01 Record Type", "D02 Product Type", "D03 Originating Account Number", "D04 Originating Account Currency", "D05 Customer Reference or Batch Reference", "D06 Payment Currency", "D07 Batch ID", "D08 Payment Date", "D09 Bank Charges", "D10 Debit Account for Bank Charges", "D11 Receiving Party Name", "D12 Payable To", "D13 Receiving Party Address 1", "D14 Receiving Party Address 2", "D15 Receiving Party Address 3", "D16 Receiving Account Number/IBAN", "D17 Country Specific", "D18 Receiving Bank Code", "D19 Receiving Branch Code", "D20 Clearing Code", "D21 Beneficiary Bank SWIFT BIC", "D22 Beneficiary Bank Name", "D23 Beneficiary Bank Address", "D24 Beneficiary Bank Country", "D25 Routing Code", "D26 Intermediary Bank SWIFT BIC", "D27 Amount Currency", "D28 Amount", "D29 FX Contract Reference 1", "D30 Amount to be Utilized 1", "D31 FX Contract Reference 2", "D32 Amount to be Utilized 2", "D33 Transaction Code", "D34 Particulars / Beneficary or Payer Reference", "D35 DDA Reference (SG HK collection) or Reference", "D36 Payment Details", "D37 Instruction to Ordering Bank", "D38 Beneficiary Resident Status", "D39 Beneficiary Category", "D40 Transaction Relationship", "D41 Payee Role", "D42 Remitter Identity", "D43 Purpose of Payment", "D44 Supplementary Info", "D45 Delivery Mode", "D46 Print At Location/Pick Up Location", "D47 Payable Location", "D48 Mail to Party Name", "D49 Mail to Party Address 1", "D50 Mail to Party Address 2", "D51 Mail to Party Address 3", "D52 Reserved Field", "D53 Postal Code", "D54 Email 1", "D55 Email 2", "D56 Email 3", "D57 Email 4", "D58 Email 5", "D59 Phone Number 1", "D60 Phone Number 2", "D61 Phone Number 3", "D62 Phone Number 4", "D63 Phone Number 5", "D64 Invoice Details", "D65 Client Reference 1", "D66 Client Reference 2", "D67 Client Reference 3", "D68 Client Reference 4", "T01 Record Type", "T02 Total No. of Transactions", "T03 Total Transaction Amount"]
 	};
 
-	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar, private configService: ConfigService, private datePipe: DatePipe) {
+	constructor(private fb: FormBuilder, private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar, private configService: ConfigService, private datePipe: DatePipe) {
 
 		this.baseUrl = configService.base_url;
 		this.imgBaseUrl = configService.img_base_url;
@@ -80,12 +82,22 @@ export class EmployerDetailsComponent implements OnInit {
 		let employerId = {
 			companyid: this.route.snapshot.params['emp_id'],
 		};
-		this.getEmployerDetails(employerId);
+		this.getEmployerDetails({ 'employerid': this.route.snapshot.params['emp_id'] });
 	}
 
 	toggleCompanyCodeGenerator(el) {
-		this.companyCodes.companycode = '';
+		this.companyCodeForm.patchValue({
+			'companyid': ''
+		});
 		this.companyCodeGenerator = !this.companyCodeGenerator;
+	}
+
+	buildCompanyCodeForm(): void {
+		this.companyCodeForm = this.fb.group({
+			// Profile Details
+			companyid: ['', Validators.compose([Validators.required])],
+			companycode: ['', Validators.compose([Validators.required]), this.isCompanycodeUnique.bind(this)],
+		});
 	}
 
 	processPayrollGenerate() {
@@ -191,7 +203,7 @@ export class EmployerDetailsComponent implements OnInit {
 	}
 
 	getEmployerDetails(employerId) {
-		this.busy = this._httpService.getEmployerDetails(employerId)
+		this.busy = this._httpService.getEmployer(employerId)
 			.subscribe(
 				response => {
 					if (response.success) {
@@ -202,8 +214,12 @@ export class EmployerDetailsComponent implements OnInit {
 						// 	this.isEmployerAvailable = false;
 						// }
 
-						this.employerDetails = response.employer;
-						this.companyCodes.companyid = response.employer._id;
+						this.employerDetails = response.result[0];
+
+						this.buildCompanyCodeForm();
+						this.companyCodeForm.patchValue({
+							'companyid': response.result.id
+						});
 						console.log(this.employerDetails);
 
 					} else if (!response.success) {

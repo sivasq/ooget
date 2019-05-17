@@ -64,7 +64,7 @@ export class EditEmployerComponent implements OnInit {
 		let employerId = {
 			companyid: this.route.snapshot.params['emp_id'],
 		}
-		this.getEmployerDetails(employerId);
+		this.getEmployerDetails({ 'employerid': this.route.snapshot.params['emp_id'] });
 		this.getIndustries();
 	}
 
@@ -88,9 +88,9 @@ export class EditEmployerComponent implements OnInit {
 	buildEmployerUpdateForm(): void {
 		this.employerUpdateForm = this.fb.group({
 			companyid: this.route.snapshot.params['emp_id'],
-			companyname: ['', Validators.compose([Validators.required])],
+			name: ['', Validators.compose([Validators.required])],
 			profile: ['', Validators.compose([Validators.required])],
-			uennumber: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]{7,9}[A-Za-z]{1}$')]), this.isUENUnique.bind(this)],
+			uen: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]{7,9}[A-Za-z]{1}$')]), this.isUENUnique.bind(this)],
 			industry: ['', Validators.compose([Validators.required])],
 			country: ['', Validators.compose([Validators.required])],
 			companycode: ['', Validators.compose([Validators.required])],
@@ -110,37 +110,37 @@ export class EditEmployerComponent implements OnInit {
 
 				let regAll = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\^&*)(+=._-])/;
 				if (!regAll.test(control.value)) {
-					this.passwordPatternError = "at least one number, one lowercase and one uppercase letter, one special charcter";
+					this.passwordPatternError = 'at least one number, one lowercase and one uppercase letter, one special charcter';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regNumber = /[0-9]/;
 				if (!regNumber.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one number (0-9)";
+					this.passwordPatternError = 'password must contain at least one number (0-9)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regSmallAlp = /[a-z]/;
 				if (!regSmallAlp.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one lowercase letter(a - z)";
+					this.passwordPatternError = 'password must contain at least one lowercase letter(a - z)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regCapsAlp = /[A-Z]/;
 				if (!regCapsAlp.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one uppercase letter (A-Z)";
+					this.passwordPatternError = 'password must contain at least one uppercase letter (A-Z)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regSpecChar = /[!@#$%\^&*)(+=._-]/;
 				if (!regSpecChar.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one Special character (!@#$%\^&*)(+=._-)";
+					this.passwordPatternError = 'password must contain at least one Special character (!@#$%\^&*)(+=._-)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				var regSpace = /\s/;
 				if (regSpace.test(control.value)) {
-					this.passwordPatternError = "space not allowed";
+					this.passwordPatternError = 'space not allowed';
 					resolve({ 'isPatternMatch': true });
 				}
 				resolve(null);
@@ -194,7 +194,7 @@ export class EditEmployerComponent implements OnInit {
 
 	// Submit handler for Employer Add
 	public employerUpdateSubmit() {
-		if (!this.employerUpdateForm.valid) return false;
+		if (!this.employerUpdateForm.valid) { return false; }
 
 		// let snackBarRef = this.snackBar.open('Backend Process Not Done, Please Wait...', 'Close', {
 		// 	duration: 5000,
@@ -204,7 +204,7 @@ export class EditEmployerComponent implements OnInit {
 		// 	console.log('The snack-bar action was triggered!');
 		// });
 
-		this.busy = this._httpService.employerUpdate(this.employerUpdateForm.value)
+		this.busy = this._httpService.updateEmployer(this.employerUpdateForm.value)
 			.subscribe(
 				response => {
 					// Response is success
@@ -235,24 +235,24 @@ export class EditEmployerComponent implements OnInit {
 	}
 
 	getEmployerDetails(employerId) {
-		this.busy = this._httpService.getEmployerDetails(employerId)
+		this.busy = this._httpService.getEmployer(employerId)
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.employerId = response.employer._id;
-						this.employerName = response.employer.companyname;
-						this.employerOldEmail = response.employer.adminid.email;
-						this.employerOldUen = response.employer.uennumber;
+						this.employerId = response.result[0].id;
+						this.employerName = response.result[0].name;
+						this.employerOldEmail = response.result[0].email;
+						this.employerOldUen = response.result[0].uen;
 						console.log(this.employerOldEmail);
 
 						this.employerUpdateForm.patchValue({
-							companyname: response.employer.companyname,
-							profile: response.employer.profile,
-							uennumber: response.employer.uennumber,
-							industry: response.employer.industry,
-							country: response.employer.country,
-							companycode: response.employer.companycode,
-							email: response.employer.adminid.email,
+							name: response.result[0].name,
+							profile: response.result[0].profile,
+							uen: response.result[0].uen,
+							industry: response.result[0].industry,
+							country: response.result[0].country,
+							companycode: response.result[0].companycode,
+							email: response.result[0].email,
 							// password: response.employer.companyname,
 						});
 					} else if (!response.success) {
@@ -266,10 +266,10 @@ export class EditEmployerComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.employerUpdateForm.get('uennumber').valueChanges
+		this.employerUpdateForm.get('uen').valueChanges
 			.subscribe(x => {
 				if (x != null) {
-					console.log(x);
+					// console.log(x);
 					this.employerUpdateForm.patchValue({ uennumber: x.toUpperCase() }, { emitEvent: false });
 				}
 			});

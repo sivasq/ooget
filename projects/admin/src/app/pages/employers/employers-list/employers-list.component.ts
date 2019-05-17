@@ -12,9 +12,9 @@ import { ConfigService } from '../../../services/config.service';
 })
 export class EmployersListComponent implements OnInit {
 
-	public imgBaseUrl;
+	public baseUrl;
 
-	//Mat Menu Configuration
+	// Mat Menu Configuration
 	@Input() xPosition: MenuPositionX
 	@Input() overlapTrigger: boolean
 
@@ -31,22 +31,22 @@ export class EmployersListComponent implements OnInit {
 	public tab1PaginateControlMaxSize: number = 5;
 	public tab1PaginateControlAutoHide: boolean = true;
 
-	//set employers availability
-	public isEmployerAvailable: boolean = false;;
+	// set employers availability
+	public isEmployerAvailable: boolean = false;
 	public employerCount: Number;
 
-	//set employers Array
+	// set employers Array
 	public employers_list: any[];
 
-	//busy Config
+	// busy Config
 	busy: Subscription;
 
 	constructor(private urlconfig: ConfigService, private _httpService: ApiCallService, public snackBar: MatSnackBar) {
-		this.imgBaseUrl = urlconfig.img_base_url;
+		this.baseUrl = urlconfig.base_url;
 	}
 
 	// Toggle Employer Status Active/Inactive
-	changeEmployerStatus(event,companyId) {
+	changeEmployerStatus(event, companyId) {
 		// console.log(event.checked);
 		// console.log(companyId);
 		this.busy = this._httpService.changeEmployerStatus({ companyid: companyId, activestatus: event.checked })
@@ -54,8 +54,7 @@ export class EmployersListComponent implements OnInit {
 				response => {
 					if (response.success) {
 						// console.log(response);
-						if (event.checked == true)
-						{
+						if (event.checked === true) {
 							let snackBarRef = this.snackBar.open('Employer Activated Successfully.', 'Close', {
 								duration: 5000,
 							});
@@ -63,7 +62,7 @@ export class EmployersListComponent implements OnInit {
 								snackBarRef.dismiss();
 								console.log('The snack-bar action was triggered!');
 							});
-						}else if (event.checked == false) {
+						} else if (event.checked == false) {
 							let snackBarRef = this.snackBar.open('Employer Deactivated Successfully.', 'Close', {
 								duration: 5000,
 							});
@@ -89,11 +88,11 @@ export class EmployersListComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log(response.employers);
-						if ((response.employers).length > 0) {
+						console.log(response.result);
+						if ((response.result).length > 0) {
 							this.isEmployerAvailable = true;
-							this.employerCount = (response.employers).length;
-							this.employers_list = response.employers;
+							this.employerCount = (response.result).length;
+							this.employers_list = response.result;
 						} else {
 							this.isEmployerAvailable = false;
 						}

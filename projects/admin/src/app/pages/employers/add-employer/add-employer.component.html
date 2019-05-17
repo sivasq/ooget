@@ -6,12 +6,14 @@
 	<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
 		<div class="flex-p" fxFlex="100">
 			<mat-card class="mat-breadcrumb" fxLayout="row">
-				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row"
+					fxLayoutAlign="flex-start center">
 					<mat-icon>home</mat-icon>
 					<span class="breadcrumb-title">Home</span>
 				</a>
 
-				<a class="breadcrumb-item" routerLink="/admin/employers/list" fxLayout="row" fxLayoutAlign="center center">
+				<a class="breadcrumb-item" routerLink="/admin/employers/list" fxLayout="row"
+					fxLayoutAlign="center center">
 					<span class="breadcrumb-title">Employers</span>
 				</a>
 
@@ -31,13 +33,14 @@
 					<h3>Employer Details</h3>
 				</div>
 				<mat-card-content>
-					<form [formGroup]="employerAddForm" (ngSubmit)="employerAddSubmit()" fxLayout="row wrap" fxLayoutAlign="space-between center">
+					<form [formGroup]="employerAddForm" (ngSubmit)="employerAddSubmit()" fxLayout="row wrap"
+						fxLayoutAlign="space-between center">
 
 						<!-- Comapny Name -->
 						<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 							<mat-label>Company Name</mat-label>
-							<input matInput placeholder="Company Name" name="companyname" autocomplete="off" formControlName="companyname"
-							 required>
+							<input matInput placeholder="Company Name" name="companyname" autocomplete="off"
+								formControlName="companyname" required>
 							<mat-error *ngIf="employerAddForm.get('companyname').hasError('required')" align="start">
 								Company Name Required
 							</mat-error>
@@ -46,8 +49,8 @@
 						<!-- Company profile -->
 						<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 							<mat-label>Company Profile</mat-label>
-							<textarea matInput placeholder="Company Profile" name="profile" autocomplete="off" formControlName="profile"
-							 required></textarea>
+							<textarea matInput placeholder="Company Profile" name="profile" autocomplete="off"
+								formControlName="profile" required></textarea>
 							<mat-error *ngIf="employerAddForm.get('profile').hasError('required')" align="start">
 								Company Profile Required
 							</mat-error>
@@ -56,15 +59,15 @@
 						<!-- UEN Number -->
 						<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 							<mat-label>UEN Number</mat-label>
-							<input matInput placeholder="UEN Number" name="uennumber" autocomplete="off" formControlName="uennumber"
-							 required>
-							<mat-error *ngIf="employerAddForm.get('uennumber').hasError('required')" align="start">
+							<input matInput placeholder="UEN Number" name="uen" autocomplete="off" formControlName="uen"
+								required>
+							<mat-error *ngIf="employerAddForm.get('uen').hasError('required')" align="start">
 								UEN Number Required
 							</mat-error>
-							<mat-error *ngIf="employerAddForm.get('uennumber').hasError('isUENUnique')" align="start">
+							<mat-error *ngIf="employerAddForm.get('uen').hasError('isUENUnique')" align="start">
 								This UEN Already Registered
 							</mat-error>
-							<mat-error *ngIf="employerAddForm.get('uennumber').hasError('pattern')" align="start">
+							<mat-error *ngIf="employerAddForm.get('uen').hasError('pattern')" align="start">
 								Invalid UEN Format
 							</mat-error>
 						</mat-form-field>
@@ -72,8 +75,8 @@
 						<!-- Company Code -->
 						<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 							<mat-label>Employer Company Code</mat-label>
-							<input matInput placeholder="Employer Company Code" name="companycode" autocomplete="off" formControlName="companycode"
-							 required>
+							<input matInput placeholder="Employer Company Code" name="companycode" autocomplete="off"
+								formControlName="companycode" required>
 							<mat-error *ngIf="employerAddForm.get('companycode').hasError('required')" align="start">
 								Company Code Required
 							</mat-error>
@@ -84,7 +87,8 @@
 							<mat-label>Industry</mat-label>
 							<mat-select placeholder="Industry" name="industry" formControlName="industry" required>
 								<mat-option>--Select Industry--</mat-option>
-								<mat-option *ngFor="let Industry of Industries" [value]="Industry.IndustryName">{{ Industry.IndustryName }}</mat-option>
+								<mat-option *ngFor="let Industry of Industries" [value]="Industry.id">
+									{{ Industry.name }}</mat-option>
 								<mat-option value="Others">Others</mat-option>
 							</mat-select>
 							<mat-error *ngIf="employerAddForm.get('industry').hasError('required')" align="start">
@@ -95,7 +99,8 @@
 						<!-- Country -->
 						<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 							<mat-label>Country</mat-label>
-							<input matInput placeholder="Country" name="country" autocomplete="off" formControlName="country" required>
+							<input matInput placeholder="Country" name="country" autocomplete="off"
+								formControlName="country" required>
 							<mat-error *ngIf="employerAddForm.get('country').hasError('required')" align="start">
 								Country Required
 							</mat-error>
@@ -104,7 +109,8 @@
 						<!-- User Name -->
 						<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 							<mat-label>User Name</mat-label>
-							<input matInput placeholder="User Name" name="username" autocomplete="off" formControlName="username" required>
+							<input matInput placeholder="User Name" name="username" autocomplete="off"
+								formControlName="username" required>
 							<mat-error *ngIf="employerAddForm.get('username').hasError('required')" align="start">
 								User Name Required
 							</mat-error>
@@ -113,15 +119,15 @@
 						<!-- Login Mail -->
 						<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 							<mat-label>Login Email</mat-label>
-							<input matInput type="email" placeholder="Login Email" name="email" autocomplete="off" formControlName="email"
-							 required>
-							<mat-error *ngIf="employerAddForm.get('email').hasError('required')" align="start">
+							<input matInput type="email" placeholder="Login Email" name="useremail" autocomplete="off"
+								formControlName="useremail" required>
+							<mat-error *ngIf="employerAddForm.get('useremail').hasError('required')" align="start">
 								Email Required
 							</mat-error>
-							<mat-error *ngIf="employerAddForm.get('email').hasError('pattern')" align="start">
+							<mat-error *ngIf="employerAddForm.get('useremail').hasError('pattern')" align="start">
 								Invalid Email Format
 							</mat-error>
-							<mat-error *ngIf="employerAddForm.get('email').hasError('isEmailUnique')" align="start">
+							<mat-error *ngIf="employerAddForm.get('useremail').hasError('isEmailUnique')" align="start">
 								This Email Already Registered
 							</mat-error>
 						</mat-form-field>
@@ -129,9 +135,11 @@
 						<!--- Password -->
 						<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 							<mat-label>Password</mat-label>
-							<input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" name="password" autocomplete="off"
-							 formControlName="password" advs-compare="verify" parent='true' required>
-							<mat-icon class="pointer" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+							<input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" name="password"
+								autocomplete="off" formControlName="password" advs-compare="verify" parent='true'
+								required>
+							<mat-icon class="pointer" matSuffix (click)="hide = !hide">
+								{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
 							<mat-error *ngIf="employerAddForm.get('password').hasError('required')" align="start">
 								Password is Required
 							</mat-error>
@@ -146,9 +154,11 @@
 						<!-- Verify Password -->
 						<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 							<mat-label>Confirm Password</mat-label>
-							<input matInput [type]="rehide ? 'password' : 'text'" placeholder="Confirm Password" name="verify" autocomplete="off"
-							 formControlName="verify" advs-compare="password" parent='false' required>
-							<mat-icon class="pointer" matSuffix (click)="rehide = !rehide">{{rehide ? 'visibility_off' : 'visibility'}}</mat-icon>
+							<input matInput [type]="rehide ? 'password' : 'text'" placeholder="Confirm Password"
+								name="verify" autocomplete="off" formControlName="verify" advs-compare="password"
+								parent='false' required>
+							<mat-icon class="pointer" matSuffix (click)="rehide = !rehide">
+								{{rehide ? 'visibility_off' : 'visibility'}}</mat-icon>
 							<mat-error *ngIf="employerAddForm.get('verify').hasError('required')" align="start">
 								Verify Password is required
 							</mat-error>
@@ -159,7 +169,8 @@
 
 						<!--- Buttons Block -->
 						<div fxFlex="100" fxLayout="row" fxLayoutAlign="center stretch" style="margin-top:25px;">
-							<button mat-raised-button color="primary" type="submit" [disabled]="!employerAddForm.valid">Add New Employer</button>
+							<button mat-raised-button color="primary" type="submit"
+								[disabled]="!employerAddForm.valid">Add New Employer</button>
 						</div>
 					</form>
 				</mat-card-content>

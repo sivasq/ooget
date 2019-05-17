@@ -6,16 +6,19 @@
 	<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
 		<div class="flex-p" fxFlex="100">
 			<mat-card class="mat-breadcrumb" fxLayout="row" fxLayoutAlign="start center">
-				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row"
+					fxLayoutAlign="flex-start center">
 					<mat-icon>home</mat-icon>
 					<span class="breadcrumb-title">Home</span>
 				</a>
 
-				<a class="breadcrumb-item" routerLink="/admin/employers/list" fxLayout="row" fxLayoutAlign="center center">
+				<a class="breadcrumb-item" routerLink="/admin/employers/list" fxLayout="row"
+					fxLayoutAlign="center center">
 					<span class="breadcrumb-title">Employers</span>
 				</a>
 
-				<a class="breadcrumb-item" routerLink="/admin/employers/{{employerId}}/view" fxLayout="row" fxLayoutAlign="center center">
+				<a class="breadcrumb-item" routerLink="/admin/employers/{{employerId}}/view" fxLayout="row"
+					fxLayoutAlign="center center">
 					<span class="breadcrumb-title">{{employerName}}</span>
 				</a>
 
@@ -37,13 +40,15 @@
 					<h3>Employer Details</h3>
 				</div>
 				<mat-card-content>
-					<form [formGroup]="employerUpdateForm" (ngSubmit)="employerUpdateSubmit()" fxLayout="row wrap" fxLayoutAlign="space-between center">
+					<form [formGroup]="employerUpdateForm" (ngSubmit)="employerUpdateSubmit()" fxLayout="row wrap"
+						fxLayoutAlign="space-between center">
 
 						<!-- Comapny Name -->
 						<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 							<mat-label>Company Name</mat-label>
-							<input matInput placeholder="Company Name" name="companyname" autocomplete="off" formControlName="companyname" required>
-							<mat-error *ngIf="employerUpdateForm.get('companyname').hasError('required')" align="start">
+							<input matInput placeholder="Company Name" name="name" autocomplete="off"
+								formControlName="name" required>
+							<mat-error *ngIf="employerUpdateForm.get('name').hasError('required')" align="start">
 								Company Name Required
 							</mat-error>
 						</mat-form-field>
@@ -51,7 +56,8 @@
 						<!-- Company profile -->
 						<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 							<mat-label>Company Profile</mat-label>
-							<textarea matInput placeholder="Company Profile" name="profile" autocomplete="off" formControlName="profile" required></textarea>
+							<textarea matInput placeholder="Company Profile" name="profile" autocomplete="off"
+								formControlName="profile" required></textarea>
 							<mat-error *ngIf="employerUpdateForm.get('profile').hasError('required')" align="start">
 								Company Profile Required
 							</mat-error>
@@ -60,14 +66,15 @@
 						<!-- UEN Number -->
 						<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 							<mat-label>UEN Number</mat-label>
-							<input matInput placeholder="UEN Number" name="uennumber" autocomplete="off" formControlName="uennumber" required>
-							<mat-error *ngIf="employerUpdateForm.get('uennumber').hasError('required')" align="start">
+							<input matInput placeholder="UEN Number" name="uen" autocomplete="off" formControlName="uen"
+								required>
+							<mat-error *ngIf="employerUpdateForm.get('uen').hasError('required')" align="start">
 								UEN Number Required
 							</mat-error>
-							<mat-error *ngIf="employerUpdateForm.get('uennumber').hasError('isUENUnique')" align="start">
+							<mat-error *ngIf="employerUpdateForm.get('uen').hasError('isUENUnique')" align="start">
 								This UEN Already Registered
 							</mat-error>
-							<mat-error *ngIf="employerUpdateForm.get('uennumber').hasError('pattern')" align="start">
+							<mat-error *ngIf="employerUpdateForm.get('uen').hasError('pattern')" align="start">
 								Invalid UEN Format
 							</mat-error>
 						</mat-form-field>
@@ -75,7 +82,8 @@
 						<!-- Company Code -->
 						<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 							<mat-label>Employer Company Code</mat-label>
-							<input matInput placeholder="Employer Company Code" name="companycode" autocomplete="off" formControlName="companycode" required>
+							<input matInput placeholder="Employer Company Code" name="companycode" autocomplete="off"
+								formControlName="companycode" required>
 							<mat-error *ngIf="employerUpdateForm.get('companycode').hasError('required')" align="start">
 								Company Code Required
 							</mat-error>
@@ -86,7 +94,8 @@
 							<mat-label>Industry</mat-label>
 							<mat-select placeholder="Industry" name="industry" formControlName="industry" required>
 								<mat-option>--Select Industry--</mat-option>
-								<mat-option *ngFor="let Industry of Industries" [value]="Industry.IndustryName">{{ Industry.IndustryName }}</mat-option>
+								<mat-option *ngFor="let Industry of Industries" [value]="Industry.id">
+									{{ Industry.name }}</mat-option>
 								<mat-option value="Others">Others</mat-option>
 							</mat-select>
 							<mat-error *ngIf="employerUpdateForm.get('industry').hasError('required')" align="start">
@@ -97,7 +106,8 @@
 						<!-- Country -->
 						<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 							<mat-label>Country</mat-label>
-							<input matInput placeholder="Country" name="country" autocomplete="off" formControlName="country" required>
+							<input matInput placeholder="Country" name="country" autocomplete="off"
+								formControlName="country" required>
 							<mat-error *ngIf="employerUpdateForm.get('country').hasError('required')" align="start">
 								Country Required
 							</mat-error>
@@ -105,7 +115,8 @@
 
 						<!--- Buttons Block -->
 						<div fxFlex="100" fxLayout="row" fxLayoutAlign="center stretch" style="margin-top:25px;">
-							<button mat-raised-button color="primary" type="submit" [disabled]="!employerUpdateForm.valid">Update Employer</button>
+							<button mat-raised-button color="primary" type="submit"
+								[disabled]="!employerUpdateForm.valid">Update Employer</button>
 						</div>
 					</form>
 				</mat-card-content>

@@ -2,59 +2,59 @@ import { Industry } from '../classes/industry';
 
 export const Industries: Industry[] = [
 	{
-		'_id': '432424',
-		'IndustryName': 'Aerospace'
+		'id': 1,
+		'name': 'Aerospace'
 	},
 	{
-		'_id': '432424',
-		'IndustryName': 'Creative Industries'
+		'id': 2,
+		'name': 'Creative Industries'
 	},
 	{
-		'_id': '432424',
-		'IndustryName': 'Energy & Chemicals'
+		'id': 3,
+		'name': 'Energy & Chemicals'
 	},
 	{
-		'_id': '432424',
-		'IndustryName': 'Logistics & Supply Chain Mangement'
+		'id': 4,
+		'name': 'Logistics & Supply Chain Mangement'
 	},
 	{
-		'_id': '432424',
-		'IndustryName': 'Medical Technology'
+		'id': 5,
+		'name': 'Medical Technology'
 	},
 	{
-		'_id': '432424',
-		'IndustryName': 'Pharmaceutical & Biotechnology'
+		'id': 6,
+		'name': 'Pharmaceutical & Biotechnology'
 	},
 	{
-		'_id': '432424',
-		'IndustryName': 'Professional Services'
+		'id': 7,
+		'name': 'Professional Services'
 	},
 	{
-		'_id': '432424',
-		'IndustryName': 'Consumer Business'
+		'id': 8,
+		'name': 'Consumer Business'
 	},
 	{
-		'_id': '432424',
-		'IndustryName': 'Electronics'
+		'id': 9,
+		'name': 'Electronics'
 	},
 	{
-		'_id': '432424',
-		'IndustryName': 'Information & Communications Technology'
+		'id': 10,
+		'name': 'Information & Communications Technology'
 	},
 	{
-		'_id': '432424',
-		'IndustryName': 'Oil & Gas Equipment and Services'
+		'id': 11,
+		'name': 'Oil & Gas Equipment and Services'
 	},
 	{
-		'_id': '432424',
-		'IndustryName': 'Natural Resources'
+		'id': 12,
+		'name': 'Natural Resources'
 	},
 	{
-		'_id': '432424',
-		'IndustryName': 'Precision Engineering'
+		'id': 13,
+		'name': 'Precision Engineering'
 	},
 	{
-		'_id': '432424',
-		'IndustryName': 'Urban Solutions & Sustainability'
+		'id': 14,
+		'name': 'Urban Solutions & Sustainability'
 	}
 ];
