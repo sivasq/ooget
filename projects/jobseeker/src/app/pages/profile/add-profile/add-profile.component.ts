@@ -16,6 +16,7 @@ import { WorkingEnvironment } from '../../../classes/WorkingEnvironment';
 import { BankDetail } from '../../../classes/bankDetail';
 import { Race } from '../../../classes/race';
 import { Nationality } from '../../../classes/Nationality';
+import { isArray } from 'util';
 
 @Component({
 	selector: 'app-add-profile',
@@ -25,16 +26,17 @@ import { Nationality } from '../../../classes/Nationality';
 })
 export class AddProfileComponent implements OnInit, OnDestroy {
 	appearance$: Observable<any>;
-	busy: Subscription; //busy Config
+	busy: Subscription; // busy Config
 
-	public BankDetails: BankDetail[];
-	public EmploymentTypes: EmploymentType[];
-	public Locations: JobLocation[];
-	public FullTimeSpecializations: Specialization[];
-	public PartTimeSpecializations: Specialization[];
-	public WorkingEnvironments: WorkingEnvironment[];
-	public Races: Race[];
-	public Nationalitys: Nationality[];
+	BankDetails: BankDetail[];
+	EmploymentTypes: EmploymentType[];
+	Locations: JobLocation[];
+	// Specializations: Specialization[];
+	FullTimeSpecializations: Specialization[];
+	PartTimeSpecializations: Specialization[];
+	WorkingEnvironments: WorkingEnvironment[];
+	Races: Race[];
+	Nationalitys: Nationality[];
 
 	days: any[] = [];
 	months: any[] = [];
@@ -54,8 +56,8 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	currentlyActiveIndexTab: number | null = 0;
 
 	public myProfile: any = {
-		username: '',
-		// nameinidcard:'',
+		firstname: '',
+		lastname: '',
 		email: '',
 		country: '',
 		race: '',
@@ -98,7 +100,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 				previousjobto: ''
 			}
 		],
-	}
+	};
 
 	public profileImage: any = 'assets/img/avatars/profile-placeholder.png';
 	public idProofFront: any = 'assets/img/avatars/id-front-placeholder.png';
@@ -110,7 +112,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 	public reqBankDetails: boolean;
 	public bankHint;
-	public imgBaseUrl;
+	public baseUrl;
 	public isJobSeekerProfileFormValid: boolean = true;
 	public isNricFinNoReadonly: boolean;
 	public isIdProofEditable: boolean;
@@ -132,7 +134,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 	constructor(public router: Router, private fb: FormBuilder, private _httpService: ApiCallService, private urlconfig: ConfigService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe, private toUppercase: UpperCasePipe, private multiplesublocationfilter: MultipleSubLocationFilter, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
-		this.imgBaseUrl = urlconfig.img_base_url;
+		this.baseUrl = urlconfig.base_url;
 		this.buildJobSeekerProfileForm();
 		this.buildPasswordUpdateForm();
 
@@ -145,6 +147,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		this.getEmploymentTypes();
 		this.getWorkingEnvironments();
 		this.getJobLocations();
+		// this.getSpecializations();
 		this.getFullTimeSpecializations();
 		this.getPartTimeSpecializations();
 		this.getBankDetails();
@@ -164,6 +167,10 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		this.mockDataService.getJobLocations()
 			.subscribe(Locations => this.Locations = Locations);
 	}
+	// getSpecializations(): void {
+	// 	this.mockDataService.getFullTimeSpecializations()
+	// 		.subscribe(Specializations => this.Specializations = Specializations);
+	// }
 	getFullTimeSpecializations(): void {
 		this.mockDataService.getFullTimeSpecializations()
 			.subscribe(Specializations => this.FullTimeSpecializations = Specializations);
@@ -190,7 +197,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			oldpassword: ['', Validators.compose([Validators.required])],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(8)]), this.isPatternMatch.bind(this)],
 			verify: ['', [Validators.required]],
-		})
+		});
 	}
 
 	buildJobSeekerProfileForm(): void {
@@ -236,7 +243,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			experiencein: [''],
 			totalexperienceinyears: [''],
 			previousexperince: this.fb.array([this.createExp()])
-		})
+		});
 	}
 
 	createExp(): FormGroup {
@@ -280,37 +287,37 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 				let regAll = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\^&*)(+=._-])/;
 				if (!regAll.test(control.value)) {
-					this.passwordPatternError = "at least one number, one lowercase and one uppercase letter, one special charcter";
+					this.passwordPatternError = 'at least one number, one lowercase and one uppercase letter, one special charcter';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regNumber = /[0-9]/;
 				if (!regNumber.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one number (0-9)";
+					this.passwordPatternError = 'password must contain at least one number (0-9)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regSmallAlp = /[a-z]/;
 				if (!regSmallAlp.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one lowercase letter(a - z)";
+					this.passwordPatternError = 'password must contain at least one lowercase letter(a - z)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regCapsAlp = /[A-Z]/;
 				if (!regCapsAlp.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one uppercase letter (A-Z)";
+					this.passwordPatternError = 'password must contain at least one uppercase letter (A-Z)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regSpecChar = /[!@#$%\^&*)(+=._-]/;
 				if (!regSpecChar.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one Special character (!@#$%\^&*)(+=._-)";
+					this.passwordPatternError = 'password must contain at least one Special character (!@#$%\^&*)(+=._-)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				var regSpace = /\s/;
 				if (regSpace.test(control.value)) {
-					this.passwordPatternError = "space not allowed";
+					this.passwordPatternError = 'space not allowed';
 					resolve({ 'isPatternMatch': true });
 				}
 				resolve(null);
@@ -423,31 +430,31 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		// console.log(this.currentlyActiveIndexTab);
 	}
 
-	//If Change Bank
+	// If Change Bank
 	bankChange(event, modeofchange?) {
 		if (modeofchange == 'customchange') {
 			this.jobSeekerProfileForm.patchValue({
 				'branchcode': '',
 				'accountno': '',
 				'bankcode': '',
-			})
+			});
 		}
 
 		if (event == undefined || event == '' || event == null) {
-			this.bankHint = "No payment if bank details are not filled up. Linked to payment to ensure no download if bank details is blank.";
+			this.bankHint = 'No payment if bank details are not filled up. Linked to payment to ensure no download if bank details is blank.';
 			this.reqBankDetails = false;
 
-			this.jobSeekerProfileForm.get("bankname").clearValidators();
-			this.jobSeekerProfileForm.get("bankname").updateValueAndValidity();
+			this.jobSeekerProfileForm.get('bankname').clearValidators();
+			this.jobSeekerProfileForm.get('bankname').updateValueAndValidity();
 
-			this.jobSeekerProfileForm.get("branchcode").clearValidators();
-			this.jobSeekerProfileForm.get("branchcode").updateValueAndValidity();
+			this.jobSeekerProfileForm.get('branchcode').clearValidators();
+			this.jobSeekerProfileForm.get('branchcode').updateValueAndValidity();
 
-			this.jobSeekerProfileForm.get("accountno").clearValidators();
-			this.jobSeekerProfileForm.get("accountno").updateValueAndValidity();
+			this.jobSeekerProfileForm.get('accountno').clearValidators();
+			this.jobSeekerProfileForm.get('accountno').updateValueAndValidity();
 
-			this.jobSeekerProfileForm.get("bankcode").clearValidators();
-			this.jobSeekerProfileForm.get("bankcode").updateValueAndValidity();
+			this.jobSeekerProfileForm.get('bankcode').clearValidators();
+			this.jobSeekerProfileForm.get('bankcode').updateValueAndValidity();
 
 		} else {
 			// this.reqBankDetails = true;
@@ -457,7 +464,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			this.bankHint = this.BankDetails[index].hint;
 			this.jobSeekerProfileForm.patchValue({
 				'bankcode': this.BankDetails[index].bankCode,
-			})
+			});
 
 			// this.jobSeekerProfileForm.get("bankname").setValidators([Validators.required]);
 			// this.jobSeekerProfileForm.get("bankname").updateValueAndValidity();
@@ -476,19 +483,19 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	// If Employment Type Change
 	employmenttypeChange(event) {
 		console.log(event);
-		if (this.isInArray(event, "Full Time")) {
+		if (this.isInArray(event, 'Full Time')) {
 			this.isPartTimeJob = false;
 		} else {
 			this.isPartTimeJob = true;
 		}
 
-		if (this.isInArray(event, "Full Time")) {
+		if (this.isInArray(event, 'Full Time')) {
 			this.showfulltimespeccilization = true;
 		} else {
 			this.showfulltimespeccilization = false;
 		}
 
-		if (this.isInArray(event, "Part Time")) {
+		if (this.isInArray(event, 'Part Time')) {
 			this.showparttimespeccilization = true;
 		}
 		else {
@@ -504,13 +511,13 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		let parttimepreferredspecialization;
 
 		if (this.showfulltimespeccilization) {
-			fulltimepreferredspecialization = this.FullTimeSpecializations.map(x => x.specialization);
+			fulltimepreferredspecialization = this.FullTimeSpecializations.map(x => x.name);
 		} else {
 			fulltimepreferredspecialization = [];
 		}
 
 		if (this.showparttimespeccilization) {
-			parttimepreferredspecialization = this.PartTimeSpecializations.map(x => x.specialization);
+			parttimepreferredspecialization = this.PartTimeSpecializations.map(x => x.name);
 		} else {
 			parttimepreferredspecialization = [];
 		}
@@ -578,7 +585,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 	// Notification Alert Type change Event
 	notificationAlertTypeChange(event) {
-		if (event == "anytime") {
+		if (event == 'anytime') {
 			this.jobSeekerProfileForm.patchValue({
 				'alertswitchedoffdays': '',
 				'alertofffrom': '',
@@ -616,7 +623,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			reader.onload = (event: any) => { // called once readAsDataURL is completed
 				this.profileImage = event.target.result;
 				// console.log(event.target.result);
-			}
+			};
 		}
 	}
 
@@ -629,7 +636,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			reader.onload = (event: any) => { // called once readAsDataURL is completed
 				this.idProofFront = event.target.result;
 				// console.log(event.target.result);
-			}
+			};
 		}
 	}
 
@@ -642,11 +649,11 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			reader.onload = (event: any) => { // called once readAsDataURL is completed
 				this.idProofBack = event.target.result;
 				// console.log(event.target.result);
-			}
+			};
 		}
 	}
 
-	//Set Validation for past Exp
+	// Set Validation for past Exp
 	pastExpChangeInit() {
 		if (this.jobSeekerProfileForm.controls['previousexperince']['controls'].length >= 0) {
 			// iterate each object in array
@@ -656,40 +663,40 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 					if ((data.previouscompanyname != null || data.previouscompanyname != '') || (data.previouscompanyposition != null || data.previouscompanyposition != '') || (data.previousjobresponsibility != null || data.previousjobresponsibility != '') || (data.previousjobfrom != null || data.previousjobfrom != '') || (data.previousjobto != null || data.previousjobto != '')) {
 
-						Exp.get("previouscompanyname").setValidators([Validators.required]);
-						Exp.get("previouscompanyname").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+						Exp.get('previouscompanyname').setValidators([Validators.required]);
+						Exp.get('previouscompanyname').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 
-						Exp.get("previouscompanyposition").setValidators([Validators.required]);
-						Exp.get("previouscompanyposition").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+						Exp.get('previouscompanyposition').setValidators([Validators.required]);
+						Exp.get('previouscompanyposition').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 
-						Exp.get("previousjobresponsibility").setValidators([Validators.required]);
-						Exp.get("previousjobresponsibility").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+						Exp.get('previousjobresponsibility').setValidators([Validators.required]);
+						Exp.get('previousjobresponsibility').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 
-						Exp.get("previousjobfrom").setValidators([Validators.required]);
-						Exp.get("previousjobfrom").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+						Exp.get('previousjobfrom').setValidators([Validators.required]);
+						Exp.get('previousjobfrom').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 
-						Exp.get("previousjobto").setValidators([Validators.required, this.dateMinimum(data.previousjobfrom)]);
-						Exp.get("previousjobto").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+						Exp.get('previousjobto').setValidators([Validators.required, this.dateMinimum(data.previousjobfrom)]);
+						Exp.get('previousjobto').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 					}
 
 					if ((data.previouscompanyname == null || data.previouscompanyname == '') && (data.previouscompanyposition == null || data.previouscompanyposition == '') && (data.previousjobresponsibility == null || data.previousjobresponsibility == '') && (data.previousjobfrom == null || data.previousjobfrom == '') && (data.previousjobto == null || data.previousjobto == '')) {
 
-						Exp.get("previouscompanyname").clearValidators();
-						Exp.get("previouscompanyname").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+						Exp.get('previouscompanyname').clearValidators();
+						Exp.get('previouscompanyname').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 
-						Exp.get("previouscompanyposition").clearValidators();
-						Exp.get("previouscompanyposition").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+						Exp.get('previouscompanyposition').clearValidators();
+						Exp.get('previouscompanyposition').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 
-						Exp.get("previousjobresponsibility").clearValidators();
-						Exp.get("previousjobresponsibility").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+						Exp.get('previousjobresponsibility').clearValidators();
+						Exp.get('previousjobresponsibility').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 
-						Exp.get("previousjobfrom").clearValidators();
-						Exp.get("previousjobfrom").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+						Exp.get('previousjobfrom').clearValidators();
+						Exp.get('previousjobfrom').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 
-						Exp.get("previousjobto").clearValidators();
-						Exp.get("previousjobto").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+						Exp.get('previousjobto').clearValidators();
+						Exp.get('previousjobto').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 					}
-				})
+				});
 			}
 		}
 	}
@@ -704,43 +711,43 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 			if ((data.previouscompanyname != null || data.previouscompanyname != '') || (data.previouscompanyposition != null || data.previouscompanyposition != '') || (data.previousjobresponsibility != null || data.previousjobresponsibility != '') || (data.previousjobfrom != null || data.previousjobfrom != '') || (data.previousjobto != null || data.previousjobto != '')) {
 
-				Exp.get("previouscompanyname").setValidators([Validators.required]);
-				Exp.get("previouscompanyname").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+				Exp.get('previouscompanyname').setValidators([Validators.required]);
+				Exp.get('previouscompanyname').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 
-				Exp.get("previouscompanyposition").setValidators([Validators.required]);
-				Exp.get("previouscompanyposition").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+				Exp.get('previouscompanyposition').setValidators([Validators.required]);
+				Exp.get('previouscompanyposition').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 
-				Exp.get("previousjobresponsibility").setValidators([Validators.required]);
-				Exp.get("previousjobresponsibility").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+				Exp.get('previousjobresponsibility').setValidators([Validators.required]);
+				Exp.get('previousjobresponsibility').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 
-				Exp.get("previousjobfrom").setValidators([Validators.required]);
-				Exp.get("previousjobfrom").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+				Exp.get('previousjobfrom').setValidators([Validators.required]);
+				Exp.get('previousjobfrom').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 
-				Exp.get("previousjobto").setValidators([Validators.required, this.dateMinimum(data.previousjobfrom)]);
-				Exp.get("previousjobto").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+				Exp.get('previousjobto').setValidators([Validators.required, this.dateMinimum(data.previousjobfrom)]);
+				Exp.get('previousjobto').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 			}
 
 			if ((data.previouscompanyname == null || data.previouscompanyname == '') && (data.previouscompanyposition == null || data.previouscompanyposition == '') && (data.previousjobresponsibility == null || data.previousjobresponsibility == '') && (data.previousjobfrom == null || data.previousjobfrom == '') && (data.previousjobto == null || data.previousjobto == '')) {
 
-				Exp.get("previouscompanyname").clearValidators();
-				Exp.get("previouscompanyname").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+				Exp.get('previouscompanyname').clearValidators();
+				Exp.get('previouscompanyname').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 
-				Exp.get("previouscompanyposition").clearValidators();
-				Exp.get("previouscompanyposition").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+				Exp.get('previouscompanyposition').clearValidators();
+				Exp.get('previouscompanyposition').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 
-				Exp.get("previousjobresponsibility").clearValidators();
-				Exp.get("previousjobresponsibility").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+				Exp.get('previousjobresponsibility').clearValidators();
+				Exp.get('previousjobresponsibility').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 
-				Exp.get("previousjobfrom").clearValidators();
-				Exp.get("previousjobfrom").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+				Exp.get('previousjobfrom').clearValidators();
+				Exp.get('previousjobfrom').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 
-				Exp.get("previousjobto").clearValidators();
-				Exp.get("previousjobto").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+				Exp.get('previousjobto').clearValidators();
+				Exp.get('previousjobto').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 			}
-		})
+		});
 	}
 
-	//===========================================================
+	// ===========================================================
 
 	// Get Profile Details
 	getProfileDetails() {
@@ -749,24 +756,25 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 				response => {
 					// console.log(response);
 					if (response.success) {
-
-						this.isActive = response.message.activestatus ? response.message.activestatus : response.message.activestatus;
+						let userdata = response.result[0];
+						this.isActive = userdata.activestatus ? userdata.activestatus : 0;
 						// Profile Tab
-						this.myProfile.username = response.message.username ? response.message.username : '';
-						// this.myProfile.nameinidcard = response.message.nameinidcard ? response.message.nameinidcard : '';
-						this.myProfile.email = response.message.email ? response.message.email : '';
-						this.myProfile.country = response.message.country ? response.message.country : '';
-						this.myProfile.race = response.message.race ? response.message.race : '';
-						this.myProfile.residencytype = response.message.residencytype ? response.message.residencytype : '';
-						this.myProfile.mobileno = response.message.mobileno ? response.message.mobileno : '';
-						this.myProfile.address = response.message.address ? response.message.address : '';
-						this.myProfile.nricfinno = response.message.nricfinno ? response.message.nricfinno : '';
+						this.myProfile.firstname = userdata.firstname ? userdata.firstname : '';
+						this.myProfile.lastname = userdata.lastname ? userdata.lastname : '';
+						// this.myProfile.nameinidcard = userdata.nameinidcard ? userdata.nameinidcard : '';
+						this.myProfile.email = userdata.email ? userdata.email : '';
+						this.myProfile.country = userdata.country ? userdata.country : '';
+						this.myProfile.race = userdata.race ? userdata.race : '';
+						this.myProfile.residencytype = userdata.residencytype ? userdata.residencytype : '';
+						this.myProfile.mobileno = userdata.mobile ? userdata.mobile : '';
+						this.myProfile.address = userdata.address ? userdata.address : '';
+						this.myProfile.nric = userdata.nric ? userdata.nric : '';
 
 						// Set NRIC FIN Not Editable If Once Added/Updated
-						this.isNricFinNoReadonly = response.message.nriceditable ? response.message.nriceditable === 'true' ? false : true : false;
+						this.isNricFinNoReadonly = userdata.nriceditable ? userdata.nriceditable === 'true' ? false : true : false;
 
-						// this.myProfile.dob = response.message.dob ? new Date(response.message.dob) : null;
-						this.myProfile.dob = response.message.dob ? response.message.dob : null;
+						// this.myProfile.dob = userdata.dob ? new Date(userdata.dob) : null;
+						this.myProfile.dob = userdata.dob ? userdata.dob : null;
 
 						// this.myProfile.age = this.CalculateAge(this.myProfile.dob);
 						let Date_parts = this.myProfile.dob ? this.myProfile.dob.split('/') : '';
@@ -775,53 +783,53 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 						this.myProfile.dob_month = Date_parts[1];
 						this.myProfile.dob_year = Date_parts[0];
 
-						this.myProfile.gender = response.message.gender ? response.message.gender : '';
+						this.myProfile.gender = userdata.gender ? userdata.gender : '';
 
 						// Bank Tab
-						this.myProfile.ispaynowreg = response.message.ispaynowreg ? response.message.ispaynowreg : 'No';
-						this.myProfile.bankname = response.message.bankname ? response.message.bankname : '';
-						this.myProfile.accountno = response.message.accountno ? response.message.accountno : '';
-						this.myProfile.bankcode = response.message.bankcode ? response.message.bankcode : '';
-						this.myProfile.branchcode = response.message.branchcode ? response.message.branchcode : '';
+						this.myProfile.ispaynowreg = userdata.ispaynowreg ? userdata.ispaynowreg : 'No';
+						this.myProfile.bankname = userdata.bank_id ? userdata.bank_id : '';
+						this.myProfile.accountno = userdata.account_no ? userdata.account_no : '';
+						this.myProfile.bankcode = userdata.bankcode ? userdata.bankcode : '';
+						this.myProfile.branchcode = userdata.branch_code ? userdata.branch_code : '';
 						// Job preferences
-						this.myProfile.employmenttype = response.message.employmenttype ? response.message.employmenttype : '';
+						this.myProfile.employmenttype = userdata.employment_type ? userdata.employment_type : '';
 						this.employmenttypeChange(this.myProfile.employmenttype);
-						this.myProfile.preferredregion = response.message.preferredregion ? response.message.preferredregion : '';
-						this.myProfile.preferredlocation = response.message.preferredlocation ? response.message.preferredlocation : '';
-						this.myProfile.preferredspecialization = response.message.preferredspecialization ? response.message.preferredspecialization : '';
-						this.myProfile.workingenvironment = response.message.workingenvironment ? response.message.workingenvironment : '';
+						this.myProfile.preferredregion = userdata.region ? userdata.region : '';
+						this.myProfile.preferredlocation = userdata.location ? userdata.location : '';
+						this.myProfile.preferredspecialization = userdata.specializations ? userdata.specializations : '';
+						this.myProfile.workingenvironment = userdata.working_environment ? userdata.working_environment : '';
 						// Notification Alert Types
-						this.myProfile.notificationalerttype = response.message.notificationalerttype ? response.message.notificationalerttype : '';
-						this.myProfile.alertswitchedoffdays = response.message.alertswitchedoffdays ? response.message.alertswitchedoffdays : '';
-						this.myProfile.alertofffrom = response.message.alertofffrom ? response.message.alertofffrom : '';
-						this.myProfile.alertoffto = response.message.alertoffto ? response.message.alertoffto : '';
+						this.myProfile.notificationalerttype = userdata.notification ? userdata.notification : '';
+						this.myProfile.alertswitchedoffdays = userdata.alertswitchedoffdays ? userdata.alertswitchedoffdays : '';
+						this.myProfile.alertofffrom = userdata.alertofffrom ? userdata.alertofffrom : '';
+						this.myProfile.alertoffto = userdata.alertoffto ? userdata.alertoffto : '';
 
 						// Past Exp
-						this.myProfile.experiencein = response.message.experiencein ? response.message.experiencein : '';
-						this.myProfile.totalexperienceinyears = response.message.totalexperienceinyears ? response.message.totalexperienceinyears : '';
+						this.myProfile.experiencein = userdata.experience_in ? userdata.experience_in : '';
+						this.myProfile.totalexperienceinyears = userdata.experience_year ? userdata.experience_year : '';
 
 						let newExp: any[] = [];
-						let pastExp = response.message.previousexperince;
+						let pastExp = isArray(userdata.experience_details) ? userdata.experience_details : [];
 						if (pastExp.length > 0) {
 							for (let i = 0; i < pastExp.length; i++) {
 								newExp.push({
 									previouscompanyname: pastExp[i].previouscompanyname, previouscompanyposition: pastExp[i].previouscompanyposition, previousjobresponsibility: pastExp[i].previousjobresponsibility, previousjobfrom: new Date(pastExp[i].previousjobfrom), previousjobto: new Date(pastExp[i].previousjobto)
-								})
+								});
 							}
 							this.myProfile.previousexperince = newExp;
 						}
-						// this.myProfile.previousexperince = response.message.previousexperince;
+						// this.myProfile.previousexperince = userdata.previousexperince;
 
 						// Documents
-						this.profileImage = response.message.jobseekerimage ? this.imgBaseUrl + '/' + response.message.jobseekerimage : 'assets/img/avatars/profile-placeholder.png';
-						this.idProofFront = response.message.jobseekeridprooffront ? this.imgBaseUrl + '/' + response.message.jobseekeridprooffront : 'assets/img/avatars/id-front-placeholder.png';
-						this.idProofBack = response.message.jobseekeridproofback ? this.imgBaseUrl + '/' + response.message.jobseekeridproofback : 'assets/img/avatars/id-back-placeholder.png';
+						this.profileImage = userdata.jobseekerimage ? this.baseUrl + '/' + userdata.imgpath : 'assets/img/avatars/profile-placeholder.png';
+						this.idProofFront = userdata.jobseekeridprooffront ? this.baseUrl + '/' + userdata.id_imgpath1 : 'assets/img/avatars/id-front-placeholder.png';
+						this.idProofBack = userdata.jobseekeridproofback ? this.baseUrl + '/' + userdata.id_imgpath2 : 'assets/img/avatars/id-back-placeholder.png';
 
-						this.isIdProofEditable = response.message.jobseekeridproofeditable ? response.message.jobseekeridproofeditable == "true" ? false : true : false;
+						this.isIdProofEditable = userdata.jobseekeridproofeditable ? userdata.jobseekeridproofeditable == 'true' ? false : true : false;
 
 						// Patch Form Value
 						this.jobSeekerProfileForm.patchValue({
-							'username': this.myProfile.username,
+							'username': `${this.myProfile.firstname} ${this.myProfile.firstname}`,
 							// 'nameinidcard': this.myProfile.nameinidcard,
 							'email': this.myProfile.email,
 							'country': this.myProfile.country,
@@ -853,7 +861,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 							'experiencein': this.myProfile.experiencein,
 							'totalexperienceinyears': this.myProfile.totalexperienceinyears,
-						})
+						});
 
 						this.jobSeekerProfileForm.patchValue({
 							dob_data: {
@@ -883,13 +891,14 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 	// Update Profile Datas
 	jobSeekerProfileUpdate() {
-		let previousexperince;
+		let experience_details;
 		let parsedPastExp: any[] = [];
+
 		// Check Employment Type And process Past Exp
 		if (this.isPartTimeJob) {
 			this.jobSeekerProfileForm.patchValue({
-				'totalexperienceinyears': "",
-				'experiencein': "",
+				'totalexperienceinyears': '',
+				'experiencein': '',
 			});
 
 			// this.jobSeekerProfileForm.setControl('previousexperince', this.fb.array([]));
@@ -899,17 +908,17 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 				this.jobSeekerProfileForm.get(`previousexperince.${i}`).clearValidators();
 				this.jobSeekerProfileForm.get(`previousexperince.${i}`).updateValueAndValidity({ emitEvent: false, onlySelf: false });
 				// Remove Item
-				control.removeAt(i)
+				control.removeAt(i);
 			}
 		} else {
 			const control = <FormArray>this.jobSeekerProfileForm.controls['previousexperince'];
 			for (let i = control.length - 1; i >= 0; i--) {
-				if (this.jobSeekerProfileForm.get(`previousexperince.${i}.previouscompanyname`).value == "") {
+				if (this.jobSeekerProfileForm.get(`previousexperince.${i}.previouscompanyname`).value === '') {
 					// Clear Validator
 					this.jobSeekerProfileForm.get(`previousexperince.${i}`).clearValidators();
 					this.jobSeekerProfileForm.get(`previousexperince.${i}`).updateValueAndValidity({ emitEvent: false, onlySelf: false });
 					// Remove Item
-					control.removeAt(i)
+					control.removeAt(i);
 				} else {
 					parsedPastExp.push({
 						previouscompanyname: this.jobSeekerProfileForm.get(`previousexperince.${i}.previouscompanyname`).value,
@@ -917,17 +926,17 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 						previousjobresponsibility: this.jobSeekerProfileForm.get(`previousexperince.${i}.previousjobresponsibility`).value,
 						previousjobfrom: this.datePipe.transform(this.jobSeekerProfileForm.get(`previousexperince.${i}.previousjobfrom`).value, 'yyyy/MM/dd'),
 						previousjobto: this.datePipe.transform(this.jobSeekerProfileForm.get(`previousexperince.${i}.previousjobto`).value, 'yyyy/MM/dd')
-					})
+					});
 				}
 			}
-			previousexperince = { "previousexperince": parsedPastExp }
+			experience_details = { 'previousexperince': parsedPastExp };
 		}
 
-		if (this.jobSeekerProfileForm.get(`notificationalerttype`).value != "off") {
+		if (this.jobSeekerProfileForm.get(`notificationalerttype`).value !== 'off') {
 			this.jobSeekerProfileForm.patchValue({
-				'alertswitchedoffdays': "",
-				'alertofffrom': "",
-				'alertoffto': ""
+				'alertswitchedoffdays': '',
+				'alertofffrom': '',
+				'alertoffto': ''
 			});
 		}
 
@@ -947,10 +956,10 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		// let dob = { "dob": this.datePipe.transform(this.jobSeekerProfileForm.get('dob').value, 'yyyy/MM/dd') };
 		let jobSeekerData = this.jobSeekerProfileForm.value;
 		// jobSeekerData = Object.assign(jobSeekerData, dob);
-		jobSeekerData = Object.assign(jobSeekerData, previousexperince);
+		jobSeekerData = Object.assign(jobSeekerData, experience_details);
 		// console.log(jobSeekerData);
 
-		this.busy = this._httpService.jobSeekerProfileUpdate(jobSeekerData)
+		this.busy = this._httpService.updateProfileDetails(jobSeekerData)
 			.subscribe(
 				response => {
 					if (response.success) {
@@ -964,7 +973,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 							localStorage.setItem('ogUserName', this.jobSeekerProfileForm.get('username').value);
 							localStorage.setItem('ogUserEmail', this.jobSeekerProfileForm.get('email').value);
 							// location.reload();
-							this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
+							this.asyncSubscriber.setProfileDetails({ 'Image': this.profileImage });
 							// this.getProfileDetails();
 							this.router.navigate(['main/jobs/list']);
 							let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
@@ -1009,7 +1018,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 					response => {
 						if (response.success) {
 							localStorage.setItem('ogUserLogo', response.jobseekerimage);
-							this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
+							this.asyncSubscriber.setProfileDetails({ 'Image': this.profileImage });
 							// location.reload();
 							// this.getProfileDetails();
 
@@ -1041,7 +1050,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.passwordErrorMsg = "";
+						this.passwordErrorMsg = '';
 						let snackBarRef = this.snackBar.open('Password Updated Successfully.', 'Close', {
 							duration: 5000,
 						});
@@ -1049,9 +1058,9 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 							snackBarRef.dismiss();
 						});
 					} else {
-						this.passwordErrorMsg = "Old Password is Wrong.";
+						this.passwordErrorMsg = 'Old Password is Wrong.';
 						setTimeout(() => {
-							this.passwordErrorMsg = "";
+							this.passwordErrorMsg = '';
 						}, 3000);
 
 						let snackBarRef = this.snackBar.open('Please Enter Correct Old Password.', 'Close', {
@@ -1075,8 +1084,8 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			DOB = new Date(DOB);
 			if (DOB) {
 				var timeDiff = Math.abs(Date.now() - DOB);
-				//Used Math.floor instead of Math.ceil
-				//so 26 years and 140 days would be considered as 26, not 27.
+				// Used Math.floor instead of Math.ceil
+				// so 26 years and 140 days would be considered as 26, not 27.
 				// console.log(DOB);
 				return Number(Math.floor((timeDiff / (1000 * 3600 * 24)) / 365));
 			}
@@ -1098,10 +1107,10 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	// Months Generate
 	generateMonths() {
 		for (let month = 1; month < 10; month++) {
-			this.months.push({ "monthValue": String('0' + month), "monthName": this.monthLongValues[month - 1] });
+			this.months.push({ 'monthValue': String('0' + month), 'monthName': this.monthLongValues[month - 1] });
 		}
 		for (let month = 10; month <= 12; month++) {
-			this.months.push({ "monthValue": String(month), "monthName": this.monthLongValues[month - 1] });
+			this.months.push({ 'monthValue': String(month), 'monthName': this.monthLongValues[month - 1] });
 		}
 
 		console.log(this.months);
@@ -1121,13 +1130,13 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	// }
 
 	isValidDate(str) {
-		var parts = str.split('/');
-		if (parts.length < 3)
+		let parts = str.split('/');
+		if (parts.length < 3) {
 			return false;
-		else {
-			var day = parseInt(parts[2]);
-			var month = parseInt(parts[1]);
-			var year = parseInt(parts[0]);
+		} else {
+			let day = parseInt(parts[2]);
+			let month = parseInt(parts[1]);
+			let year = parseInt(parts[0]);
 			if (isNaN(day) || isNaN(month) || isNaN(year)) {
 				return false;
 			}
@@ -1165,46 +1174,46 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 				let year = parseInt(parts[0]);
 
 				if (isNaN(day) && isNaN(month) && isNaN(year)) {
-					this.invalidDobErrorMsg = "";
+					this.invalidDobErrorMsg = '';
 					return { validDob: true };
 				}
 
 				if (isNaN(day) || isNaN(month) || isNaN(year)) {
-					this.invalidDobErrorMsg = "Please Fill All DOB Fields";
+					this.invalidDobErrorMsg = 'Please Fill All DOB Fields';
 					return { validDob: true };
 				}
 
 				if (day < 1 || year < 1) {
-					this.invalidDobErrorMsg = "Are you sure you entered the right birthday?";
+					this.invalidDobErrorMsg = 'Are you sure you entered the right birthday?';
 					return { validDob: true };
 				}
 				if (month > 12 || month < 1) {
-					this.invalidDobErrorMsg = "Are you sure you entered the right birthday?";
+					this.invalidDobErrorMsg = 'Are you sure you entered the right birthday?';
 					return { validDob: true };
 				}
 				if ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) && day > 31) {
-					this.invalidDobErrorMsg = "Are you sure you entered the right birthday?";
+					this.invalidDobErrorMsg = 'Are you sure you entered the right birthday?';
 					return { validDob: true };
 				}
 				if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30) {
-					this.invalidDobErrorMsg = "Are you sure you entered the right birthday?";
+					this.invalidDobErrorMsg = 'Are you sure you entered the right birthday?';
 					return { validDob: true };
 				}
 				if (month == 2) {
 					if (((year % 4) == 0 && (year % 100) != 0) || ((year % 400) == 0 && (year % 100) == 0)) {
 						if (day > 29) {
-							this.invalidDobErrorMsg = "Are you sure you entered the right birthday?";
+							this.invalidDobErrorMsg = 'Are you sure you entered the right birthday?';
 							return { validDob: true };
 						}
 					} else {
 						if (day > 28) {
-							this.invalidDobErrorMsg = "Are you sure you entered the right birthday?";
+							this.invalidDobErrorMsg = 'Are you sure you entered the right birthday?';
 							return { validDob: true };
 						}
 					}
 				}
 				if (year >= currentYear - 8) {
-					this.invalidDobErrorMsg = "Are you sure you entered the right birthday?";
+					this.invalidDobErrorMsg = 'Are you sure you entered the right birthday?';
 					return { validDob: true };
 				}
 				// if (this.CalculateAge(dob))
@@ -1255,8 +1264,8 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 				let dob = year + '/' + month + '/' + day;
 
-				this.jobSeekerProfileForm.get("dob").setValidators([Validators.required, this.isValidDob(dob)]);
-				this.jobSeekerProfileForm.get("dob").updateValueAndValidity({ emitEvent: false, onlySelf: false });
+				this.jobSeekerProfileForm.get('dob').setValidators([Validators.required, this.isValidDob(dob)]);
+				this.jobSeekerProfileForm.get('dob').updateValueAndValidity({ emitEvent: false, onlySelf: false });
 
 				this.jobSeekerProfileForm.patchValue({
 					'dob': dob
@@ -1264,7 +1273,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 				let Age = this.CalculateAge(dob);
 				// console.log(this.jobSeekerProfileForm.get('dob').status);
-				if (!isNaN(Age) && this.jobSeekerProfileForm.get('dob').status == "VALID") {
+				if (!isNaN(Age) && this.jobSeekerProfileForm.get('dob').status == 'VALID') {
 					this.jobSeekerProfileForm.patchValue({
 						'age': Age
 					});

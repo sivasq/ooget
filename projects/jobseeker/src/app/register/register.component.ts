@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 	//  Build JobSeeker Reg Form
 	buildJobSeekerRegForm(): void {
 		this.jobSeekerRegForm = this.fb.group({
-			username: ['', Validators.compose([Validators.required])],
+			name: ['', Validators.compose([Validators.required])],
 			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],
 			//  password: ['', Validators.compose([Validators.required, Validators.minLength(8)]), this.isPatternMatch.bind(this)],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(8)]), this.isPatternMatch.bind(this)],
@@ -55,7 +55,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 			country: ['', Validators.compose([Validators.required])],
 			//  docName: ['', Validators.compose([Validators.required])],
 			accept_terms: [null, Validators.compose([Validators.required])],
-			activestatus: ['false'],
 			recaptcha: ['', Validators.required]
 		});
 	}
@@ -109,7 +108,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 	isEmailUnique(control: FormControl) {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
-				this._httpService.checkEmail({ 'email': control.value }).subscribe((response) => {
+				this._httpService.checkUniqueEmail({ 'email': control.value }).subscribe((response) => {
 					if (response.success) {
 						resolve(null);
 					} else {
@@ -197,7 +196,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
 		if (!this.jobSeekerRegForm.valid) { return false; }
 
-		this.busy = this._httpService.postRegData(this.jobSeekerRegForm.value)
+		this.busy = this._httpService.createJobseeker(this.jobSeekerRegForm.value)
 			.subscribe(
 				response => {
 					if (response.success) {

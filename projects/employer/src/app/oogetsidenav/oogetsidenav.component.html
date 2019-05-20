@@ -40,7 +40,7 @@
         </a>
     </div> -->
 
-	<div class="menu-item" *ngxPermissionsOnly="['superemployer']">
+	<!-- <div class="menu-item" *ngxPermissionsOnly="['superemployer']">
 		<a mat-button routerLink="/employer/settings/viewcompany" routerLinkActive="active-link" fxLayout="row" fxLayoutAlign="flex-start center">
 			<mat-icon>info</mat-icon>
 			<span class="menu-title"> Company Details</span>
@@ -81,10 +81,11 @@
 			<mat-icon>person_add</mat-icon>
 			<span class="menu-title"> Add User</span>
 		</a>
-	</div>
+	</div> -->
 
 	<!-- <mat-nav-list>
 		<app-sidemenu *ngFor="let item of navItems" [item]="item"></app-sidemenu>
 	</mat-nav-list> -->
 
+	<app-sidemenu></app-sidemenu>
 </div>

@@ -5,7 +5,7 @@ import { AuthloginComponent } from './authlogin/authlogin.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-import { Layout2Component } from './layouts/layout2/layout2.component';
+import { UserLayoutComponent } from './layouts/user-layout/user-layout.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { HomepageComponent } from './homepage/homepage.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
@@ -50,7 +50,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'main',
-		component: Layout2Component,
+		component: UserLayoutComponent,
 		canActivate: [AuthGuardService],
 		children: [
 			{

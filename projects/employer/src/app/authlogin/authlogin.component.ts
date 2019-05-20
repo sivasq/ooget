@@ -13,14 +13,18 @@ import { AsyncSubscriber } from '../services/async.service';
 	styleUrls: ['./authlogin.component.scss']
 })
 export class AuthloginComponent implements OnInit {
-	public homePageUrl;
+
+	homePageUrl;
+
 	appearance$: Observable<any>;
+
 	// Password visibility set
 	public hide = true;
-	//Error Message
+
+	// Error Message
 	isAuthMsg: string;
 
-	//busy Config
+	// busy Config
 	busy: Subscription;
 
 	employerAuthForm: FormGroup;
@@ -31,7 +35,7 @@ export class AuthloginComponent implements OnInit {
 
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
-		this.homePageUrl = config.homePageUrl;
+		// this.homePageUrl = config.homePageUrl;
 		this.buildEmployerAuthForm();
 	}
 
@@ -40,33 +44,35 @@ export class AuthloginComponent implements OnInit {
 		this.employerAuthForm = this.fb.group({
 			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)])],
 			password: ['', Validators.compose([Validators.required])],
-		})
+		});
 	}
 
 	onAuthCheck() {
-		if (!this.employerAuthForm.valid) return false;
-		this.busy = this._httpService.postLoginData(this.employerAuthForm.value)
+		if (!this.employerAuthForm.valid) { return false; }
+		this.busy = this._httpService.authLogin(this.employerAuthForm.value)
 			.subscribe(
 				async response => {
 					if (response.success) {
 						// Set local storages
-						localStorage.setItem('isLoggedIn', "true");
-						localStorage.setItem('ogToken', response.token);
-						localStorage.setItem('ogUserEmail', response.employer.email);
-						localStorage.setItem('ogUserName', response.employer.username);
-						localStorage.setItem('ogDefaultEmployer', response.employer.defaultemployer);
-						localStorage.setItem('ogUserObjID', response.employer._id);
-						localStorage.setItem('ogCompanyObjID', response.employer.company._id);
-						localStorage.setItem('ogCompanyName', response.employer.company.companyname);
-						localStorage.setItem('ogCompanyCode', response.employer.company.companycode);
+						const apiHttpResponse = response.result;
+						localStorage.setItem('isLoggedIn', 'true');
+						localStorage.setItem('ogToken', apiHttpResponse.token);
+						localStorage.setItem('ogUserEmail', apiHttpResponse.email);
+						localStorage.setItem('ogUserName', `${apiHttpResponse.firstname} ${apiHttpResponse.lastname}`);
+
+						// localStorage.setItem('ogDefaultEmployer', response.employer.defaultemployer);
+						localStorage.setItem('ogUserObjID', apiHttpResponse.id);
+						localStorage.setItem('ogCompanyObjID', 'cid');
+						localStorage.setItem('ogCompanyName', apiHttpResponse.companyname);
+						localStorage.setItem('ogCompanyCode', 'ccode');
 
 						// Set Roles
-						localStorage.setItem('ogRole', response.employer.role.rolename);
-						localStorage.setItem('ogPermissions', JSON.stringify(response.employer.role.permissions));
+						localStorage.setItem('ogRole', 'superemployer');
+						localStorage.setItem('ogPermissions', JSON.stringify(['add']));
 
-						//Load Roles and Permissions
-						this.permissionsService.loadPermissions(response.employer.role.permissions);
-						this.rolesService.addRole(response.employer.role.rolename, response.employer.role.permissions);
+						// Load Roles and Permissions
+						this.permissionsService.loadPermissions(['add']);
+						this.rolesService.addRole('superemployer', ['add']);
 
 						// If Auth Success, redirect to Main Page
 						await this.router.navigate(['employer/jobs/list']);
@@ -75,7 +81,7 @@ export class AuthloginComponent implements OnInit {
 
 					} else if (!response.success) {
 
-						this.isAuthMsg = "Sorry! Invalid Login Credentials";
+						this.isAuthMsg = 'Sorry! Invalid Login Credentials';
 
 						setTimeout(() => {
 							this.isAuthMsg = '';
@@ -85,10 +91,10 @@ export class AuthloginComponent implements OnInit {
 				},
 				error => {
 					console.log(error);
-					this.isAuthMsg = "Server Errors Occured! Please Try Again";
+					this.isAuthMsg = 'Sorry! Invalid Login Credentials';
 					setTimeout(() => {
 						this.isAuthMsg = '';
-						// this.resetEmployerAuthForm.resetForm();
+						// this.resetAdminAuthForm.resetForm();
 					}, 3000);
 				}
 			);

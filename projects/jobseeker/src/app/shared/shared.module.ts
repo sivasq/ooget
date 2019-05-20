@@ -36,6 +36,8 @@ import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpModule } from '@ngx-progressbar/http';
 import { NgProgressRouterModule } from '@ngx-progressbar/router';
 import { Ng5SliderModule } from 'ng5-slider';
+import { SidemenuComponent } from '../sidemenu/sidemenu.component';
+import { AccordionAnchorDirective, AccordionLinkDirective, AccordionDirective } from '../directives/menu-accordion';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true,
@@ -76,7 +78,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		TermsConditionsDialogComponent,
 		ConfirmDialogComponent,
 		EqualValidatorDirective, Collapse, CompareDirective,
-		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, MultipleSubLocationFilter, SafeHtml
+		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, MultipleSubLocationFilter, SafeHtml,
+		SidemenuComponent,
+		AccordionAnchorDirective,
+		AccordionLinkDirective,
+		AccordionDirective
 	],
 	entryComponents: [
 		TopProfiledialogComponent,
@@ -109,7 +115,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		NguCarouselModule,
 		NgPipesModule,
 		Ng5SliderModule,
-		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, MultipleSubLocationFilter, SafeHtml
+		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, MultipleSubLocationFilter, SafeHtml,
+		SidemenuComponent,
+		AccordionAnchorDirective,
+		AccordionLinkDirective,
+		AccordionDirective
 	],
 	providers: [
 		ConfigService,

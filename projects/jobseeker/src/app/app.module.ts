@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-import { Layout2Component } from './layouts/layout2/layout2.component';
+import { UserLayoutComponent } from './layouts/user-layout/user-layout.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
@@ -50,7 +50,7 @@ export class MyHammerConfig extends HammerGestureConfig {
 		ForgotPasswordComponent,
 		RegisterComponent,
 		AuthLayoutComponent,
-		Layout2Component,
+		UserLayoutComponent,
 		HomepageComponent,
 		ResetPasswordComponent,
 	],

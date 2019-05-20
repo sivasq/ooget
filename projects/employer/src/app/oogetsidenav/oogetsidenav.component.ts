@@ -4,14 +4,6 @@ import { ConfigService } from '../services/config.service';
 import { Router } from '@angular/router';
 import { AsyncSubscriber } from '../services/async.service';
 
-export interface NavItem {
-	displayName: string;
-	disabled?: boolean;
-	iconName: string;
-	route?: string;
-	children?: NavItem[];
-}
-
 @Component({
 	selector: 'app-oogetsidenav',
 	templateUrl: './oogetsidenav.component.html',
@@ -31,47 +23,6 @@ export class OogetsidenavComponent implements OnInit {
 	public companyCode: String;
 
 	userprofile: boolean = true;
-
-	navItems: NavItem[] = [
-		{
-			displayName: 'Settings',
-			iconName: 'recent_actors',
-			route: 'employer/settings',
-			children: [
-				{
-					displayName: 'Users List',
-					iconName: 'group',
-					route: 'employer/settings/listusers',
-				},
-				{
-					displayName: 'My Company',
-					iconName: 'speaker_notes',
-					route: 'employer/settings/viewcompany',
-				}
-			]
-		},
-		{
-			displayName: 'Disney',
-			iconName: 'videocam',
-			children: [
-				{
-					displayName: 'Create Enterprise UIs',
-					iconName: 'star_rate',
-					route: 'material-design'
-				},
-				{
-					displayName: 'What\'s up with the Web?',
-					iconName: 'star_rate',
-					route: 'what-up-web'
-				}
-			]
-		},
-		{
-			displayName: 'Feedback',
-			iconName: 'feedback',
-			route: 'feedback'
-		}
-	]
 
 	constructor(private urlconfig: ConfigService, public router: Router, private asyncSubscriber: AsyncSubscriber) {
 		this.baseUrl = urlconfig.base_url;

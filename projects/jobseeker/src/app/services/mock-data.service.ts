@@ -11,6 +11,7 @@ import { JobLocation } from '../classes/jobLocation';
 import { JobLocations } from '../mock-datas/JobLocations';
 
 import { Specialization } from '../classes/Specialization';
+import { Specializations } from '../mock-datas/Specializations';
 import { FullTimeSpecializations } from '../mock-datas/fullTimeSpecializations';
 import { PartTimeSpecializations } from '../mock-datas/partTimeSpecializations';
 import { BankDetail } from '../classes/bankDetail';
@@ -33,6 +34,10 @@ export class MockDataService {
 
 	getWorkingEnvironments(): Observable<WorkingEnvironment[]> {
 		return of(WorkingEnvironments);
+	}
+
+	getSpecializations(): Observable<Specialization[]> {
+		return of(Specializations);
 	}
 
 	getFullTimeSpecializations(): Observable<Specialization[]> {

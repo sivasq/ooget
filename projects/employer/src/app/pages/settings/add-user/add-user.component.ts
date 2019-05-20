@@ -99,7 +99,7 @@ export class AddUserComponent implements OnInit {
 	isEmailUnique(control: FormControl) {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
-				this._httpService.checkEmail({ 'email': control.value }).subscribe((response) => {
+				this._httpService.checkEmailExists({ 'email': control.value }).subscribe((response) => {
 					if (response.success) {
 						resolve(null);
 					} else {

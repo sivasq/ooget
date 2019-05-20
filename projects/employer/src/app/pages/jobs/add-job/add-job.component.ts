@@ -99,7 +99,7 @@ export class AddJobComponent implements OnInit {
 	public WorkingEnvironments: WorkingEnvironment[];
 	public EmploymentTypes: EmploymentType[];
 
-	//busy Config
+	// busy Config
 	busy: Subscription;
 
 	constructor(private _httpService: ApiCallService, public dialog: MatDialog, public snackBar: MatSnackBar, private route: ActivatedRoute, public router: Router, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
@@ -109,7 +109,7 @@ export class AddJobComponent implements OnInit {
 		this.companyid = localStorage.getItem('ogCompanyObjID');
 
 		// this.openTermsConditionsDialog('fileName');
-		this.getTermsAcceptanceStatus({ 'companyid': this.companyid });
+		// this.getTermsAcceptanceStatus({ 'companyid': this.companyid });
 
 		this.getEmploymentTypes();
 		this.getWorkingEnvironments();
@@ -154,7 +154,7 @@ export class AddJobComponent implements OnInit {
 			.subscribe(pax => this.maxpax = pax);
 	}
 
-	//==========================
+	// ==========================
 	getTermsAcceptanceStatus(employerData) {
 		this.busy = this._httpService.getTermsAcceptanceStatus(employerData)
 			.subscribe(
@@ -227,7 +227,7 @@ export class AddJobComponent implements OnInit {
 			);
 	}
 
-	//====================
+	// ====================
 
 	startTimeChange(event) {
 		this.workMinEndTime = new Date(event.value.getTime() + 3600000); // + 1 hr in ms

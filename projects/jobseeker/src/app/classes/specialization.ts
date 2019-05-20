@@ -1,4 +1,5 @@
 export class Specialization {
-	_id: string;
-	specialization: string;
+	id: Number;
+	name: string;
+	type: Number;
 }

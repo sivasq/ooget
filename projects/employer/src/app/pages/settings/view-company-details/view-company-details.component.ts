@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material';
 import { ConfigService } from '../../../services/config.service';
 import { Subscription } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { isArray } from 'util';
 
 @Component({
 	selector: 'app-view-company-details',
@@ -27,10 +28,10 @@ export class ViewCompanyDetailsComponent implements OnInit {
 
 	public docName;
 	public companyid;
-	public companyCodes = {
-		companyid: '',
-		companycode: ''
-	}
+	// public companyCodes = {
+	// 	companyid: '',
+	// 	companycode: ''
+	// }
 	busy: Subscription;
 
 	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar, private configService: ConfigService, private datePipe: DatePipe) {
@@ -42,12 +43,12 @@ export class ViewCompanyDetailsComponent implements OnInit {
 	}
 
 	getCompanyDetails() {
-		this.busy = this._httpService.getCompanyDetails()
+		this.busy = this._httpService.getEmployer()
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.companyDetails = response.company;
-						this.companyCodes.companyid = response.company._id;
+						this.companyDetails = isArray(response.result) ? response.result[0] : '';
+						// this.companyCodes.companyid = response.company._id;
 						console.log(this.companyDetails);
 
 					} else if (!response.success) {

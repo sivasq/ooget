@@ -13,7 +13,7 @@ import { CommonModule, APP_BASE_HREF } from '@angular/common';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-import { Layout2Component } from './layouts/layout2/layout2.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
@@ -29,7 +29,7 @@ import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 		ForgotPasswordComponent,
 		RegisterComponent,
 		AuthLayoutComponent,
-		Layout2Component,
+		AdminLayoutComponent,
 		NotAuthorizedComponent,
 		ResetPasswordComponent,
 	],

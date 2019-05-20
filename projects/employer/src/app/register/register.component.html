@@ -37,16 +37,15 @@
 							<!-- UEN Number -->
 							<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 								<mat-label>UEN Number</mat-label>
-								<input matInput placeholder="UEN Number" name="uennumber" autocomplete="off"
-									formControlName="uennumber" required>
-								<mat-error *ngIf="employerRegForm.get('uennumber').hasError('required')" align="start">
+								<input matInput placeholder="UEN Number" name="uen" autocomplete="off"
+									formControlName="uen" required>
+								<mat-error *ngIf="employerRegForm.get('uen').hasError('required')" align="start">
 									UEN Number Required
 								</mat-error>
-								<mat-error *ngIf="employerRegForm.get('uennumber').hasError('isUENUnique')"
-									align="start">
+								<mat-error *ngIf="employerRegForm.get('uen').hasError('isUENUnique')" align="start">
 									This UEN Already Registered
 								</mat-error>
-								<mat-error *ngIf="employerRegForm.get('uennumber').hasError('pattern')" align="start">
+								<mat-error *ngIf="employerRegForm.get('uen').hasError('pattern')" align="start">
 									Invalid UEN Format
 								</mat-error>
 							</mat-form-field>
@@ -68,8 +67,8 @@
 								<mat-label>Industry</mat-label>
 								<mat-select placeholder="Industry" name="industry" formControlName="industry" required>
 									<mat-option>Select Industry</mat-option>
-									<mat-option *ngFor="let Industry of Industries" [value]="Industry.IndustryName">
-										{{ Industry.IndustryName }}</mat-option>
+									<mat-option *ngFor="let Industry of Industries" [value]="Industry.id">
+										{{ Industry.name }}</mat-option>
 									<mat-option value="Others">Others</mat-option>
 								</mat-select>
 								<mat-error *ngIf="employerRegForm.get('industry').hasError('required')" align="start">
@@ -92,15 +91,15 @@
 							<!-- Login Mail -->
 							<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 								<mat-label>Login Email</mat-label>
-								<input matInput type="email" placeholder="Login Email" name="email" autocomplete="off"
-									formControlName="email" required>
-								<mat-error *ngIf="employerRegForm.get('email').hasError('required')" align="start">
+								<input matInput type="email" placeholder="Login Email" name="useremail" autocomplete="off"
+									formControlName="useremail" required>
+								<mat-error *ngIf="employerRegForm.get('useremail').hasError('required')" align="start">
 									Email Required
 								</mat-error>
-								<mat-error *ngIf="employerRegForm.get('email').hasError('pattern')" align="start">
+								<mat-error *ngIf="employerRegForm.get('useremail').hasError('pattern')" align="start">
 									Invalid Email Format
 								</mat-error>
-								<mat-error *ngIf="employerRegForm.get('email').hasError('isEmailUnique')" align="start">
+								<mat-error *ngIf="employerRegForm.get('useremail').hasError('isEmailUnique')" align="start">
 									This Email Already Registered
 								</mat-error>
 							</mat-form-field>

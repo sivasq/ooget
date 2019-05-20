@@ -19,10 +19,10 @@ export class AuthloginComponent implements OnInit, OnDestroy {
 	// Password visibility set
 	hide = true;
 
-	//Error Message
+	// Error Message
 	isAuthMsg: string;
 
-	//busy Config
+	// busy Config
 	busy: Subscription;
 
 	// Form Build
@@ -44,33 +44,33 @@ export class AuthloginComponent implements OnInit, OnDestroy {
 		this.jobseekerAuthForm = this.fb.group({
 			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)])],
 			password: ['', Validators.compose([Validators.required])],
-		})
+		});
 	}
 
-	//Submit form
+	// Submit form
 	onAuthCheck() {
-		if (!this.jobseekerAuthForm.valid) return false;
+		if (!this.jobseekerAuthForm.valid) { return false; }
 
-		this.busy = this._httpService.postLoginData(this.jobseekerAuthForm.value)
+		this.busy = this._httpService.authLogin(this.jobseekerAuthForm.value)
 			.subscribe(
 				async response => {
 					if (response.success) {
 						// Set local storages
-						localStorage.setItem('isLoggedIn', "true");
-						localStorage.setItem('ogToken', response.token);
-						localStorage.setItem('ogUserEmail', response.jobseeker.email);
-						localStorage.setItem('ogUserObjID', response.jobseeker._id);
-						localStorage.setItem('ogUserName', response.jobseeker.username);
-						localStorage.setItem('ogUserLogo', response.jobseekerimage);
-						localStorage.setItem('ogActiveStatus', response.activestatus);
+						let JobseekerData = response.result;
+						localStorage.setItem('isLoggedIn', 'true');
+						localStorage.setItem('ogToken', JobseekerData.token);
+						localStorage.setItem('ogUserEmail', JobseekerData.email);
+						localStorage.setItem('ogUserObjID', JobseekerData.id);
+						localStorage.setItem('ogUserName', `${JobseekerData.firstname} ${JobseekerData.lastname}`);
+						localStorage.setItem('ogUserLogo', JobseekerData.jobseekerimage);
+						localStorage.setItem('ogActiveStatus', JobseekerData.status);
 
 						// If Successfull Validation redirect to Dashboard or Profile
-						if (response.firsttime == "true") {
-							console.log("load1");
+						if (response.lastlogin === '' || response.lastlogin == null) {
+							// console.log('load1');
 							await this.router.navigate(['main/profile']);
-
-						} else if (response.firsttime == "false") {
-							console.log("load2");
+						} else {
+							// console.log('load2');
 							await this.router.navigate(['main/profile']);
 							// this.router.navigate(['main/dashboard']);
 						}
@@ -79,7 +79,7 @@ export class AuthloginComponent implements OnInit, OnDestroy {
 
 					} else if (!response.success) {
 
-						this.isAuthMsg = "Sorry! Invalid Login Credentials";
+						this.isAuthMsg = 'Sorry! Invalid Login Credentials';
 						setTimeout(() => {
 							this.isAuthMsg = '';
 							// this.resetJobseekerAuthForm.resetForm();
@@ -88,7 +88,7 @@ export class AuthloginComponent implements OnInit, OnDestroy {
 				},
 				error => {
 					console.log(error);
-					this.isAuthMsg = "Server Errors Occured! Please Try Again";
+					this.isAuthMsg = 'Server Errors Occured! Please Try Again';
 					setTimeout(() => {
 						this.isAuthMsg = '';
 						// this.resetJobseekerAuthForm.resetForm();

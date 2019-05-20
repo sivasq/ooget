@@ -50,16 +50,13 @@ export class RegisterComponent implements OnInit {
 		this.employerRegForm = this.fb.group({
 			companyname: ['', Validators.compose([Validators.required])],
 			profile: ['', Validators.compose([Validators.required])],
-			uennumber: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]{7,9}[A-Za-z]{1}$')]), this.isUENUnique.bind(this)],
+			uen: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]{7,9}[A-Za-z]{1}$')]), this.isUENUnique.bind(this)],
 			industry: ['', Validators.compose([Validators.required])],
 			country: ['', Validators.compose([Validators.required])],
 			username: ['', Validators.compose([Validators.required])],
-			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],
+			useremail: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(8)]), this.isPatternMatch.bind(this)],
 			verify: ['', [Validators.required]],
-			activestatus: ['true'],
-			registeredby: ['self'],
-			termsaccepted: ['false'],
 			recaptcha: ['', Validators.required]
 		});
 	}
@@ -113,7 +110,7 @@ export class RegisterComponent implements OnInit {
 	isUENUnique(control: FormControl) {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
-				this._httpService.checkUEN({ 'uennumber': control.value.toUpperCase() }).subscribe((response) => {
+				this._httpService.checkUENExists({ 'uen': control.value.toUpperCase() }).subscribe((response) => {
 					if (response.success) {
 						resolve(null);
 					} else {
@@ -128,7 +125,7 @@ export class RegisterComponent implements OnInit {
 	isEmailUnique(control: FormControl) {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
-				this._httpService.checkEmail({ 'email': control.value }).subscribe((response) => {
+				this._httpService.checkEmailExists({ 'email': control.value }).subscribe((response) => {
 					if (response.success) {
 						resolve(null);
 					} else {
@@ -143,7 +140,7 @@ export class RegisterComponent implements OnInit {
 	public onSubmitReg() {
 		if (!this.employerRegForm.valid) { return false; }
 
-		this.busy = this._httpService.postRegData(this.employerRegForm.value)
+		this.busy = this._httpService.createEmployer(this.employerRegForm.value)
 			.subscribe(
 				response => {
 					// Response is success
@@ -178,11 +175,11 @@ export class RegisterComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.employerRegForm.get('uennumber').valueChanges
+		this.employerRegForm.get('uen').valueChanges
 			.subscribe(x => {
 				if (x != null) {
 					// console.log(x);
-					this.employerRegForm.patchValue({ uennumber: x.toUpperCase() }, { emitEvent: false });
+					this.employerRegForm.patchValue({ uen: x.toUpperCase() }, { emitEvent: false });
 				}
 			});
 	}

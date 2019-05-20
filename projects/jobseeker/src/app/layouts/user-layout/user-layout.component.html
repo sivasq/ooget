@@ -1,0 +1,20 @@
+<mat-sidenav-container class="app-inner">
+	<mat-sidenav #mainNav class="sidebar-panel" id="sidebar-panel" [mode]="isOver() ? 'over' : 'side'"
+		[opened]="!isOver()" (open)="sidePanelOpened = true" (close)="sidePanelOpened = false"
+		(mouseover)="menuMouseOver()" (mouseout)="menuMouseOut()">
+		<app-oogetsidenav #mainSidebar></app-oogetsidenav>
+	</mat-sidenav>
+    <!-- <mat-sidenav #mainNav [mode]="navMode" [opened]="navOpen" class="sidenav mat-elevation-z6" (click)="navMode!=='side' ? mainNav.toggle() : false"
+        style="position:fixed;">
+        <app-oogetsidenav #mainSidebar></app-oogetsidenav>
+    </mat-sidenav> -->
+
+    <mat-sidenav-content>
+        <app-oogettopbar (navToggle)="mainNav.toggle()" (navOpen)="mainNav.open()" (toggleProfile)="mainSidebar.toggleshowprofile()"></app-oogettopbar>
+        <!-- Main Content Start -->
+
+        <router-outlet></router-outlet>
+
+        <!-- Main Content End -->
+    </mat-sidenav-content>
+</mat-sidenav-container>

@@ -46,6 +46,7 @@ import { JsonToTextService } from '../services/json-to-text.service';
 import { SidemenuComponent } from '../sidemenu/sidemenu.component';
 
 import { NgxPermissionsModule } from 'ngx-permissions';
+import { AccordionAnchorDirective, AccordionLinkDirective, AccordionDirective } from '../directives/menu-accordion';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true,
@@ -96,7 +97,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		SearchPipe,
 		AgePipe,
 		EqualValidator,
-		CompareDirective
+		CompareDirective,
+		AccordionAnchorDirective,
+		AccordionLinkDirective,
+		AccordionDirective
 	],
 	entryComponents: [
 		TopProfiledialogComponent,
@@ -129,7 +133,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		NgPipesModule,
 		NgxMaskModule,
 		EqualValidator, CompareDirective,
-		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, AgePipe, NgxPermissionsModule
+		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, AgePipe, NgxPermissionsModule,
+		AccordionAnchorDirective,
+		AccordionLinkDirective,
+		AccordionDirective
 	],
 	providers: [
 		ConfigService,

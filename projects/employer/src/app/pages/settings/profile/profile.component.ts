@@ -67,37 +67,37 @@ export class ProfileComponent implements OnInit {
 
 				let regAll = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\^&*)(+=._-])/;
 				if (!regAll.test(control.value)) {
-					this.passwordPatternError = "at least one number, one lowercase and one uppercase letter, one special charcter";
+					this.passwordPatternError = 'at least one number, one lowercase and one uppercase letter, one special charcter';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regNumber = /[0-9]/;
 				if (!regNumber.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one number (0-9)";
+					this.passwordPatternError = 'password must contain at least one number (0-9)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regSmallAlp = /[a-z]/;
 				if (!regSmallAlp.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one lowercase letter(a - z)";
+					this.passwordPatternError = 'password must contain at least one lowercase letter(a - z)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regCapsAlp = /[A-Z]/;
 				if (!regCapsAlp.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one uppercase letter (A-Z)";
+					this.passwordPatternError = 'password must contain at least one uppercase letter (A-Z)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regSpecChar = /[!@#$%\^&*)(+=._-]/;
 				if (!regSpecChar.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one Special character (!@#$%\^&*)(+=._-)";
+					this.passwordPatternError = 'password must contain at least one Special character (!@#$%\^&*)(+=._-)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				var regSpace = /\s/;
 				if (regSpace.test(control.value)) {
-					this.passwordPatternError = "space not allowed";
+					this.passwordPatternError = 'space not allowed';
 					resolve({ 'isPatternMatch': true });
 				}
 				resolve(null);
@@ -109,8 +109,8 @@ export class ProfileComponent implements OnInit {
 	isEmailUnique(control: FormControl) {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
-				if (this.userProfile.email != control.value) {
-					this._httpService.checkEmail({ 'email': control.value }).subscribe((response) => {
+				if (this.userProfile.email !== control.value) {
+					this._httpService.checkEmailExists({ 'email': control.value }).subscribe((response) => {
 						if (response.success) {
 							resolve(null);
 						} else {
@@ -192,7 +192,7 @@ export class ProfileComponent implements OnInit {
 							localStorage.setItem('ogUserName', this.UserUpdateForm.get('username').value);
 							localStorage.setItem('ogUserEmail', this.UserUpdateForm.get('email').value);
 							// location.reload();
-							this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
+							this.asyncSubscriber.setProfileDetails({ 'Image': this.profileImage });
 
 							let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
 								duration: 5000,
@@ -230,7 +230,7 @@ export class ProfileComponent implements OnInit {
 						if (response.success) {
 							localStorage.setItem('ogProfileimage', response.adminimage);
 							// location.reload();
-							this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
+							this.asyncSubscriber.setProfileDetails({ 'Image': this.profileImage });
 
 							let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
 								duration: 5000,

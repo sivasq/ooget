@@ -1,6 +1,6 @@
 <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="inner-sidenav-content transition-2">
 	<!-- Http Progress Bar -->
-	
+
 
 	<!-- Breadcrumb Start -->
 	<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
@@ -59,15 +59,15 @@
 						<!-- UEN Number -->
 						<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 							<mat-label>UEN Number</mat-label>
-							<input matInput placeholder="UEN Number" name="uennumber" autocomplete="off" formControlName="uennumber"
+							<input matInput placeholder="UEN Number" name="uen" autocomplete="off" formControlName="uen"
 							 required>
-							<mat-error *ngIf="employerUpdateForm.get('uennumber').hasError('required')" align="start">
+							<mat-error *ngIf="employerUpdateForm.get('uen').hasError('required')" align="start">
 								UEN Number Required
 							</mat-error>
-							<mat-error *ngIf="employerUpdateForm.get('uennumber').hasError('isUENUnique')" align="start">
+							<mat-error *ngIf="employerUpdateForm.get('uen').hasError('isUENUnique')" align="start">
 								This UEN Already Registered
 							</mat-error>
-							<mat-error *ngIf="employerUpdateForm.get('uennumber').hasError('pattern')" align="start">
+							<mat-error *ngIf="employerUpdateForm.get('uen').hasError('pattern')" align="start">
 								Invalid UEN Format
 							</mat-error>
 						</mat-form-field>

@@ -27,7 +27,7 @@ const routes: Routes = [
 		canActivate: [AuthGuardService, NgxPermissionsGuard],
 		data: {
 			permissions: {
-				only: ['superemployer','verifier'],
+				only: ['superemployer', 'verifier'],
 				redirectTo: '/employer/401'
 			}
 		}

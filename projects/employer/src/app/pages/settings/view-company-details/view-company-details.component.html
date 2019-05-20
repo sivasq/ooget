@@ -3,7 +3,8 @@
 	<div fxLayout="row wrap">
 		<div class="flex-p" fxFlex="1 1 100%">
 			<mat-card class="mat-breadcrumb" fxLayout="row">
-				<a class="breadcrumb-item" routerLink="/employer/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+				<a class="breadcrumb-item" routerLink="/employer/dashboard" fxLayout="row"
+					fxLayoutAlign="flex-start center">
 					<mat-icon>home</mat-icon>
 					<span class="breadcrumb-title">Home</span>
 				</a>
@@ -21,8 +22,8 @@
 		<div class="flex-p" fxFlex="1 1 100%">
 			<mat-card class="p-0" fxLayout="row" fxLayoutAlign="space-between center">
 				<div>
-					<button mat-mini-fab color="primary" matTooltip="Add New Job" matTooltipPosition="right" style="border-radius: 0"
-					 routerLink="/employer/jobs/add">
+					<button mat-mini-fab color="primary" matTooltip="Add New Job" matTooltipPosition="right"
+						style="border-radius: 0" routerLink="/employer/jobs/add">
 						<mat-icon>playlist_add</mat-icon>
 					</button>
 					<!-- &nbsp;
@@ -34,8 +35,8 @@
 
 				<h3>Company Details</h3>
 
-				<button mat-mini-fab color="primary" matTooltip="View Jobs" matTooltipPosition="left" style="border-radius: 0"
-				 routerLink="/employer/jobs/list">
+				<button mat-mini-fab color="primary" matTooltip="View Jobs" matTooltipPosition="left"
+					style="border-radius: 0" routerLink="/employer/jobs/list">
 					<mat-icon>list</mat-icon>
 				</button>
 			</mat-card>
@@ -43,7 +44,7 @@
 			<mat-card class="p-10 mt-1" fxLayout="row wrap">
 				<mat-list>
 					<mat-list-item>
-						<span class="title">Company Name : </span>{{companyDetails.companyname}}
+						<span class="title">Company Name : </span>{{companyDetails.name}}
 					</mat-list-item>
 
 					<mat-divider></mat-divider>
@@ -55,7 +56,7 @@
 					<mat-divider></mat-divider>
 
 					<mat-list-item>
-						<span class="title">Industry : </span>{{companyDetails.industry}}
+						<span class="title">Industry : </span>{{companyDetails.industryname}}
 					</mat-list-item>
 
 					<mat-divider></mat-divider>
@@ -67,7 +68,7 @@
 					<mat-divider></mat-divider>
 
 					<mat-list-item>
-						<span class="title">UEN Number : </span>{{companyDetails.uennumber}}
+						<span class="title">UEN Number : </span>{{companyDetails.uen}}
 					</mat-list-item>
 
 					<mat-divider></mat-divider>
@@ -82,8 +83,10 @@
 						<span class="title" style="white-space: nowrap;">Terms &amp; Conditions : </span>
 
 						<div fxFlex fxLayout="row wrap" fxLayoutAlign="start center">
-							<span *ngIf="companyDetails.termsandconditions" style="margin-right: 15px; text-align: center;">
-								<a class="text-wrap" href="{{imgBaseUrl}}/company/{{companyDetails.termsandconditions}}" target="_blank" style="color: blue; font-weight: bold; font-size: 16px;">Click
+							<span *ngIf="companyDetails.TermsConditions"
+								style="margin-right: 15px; text-align: center;">
+								<a class="text-wrap" href="{{baseUrl}}/{{companyDetails.TermsConditions_file}}"
+									target="_blank" style="color: blue; font-weight: bold; font-size: 16px;">Click
 									here</a> to Download Terms and Conditions</span>
 						</div>
 					</mat-list-item>

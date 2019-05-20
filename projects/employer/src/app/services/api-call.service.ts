@@ -1,17 +1,110 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import { ConfigService } from './config.service';
 
 @Injectable()
 export class ApiCallService {
-	public baseUrl;
+	private _baseUrl;
+	private _token;
 
 	constructor(private http: HttpClient, private config: ConfigService) {
-		this.baseUrl = config.base_url;
+		this._baseUrl = config.base_url;
+		this._token = localStorage.getItem('ogToken');
 	}
 
+	createNonAuthorizationHeaderJson() {
+		const headers = {};
+		headers['Content-Type'] = 'application/json';
+		headers['Access-Control-Allow-Origin'] = '*';
+		// headers['Accept'] = 'application/json';
+		return headers;
+	}
+
+	createAuthorizationHeaderJson() {
+		const headers = {};
+		headers['Content-Type'] = 'application/json';
+		headers['Access-Control-Allow-Origin'] = '*';
+		// headers['Accept'] = 'application/json';
+		headers['Token'] = this._token;
+		return headers;
+	}
+
+	createAuthorizationHeaderFormData() {
+		const headers = {};
+		headers['Content-Type'] = 'multipart/form-data';
+		headers['Access-Control-Allow-Origin'] = '*';
+		// headers['Accept'] = 'application/json';
+		headers['token'] = this._token;
+		return headers;
+	}
+
+	createUrlParams(moduleName, modeName) {
+		const params = {};
+		params['module'] = moduleName;
+		params['mode'] = modeName;
+		return params;
+	}
+
+	// ==================================== Services ==================================== //
+
+	// Check Unique Email
+	checkEmailExists(email): Observable<any> {
+		const headers = this.createNonAuthorizationHeaderJson();
+		const params = this.createUrlParams('Users', 'CheckEmail');
+		return this.http.post(this._baseUrl, email, { headers: headers, params: params });
+	}
+
+	// Check UEN Number Exists for Employer
+	checkUENExists(uen): Observable<any> {
+		const headers = this.createNonAuthorizationHeaderJson();
+		const params = this.createUrlParams('Employer', 'CheckCompanyUenExist');
+		return this.http.post(this._baseUrl, uen, { headers: headers, params: params });
+	}
+
+	// Create New Employer with Default User
+	createEmployer(employerData): Observable<any> {
+		const headers = this.createNonAuthorizationHeaderJson();
+		const params = this.createUrlParams('Employer', 'CreateEmployer');
+		return this.http.post(this._baseUrl, employerData, { headers: headers, params: params });
+	}
+
+	// User Login Auth Check
+	authLogin(authData): Observable<any> {
+		const headers = this.createNonAuthorizationHeaderJson();
+		const params = this.createUrlParams('Users', 'Login');
+		return this.http.post(this._baseUrl, authData, { headers: headers, params: params });
+	}
+
+	// Get Particular Employers
+	getEmployer(): Observable<any> {
+		const headers = this.createAuthorizationHeaderJson();
+		const params = this.createUrlParams('Employer', 'GetEmployer');
+		return this.http.post(this._baseUrl, {}, { headers: headers, params: params });
+	}
+
+	// Update Employer
+	updateEmployer(employerData): Observable<any> {
+		const headers = this.createAuthorizationHeaderJson();
+		const params = this.createUrlParams('Employer', 'UpdateEmployer');
+		return this.http.post(this._baseUrl, employerData, { headers: headers, params: params });
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// ====================================================
 	getUserDetails(userId): Observable<any> {
 		let headers = new HttpHeaders(
 			{
@@ -19,7 +112,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 			})
 
-		return this.http.post(this.baseUrl + '/fetchemailwithidnoauth', userId, { headers: headers })
+		return this.http.post(this._baseUrl + '/fetchemailwithidnoauth', userId, { headers: headers })
 	}
 
 	resetPassword(data): Observable<any> {
@@ -27,40 +120,13 @@ export class ApiCallService {
 		let headers = new HttpHeaders()
 			.append('Content-Type', 'application/json')
 			.append('Access-Control-Allow-Origin', '*');
-		return this.http.post(this.baseUrl + '/changepasswordnoauth', data, { headers: headers })
+		return this.http.post(this._baseUrl + '/changepasswordnoauth', data, { headers: headers })
 	}
 
-	checkUEN(uen) {
-		let dummyData = '';
-		let userToken = localStorage.getItem('ogToken');
-		let headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-			})
-		return this.http.post<any>(this.baseUrl + '/unqiuecompany', uen, { headers: headers })
-			.map(res => res)
-	}
 
-	checkEmail(email) {
-		let dummyData = '';
-		let userToken = localStorage.getItem('ogToken');
-		let headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-			})
-		return this.http.post<any>(this.baseUrl + '/unqiueemployer', email, { headers: headers })
-			.map(res => res)
-	}
 
-	postLoginData(authData): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
-		let headers = new HttpHeaders()
-			.append('Content-Type', 'application/json')
-			.append('Access-Control-Allow-Origin', '*');
-		return this.http.post(this.baseUrl + '/login', authData, { headers: headers })
-	}
+
+
 
 	getSingleEmployersJobsList(employerId): Observable<any> {
 		let employerIds = employerId;
@@ -71,7 +137,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/job/jobslist', employerIds, { headers: headers })
+		return this.http.post(this._baseUrl + '/job/jobslist', employerIds, { headers: headers })
 	}
 
 	getTermsAcceptanceStatus(employerData): Observable<any> {
@@ -82,7 +148,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/fetchtermsstatus', employerData, { headers: headers })
+		return this.http.post(this._baseUrl + '/fetchtermsstatus', employerData, { headers: headers })
 	}
 
 	termsAcceptanceUpdate(termData): Observable<any> {
@@ -93,7 +159,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/updatetermsstatus', termData, { headers: headers })
+		return this.http.post(this._baseUrl + '/updatetermsstatus', termData, { headers: headers })
 	}
 
 	closeJob(jobStatus): Observable<any> {
@@ -105,7 +171,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/job/changejobstatus', jobStatus, { headers: headers })
+		return this.http.post(this._baseUrl + '/job/changejobstatus', jobStatus, { headers: headers })
 	}
 
 	getJobDetails(jobId): Observable<any> {
@@ -117,7 +183,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/job/fetchparticularjob', jobIds, { headers: headers })
+		return this.http.post(this._baseUrl + '/job/fetchparticularjob', jobIds, { headers: headers })
 	}
 
 	getJobContractors(jobId): Observable<any> {
@@ -129,7 +195,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/contract/contractslist', jobIds, { headers: headers })
+		return this.http.post(this._baseUrl + '/contract/contractslist', jobIds, { headers: headers })
 	}
 
 	getAppliedCandidates(jobId): Observable<any> {
@@ -140,7 +206,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/job/fetchparticularjobappliedjobseekers', jobId, { headers: headers })
+		return this.http.post(this._baseUrl + '/job/fetchparticularjobappliedjobseekers', jobId, { headers: headers })
 	}
 
 	getPendingJobApplications(): Observable<any> {
@@ -152,7 +218,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/job/fetchalljobappliedjobseekers', dummy, { headers: headers })
+		return this.http.post(this._baseUrl + '/job/fetchalljobappliedjobseekers', dummy, { headers: headers })
 	}
 
 	getJobSeekerDetails(jobseekerId): Observable<any> {
@@ -163,7 +229,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/job/fetchparticularjobseeker', jobseekerId, { headers: headers })
+		return this.http.post(this._baseUrl + '/job/fetchparticularjobseeker', jobseekerId, { headers: headers })
 	}
 
 	selectApplication(ids): Observable<any> {
@@ -175,7 +241,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/job/offerjob', ids, { headers: headers })
+		return this.http.post(this._baseUrl + '/job/offerjob', ids, { headers: headers })
 	}
 
 	jobAddToEmployer(employerJobData): Observable<any> {
@@ -187,7 +253,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/job/createjob', employerJobData, { headers: headers })
+		return this.http.post(this._baseUrl + '/job/createjob', employerJobData, { headers: headers })
 			.map(res => res)
 	}
 
@@ -200,17 +266,11 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/job/updatejob', employerJobData, { headers: headers })
+		return this.http.post(this._baseUrl + '/job/updatejob', employerJobData, { headers: headers })
 			.map(res => res)
 	}
 
-	postRegData(regData): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
-		let headers = new HttpHeaders()
-			.append('Content-Type', 'application/json')
-			.append('Access-Control-Allow-Origin', '*');
-		return this.http.post(this.baseUrl + '/register', regData, { headers: headers })
-	}
+
 
 	verifyTimeSheets(timesheetIds): Observable<any> {
 		let userToken = localStorage.getItem('ogToken');
@@ -220,7 +280,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/contract/verifytimesheet', timesheetIds, { headers: headers })
+		return this.http.post(this._baseUrl + '/contract/verifytimesheet', timesheetIds, { headers: headers })
 			.map(res => res)
 	}
 
@@ -232,7 +292,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/contract/generatepayroll', contractid, { headers: headers })
+		return this.http.post(this._baseUrl + '/contract/generatepayroll', contractid, { headers: headers })
 			.map(res => res)
 	}
 
@@ -244,7 +304,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/contract/fetchparticularcontract', contractId, { headers: headers })
+		return this.http.post(this._baseUrl + '/contract/fetchparticularcontract', contractId, { headers: headers })
 	}
 
 	getTimesheetDetails(contractId): Observable<any> {
@@ -255,7 +315,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/contract/fetchtimesheetdetails', contractId, { headers: headers })
+		return this.http.post(this._baseUrl + '/contract/fetchtimesheetdetails', contractId, { headers: headers })
 	}
 
 	timesheetAdjust(verifiedTime): Observable<any> {
@@ -267,7 +327,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/contract/verifypunch', verifiedTime, { headers: headers })
+		return this.http.post(this._baseUrl + '/contract/verifypunch', verifiedTime, { headers: headers })
 			.map(res => res)
 	}
 
@@ -280,7 +340,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/contract/verifypunchin', verifiedTime, { headers: headers })
+		return this.http.post(this._baseUrl + '/contract/verifypunchin', verifiedTime, { headers: headers })
 			.map(res => res)
 	}
 
@@ -293,7 +353,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/contract/verifypunchout', verifiedTime, { headers: headers })
+		return this.http.post(this._baseUrl + '/contract/verifypunchout', verifiedTime, { headers: headers })
 			.map(res => res)
 	}
 
@@ -305,7 +365,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/contract/fetchoffdays', contractId, { headers: headers })
+		return this.http.post(this._baseUrl + '/contract/fetchoffdays', contractId, { headers: headers })
 	}
 
 	addOffDay(Data): Observable<any> {
@@ -316,7 +376,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/contract/addoffday', Data, { headers: headers })
+		return this.http.post(this._baseUrl + '/contract/addoffday', Data, { headers: headers })
 	}
 
 	removeOffDay(Data): Observable<any> {
@@ -327,7 +387,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/contract/removeoffday', Data, { headers: headers })
+		return this.http.post(this._baseUrl + '/contract/removeoffday', Data, { headers: headers })
 	}
 
 	timesheetNotesUpdate(notesData): Observable<any> {
@@ -339,7 +399,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/contract/updatenotes', notesData, { headers: headers })
+		return this.http.post(this._baseUrl + '/contract/updatenotes', notesData, { headers: headers })
 			.map(res => res)
 	}
 
@@ -351,7 +411,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/updateownprofile', employerData, { headers: headers })
+		return this.http.post(this._baseUrl + '/updateownprofile', employerData, { headers: headers })
 			.map(res => res)
 	}
 
@@ -364,7 +424,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/createsupervisor', employerData, { headers: headers })
+		return this.http.post(this._baseUrl + '/createsupervisor', employerData, { headers: headers })
 			.map(res => res)
 	}
 
@@ -376,7 +436,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/updatesupervisor', employerData, { headers: headers })
+		return this.http.post(this._baseUrl + '/updatesupervisor', employerData, { headers: headers })
 			.map(res => res)
 	}
 
@@ -388,7 +448,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/deletesupervisor', employerData, { headers: headers })
+		return this.http.post(this._baseUrl + '/deletesupervisor', employerData, { headers: headers })
 			.map(res => res)
 	}
 
@@ -402,22 +462,11 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/createemployer', employerData, { headers: headers })
+		return this.http.post(this._baseUrl + '/createemployer', employerData, { headers: headers })
 			.map(res => res)
 	}
 
-	employerUpdate(employerData): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
-		let userToken = localStorage.getItem('ogToken');
-		let headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/updatecompanydetails', employerData, { headers: headers })
-			.map(res => res)
-	}
+
 
 	getUserProfileDetails(): Observable<any> {
 		let dummyData = '';
@@ -428,7 +477,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/fetchownprofile', dummyData, { headers: headers })
+		return this.http.post(this._baseUrl + '/fetchownprofile', dummyData, { headers: headers })
 			.map(res => res)
 	}
 
@@ -439,20 +488,10 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken,
 			})
-		return this.http.post(this.baseUrl + '/updateprofileimage', formData, { headers: headers })
+		return this.http.post(this._baseUrl + '/updateprofileimage', formData, { headers: headers })
 	}
 
-	getCompanyDetails(): Observable<any> {
-		let employerIds = '';
-		let userToken = localStorage.getItem('ogToken');
-		let headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			})
-		return this.http.post(this.baseUrl + '/fetchcompany', employerIds, { headers: headers })
-	}
+
 
 	getExtraUserProfileDetails(userid): Observable<any> {
 		let dummyData = '';
@@ -463,7 +502,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/fetchsupervisor', userid, { headers: headers })
+		return this.http.post(this._baseUrl + '/fetchsupervisor', userid, { headers: headers })
 			.map(res => res)
 	}
 
@@ -476,7 +515,7 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/listsupervisors', dummyData, { headers: headers })
+		return this.http.post(this._baseUrl + '/listsupervisors', dummyData, { headers: headers })
 	}
 
 	getRolesAndPermissions(): Observable<any> {
@@ -488,6 +527,6 @@ export class ApiCallService {
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
 			})
-		return this.http.post(this.baseUrl + '/fetchownroles', dummyData, { headers: headers })
+		return this.http.post(this._baseUrl + '/fetchownroles', dummyData, { headers: headers })
 	}
 }

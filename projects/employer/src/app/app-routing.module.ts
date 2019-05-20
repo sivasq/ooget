@@ -5,7 +5,7 @@ import { AuthloginComponent } from './authlogin/authlogin.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-import { Layout2Component } from './layouts/layout2/layout2.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 import { NgxPermissionsGuard } from 'ngx-permissions';
@@ -36,7 +36,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'employer',
-		component: Layout2Component,
+		component: AdminLayoutComponent,
 		canActivate: [AuthGuardService],
 		children: [
 			{
