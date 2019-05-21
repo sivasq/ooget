@@ -46,8 +46,8 @@
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Name (same as Identification Card)</mat-label>
 										<input matInput type="text" placeholder="Name (same as Identification Card)"
-											name="username" formControlName="username" required>
-										<mat-error *ngIf="jobSeekerProfileForm.get('username').hasError('required')"
+											name="firstname" formControlName="firstname" required>
+										<mat-error *ngIf="jobSeekerProfileForm.get('firstname').hasError('required')"
 											align="start">
 											Your Name Required
 										</mat-error>
@@ -87,19 +87,18 @@
 
 									<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 										<mat-label>NRIC/FIN ( S1234567A )</mat-label>
-										<input matInput placeholder="NRIC/FIN ( S1234567A )" name="nricfinno"
-											autocomplete="off" formControlName="nricfinno"
-											[readonly]="isNricFinNoReadonly" #nricfininput
+										<input matInput placeholder="NRIC/FIN ( S1234567A )" name="nric"
+											autocomplete="off" formControlName="nric" [readonly]="isNricFinNoReadonly"
+											#nricfininput
 											(input)="nricfininput.value=$event.target.value.toUpperCase()">
-										<!-- <mat-error *ngIf="jobSeekerProfileForm.get('nricfinno').hasError('required')" align="start">
+										<!-- <mat-error *ngIf="jobSeekerProfileForm.get('nric').hasError('required')" align="start">
 											NRIC / FIN No Required
 										</mat-error> -->
-										<mat-error *ngIf="jobSeekerProfileForm.get('nricfinno').hasError('pattern')"
+										<mat-error *ngIf="jobSeekerProfileForm.get('nric').hasError('pattern')"
 											align="start">
 											Invalid NRIC / FIN No Format
 										</mat-error>
-										<mat-error
-											*ngIf="jobSeekerProfileForm.get('nricfinno').hasError('isNricFinUnique')"
+										<mat-error *ngIf="jobSeekerProfileForm.get('nric').hasError('isNricFinUnique')"
 											align="start">
 											This NRIC/FIN No Already Registered
 										</mat-error>
@@ -108,7 +107,7 @@
 									<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 										<mat-label>Race</mat-label>
 										<mat-select placeholder="Race" name="race" formControlName="race" required>
-											<mat-option *ngFor="let race of Races" [value]="race.value">
+											<mat-option *ngFor="let race of Races" [value]="race.id">
 												{{ race.name }}
 											</mat-option>
 										</mat-select>
@@ -116,10 +115,10 @@
 
 									<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 										<mat-label>Nationality</mat-label>
-										<mat-select placeholder="Nationality" name="residencytype"
-											formControlName="residencytype" required>
+										<mat-select placeholder="Nationality" name="residency_type"
+											formControlName="residency_type" required>
 											<mat-option *ngFor="let nationality of Nationalitys"
-												[value]="nationality.value">
+												[value]="nationality.id">
 												{{ nationality.name }}
 											</mat-option>
 										</mat-select>
@@ -127,18 +126,17 @@
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Mobile Number</mat-label>
-										<input matInput placeholder="Mobile Number" name="mobileno" autocomplete="off"
-											formControlName="mobileno" required>
-										<mat-error *ngIf="jobSeekerProfileForm.get('mobileno').hasError('required')"
+										<input matInput placeholder="Mobile Number" name="mobile" autocomplete="off"
+											formControlName="mobile" required>
+										<mat-error *ngIf="jobSeekerProfileForm.get('mobile').hasError('required')"
 											align="start">
 											Mobile No Required
 										</mat-error>
-										<mat-error *ngIf="jobSeekerProfileForm.get('mobileno').hasError('pattern')"
+										<mat-error *ngIf="jobSeekerProfileForm.get('mobile').hasError('pattern')"
 											align="start">
 											Numbers Only Allowed
 										</mat-error>
-										<mat-error
-											*ngIf="jobSeekerProfileForm.get('mobileno').hasError('isMobileUnique')"
+										<mat-error *ngIf="jobSeekerProfileForm.get('mobile').hasError('isMobileUnique')"
 											align="start">
 											This Mobile No Already Registered
 										</mat-error>
@@ -263,13 +261,13 @@
 										<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center">
 											<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 												<mat-label>Choose Bank</mat-label>
-												<mat-select placeholder="Choose Bank" name="bankname"
-													formControlName="bankname"
+												<mat-select placeholder="Choose Bank" name="bank_id"
+													formControlName="bank_id"
 													(ngModelChange)="bankChange($event,'customchange')"
 													[required]="reqBankDetails">
 													<mat-option>--Select Bank--</mat-option>
 													<mat-option *ngFor="let BankDetail of BankDetails;"
-														[value]="BankDetail.shortName">{{ BankDetail.shortName
+														[value]="BankDetail.id">{{ BankDetail.shortName
 														==
 														BankDetail.fullName ? BankDetail.shortName : BankDetail.fullName }}
 													</mat-option>
@@ -278,10 +276,10 @@
 
 											<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 												<mat-label>Bank Code</mat-label>
-												<input matInput type="text" placeholder="Bank Code" name="bankcode"
-													formControlName="bankcode" [required]="reqBankDetails" readonly>
+												<input matInput type="text" placeholder="Bank Code" name="bank_code"
+													formControlName="bank_code" [required]="reqBankDetails" readonly>
 												<mat-error
-													*ngIf="jobSeekerProfileForm.get('bankcode').hasError('required')"
+													*ngIf="jobSeekerProfileForm.get('bank_code').hasError('required')"
 													align="start">
 													Bank Code Required
 												</mat-error>
@@ -289,10 +287,10 @@
 
 											<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 												<mat-label>Branch Code</mat-label>
-												<input matInput type="text" placeholder="Branch Code" name="branchcode"
-													formControlName="branchcode" [required]="reqBankDetails">
+												<input matInput type="text" placeholder="Branch Code" name="branch_code"
+													formControlName="branch_code" [required]="reqBankDetails">
 												<mat-error
-													*ngIf="jobSeekerProfileForm.get('branchcode').hasError('required')"
+													*ngIf="jobSeekerProfileForm.get('branch_code').hasError('required')"
 													align="start">
 													Branch Code Required
 												</mat-error>
@@ -301,10 +299,10 @@
 											<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 												<mat-label>Account Number</mat-label>
 												<input matInput type="text" placeholder="Account Number"
-													name="accountno" formControlName="accountno"
+													name="account_no" formControlName="account_no"
 													[required]="reqBankDetails">
 												<mat-error
-													*ngIf="jobSeekerProfileForm.get('accountno').hasError('required')"
+													*ngIf="jobSeekerProfileForm.get('account_no').hasError('required')"
 													align="start">
 													Account Number Required
 												</mat-error>
@@ -344,12 +342,12 @@
 								<div fxLayout="row wrap">
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Employment Type</mat-label>
-										<mat-select placeholder="Employment Type" name="employmenttype" multiple
-											formControlName="employmenttype"
+										<mat-select placeholder="Employment Type" name="employment_type" multiple
+											formControlName="employment_type"
 											(ngModelChange)="employmenttypeChange($event)">
 											<mat-option *ngFor="let EmploymentType of EmploymentTypes"
-												[value]="EmploymentType.EmploymentType">{{
-												EmploymentType.EmploymentType
+												[value]="EmploymentType.id"> {{
+												EmploymentType.name
 												}}
 											</mat-option>
 										</mat-select>
@@ -357,11 +355,10 @@
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Region</mat-label>
-										<mat-select multiple placeholder="Region" name="preferredregion"
-											formControlName="preferredregion" (ngModelChange)="mainlocationChange()">
-											<mat-option *ngFor="let Location of Locations | uniquemainlocation"
-												[value]="Location.mainlocation">{{
-												Location.mainlocation
+										<mat-select multiple placeholder="Region" name="region" formControlName="region"
+											(ngModelChange)="mainlocationChange()">
+											<mat-option *ngFor="let Region of Regions" [value]="Region.id"> {{
+												Region.name
 												}}
 											</mat-option>
 										</mat-select>
@@ -369,8 +366,8 @@
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Location</mat-label>
-										<mat-select placeholder="Location" name="preferredlocation"
-											formControlName="preferredlocation" multiple>
+										<mat-select placeholder="Location" name="location" formControlName="location"
+											multiple>
 											<div style="padding:10px 20px;font-weight: 500;">
 												<span style="cursor:pointer; color:#021def;"
 													(click)="selectAllSubLocation()"> Select All </span>,
@@ -380,16 +377,16 @@
 													All </span>
 											</div>
 											<mat-option
-												*ngFor="let Location of Locations | multiplesublocationfilter:jobSeekerProfileForm.get('preferredregion').value"
-												[value]="Location.sublocation">{{ Location.sublocation }}
+												*ngFor="let Location of Locations | multiplesublocationfilter:jobSeekerProfileForm.get('region').value"
+												[value]="Location.id">{{ Location.name }}
 											</mat-option>
 										</mat-select>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Specialization</mat-label>
-										<mat-select placeholder="Specialization" name="preferredspecialization"
-											formControlName="preferredspecialization" multiple>
+										<mat-select placeholder="Specialization" name="specializations"
+											formControlName="specializations" multiple>
 											<div style="padding:10px 20px;font-weight: 500;">
 												<span style="cursor:pointer; color:#021def;"
 													(click)="selectAllSpecialization()"> Select All </span>,
@@ -403,23 +400,23 @@
 												<p style="padding:10px 20px;font-weight: 500; background: #eee;">FULL
 													TIME</p>
 												<mat-option *ngFor="let Specialization of FullTimeSpecializations"
-													[value]="Specialization.specialization">{{
-													Specialization.specialization }}</mat-option>
+													[value]="Specialization.id">{{
+													Specialization.name }}</mat-option>
 											</div>
 											<div *ngIf="showparttimespeccilization">
 												<p style="padding:10px 20px;font-weight: 500; background: #eee;">PART
 													TIME</p>
 												<mat-option *ngFor="let Specialization of PartTimeSpecializations"
-													[value]="Specialization.specialization">{{
-													Specialization.specialization }}</mat-option>
+													[value]="Specialization.id">{{
+													Specialization.name }}</mat-option>
 											</div>
 										</mat-select>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Working Environment</mat-label>
-										<mat-select placeholder="Working Environment" name="workingenvironment"
-											formControlName="workingenvironment" multiple>
+										<mat-select placeholder="Working Environment" name="working_environment"
+											formControlName="working_environment" multiple>
 											<div style="padding:10px 20px;font-weight: 500;">
 												<span style="cursor:pointer; color:#021def;"
 													(click)="selectAllWorkEnvironment()"> Select All </span>,
@@ -429,8 +426,8 @@
 													All </span>
 											</div>
 											<mat-option *ngFor="let WorkingEnvironment of WorkingEnvironments"
-												[value]="WorkingEnvironment.Environment">{{
-												WorkingEnvironment.Environment }}</mat-option>
+												[value]="WorkingEnvironment.id">{{
+												WorkingEnvironment.name }}</mat-option>
 										</mat-select>
 									</mat-form-field>
 
@@ -452,19 +449,18 @@
 								<div fxLayout="row wrap">
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Experience In</mat-label>
-										<mat-select placeholder="Experience In" name="experiencein"
-											formControlName="experiencein" multiple>
+										<mat-select placeholder="Experience In" name="experience_in"
+											formControlName="experience_in" multiple>
 											<mat-option *ngFor="let Specialization of FullTimeSpecializations"
-												[value]="Specialization.specialization">
-												{{Specialization.specialization}}</mat-option>
+												[value]="Specialization.id">
+												{{Specialization.name}}</mat-option>
 										</mat-select>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Years of Experience (in total)</mat-label>
 										<input matInput type="number" placeholder="Years of Experience (in total)"
-											name="totalexperienceinyears" autocomplete="off"
-											formControlName="totalexperienceinyears">
+											name="experience_year" autocomplete="off" formControlName="experience_year">
 									</mat-form-field>
 								</div>
 
@@ -480,9 +476,9 @@
 									</div>
 								</div>
 
-								<div formArrayName="previousexperince">
+								<div formArrayName="experience_details">
 									<div fxLayout="row"
-										*ngFor="let Exp of jobSeekerProfileForm.controls['previousexperince']['controls']; let expIndex = index;"
+										*ngFor="let Exp of jobSeekerProfileForm.controls['experience_details']['controls']; let expIndex = index;"
 										[formGroupName]="expIndex">
 										<div fxFlex="95" fxLayout="row wrap" fxLayoutAlign="space-between center"
 											style="border: 2px solid #eee; padding: 10px; margin: 10px 0;">
@@ -527,7 +523,7 @@
 												<input matInput [max]="today" [matDatepicker]="frompicker"
 													placeholder="Job Period From" name="previousjobfrom"
 													autocomplete="off" formControlName="previousjobfrom"
-													(ngModelChange)="jobSeekerProfileForm.controls.previousexperince.controls[expIndex].controls.previousjobfrom.value = $event"
+													(ngModelChange)="jobSeekerProfileForm.controls.experience_details.controls[expIndex].controls.previousjobfrom.value = $event"
 													(click)="frompicker.open()" readonly>
 												<mat-datepicker-toggle matSuffix [for]="frompicker">
 												</mat-datepicker-toggle>
@@ -547,7 +543,7 @@
 												[appearance]="appearance$ | async">
 												<mat-label>Job Period To</mat-label>
 												<input matInput
-													[min]="jobSeekerProfileForm.controls.previousexperince.controls[expIndex].controls.previousjobfrom.value"
+													[min]="jobSeekerProfileForm.controls.experience_details.controls[expIndex].controls.previousjobfrom.value"
 													[max]="today" [matDatepicker]="topicker" placeholder="Job Period To"
 													name="previousjobto" autocomplete="off"
 													formControlName="previousjobto" (click)="topicker.open()" readonly>
@@ -597,8 +593,7 @@
 								<div fxLayout="row wrap">
 									<h4 style="margin-bottom: 10px;">Frequency of Notification</h4>
 
-									<mat-radio-group name="notificationalerttype"
-										formControlName="notificationalerttype"
+									<mat-radio-group name="notification" formControlName="notification"
 										(ngModelChange)="notificationAlertTypeChange($event)" fxLayout.lt-sm='column'>
 										<mat-radio-button [ngStyle.lt-sm]="{'margin':'5px 0'}" value="anytime"> Always
 										</mat-radio-button>
@@ -607,7 +602,7 @@
 										</mat-radio-button>
 									</mat-radio-group>
 
-									<div *ngIf="jobSeekerProfileForm.get('notificationalerttype').value == 'off'"
+									<div *ngIf="jobSeekerProfileForm.get('notification').value == 'off'"
 										style="margin: 25px 0 0;">
 										<mat-radio-group name="alertswitchedoffdays"
 											formControlName="alertswitchedoffdays"
@@ -618,7 +613,7 @@
 										</mat-radio-group>
 									</div>
 
-									<div *ngIf="jobSeekerProfileForm.get('notificationalerttype').value == 'off'"
+									<div *ngIf="jobSeekerProfileForm.get('notification').value == 'off'"
 										style="margin: 15px 0 25px; padding-left: 15px; color: #797676; font-weight: 600;">
 										(Notification
 										Off until :

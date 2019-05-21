@@ -128,6 +128,13 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, {}, { headers: headers, params: params });
 	}
 
+	// Check unique NRIC
+	checkUniqueNric(nric): Observable<any> {
+		const headers = this.createAuthorizationHeaderJson();
+		const params = this.createUrlParams('Jobseeker', 'CheckNric');
+		return this.http.post(this._baseUrl, nric, { headers: headers, params: params });
+	}
+
 	// Update Current User Profile
 	updateProfileDetails(ProfileData): Observable<any> {
 		const headers = this.createAuthorizationHeaderJson();
@@ -212,17 +219,7 @@ export class ApiCallService {
 			.map(res => res);
 	}
 
-	checkNricFin(nricfinno) {
-		const dummyData = '';
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-			});
-		return this.http.post<any>(this._baseUrl + '/uniquenricfinno', nricfinno, { headers: headers })
-			.map(res => res);
-	}
+
 
 	postRegData(regData): Observable<any> {
 		// var authDatas = JSON.stringify(authData);

@@ -2,11 +2,11 @@ import { Nationality } from '../classes/nationality';
 
 export const Nationalitys: Nationality[] = [
 	{
-		"name": "Singapore Citizen",
-		"value": "Singapore Citizen"
+		'name': 'Singapore Citizen',
+		'id': 1
 	},
 	{
-		"name": "Permanent Resident",
-		"value": "Permanent Resident"
+		'name': 'Permanent Resident',
+		'id': 2
 	}
 ]

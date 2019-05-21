@@ -1,4 +1,4 @@
 export class Nationality {
 	name: string;
-	value: string;
+	id: Number;
 }

@@ -4,11 +4,11 @@ import { Observable, of } from 'rxjs';
 import { EmploymentType } from '../classes/EmploymentType';
 import { EmploymentTypes } from '../mock-datas/EmploymentTypes';
 
-import { WorkingEnvironment } from '../classes/WorkingEnvironment';
+import { WorkingEnvironment } from '../classes/workingEnvironment';
 import { WorkingEnvironments } from '../mock-datas/WorkingEnvironments';
 
-import { JobLocation } from '../classes/jobLocation';
-import { JobLocations } from '../mock-datas/JobLocations';
+import { JobLocation, JobRegion } from '../classes/jobLocation';
+import { JobLocations, JobRegions } from '../mock-datas/JobLocations';
 
 import { Specialization } from '../classes/Specialization';
 import { Specializations } from '../mock-datas/Specializations';
@@ -22,7 +22,7 @@ import { Races } from '../mock-datas/race';
 import { Nationalitys } from '../mock-datas/nationlitys';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class MockDataService {
 
@@ -40,12 +40,16 @@ export class MockDataService {
 		return of(Specializations);
 	}
 
-	getFullTimeSpecializations(): Observable<Specialization[]> {
-		return of(FullTimeSpecializations);
-	}
+	// getFullTimeSpecializations(): Observable<Specialization[]> {
+	// 	return of(FullTimeSpecializations);
+	// }
 
-	getPartTimeSpecializations(): Observable<Specialization[]> {
-		return of(PartTimeSpecializations);
+	// getPartTimeSpecializations(): Observable<Specialization[]> {
+	// 	return of(PartTimeSpecializations);
+	// }
+
+	getJobRegions(): Observable<JobRegion[]> {
+		return of(JobRegions);
 	}
 
 	getJobLocations(): Observable<JobLocation[]> {

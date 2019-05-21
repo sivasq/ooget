@@ -1,288 +1,307 @@
-import { JobLocation } from '../classes/jobLocation';
+import { JobLocation, JobRegion } from '../classes/jobLocation';
 
 export const JobLocations: JobLocation[] = [
 	{
-		"_id": "432424",
-		"mainlocation": "North",
-		"sublocation": "Central Water Catchment"
+		'id': 1,
+		'name': 'Central Water Catchment',
+		'region': 5
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "North",
-		"sublocation": "Lim Chu Kang"
+		'id': 2,
+		'name': 'Lim Chu Kang',
+		'region': 5
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "North",
-		"sublocation": "Mandai"
+		'id': 3,
+		'name': 'Mandai',
+		'region': 5
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "North",
-		"sublocation": "Sembawang"
+		'id': 4,
+		'name': 'Sembawang',
+		'region': 5
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "North",
-		"sublocation": "Simpang"
+		'id': 5,
+		'name': 'Simpang',
+		'region': 5
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "North",
-		"sublocation": "Sungei Kadut"
+		'id': 6,
+		'name': 'Sungei Kadut',
+		'region': 5
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "North",
-		"sublocation": "Woodlands"
+		'id': 7,
+		'name': 'Woodlands',
+		'region': 5
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "North",
-		"sublocation": "Yishun"
-	},
-
-	{
-		"_id": "432424",
-		"mainlocation": "North East",
-		"sublocation": "Ang Mo Kio"
+		'id': 8,
+		'name': 'Yishun',
+		'region': 5
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "North East",
-		"sublocation": "Hougang"
+		'id': 9,
+		'name': 'Ang Mo Kio',
+		'region': 4
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "North East",
-		"sublocation": "North Eastern Islands"
+		'id': 10,
+		'name': 'Hougang',
+		'region': 4
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "North East",
-		"sublocation": "Punggol"
+		'id': 11,
+		'name': 'North Eastern Islands',
+		'region': 4
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "North East",
-		"sublocation": "Seletar"
+		'id': 12,
+		'name': 'Punggol',
+		'region': 4
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "North East",
-		"sublocation": "Sengkang"
+		'id': 13,
+		'name': 'Seletar',
+		'region': 4
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "North East",
-		"sublocation": "Serangoon"
-	},
-
-	{
-		"_id": "432424",
-		"mainlocation": "West",
-		"sublocation": "Boon Lay"
+		'id': 14,
+		'name': 'Sengkang',
+		'region': 4
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "West",
-		"sublocation": "Bukit Batok"
+		'id': 15,
+		'name': 'Serangoon',
+		'region': 4
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "West",
-		"sublocation": "Bukit Panjang"
+		'id': 16,
+		'name': 'Boon Lay',
+		'region': 3
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "West",
-		"sublocation": "Choa Chu Kang"
+		'id': 17,
+		'name': 'Bukit Batok',
+		'region': 3
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "West",
-		"sublocation": "Clementi"
+		'id': 18,
+		'name': 'Bukit Panjang',
+		'region': 3
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "West",
-		"sublocation": "Jurong East"
+		'id': 19,
+		'name': 'Choa Chu Kang',
+		'region': 3
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "West",
-		"sublocation": "Jurong West"
+		'id': 20,
+		'name': 'Clementi',
+		'region': 3
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "West",
-		"sublocation": "Pioneer"
+		'id': 21,
+		'name': 'Jurong East',
+		'region': 3
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "West",
-		"sublocation": "Tengah"
+		'id': 22,
+		'name': 'Jurong West',
+		'region': 3
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "West",
-		"sublocation": "Tuas"
+		'id': 23,
+		'name': 'Pioneer',
+		'region': 3
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "West",
-		"sublocation": "Western Islands"
+		'id': 24,
+		'name': 'Tengah',
+		'region': 3
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "West",
-		"sublocation": "Western Water"
+		'id': 25,
+		'name': 'Tuas',
+		'region': 3
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "West",
-		"sublocation": "Catchment"
-	},
-
-	{
-		"_id": "432424",
-		"mainlocation": "East",
-		"sublocation": "Bedok"
+		'id': 26,
+		'name': 'Western Islands',
+		'region': 3
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "East",
-		"sublocation": "Changi"
+		'id': 27,
+		'name': 'Western Water',
+		'region': 3
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "East",
-		"sublocation": "Changi Bay"
+		'id': 28,
+		'name': 'Catchment',
+		'region': 3
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "East",
-		"sublocation": "Pasir Ris"
+		'id': 29,
+		'name': 'Bedok',
+		'region': 2
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "East",
-		"sublocation": "Paya Lebar"
+		'id': 30,
+		'name': 'Changi',
+		'region': 2
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "East",
-		"sublocation": "Tampines"
-	},
-
-	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Bishan"
+		'id': 31,
+		'name': 'Changi Bay',
+		'region': 2
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Bukit Merah"
+		'id': 32,
+		'name': 'Pasir Ris',
+		'region': 2
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Bukit Timah"
+		'id': 33,
+		'name': 'Paya Lebar',
+		'region': 2
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Downtown Core"
+		'id': 34,
+		'name': 'Tampines',
+		'region': 2
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Geylang"
+		'id': 35,
+		'name': 'Bishan',
+		'region': 1
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Kallang"
+		'id': 36,
+		'name': 'Bukit Merah',
+		'region': 1
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Marina East"
+		'id': 37,
+		'name': 'Bukit Timah',
+		'region': 1
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Marina South"
+		'id': 38,
+		'name': 'Downtown Core',
+		'region': 1
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Marine Parade"
+		'id': 39,
+		'name': 'Geylang',
+		'region': 1
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Museum"
+		'id': 40,
+		'name': 'Kallang',
+		'region': 1
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Newton"
+		'id': 41,
+		'name': 'Marina East',
+		'region': 1
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Novena"
+		'id': 42,
+		'name': 'Marina South',
+		'region': 1
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Orchard"
+		'id': 43,
+		'name': 'Marine Parade',
+		'region': 1
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Outram"
+		'id': 44,
+		'name': 'Museum',
+		'region': 1
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Queenstown"
+		'id': 45,
+		'name': 'Newton',
+		'region': 1
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "River Valley"
+		'id': 46,
+		'name': 'Novena',
+		'region': 1
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Rochor"
+		'id': 47,
+		'name': 'Orchard',
+		'region': 1
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Singapore River"
+		'id': 48,
+		'name': 'Outram',
+		'region': 1
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Southern Islands"
+		'id': 49,
+		'name': 'Queenstown',
+		'region': 1
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Straits View"
+		'id': 50,
+		'name': 'River Valley',
+		'region': 1
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Tanglin"
+		'id': 51,
+		'name': 'Rochor',
+		'region': 1
 	},
 	{
-		"_id": "432424",
-		"mainlocation": "Central",
-		"sublocation": "Toa Payoh"
+		'id': 52,
+		'name': 'Singapore River',
+		'region': 1
+	},
+	{
+		'id': 53,
+		'name': 'Southern Islands',
+		'region': 1
+	},
+	{
+		'id': 54,
+		'name': 'Straits View',
+		'region': 1
+	},
+	{
+		'id': 55,
+		'name': 'Tanglin',
+		'region': 1
+	},
+	{
+		'id': 56,
+		'name': 'Toa Payoh',
+		'region': 1
 	}
-]
+];
+
+export const JobRegions: JobRegion[] = [
+	{
+		'id': 1,
+		'name': 'Central'
+	},
+	{
+		'id': 2,
+		'name': 'East'
+	},
+	{
+		'id': 3,
+		'name': 'West'
+	},
+	{
+		'id': 4,
+		'name': 'North East'
+	},
+	{
+		'id': 5,
+		'name': 'North'
+	}
+];

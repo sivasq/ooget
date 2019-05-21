@@ -1,5 +1,5 @@
 export class BankDetail {
-	_id: string;
+	id: Number;
 	fullName: string;
 	shortName: string;
 	bankCode: string;

@@ -5,14 +5,14 @@ import { MatTabChangeEvent, MatSnackBar } from '@angular/material';
 import { Subscription, Observable } from 'rxjs';
 import { ConfigService } from '../../../services/config.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe, UpperCasePipe } from '@angular/common';
+import { DatePipe, UpperCasePipe, JsonPipe } from '@angular/common';
 import { MultipleSubLocationFilter } from '../../../pipes/custompipes.pipe';
 import { AsyncSubscriber } from '../../../services/async.service';
 import { MockDataService } from '../../../services/mock-data.service';
 import { EmploymentType } from '../../../classes/EmploymentType';
-import { JobLocation } from '../../../classes/jobLocation';
+import { JobLocation, JobRegion } from '../../../classes/jobLocation';
 import { Specialization } from '../../../classes/Specialization';
-import { WorkingEnvironment } from '../../../classes/WorkingEnvironment';
+import { WorkingEnvironment } from '../../../classes/workingEnvironment';
 import { BankDetail } from '../../../classes/bankDetail';
 import { Race } from '../../../classes/race';
 import { Nationality } from '../../../classes/Nationality';
@@ -30,8 +30,8 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 	BankDetails: BankDetail[];
 	EmploymentTypes: EmploymentType[];
+	Regions: JobRegion[];
 	Locations: JobLocation[];
-	// Specializations: Specialization[];
 	FullTimeSpecializations: Specialization[];
 	PartTimeSpecializations: Specialization[];
 	WorkingEnvironments: WorkingEnvironment[];
@@ -61,8 +61,8 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		email: '',
 		country: '',
 		race: '',
-		residencytype: '',
-		mobileno: '',
+		residency_type: '',
+		mobile: '',
 		address: '',
 		nricfinno: '',
 		dob_day: '',
@@ -73,25 +73,25 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		gender: '',
 
 		ispaynowreg: '',
-		bankname: '',
-		bankcode: '',
-		branchcode: '',
-		accountno: '',
+		bank_id: '',
+		bank_code: '',
+		branch_code: '',
+		account_no: '',
 
-		employmenttype: '',
-		preferredregion: '',
-		preferredlocation: '',
-		preferredspecialization: '',
-		workingenvironment: '',
+		employment_type: '',
+		region: '',
+		location: '',
+		specializations: '',
+		working_environment: '',
 
-		notificationalerttype: '',
+		notification: '',
 		alertswitchedoffdays: '',
 		alertofffrom: '',
 		alertoffto: '',
 
-		experiencein: '',
-		totalexperienceinyears: '',
-		previousexperince: [
+		experience_in: '',
+		experience_year: '',
+		experience_details: [
 			{
 				previouscompanyname: '',
 				previouscompanyposition: '',
@@ -146,6 +146,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 		this.getEmploymentTypes();
 		this.getWorkingEnvironments();
+		this.getJobRegions();
 		this.getJobLocations();
 		// this.getSpecializations();
 		this.getFullTimeSpecializations();
@@ -163,21 +164,25 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		this.mockDataService.getWorkingEnvironments()
 			.subscribe(WorkingEnvironments => this.WorkingEnvironments = WorkingEnvironments);
 	}
+	getJobRegions(): void {
+		this.mockDataService.getJobRegions()
+			.subscribe(Regions => this.Regions = Regions);
+	}
 	getJobLocations(): void {
 		this.mockDataService.getJobLocations()
 			.subscribe(Locations => this.Locations = Locations);
 	}
-	// getSpecializations(): void {
-	// 	this.mockDataService.getFullTimeSpecializations()
-	// 		.subscribe(Specializations => this.Specializations = Specializations);
-	// }
 	getFullTimeSpecializations(): void {
-		this.mockDataService.getFullTimeSpecializations()
-			.subscribe(Specializations => this.FullTimeSpecializations = Specializations);
+		this.mockDataService.getSpecializations()
+			.subscribe(Specializations => {
+				this.FullTimeSpecializations = Specializations.filter(specialization => specialization.type === 1 || specialization.type === 3);
+			});
 	}
 	getPartTimeSpecializations(): void {
-		this.mockDataService.getPartTimeSpecializations()
-			.subscribe(Specializations => this.PartTimeSpecializations = Specializations);
+		this.mockDataService.getSpecializations()
+			.subscribe(Specializations => {
+				this.PartTimeSpecializations = Specializations.filter(specialization => specialization.type === 2 || specialization.type === 3);
+			});
 	}
 	getBankDetails(): void {
 		this.mockDataService.getBankDetails()
@@ -203,16 +208,18 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	buildJobSeekerProfileForm(): void {
 		this.jobSeekerProfileForm = this.fb.group({
 			// Profile Details
-			username: ['', Validators.compose([Validators.required])],
+			firstname: ['', Validators.compose([Validators.required])],
 			// nameinidcard: ['', Validators.compose([Validators.required])],
 			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],
 			country: ['Singapore', Validators.compose([Validators.required])],
 			race: ['', Validators.compose([Validators.required])],
-			residencytype: ['', Validators.compose([Validators.required])],
-			mobileno: ['', Validators.compose([Validators.required, Validators.pattern(this.mobileNoPattern)]), this.isMobileUnique.bind(this)],
+			residency_type: ['', Validators.compose([Validators.required])],
+			mobile: ['', Validators.compose([Validators.required, Validators.pattern(this.mobileNoPattern)])],
+			// mobile: ['', Validators.compose([Validators.required, Validators.pattern(this.mobileNoPattern)]), this.isMobileUnique.bind(this)],
 			address: ['', Validators.compose([Validators.required])],
-			nricfinno: ['', Validators.compose([Validators.pattern(this.nricFinNoPattern)]), this.isNricFinUnique.bind(this)],
-			// nricfinno: ['', Validators.compose([Validators.required, Validators.pattern(this.nricFinNoPattern)]), this.isNricFinUnique.bind(this)],
+			nric: ['', Validators.compose([Validators.pattern(this.nricFinNoPattern)])],
+			// nric: ['', Validators.compose([Validators.pattern(this.nricFinNoPattern)]), this.isNricFinUnique.bind(this)],
+			// nric: ['', Validators.compose([Validators.required, Validators.pattern(this.nricFinNoPattern)]), this.isNricFinUnique.bind(this)],
 			age: ['', Validators.compose([Validators.pattern(this.agePattern)])],
 			dob_data: this.fb.group({
 				dob_day: ['', Validators.compose([Validators.required])],
@@ -224,25 +231,25 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			gender: ['Male', Validators.compose([Validators.required])],
 			// Bank Details
 			ispaynowreg: ['No'],
-			bankname: [''],
-			bankcode: [''],
-			branchcode: [''],
-			accountno: [''],
+			bank_id: [''],
+			bank_code: [''],
+			branch_code: [''],
+			account_no: [''],
 			// Job Preference
-			employmenttype: [''],
-			preferredregion: [''],
-			preferredlocation: [''],
-			preferredspecialization: [''],
-			workingenvironment: [''],
+			employment_type: [''],
+			region: [''],
+			location: [''],
+			specializations: [''],
+			working_environment: [''],
 			// Notification Alerts Manage
-			notificationalerttype: [''],
+			notification: [''],
 			alertswitchedoffdays: [''],
 			alertofffrom: [''],
 			alertoffto: [''],
 			// Past Exp
-			experiencein: [''],
-			totalexperienceinyears: [''],
-			previousexperince: this.fb.array([this.createExp()])
+			experience_in: [''],
+			experience_year: [''],
+			experience_details: this.fb.array([this.createExp()])
 		});
 	}
 
@@ -258,24 +265,24 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 	addExp(): void {
 		// == Method 1
-		// const control = this.jobSeekerProfileForm.get('previousexperince') as FormArray;
-		// const control = <FormArray>this.jobSeekerProfileForm.controls['previousexperince'];
+		// const control = this.jobSeekerProfileForm.get('experience_details') as FormArray;
+		// const control = <FormArray>this.jobSeekerProfileForm.controls['experience_details'];
 		// control.push(this.createExp());
 
 		// == Method 2
-		(<FormArray>this.jobSeekerProfileForm.get('previousexperince')).push(this.createExp());
+		(<FormArray>this.jobSeekerProfileForm.get('experience_details')).push(this.createExp());
 
 		// Add Validation For current row
-		this.pastExpChangeAddInit(this.jobSeekerProfileForm.get(`previousexperince.length`));
-		// this.pastExpChangeAddInit(this.jobSeekerProfileForm.controls['previousexperince']['controls'].length);
+		this.pastExpChangeAddInit(this.jobSeekerProfileForm.get(`experience_details.length`));
+		// this.pastExpChangeAddInit(this.jobSeekerProfileForm.controls['experience_details']['controls'].length);
 
-		// this.jobSeekerProfileForm.get(`previousexperince.${0}.settings`)
+		// this.jobSeekerProfileForm.get(`experience_details.${0}.settings`)
 	}
 
 	removeExp(index: number) {
 		// control refers to your formarray
-		const control = this.jobSeekerProfileForm.get('previousexperince') as FormArray;
-		// const control = <FormArray>this.jobSeekerProfileForm.controls['previousexperince'];
+		const control = this.jobSeekerProfileForm.get('experience_details') as FormArray;
+		// const control = <FormArray>this.jobSeekerProfileForm.controls['experience_details'];
 		// remove the chosen row
 		control.removeAt(index);
 	}
@@ -350,8 +357,8 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	isMobileUnique(control: FormControl) {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
-				if (this.myProfile.mobileno != control.value) {
-					this._httpService.checkMobile({ 'mobileno': control.value }).subscribe((response) => {
+				if (this.myProfile.mobile != control.value) {
+					this._httpService.checkMobile({ 'mobile': control.value }).subscribe((response) => {
 						if (response.success) {
 							resolve(null);
 						} else {
@@ -371,8 +378,8 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	isNricFinUnique(control: FormControl) {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
-				if (this.myProfile.nricfinno != this.toUppercase.transform(control.value)) {
-					this._httpService.checkNricFin({ 'nricfinno': this.toUppercase.transform(control.value) }).subscribe((response) => {
+				if (this.myProfile.nric != this.toUppercase.transform(control.value)) {
+					this._httpService.checkUniqueNric({ 'nric': this.toUppercase.transform(control.value) }).subscribe((response) => {
 						if (response.success) {
 							resolve(null);
 						} else {
@@ -434,9 +441,9 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	bankChange(event, modeofchange?) {
 		if (modeofchange == 'customchange') {
 			this.jobSeekerProfileForm.patchValue({
-				'branchcode': '',
-				'accountno': '',
-				'bankcode': '',
+				'branch_code': '',
+				'account_no': '',
+				'bank_code': '',
 			});
 		}
 
@@ -444,61 +451,60 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			this.bankHint = 'No payment if bank details are not filled up. Linked to payment to ensure no download if bank details is blank.';
 			this.reqBankDetails = false;
 
-			this.jobSeekerProfileForm.get('bankname').clearValidators();
-			this.jobSeekerProfileForm.get('bankname').updateValueAndValidity();
+			this.jobSeekerProfileForm.get('bank_id').clearValidators();
+			this.jobSeekerProfileForm.get('bank_id').updateValueAndValidity();
 
-			this.jobSeekerProfileForm.get('branchcode').clearValidators();
-			this.jobSeekerProfileForm.get('branchcode').updateValueAndValidity();
+			this.jobSeekerProfileForm.get('branch_code').clearValidators();
+			this.jobSeekerProfileForm.get('branch_code').updateValueAndValidity();
 
-			this.jobSeekerProfileForm.get('accountno').clearValidators();
-			this.jobSeekerProfileForm.get('accountno').updateValueAndValidity();
+			this.jobSeekerProfileForm.get('account_no').clearValidators();
+			this.jobSeekerProfileForm.get('account_no').updateValueAndValidity();
 
-			this.jobSeekerProfileForm.get('bankcode').clearValidators();
-			this.jobSeekerProfileForm.get('bankcode').updateValueAndValidity();
+			this.jobSeekerProfileForm.get('bank_code').clearValidators();
+			this.jobSeekerProfileForm.get('bank_code').updateValueAndValidity();
 
 		} else {
 			// this.reqBankDetails = true;
 			this.reqBankDetails = false;
 			// let index = this.BankDetails.findIndex(x => x.shortName === event);
-			let index = this.BankDetails.map(x => x.shortName).indexOf(event);
+			let index = this.BankDetails.map(x => x.id).indexOf(event);
 			this.bankHint = this.BankDetails[index].hint;
 			this.jobSeekerProfileForm.patchValue({
-				'bankcode': this.BankDetails[index].bankCode,
+				'bank_code': this.BankDetails[index].bankCode,
 			});
 
-			// this.jobSeekerProfileForm.get("bankname").setValidators([Validators.required]);
-			// this.jobSeekerProfileForm.get("bankname").updateValueAndValidity();
+			// this.jobSeekerProfileForm.get("bank_id").setValidators([Validators.required]);
+			// this.jobSeekerProfileForm.get("bank_id").updateValueAndValidity();
 
-			// this.jobSeekerProfileForm.get("branchcode").setValidators([Validators.required]);
-			// this.jobSeekerProfileForm.get("branchcode").updateValueAndValidity();
+			// this.jobSeekerProfileForm.get("branch_code").setValidators([Validators.required]);
+			// this.jobSeekerProfileForm.get("branch_code").updateValueAndValidity();
 
-			// this.jobSeekerProfileForm.get("accountno").setValidators([Validators.required]);
-			// this.jobSeekerProfileForm.get("accountno").updateValueAndValidity();
+			// this.jobSeekerProfileForm.get("account_no").setValidators([Validators.required]);
+			// this.jobSeekerProfileForm.get("account_no").updateValueAndValidity();
 
-			// this.jobSeekerProfileForm.get("bankcode").setValidators([Validators.required]);
-			// this.jobSeekerProfileForm.get("bankcode").updateValueAndValidity();
+			// this.jobSeekerProfileForm.get("bank_code").setValidators([Validators.required]);
+			// this.jobSeekerProfileForm.get("bank_code").updateValueAndValidity();
 		}
 	}
 
 	// If Employment Type Change
 	employmenttypeChange(event) {
 		console.log(event);
-		if (this.isInArray(event, 'Full Time')) {
+		if (this.isInArray(event, 2)) {
 			this.isPartTimeJob = false;
 		} else {
 			this.isPartTimeJob = true;
 		}
 
-		if (this.isInArray(event, 'Full Time')) {
+		if (this.isInArray(event, 2)) {
 			this.showfulltimespeccilization = true;
 		} else {
 			this.showfulltimespeccilization = false;
 		}
 
-		if (this.isInArray(event, 'Part Time')) {
+		if (this.isInArray(event, 1)) {
 			this.showparttimespeccilization = true;
-		}
-		else {
+		} else {
 			this.showparttimespeccilization = false;
 		}
 
@@ -527,7 +533,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		// console.log(parttimepreferredspecialization);
 		let preferredspecialization = fulltimepreferredspecialization.concat(parttimepreferredspecialization);
 		this.jobSeekerProfileForm.patchValue({
-			'preferredspecialization': preferredspecialization
+			'specializations': preferredspecialization
 		});
 		// console.log(preferredspecialization);
 	}
@@ -536,7 +542,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	unSelectAllSpecialization() {
 		let preferredspecialization = [];
 		this.jobSeekerProfileForm.patchValue({
-			'preferredspecialization': preferredspecialization,
+			'specializations': preferredspecialization,
 		});
 	}
 
@@ -547,13 +553,15 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 	// Select All SubLocation
 	selectAllSubLocation() {
-		let selectedPreferredRegion = this.jobSeekerProfileForm.get('preferredregion').value;
-
+		let selectedPreferredRegion = this.jobSeekerProfileForm.get('region').value;
+		console.log('selectedPreferredRegion', selectedPreferredRegion);
 		let availableSubLocation = this.multiplesublocationfilter.transform(this.Locations, selectedPreferredRegion);
-		let preferredlocation = availableSubLocation.map(x => x.sublocation);
+		console.log('availableSubLocation', selectedPreferredRegion);
+		let preferredlocation = availableSubLocation.map(x => x.id);
+		console.log('preferredlocation', selectedPreferredRegion);
 
 		this.jobSeekerProfileForm.patchValue({
-			'preferredlocation': preferredlocation
+			'location': preferredlocation
 		});
 	}
 
@@ -561,15 +569,15 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	unSelectAllSubLocation() {
 		let preferredlocation = [];
 		this.jobSeekerProfileForm.patchValue({
-			'preferredlocation': preferredlocation
+			'location': preferredlocation
 		});
 	}
 
 	// Select All WorkEnvironment
 	selectAllWorkEnvironment() {
-		let workingenvironment = this.WorkingEnvironments.map(x => x.Environment);
+		let workingenvironment = this.WorkingEnvironments.map(x => x.name);
 		this.jobSeekerProfileForm.patchValue({
-			'workingenvironment': workingenvironment,
+			'working_environment': workingenvironment,
 		});
 		// console.log(workingenvironment);
 	}
@@ -578,7 +586,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	unSelectWorkEnvironment() {
 		let workingenvironment = [];
 		this.jobSeekerProfileForm.patchValue({
-			'workingenvironment': workingenvironment,
+			'working_environment': workingenvironment,
 		});
 		// console.log(this.workingenvironment);
 	}
@@ -655,9 +663,9 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 	// Set Validation for past Exp
 	pastExpChangeInit() {
-		if (this.jobSeekerProfileForm.controls['previousexperince']['controls'].length >= 0) {
+		if (this.jobSeekerProfileForm.controls['experience_details']['controls'].length >= 0) {
 			// iterate each object in array
-			for (let Exp of this.jobSeekerProfileForm.controls['previousexperince']['controls']) {
+			for (let Exp of this.jobSeekerProfileForm.controls['experience_details']['controls']) {
 				// listen to changes in each barcode, if change, do something!
 				Exp.valueChanges.subscribe(data => {
 
@@ -704,10 +712,10 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	// Set Validation for new row at past exp
 	pastExpChangeAddInit(index) {
 		index = Number(index - 1);
-		this.jobSeekerProfileForm.get(`previousexperince.${index}`).valueChanges.subscribe(data => {
+		this.jobSeekerProfileForm.get(`experience_details.${index}`).valueChanges.subscribe(data => {
 			// console.log(data);
-			let Exp = this.jobSeekerProfileForm.get(`previousexperince.${index}`);
-			// console.log(<FormArray>this.jobSeekerProfileForm.controls['previousexperince'].controls);
+			let Exp = this.jobSeekerProfileForm.get(`experience_details.${index}`);
+			// console.log(<FormArray>this.jobSeekerProfileForm.controls['experience_details'].controls);
 
 			if ((data.previouscompanyname != null || data.previouscompanyname != '') || (data.previouscompanyposition != null || data.previouscompanyposition != '') || (data.previousjobresponsibility != null || data.previousjobresponsibility != '') || (data.previousjobfrom != null || data.previousjobfrom != '') || (data.previousjobto != null || data.previousjobto != '')) {
 
@@ -765,8 +773,8 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 						this.myProfile.email = userdata.email ? userdata.email : '';
 						this.myProfile.country = userdata.country ? userdata.country : '';
 						this.myProfile.race = userdata.race ? userdata.race : '';
-						this.myProfile.residencytype = userdata.residencytype ? userdata.residencytype : '';
-						this.myProfile.mobileno = userdata.mobile ? userdata.mobile : '';
+						this.myProfile.residency_type = userdata.residency_type ? userdata.residency_type : '';
+						this.myProfile.mobile = userdata.mobile ? userdata.mobile : '';
 						this.myProfile.address = userdata.address ? userdata.address : '';
 						this.myProfile.nric = userdata.nric ? userdata.nric : '';
 
@@ -787,38 +795,38 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 						// Bank Tab
 						this.myProfile.ispaynowreg = userdata.ispaynowreg ? userdata.ispaynowreg : 'No';
-						this.myProfile.bankname = userdata.bank_id ? userdata.bank_id : '';
-						this.myProfile.accountno = userdata.account_no ? userdata.account_no : '';
-						this.myProfile.bankcode = userdata.bankcode ? userdata.bankcode : '';
-						this.myProfile.branchcode = userdata.branch_code ? userdata.branch_code : '';
+						this.myProfile.bank_id = userdata.bank_id ? userdata.bank_id : '';
+						this.myProfile.account_no = userdata.account_no ? userdata.account_no : '';
+						this.myProfile.bank_code = userdata.bank_code ? userdata.bank_code : '';
+						this.myProfile.branch_code = userdata.branch_code ? userdata.branch_code : '';
 						// Job preferences
-						this.myProfile.employmenttype = userdata.employment_type ? userdata.employment_type : '';
-						this.employmenttypeChange(this.myProfile.employmenttype);
-						this.myProfile.preferredregion = userdata.region ? userdata.region : '';
-						this.myProfile.preferredlocation = userdata.location ? userdata.location : '';
-						this.myProfile.preferredspecialization = userdata.specializations ? userdata.specializations : '';
-						this.myProfile.workingenvironment = userdata.working_environment ? userdata.working_environment : '';
+						this.myProfile.employment_type = userdata.employment_type ? this.stringToArray(userdata.employment_type) : '';
+						this.employmenttypeChange(this.myProfile.employment_type);
+						this.myProfile.region = userdata.region ? this.stringToArray(userdata.region) : '';
+						this.myProfile.location = userdata.location ? this.stringToArray(userdata.location) : '';
+						this.myProfile.specializations = userdata.specializations ? this.stringToArray(userdata.specializations) : '';
+						this.myProfile.working_environment = userdata.working_environment ? this.stringToArray(userdata.working_environment) : '';
 						// Notification Alert Types
-						this.myProfile.notificationalerttype = userdata.notification ? userdata.notification : '';
+						this.myProfile.notification = userdata.notification ? userdata.notification : '';
 						this.myProfile.alertswitchedoffdays = userdata.alertswitchedoffdays ? userdata.alertswitchedoffdays : '';
 						this.myProfile.alertofffrom = userdata.alertofffrom ? userdata.alertofffrom : '';
 						this.myProfile.alertoffto = userdata.alertoffto ? userdata.alertoffto : '';
 
 						// Past Exp
-						this.myProfile.experiencein = userdata.experience_in ? userdata.experience_in : '';
-						this.myProfile.totalexperienceinyears = userdata.experience_year ? userdata.experience_year : '';
+						this.myProfile.experience_in = userdata.experience_in ? this.stringToArray(userdata.experience_in) : '';
+						this.myProfile.experience_year = userdata.experience_year ? userdata.experience_year : '';
 
 						let newExp: any[] = [];
-						let pastExp = isArray(userdata.experience_details) ? userdata.experience_details : [];
+						let pastExp = isArray(userdata.experience_details) ? JSON.parse(userdata.experience_details) : [];
 						if (pastExp.length > 0) {
 							for (let i = 0; i < pastExp.length; i++) {
 								newExp.push({
 									previouscompanyname: pastExp[i].previouscompanyname, previouscompanyposition: pastExp[i].previouscompanyposition, previousjobresponsibility: pastExp[i].previousjobresponsibility, previousjobfrom: new Date(pastExp[i].previousjobfrom), previousjobto: new Date(pastExp[i].previousjobto)
 								});
 							}
-							this.myProfile.previousexperince = newExp;
+							this.myProfile.experience_details = newExp;
 						}
-						// this.myProfile.previousexperince = userdata.previousexperince;
+						// this.myProfile.experience_details = userdata.experience_details;
 
 						// Documents
 						this.profileImage = userdata.jobseekerimage ? this.baseUrl + '/' + userdata.imgpath : 'assets/img/avatars/profile-placeholder.png';
@@ -829,13 +837,12 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 						// Patch Form Value
 						this.jobSeekerProfileForm.patchValue({
-							'username': `${this.myProfile.firstname} ${this.myProfile.firstname}`,
-							// 'nameinidcard': this.myProfile.nameinidcard,
+							'firstname': `${this.myProfile.firstname}`,
 							'email': this.myProfile.email,
 							'country': this.myProfile.country,
 							'race': this.myProfile.race,
-							'residencytype': this.myProfile.residencytype,
-							'mobileno': this.myProfile.mobileno,
+							'residency_type': this.myProfile.residency_type,
+							'mobile': this.myProfile.mobile,
 							'address': this.myProfile.address,
 							'nricfinno': this.myProfile.nricfinno,
 							// 'dob': this.myProfile.dob,
@@ -843,24 +850,24 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 							'gender': this.myProfile.gender,
 
 							'ispaynowreg': this.myProfile.ispaynowreg,
-							'bankname': this.myProfile.bankname,
-							'accountno': this.myProfile.accountno,
-							'bankcode': this.myProfile.bankcode,
-							'branchcode': this.myProfile.branchcode,
+							'bank_id': this.myProfile.bank_id,
+							'account_no': this.myProfile.account_no,
+							'bank_code': this.myProfile.bank_code,
+							'branch_code': this.myProfile.branch_code,
 
-							'employmenttype': this.myProfile.employmenttype,
-							'preferredregion': this.myProfile.preferredregion,
-							'preferredlocation': this.myProfile.preferredlocation,
-							'preferredspecialization': this.myProfile.preferredspecialization,
-							'workingenvironment': this.myProfile.workingenvironment,
+							'employment_type': this.myProfile.employment_type,
+							'region': this.myProfile.region,
+							'location': this.myProfile.location,
+							'specializations': this.myProfile.specializations,
+							'working_environment': this.myProfile.working_environment,
 
-							'notificationalerttype': this.myProfile.notificationalerttype,
+							'notification': this.myProfile.notification,
 							'alertswitchedoffdays': this.myProfile.alertswitchedoffdays,
 							'alertofffrom': this.myProfile.alertofffrom,
 							'alertoffto': this.myProfile.alertoffto,
 
-							'experiencein': this.myProfile.experiencein,
-							'totalexperienceinyears': this.myProfile.totalexperienceinyears,
+							'experience_in': this.myProfile.experience_in,
+							'experience_year': this.myProfile.experience_year,
 						});
 
 						this.jobSeekerProfileForm.patchValue({
@@ -873,11 +880,11 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 						// Set PastExp
 						// Create Form Group Of Datas
-						const pastExpFGs = this.myProfile.previousexperince.map(previousexperince => this.fb.group(previousexperince));
+						const pastExpFGs = this.myProfile.experience_details.map(experience_details => this.fb.group(experience_details));
 						// Change Form Group into FormArray
 						const pastExpFormArray = this.fb.array(pastExpFGs);
 						// Set Form Array values into Form
-						this.jobSeekerProfileForm.setControl('previousexperince', pastExpFormArray);
+						this.jobSeekerProfileForm.setControl('experience_details', pastExpFormArray);
 
 					} else if (!response.success) {
 						// console.log(response);
@@ -897,42 +904,42 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		// Check Employment Type And process Past Exp
 		if (this.isPartTimeJob) {
 			this.jobSeekerProfileForm.patchValue({
-				'totalexperienceinyears': '',
-				'experiencein': '',
+				'experience_year': '',
+				'experience_in': '',
 			});
 
-			// this.jobSeekerProfileForm.setControl('previousexperince', this.fb.array([]));
-			const control = <FormArray>this.jobSeekerProfileForm.controls['previousexperince'];
+			// this.jobSeekerProfileForm.setControl('experience_details', this.fb.array([]));
+			const control = <FormArray>this.jobSeekerProfileForm.controls['experience_details'];
 			for (let i = control.length - 1; i >= 0; i--) {
 				// Clear Validator
-				this.jobSeekerProfileForm.get(`previousexperince.${i}`).clearValidators();
-				this.jobSeekerProfileForm.get(`previousexperince.${i}`).updateValueAndValidity({ emitEvent: false, onlySelf: false });
+				this.jobSeekerProfileForm.get(`experience_details.${i}`).clearValidators();
+				this.jobSeekerProfileForm.get(`experience_details.${i}`).updateValueAndValidity({ emitEvent: false, onlySelf: false });
 				// Remove Item
 				control.removeAt(i);
 			}
 		} else {
-			const control = <FormArray>this.jobSeekerProfileForm.controls['previousexperince'];
+			const control = <FormArray>this.jobSeekerProfileForm.controls['experience_details'];
 			for (let i = control.length - 1; i >= 0; i--) {
-				if (this.jobSeekerProfileForm.get(`previousexperince.${i}.previouscompanyname`).value === '') {
+				if (this.jobSeekerProfileForm.get(`experience_details.${i}.previouscompanyname`).value === '') {
 					// Clear Validator
-					this.jobSeekerProfileForm.get(`previousexperince.${i}`).clearValidators();
-					this.jobSeekerProfileForm.get(`previousexperince.${i}`).updateValueAndValidity({ emitEvent: false, onlySelf: false });
+					this.jobSeekerProfileForm.get(`experience_details.${i}`).clearValidators();
+					this.jobSeekerProfileForm.get(`experience_details.${i}`).updateValueAndValidity({ emitEvent: false, onlySelf: false });
 					// Remove Item
 					control.removeAt(i);
 				} else {
 					parsedPastExp.push({
-						previouscompanyname: this.jobSeekerProfileForm.get(`previousexperince.${i}.previouscompanyname`).value,
-						previouscompanyposition: this.jobSeekerProfileForm.get(`previousexperince.${i}.previouscompanyposition`).value,
-						previousjobresponsibility: this.jobSeekerProfileForm.get(`previousexperince.${i}.previousjobresponsibility`).value,
-						previousjobfrom: this.datePipe.transform(this.jobSeekerProfileForm.get(`previousexperince.${i}.previousjobfrom`).value, 'yyyy/MM/dd'),
-						previousjobto: this.datePipe.transform(this.jobSeekerProfileForm.get(`previousexperince.${i}.previousjobto`).value, 'yyyy/MM/dd')
+						previouscompanyname: this.jobSeekerProfileForm.get(`experience_details.${i}.previouscompanyname`).value,
+						previouscompanyposition: this.jobSeekerProfileForm.get(`experience_details.${i}.previouscompanyposition`).value,
+						previousjobresponsibility: this.jobSeekerProfileForm.get(`experience_details.${i}.previousjobresponsibility`).value,
+						previousjobfrom: this.datePipe.transform(this.jobSeekerProfileForm.get(`experience_details.${i}.previousjobfrom`).value, 'yyyy/MM/dd'),
+						previousjobto: this.datePipe.transform(this.jobSeekerProfileForm.get(`experience_details.${i}.previousjobto`).value, 'yyyy/MM/dd')
 					});
 				}
 			}
-			experience_details = { 'previousexperince': parsedPastExp };
+			experience_details = { 'experience_details': JSON.stringify(parsedPastExp) };
 		}
 
-		if (this.jobSeekerProfileForm.get(`notificationalerttype`).value !== 'off') {
+		if (this.jobSeekerProfileForm.get(`notification`).value !== 'off') {
 			this.jobSeekerProfileForm.patchValue({
 				'alertswitchedoffdays': '',
 				'alertofffrom': '',
@@ -959,6 +966,10 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		jobSeekerData = Object.assign(jobSeekerData, experience_details);
 		// console.log(jobSeekerData);
 
+		let specializations = { 'specializations': this.ArrayToString(this.jobSeekerProfileForm.get(`specializations`).value) };
+
+		jobSeekerData = Object.assign(jobSeekerData, specializations);
+
 		this.busy = this._httpService.updateProfileDetails(jobSeekerData)
 			.subscribe(
 				response => {
@@ -970,7 +981,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 						if (profileImage.files[0] || idProofFront.files[0] || idProofBack.files[0]) {
 							this.uploadProfileDocs();
 						} else {
-							localStorage.setItem('ogUserName', this.jobSeekerProfileForm.get('username').value);
+							localStorage.setItem('ogUserName', this.jobSeekerProfileForm.get('firstname').value);
 							localStorage.setItem('ogUserEmail', this.jobSeekerProfileForm.get('email').value);
 							// location.reload();
 							this.asyncSubscriber.setProfileDetails({ 'Image': this.profileImage });
@@ -1304,6 +1315,18 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 				// 	});
 				// }
 			});
+	}
+
+	ArrayToString(dataArray) {
+		dataArray.map(function (e) {
+			// return JSON.stringify(e);
+			return e;
+		});
+		return dataArray.join(',');
+	}
+
+	stringToArray(dataString) {
+		return dataString.split(',');
 	}
 
 	ngOnDestroy() {

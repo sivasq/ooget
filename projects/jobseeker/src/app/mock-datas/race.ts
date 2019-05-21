@@ -2,19 +2,19 @@ import { Race } from '../classes/race';
 
 export const Races: Race[] = [
 	{
-		"name": "Indian",
-		"value": "indian"
+		'name': 'Indian',
+		'id': 1
 	},
 	{
-		"name": "Chinese",
-		"value": "chinese"
+		'name': 'Chinese',
+		'id': 2
 	},
 	{
-		"name": "Malay",
-		"value": "malay"
+		'name': 'Malay',
+		'id': 3
 	},
 	{
-		"name": "Others",
-		"value": "others"
+		'name': 'Others',
+		'id': 4
 	}
 ]
