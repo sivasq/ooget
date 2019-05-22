@@ -9,4 +9,4 @@ export const Nationalitys: Nationality[] = [
 		'name': 'Permanent Resident',
 		'id': 2
 	}
-]
+];

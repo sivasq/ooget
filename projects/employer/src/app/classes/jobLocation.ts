@@ -1,5 +1,10 @@
 export class JobLocation {
-	_id: string;
-	mainlocation: string;
-	sublocation: string;
+	id: Number;
+	region: Number;
+	name: string;
+}
+
+export class JobRegion {
+	id: Number;
+	name: string;
 }

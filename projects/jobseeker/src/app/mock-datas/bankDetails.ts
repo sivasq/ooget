@@ -50,4 +50,4 @@ export const BankDetails: BankDetail[] = [
 		'bankCode': '7214',
 		'hint': '<div>The account number consists of 10 digits. The ACH branch code varies for corporate and personal accounts.</div><br/><div>E.g. If the branch name is ShentonWay-IB, this will be for corporate account. The ACH branch code will be 001.</div><br/><div>If the branch name is ShentonWay-CSG, this will be for personal account. The ACH branch code will be 011 and the account number 1012345670.</div>'
 	}
-]
+];

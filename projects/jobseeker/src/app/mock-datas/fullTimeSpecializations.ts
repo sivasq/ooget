@@ -346,4 +346,4 @@ export const FullTimeSpecializations: Specialization[] = [
 		'name': 'Retails',
 		'type': 2
 	}
-]
+];

@@ -17,6 +17,7 @@ import { BankDetail } from '../../../classes/bankDetail';
 import { Race } from '../../../classes/race';
 import { Nationality } from '../../../classes/Nationality';
 import { isArray } from 'util';
+import * as moment from 'moment';
 
 @Component({
 	selector: 'app-add-profile',
@@ -44,6 +45,8 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	maxDays = 31;
 	invalidDobErrorMsg: string = '';
 
+	one = 1;
+	zero = 0;
 	monthLongValues: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 	public today = new Date();
@@ -64,7 +67,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		residency_type: '',
 		mobile: '',
 		address: '',
-		nricfinno: '',
+		nric: '',
 		dob_day: '',
 		dob_month: '',
 		dob_year: '',
@@ -86,8 +89,8 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 		notification: '',
 		alertswitchedoffdays: '',
-		alertofffrom: '',
-		alertoffto: '',
+		notification_off_from: '',
+		notification_off_to: '',
 
 		experience_in: '',
 		experience_year: '',
@@ -131,6 +134,17 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	agePattern: RegExp = /^[0-9]{1,}$/;
 	mobileNoPattern: RegExp = /^[0-9]{1,}$/;
 	nricFinNoPattern: RegExp = /^[F,T,S,G,f,t,s,g]{1}[0-9]{7}[A-Za-z]{1}$/;
+
+	gender = [
+		{
+			id: 1,
+			name: 'Male'
+		},
+		{
+			id: 2,
+			name: 'Female'
+		}
+	];
 
 	constructor(public router: Router, private fb: FormBuilder, private _httpService: ApiCallService, private urlconfig: ConfigService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe, private toUppercase: UpperCasePipe, private multiplesublocationfilter: MultipleSubLocationFilter, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
@@ -228,7 +242,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			}),
 			dob: ['', Validators.compose([Validators.required])],
 			// dob: ['', Validators.compose([Validators.required])],
-			gender: ['Male', Validators.compose([Validators.required])],
+			gender: [1, Validators.compose([Validators.required])],
 			// Bank Details
 			ispaynowreg: ['No'],
 			bank_id: [''],
@@ -242,10 +256,10 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			specializations: [''],
 			working_environment: [''],
 			// Notification Alerts Manage
-			notification: [''],
+			notification: [null],
 			alertswitchedoffdays: [''],
-			alertofffrom: [''],
-			alertoffto: [''],
+			notification_off_from: [null],
+			notification_off_to: [null],
 			// Past Exp
 			experience_in: [''],
 			experience_year: [''],
@@ -423,11 +437,14 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	// }
 
 	// Check Array Contain Elements
+
 	isInArray(array, word) {
 		// console.log(array.indexOf(word));
 		// console.log(array.includes(word));
 		// console.log(array.indexOf(word) > -1);
 		// console.log(array.indexOf(word.toLowerCase()) > -1);
+		console.log(array);
+		console.log(word);
 		return array.includes(word);
 	}
 
@@ -517,13 +534,13 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		let parttimepreferredspecialization;
 
 		if (this.showfulltimespeccilization) {
-			fulltimepreferredspecialization = this.FullTimeSpecializations.map(x => x.name);
+			fulltimepreferredspecialization = this.FullTimeSpecializations.map(x => x.id);
 		} else {
 			fulltimepreferredspecialization = [];
 		}
 
 		if (this.showparttimespeccilization) {
-			parttimepreferredspecialization = this.PartTimeSpecializations.map(x => x.name);
+			parttimepreferredspecialization = this.PartTimeSpecializations.map(x => x.id);
 		} else {
 			parttimepreferredspecialization = [];
 		}
@@ -554,11 +571,8 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	// Select All SubLocation
 	selectAllSubLocation() {
 		let selectedPreferredRegion = this.jobSeekerProfileForm.get('region').value;
-		console.log('selectedPreferredRegion', selectedPreferredRegion);
 		let availableSubLocation = this.multiplesublocationfilter.transform(this.Locations, selectedPreferredRegion);
-		console.log('availableSubLocation', selectedPreferredRegion);
 		let preferredlocation = availableSubLocation.map(x => x.id);
-		console.log('preferredlocation', selectedPreferredRegion);
 
 		this.jobSeekerProfileForm.patchValue({
 			'location': preferredlocation
@@ -593,13 +607,13 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 	// Notification Alert Type change Event
 	notificationAlertTypeChange(event) {
-		if (event == 'anytime') {
+		if (event == 1) {
 			this.jobSeekerProfileForm.patchValue({
 				'alertswitchedoffdays': '',
-				'alertofffrom': '',
-				'alertoffto': ''
+				'notification_off_from': null,
+				'notification_off_to': null
 			});
-		} else if (event == 'off') {
+		} else if (event == 0) {
 			this.jobSeekerProfileForm.patchValue({
 				'alertswitchedoffdays': '1',
 			});
@@ -613,12 +627,12 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		let fromDate: Date = new Date();
 		let toDate: Date = new Date();
 		toDate.setDate(toDate.getDate() + days);
-		let alertofffrom = this.datePipe.transform(fromDate, 'yyyy/MM/dd');
-		let alertoffto = this.datePipe.transform(toDate, 'yyyy/MM/dd');
+		let notification_off_from = this.datePipe.transform(fromDate, 'yyyy/MM/dd');
+		let notification_off_to = this.datePipe.transform(toDate, 'yyyy/MM/dd');
 
 		this.jobSeekerProfileForm.patchValue({
-			'alertofffrom': alertofffrom,
-			'alertoffto': alertoffto,
+			'notification_off_from': notification_off_from,
+			'notification_off_to': notification_off_to,
 		});
 	}
 
@@ -773,7 +787,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 						this.myProfile.email = userdata.email ? userdata.email : '';
 						this.myProfile.country = userdata.country ? userdata.country : '';
 						this.myProfile.race = userdata.race ? userdata.race : '';
-						this.myProfile.residency_type = userdata.residency_type ? userdata.residency_type : '';
+						this.myProfile.residency_type = userdata.nationality ? userdata.nationality : '';
 						this.myProfile.mobile = userdata.mobile ? userdata.mobile : '';
 						this.myProfile.address = userdata.address ? userdata.address : '';
 						this.myProfile.nric = userdata.nric ? userdata.nric : '';
@@ -785,39 +799,43 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 						this.myProfile.dob = userdata.dob ? userdata.dob : null;
 
 						// this.myProfile.age = this.CalculateAge(this.myProfile.dob);
-						let Date_parts = this.myProfile.dob ? this.myProfile.dob.split('/') : '';
+						let Date_parts = this.myProfile.dob ? this.myProfile.dob.split('-') : '';
 
 						this.myProfile.dob_day = Date_parts[2];
 						this.myProfile.dob_month = Date_parts[1];
 						this.myProfile.dob_year = Date_parts[0];
-
 						this.myProfile.gender = userdata.gender ? userdata.gender : '';
-
 						// Bank Tab
 						this.myProfile.ispaynowreg = userdata.ispaynowreg ? userdata.ispaynowreg : 'No';
+						userdata.bank_id = 1;
 						this.myProfile.bank_id = userdata.bank_id ? userdata.bank_id : '';
+						this.bankChange(userdata.bank_id);
 						this.myProfile.account_no = userdata.account_no ? userdata.account_no : '';
-						this.myProfile.bank_code = userdata.bank_code ? userdata.bank_code : '';
+						// this.myProfile.bank_code = userdata.bank_code ? userdata.bank_code : '';
 						this.myProfile.branch_code = userdata.branch_code ? userdata.branch_code : '';
 						// Job preferences
 						this.myProfile.employment_type = userdata.employment_type ? this.stringToArray(userdata.employment_type) : '';
+						console.log(userdata.employment_type);
 						this.employmenttypeChange(this.myProfile.employment_type);
 						this.myProfile.region = userdata.region ? this.stringToArray(userdata.region) : '';
 						this.myProfile.location = userdata.location ? this.stringToArray(userdata.location) : '';
 						this.myProfile.specializations = userdata.specializations ? this.stringToArray(userdata.specializations) : '';
 						this.myProfile.working_environment = userdata.working_environment ? this.stringToArray(userdata.working_environment) : '';
 						// Notification Alert Types
-						this.myProfile.notification = userdata.notification ? userdata.notification : '';
-						this.myProfile.alertswitchedoffdays = userdata.alertswitchedoffdays ? userdata.alertswitchedoffdays : '';
-						this.myProfile.alertofffrom = userdata.alertofffrom ? userdata.alertofffrom : '';
-						this.myProfile.alertoffto = userdata.alertoffto ? userdata.alertoffto : '';
+						this.myProfile.notification = userdata.notification;
+						console.log(this.myProfile.notification);
+						this.myProfile.notification_off_from = userdata.notification_off_from ? userdata.notification_off_from : null;
+						this.myProfile.notification_off_to = userdata.notification_off_to ? userdata.notification_off_to : null;
 
+						this.myProfile.alertswitchedoffdays = this.dateDiff(this.myProfile.notification_off_from, this.myProfile.notification_off_to);
+						console.log(this.myProfile.alertswitchedoffdays);
 						// Past Exp
 						this.myProfile.experience_in = userdata.experience_in ? this.stringToArray(userdata.experience_in) : '';
-						this.myProfile.experience_year = userdata.experience_year ? userdata.experience_year : '';
+						this.myProfile.experience_year = userdata.experience_year;
 
 						let newExp: any[] = [];
-						let pastExp = isArray(userdata.experience_details) ? JSON.parse(userdata.experience_details) : [];
+						let pastExp = userdata.experience_details !== '' ? JSON.parse(userdata.experience_details) : [];
+						console.log(userdata.experience_details);
 						if (pastExp.length > 0) {
 							for (let i = 0; i < pastExp.length; i++) {
 								newExp.push({
@@ -835,6 +853,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 						this.isIdProofEditable = userdata.jobseekeridproofeditable ? userdata.jobseekeridproofeditable == 'true' ? false : true : false;
 
+
 						// Patch Form Value
 						this.jobSeekerProfileForm.patchValue({
 							'firstname': `${this.myProfile.firstname}`,
@@ -844,15 +863,16 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 							'residency_type': this.myProfile.residency_type,
 							'mobile': this.myProfile.mobile,
 							'address': this.myProfile.address,
-							'nricfinno': this.myProfile.nricfinno,
+							'nric': this.myProfile.nric,
 							// 'dob': this.myProfile.dob,
 							// 'age': this.myProfile.age,
+							// 'gender': this.myProfile.gender,
 							'gender': this.myProfile.gender,
 
 							'ispaynowreg': this.myProfile.ispaynowreg,
 							'bank_id': this.myProfile.bank_id,
 							'account_no': this.myProfile.account_no,
-							'bank_code': this.myProfile.bank_code,
+							// 'bank_code': this.myProfile.bank_code,
 							'branch_code': this.myProfile.branch_code,
 
 							'employment_type': this.myProfile.employment_type,
@@ -863,8 +883,8 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 							'notification': this.myProfile.notification,
 							'alertswitchedoffdays': this.myProfile.alertswitchedoffdays,
-							'alertofffrom': this.myProfile.alertofffrom,
-							'alertoffto': this.myProfile.alertoffto,
+							'notification_off_from': this.myProfile.notification_off_from,
+							'notification_off_to': this.myProfile.notification_off_to,
 
 							'experience_in': this.myProfile.experience_in,
 							'experience_year': this.myProfile.experience_year,
@@ -894,6 +914,13 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 					// console.log(error);
 				}
 			);
+	}
+
+	dateDiff(from, end) {
+		var startDate = moment(from, 'YYYY-MM-DD');
+		var endDate = moment(end, 'YYYY-MM-DD');
+
+		return endDate.diff(startDate, 'days').toString();
 	}
 
 	// Update Profile Datas
@@ -939,17 +966,17 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			experience_details = { 'experience_details': JSON.stringify(parsedPastExp) };
 		}
 
-		if (this.jobSeekerProfileForm.get(`notification`).value !== 'off') {
+		if (this.jobSeekerProfileForm.get(`notification`).value !== 0) {
 			this.jobSeekerProfileForm.patchValue({
 				'alertswitchedoffdays': '',
-				'alertofffrom': '',
-				'alertoffto': ''
+				'notification_off_from': null,
+				'notification_off_to': null
 			});
 		}
 
-		// if (this.jobSeekerProfileForm.get(`nricfinno`).value != "") {
+		// if (this.jobSeekerProfileForm.get(`nric`).value != "") {
 		// 	this.jobSeekerProfileForm.patchValue({
-		// 		'nricfinno': this.toUppercase.transform(this.jobSeekerProfileForm.get(`nricfinno`).value),
+		// 		'nric': this.toUppercase.transform(this.jobSeekerProfileForm.get(`nric`).value),
 		// 	});
 		// }
 
@@ -967,8 +994,22 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		// console.log(jobSeekerData);
 
 		let specializations = { 'specializations': this.ArrayToString(this.jobSeekerProfileForm.get(`specializations`).value) };
-
 		jobSeekerData = Object.assign(jobSeekerData, specializations);
+
+		let working_environment = { 'working_environment': this.ArrayToString(this.jobSeekerProfileForm.get(`working_environment`).value) };
+		jobSeekerData = Object.assign(jobSeekerData, working_environment);
+
+		let region = { 'region': this.ArrayToString(this.jobSeekerProfileForm.get(`region`).value) };
+		jobSeekerData = Object.assign(jobSeekerData, region);
+
+		let location = { 'location': this.ArrayToString(this.jobSeekerProfileForm.get(`location`).value) };
+		jobSeekerData = Object.assign(jobSeekerData, location);
+
+		let experience_in = { 'experience_in': this.ArrayToString(this.jobSeekerProfileForm.get(`experience_in`).value) };
+		jobSeekerData = Object.assign(jobSeekerData, experience_in);
+
+		let employment_type = { 'employment_type': this.ArrayToString(this.jobSeekerProfileForm.get(`employment_type`).value) };
+		jobSeekerData = Object.assign(jobSeekerData, employment_type);
 
 		this.busy = this._httpService.updateProfileDetails(jobSeekerData)
 			.subscribe(
@@ -1318,15 +1359,25 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	}
 
 	ArrayToString(dataArray) {
-		dataArray.map(function (e) {
-			// return JSON.stringify(e);
-			return e;
-		});
-		return dataArray.join(',');
+		if (isArray(dataArray)) {
+			dataArray.map(function (e) {
+				// return JSON.stringify(e);
+				return e;
+			});
+			return dataArray.join(',');
+		}
 	}
 
 	stringToArray(dataString) {
-		return dataString.split(',');
+		if (typeof dataString !== 'undefined' && dataString) {
+			if (dataString.includes(',')) {
+				return dataString.split(',').map(Number);
+			} else {
+				return [dataString].map(Number);
+			}
+		} else {
+			return [];
+		}
 	}
 
 	ngOnDestroy() {

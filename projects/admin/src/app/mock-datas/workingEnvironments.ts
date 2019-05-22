@@ -2,39 +2,39 @@ import { WorkingEnvironment } from '../classes/workingEnvironment';
 
 export const WorkingEnvironments: WorkingEnvironment[] = [
 	{
-		'_id': '432424',
-		'Environment': 'Office'
+		'id': 1,
+		'name': 'Office'
 	},
 	{
-		'_id': '432424',
-		'Environment': 'Factory'
+		'id': 2,
+		'name': 'Factory'
 	},
 	{
-		'_id': '432424',
-		'Environment': 'Restaurant'
+		'id': 3,
+		'name': 'Restaurant'
 	},
 	{
-		'_id': '432424',
-		'Environment': 'Hotel'
+		'id': 4,
+		'name': 'Hotel'
 	},
 	{
-		'_id': '432424',
-		'Environment': 'Warehouse'
+		'id': 5,
+		'name': 'Warehouse'
 	},
 	{
-		'_id': '432424',
-		'Environment': 'Supermarket'
+		'id': 6,
+		'name': 'Supermarket'
 	},
 	{
-		'_id': '432424',
-		'Environment': 'Retail'
+		'id': 7,
+		'name': 'Retail'
 	},
 	{
-		'_id': '432424',
-		'Environment': 'Aircon'
+		'id': 8,
+		'name': 'Aircon'
 	},
 	{
-		'_id': '432424',
-		'Environment': 'Non Aircon'
+		'id': 9,
+		'name': 'Non Aircon'
 	}
-]
+];

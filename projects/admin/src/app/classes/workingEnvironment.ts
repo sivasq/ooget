@@ -1,4 +1,4 @@
 export class WorkingEnvironment {
-	_id: string;
-	Environment: string;
+	id: Number;
+	name: string;
 }

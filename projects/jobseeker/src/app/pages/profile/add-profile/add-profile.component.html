@@ -228,8 +228,9 @@
 										<b style="font-size: small;">Gender
 											<span style="color: #767676">*</span> : </b>
 										<mat-radio-group name="gender" formControlName="gender" required>
-											<mat-radio-button value="Male">Male</mat-radio-button>
-											<mat-radio-button value="Female">Female</mat-radio-button>
+											<mat-radio-button *ngFor="let gender of gender" [value]=gender.id>
+												{{gender.name}}</mat-radio-button>
+											<!-- <mat-radio-button value=1>Female</mat-radio-button> -->
 											<!-- <mat-error *ngIf="jobSeekerProfileForm.get('gender').hasError('required')" align="start">
 												Gender Required
 											</mat-error> -->
@@ -595,14 +596,15 @@
 
 									<mat-radio-group name="notification" formControlName="notification"
 										(ngModelChange)="notificationAlertTypeChange($event)" fxLayout.lt-sm='column'>
-										<mat-radio-button [ngStyle.lt-sm]="{'margin':'5px 0'}" value="anytime"> Always
+										<mat-radio-button [ngStyle.lt-sm]="{'margin':'5px 0'}" [value]="one"> Always
 										</mat-radio-button>
-										<mat-radio-button [ngStyle.lt-sm]="{'margin':'5px 0'}" value="off"> Switched Off
+										<mat-radio-button [ngStyle.lt-sm]="{'margin':'5px 0'}" [value]="zero"> Switched
+											Off
 											Notification
 										</mat-radio-button>
 									</mat-radio-group>
 
-									<div *ngIf="jobSeekerProfileForm.get('notification').value == 'off'"
+									<div *ngIf="jobSeekerProfileForm.get('notification').value == 0"
 										style="margin: 25px 0 0;">
 										<mat-radio-group name="alertswitchedoffdays"
 											formControlName="alertswitchedoffdays"
@@ -613,11 +615,12 @@
 										</mat-radio-group>
 									</div>
 
-									<div *ngIf="jobSeekerProfileForm.get('notification').value == 'off'"
+									<div *ngIf="jobSeekerProfileForm.get('notification').value == 0"
 										style="margin: 15px 0 25px; padding-left: 15px; color: #797676; font-weight: 600;">
 										(Notification
 										Off until :
-										{{jobSeekerProfileForm.get('alertoffto').value | date:'dd/MM/yyyy'}})</div>
+										{{jobSeekerProfileForm.get('notification_off_to').value | date:'dd/MM/yyyy'}})
+									</div>
 
 									<mat-toolbar class="next_action" color="primary" style="margin-top:25px;">
 										<a mat-mini-fab color="primary"

@@ -346,4 +346,4 @@ export const PartTimeSpecializations: Specialization[] = [
 		'name': 'Retails',
 		'type': 2
 	}
-]
+];

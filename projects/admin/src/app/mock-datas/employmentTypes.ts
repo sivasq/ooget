@@ -2,11 +2,11 @@ import { EmploymentType } from '../classes/employmentType';
 
 export const EmploymentTypes: EmploymentType[] = [
 	{
-		"_id": "432424",
-		"EmploymentType": "Part Time"
+		'id': 1,
+		'name': 'Part Time'
 	},
 	{
-		"_id": "432424",
-		"EmploymentType": "Full Time"
+		'id': 2,
+		'name': 'Full Time'
 	}
-]
+];

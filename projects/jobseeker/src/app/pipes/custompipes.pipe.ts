@@ -50,7 +50,7 @@ export class MultipleSubLocationFilter implements PipeTransform {
 			args.forEach(function (filterobj) {
 				let filtervalue = filterobj;
 				myobjects.forEach(function (objectToFilter) {
-					if (objectToFilter.mainlocation == filtervalue) {
+					if (objectToFilter.region == filtervalue) {
 						resultdata.push(objectToFilter);
 					}
 				})
@@ -95,7 +95,7 @@ export class SafeHtml implements PipeTransform {
 
 	transform(html) {
 		// return this.sanitizer.bypassSecurityTrustStyle(html);
-		return this.sanitizer.bypassSecurityTrustHtml(html);		
+		return this.sanitizer.bypassSecurityTrustHtml(html);
 		// return this.sanitizer.bypassSecurityTrustScript(html);
 		// return this.sanitizer.bypassSecurityTrustUrl(html);
 		// return this.sanitizer.bypassSecurityTrustResourceUrl(html);

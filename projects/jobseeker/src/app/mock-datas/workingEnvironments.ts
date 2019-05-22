@@ -37,4 +37,4 @@ export const WorkingEnvironments: WorkingEnvironment[] = [
 		'id': 9,
 		'name': 'Non Aircon'
 	}
-]
+];

@@ -9,4 +9,4 @@ export const EmploymentTypes: EmploymentType[] = [
 		'id': 2,
 		'name': 'Full Time'
 	}
-]
+];

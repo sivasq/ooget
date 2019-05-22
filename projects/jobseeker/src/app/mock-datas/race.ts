@@ -17,4 +17,4 @@ export const Races: Race[] = [
 		'name': 'Others',
 		'id': 4
 	}
-]
+];
