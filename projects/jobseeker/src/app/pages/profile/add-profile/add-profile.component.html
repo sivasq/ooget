@@ -650,7 +650,7 @@
 										<div fxLayout="row" fxLayoutAlign="start center">
 											<div class="drop-zone content" (change)="logochange($event)"
 												(click)="imgFileInput.click() " style="cursor: pointer; ">
-												<input hidden type="file" #imgFileInput>
+												<input hidden type="file" #imgFileInput accept="image/*">
 												<img style="height:100%; width:100%; border-radius: 50px;" alt=""
 													[src]="profileImage">
 											</div>

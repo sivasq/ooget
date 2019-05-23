@@ -29,6 +29,7 @@ export class OogetsidenavComponent implements OnInit {
 		this.imgBaseUrl = urlconfig.img_base_url;
 
 		asyncSubscriber.getProfileDetails.subscribe(value => {
+			console.log('getprofile');
 			this.UserName = localStorage.getItem('ogUserName');
 			this.userEmail = localStorage.getItem('ogUserEmail');
 			let userLogo = localStorage.getItem('ogUserLogo');
@@ -36,7 +37,7 @@ export class OogetsidenavComponent implements OnInit {
 			if (userLogo == null || userLogo == 'undefined') {
 				this.profileImage = "assets/img/avatars/profile-placeholder.png";
 			} else {
-				this.profileImage = this.imgBaseUrl + '/' + userLogo;
+				this.profileImage = this.baseUrl + '/' + userLogo;
 			}
 		});
 	}

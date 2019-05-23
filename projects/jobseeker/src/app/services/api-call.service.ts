@@ -84,8 +84,8 @@ export class ApiCallService {
 
 	createAuthorizationHeaderFormData() {
 		const headers = {};
-		headers['Content-Type'] = 'multipart/form-data';
-		headers['Access-Control-Allow-Origin'] = '*';
+		// headers['Content-Type'] = 'multipart/form-data';
+		// headers['Access-Control-Allow-Origin'] = '*';
 		// headers['Accept'] = 'application/json';
 		headers['token'] = this._token;
 		return headers;
@@ -142,10 +142,12 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, ProfileData, { headers: headers, params: params });
 	}
 
-
-
-
-
+	// Upload Profile Picture
+	uploadProfileDocs(Files): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Jobseeker', 'ImageUpload');
+		return this.http.post(this._baseUrl, Files, { headers: headers, params: params });
+	}
 
 
 
@@ -379,15 +381,7 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl + '/changepassword', jobSeekerPasswordData, { headers: headers });
 	}
 
-	uploadProfileDocs(formData): Observable<any> {
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken,
-			});
-		return this.http.post(this._baseUrl + '/updateimageandproof', formData, { headers: headers });
-	}
+
 
 	// sendJobApplication(jobId): Observable<any> {
 	// 	//var authDatas = JSON.stringify(authData);
