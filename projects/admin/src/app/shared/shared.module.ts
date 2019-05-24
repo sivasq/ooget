@@ -32,7 +32,7 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher, MAT_DATE_LOCALE } from '@angular/material';
 
 import { NgPipesModule } from 'ngx-pipes';
-import { DataService } from '../services/data.service';
+import { HolidayDataService } from '../services/holiday-data.service';
 import { MultipleDatePickerModule } from '../multiple-date-picker';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpModule } from '@ngx-progressbar/http';
@@ -177,8 +177,11 @@ export const MY_NATIVE_FORMATS = {
 	providers: [
 		ConfigService,
 		ApiCallService,
-		DataService, JsonToCsvService, JsonToTextService,
-		DatePipe, UpperCasePipe,
+		HolidayDataService,
+		JsonToCsvService,
+		JsonToTextService,
+		DatePipe,
+		UpperCasePipe,
 		AgePipe,
 		{ provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
 		{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },

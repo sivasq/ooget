@@ -14,11 +14,11 @@ export class ListUserComponent implements OnInit {
 
 	busy: Subscription;
 	employerId;
-	empJobId;
+	// empJobId;
 
-	//Mat Menu Configuration
-	@Input() xPosition: MenuPositionX
-	@Input() overlapTrigger: boolean
+	// Mat Menu Configuration
+	@Input() xPosition: MenuPositionX;
+	@Input() overlapTrigger: boolean;
 
 	public pageSizeOptions = [5, 10, 15, 20, 30, 50, 100, 250];
 
@@ -29,20 +29,20 @@ export class ListUserComponent implements OnInit {
 		currentPage: 1
 	};
 	public tab1search;
-	public tab1Filter: string = '';
-	public tab1PaginateControlMaxSize: number = 10;
-	public tab1PaginateControlAutoHide: boolean = true;
+	public tab1Filter = '';
+	public tab1PaginateControlMaxSize = 10;
+	public tab1PaginateControlAutoHide = true;
 
-	//set Company Details
-	public companyDetails: any;
+	// set Company Details
+	public employerDetails: any;
 	public jobDetails: any;
 
 	constructor(private _httpService: ApiCallService, private route: ActivatedRoute) {
 		this.employerId = this.route.snapshot.params['emp_id'];
-		this.empJobId = this.route.snapshot.params['job_id'];
+		// this.empJobId = this.route.snapshot.params['job_id'];
 
-		this.getListOfUsers({ 'companyid': this.employerId });
-		this.getEmployerDetails(this.route.snapshot.params['emp_id']);
+		this.getListOfUsers({ 'employerid': this.employerId });
+		this.getEmployerDetails({ 'employerid': this.employerId });
 	}
 
 	public isUserAvailable: boolean;
@@ -53,40 +53,37 @@ export class ListUserComponent implements OnInit {
 		return localStorage.getItem('ogDefaultEmployer');
 	}
 
-	getListOfUsers(companyid) {
-		this.busy = this._httpService.getListOfUsers(companyid)
+	getListOfUsers(employerid) {
+		this.busy = this._httpService.getListOfUsers(employerid)
 			.subscribe(
 				response => {
+					if (response.success) {
+						if ((response.result).length > 0) {
+							this.isUserAvailable = true;
+						} else {
+							this.isUserAvailable = false;
+						}
+						this.users_list = response.result;
 
-		if (response.success) {
-			if ((response.supervisors).length > 0) {
-				this.isUserAvailable = true;
-			} else {
-				this.isUserAvailable = false;
-			}
-			this.users_list = response.supervisors;
-
-		} else if (!response.success) {
-			console.log(response);
-		}
-			},
-			error => {
-				console.log(error);
-			}
-		);
+					} else if (!response.success) {
+						console.log(response);
+					}
+				},
+				error => {
+					console.log(error);
+				}
+			);
 	}
 
 	deleteUser(userid) {
 		console.log(userid);
-		// return false;
-		this.busy = this._httpService.deleteUserProfile({ "supervisorid": userid })
+		return false;
+		this.busy = this._httpService.deleteUserProfile({ 'userid': userid })
 			.subscribe(
 				response => {
 					// console.log(response);
 					if (response.success) {
-
-						this.getListOfUsers({ 'companyid': this.employerId });
-
+						this.getListOfUsers({ 'employerid': this.employerId });
 					} else if (!response.success) {
 						// console.log(response);
 					}
@@ -97,12 +94,13 @@ export class ListUserComponent implements OnInit {
 			);
 	}
 
-	getEmployerDetails(employerId) {
-		this.busy = this._httpService.getEmployerDetails({ 'companyid': employerId })
+	getEmployerDetails(employerid) {
+		this.busy = this._httpService.getEmployer(employerid)
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.companyDetails = response.employer;
+						// this.companyDetails = response.employer;
+						this.employerDetails = response.result[0];
 					} else if (!response.success) {
 						console.log(response);
 					}

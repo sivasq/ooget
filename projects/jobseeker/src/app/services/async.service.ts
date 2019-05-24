@@ -49,7 +49,6 @@ export class AsyncSubscriber {
 	}
 
 	public setProfileDetails(profileData) {
-		console.log('setprofile');
 		this.profileDetails.next(profileData);
 	}
 }

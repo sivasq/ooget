@@ -16,7 +16,6 @@ export class OogetsidenavComponent implements OnInit {
 	public config: PerfectScrollbarConfigInterface = {};
 
 	public baseUrl;
-	public imgBaseUrl;
 	public profileImage: String;
 	public UserName: String;
 	// public UserRole: String;
@@ -26,18 +25,20 @@ export class OogetsidenavComponent implements OnInit {
 
 	constructor(private urlconfig: ConfigService, public router: Router, public dialog: MatDialog, private asyncSubscriber: AsyncSubscriber) {
 		this.baseUrl = urlconfig.base_url;
-		this.imgBaseUrl = urlconfig.img_base_url;
 
 		asyncSubscriber.getProfileDetails.subscribe(value => {
-			console.log('getprofile');
 			this.UserName = localStorage.getItem('ogUserName');
 			this.userEmail = localStorage.getItem('ogUserEmail');
 			let userLogo = localStorage.getItem('ogUserLogo');
 
 			if (userLogo == null || userLogo == 'undefined') {
-				this.profileImage = "assets/img/avatars/profile-placeholder.png";
+				this.profileImage = 'assets/img/avatars/profile-placeholder.png';
 			} else {
-				this.profileImage = this.baseUrl + '/' + userLogo;
+				this.profileImage = 'assets/img/avatars/profile-placeholder.png';
+				setTimeout(() => {
+					console.log('Test');
+					this.profileImage = this.baseUrl + userLogo;
+				}, 1000 / 60);
 			}
 		});
 	}
@@ -64,7 +65,7 @@ export class OogetsidenavComponent implements OnInit {
 		if (userLogo == null || userLogo == 'undefined') {
 			this.profileImage = "assets/img/avatars/profile-placeholder.png";
 		} else {
-			this.profileImage = this.imgBaseUrl + '/' + userLogo;
+			this.profileImage = this.baseUrl + userLogo;
 		}
 	}
 

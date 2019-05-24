@@ -668,7 +668,7 @@
 											<div class="drop-zone content" (change)="idfrontchange($event)"
 												(click)="idFrontFileInput.click()" style="cursor: pointer;">
 												<input hidden type="file" #idFrontFileInput
-													[disabled]="isIdProofEditable">
+													[disabled]="isIdProofEditable" accept="image/*">
 												<img style="height:100%; width:100%; border-radius: 50px;" alt=""
 													[src]="idProofFront">
 											</div>
@@ -676,7 +676,7 @@
 											<div class="drop-zone content" (change)="idbackchange($event)"
 												(click)="idBackFileInput.click()" style="cursor: pointer;">
 												<input hidden type="file" #idBackFileInput
-													[disabled]="isIdProofEditable">
+													[disabled]="isIdProofEditable" accept="image/*">
 												<img style="height:100%; width:100%; border-radius: 50px;" alt=""
 													[src]="idProofBack">
 											</div>

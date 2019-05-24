@@ -20,7 +20,6 @@ export interface NavItem {
 })
 export class OogetsidenavComponent implements OnInit {
 	public baseUrl;
-	public imgBaseUrl;
 	public config: PerfectScrollbarConfigInterface = {};
 	public userprofile: boolean;
 	public profileImage: String;
@@ -93,17 +92,21 @@ export class OogetsidenavComponent implements OnInit {
 
 	constructor(private configService: ConfigService, public router: Router, private urlconfig: ConfigService, private asyncSubscriber: AsyncSubscriber) {
 		this.baseUrl = configService.base_url;
-		this.imgBaseUrl = urlconfig.img_base_url;
 
 		// this.appearance$ = asyncSubscriber.getAppearance.pipe();
 		asyncSubscriber.getProfileDetails.subscribe(value => {
+			console.log('get called');
 			this.UserName = localStorage.getItem('ogUserName');
 			this.UserRole = localStorage.getItem('ogUserRole');
 			let userimage = localStorage.getItem('ogProfileimage');
-			if (userimage == null || userimage == "undefined") {
-				this.profileImage = "assets/img/avatars/profile-placeholder.png";
+			if (userimage == null || userimage == 'undefined') {
+				this.profileImage = 'assets/img/avatars/profile-placeholder.png';
 			} else {
-				this.profileImage = this.imgBaseUrl + "/admin/" + userimage;
+				this.profileImage = 'assets/img/avatars/profile-placeholder.png';
+				setTimeout(() => {
+					console.log('Test');
+					this.profileImage = this.baseUrl + userimage;
+				}, 1000 / 60);
 			}
 		});
 	}
@@ -119,17 +122,17 @@ export class OogetsidenavComponent implements OnInit {
 	onLogout() {
 		localStorage.clear();
 		this.router.navigate(['logout']);
-		console.log("Logout Success");
+		console.log('Logout Success');
 	}
 
 	refreshLS() {
 		this.UserName = localStorage.getItem('ogUserName');
 		this.UserRole = localStorage.getItem('ogUserRole');
 		let userimage = localStorage.getItem('ogProfileimage');
-		if (userimage == null || userimage == "undefined") {
-			this.profileImage = "assets/img/avatars/profile-placeholder.png";
+		if (userimage == null || userimage == 'undefined') {
+			this.profileImage = 'assets/img/avatars/profile-placeholder.png';
 		} else {
-			this.profileImage = this.imgBaseUrl + "/admin/" + userimage;
+			this.profileImage = this.baseUrl + userimage;
 		}
 	}
 

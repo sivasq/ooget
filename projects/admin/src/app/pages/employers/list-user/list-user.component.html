@@ -12,9 +12,9 @@
 					<span class="breadcrumb-title">Home</span>
 				</a>
 
-				<a class="breadcrumb-item" routerLink="/admin/employers/{{companyDetails?._id}}/view" fxLayout="row"
+				<a class="breadcrumb-item" routerLink="/admin/employers/{{employerDetails?.id}}/view" fxLayout="row"
 					fxLayoutAlign="center center">
-					<span class="breadcrumb-title">{{companyDetails?.companyname}}</span>
+					<span class="breadcrumb-title">{{employerDetails?.name}}</span>
 				</a>
 
 				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
@@ -70,19 +70,16 @@
 				<tbody>
 					<tr
 						*ngFor="let user of users_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
-						<td>{{user.username | ucfirst}}</td>
+						<td>{{user.firstname | ucfirst}}</td>
 						<td>{{user.email}}</td>
+						<td>{{user.type | ucfirst}}</td>
 						<td>
-							{{user.roleid.rolename == "superemployer" ? "Super Admin" : user.roleid.rolename == "normalemployer" ? "Admin" :
-							user.roleid.rolename == "verifier" ? "Verifier" : user.roleid.rolename}}
-						</td>
-						<td>
-							<span *ngIf="user.roleid.rolename != 'superemployer'">
+							<span *ngIf="user.type == 'employer'">
 								<a mat-icon-button color="primary"
-									routerLink="/admin/employers/{{employerId}}/user/{{user._id}}">
+									routerLink="/admin/employers/{{employerId}}/user/{{user.id}}">
 									<mat-icon>border_color</mat-icon>
 								</a>
-								<button mat-icon-button color="warn" (click)="deleteUser(user._id)">
+								<button mat-icon-button color="warn" (click)="deleteUser(user.id)">
 									<mat-icon aria-label="Delete">delete</mat-icon>
 								</button>
 							</span>

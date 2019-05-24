@@ -25,16 +25,16 @@ export class AddUserComponent implements OnInit {
 	public employerDetails;
 	busy: Subscription;
 
-	UserAddForm: FormGroup;
-	@ViewChild(FormGroupDirective) resetUserAddForm;
+	UserForm: FormGroup;
+	@ViewChild(FormGroupDirective) resetUserForm;
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService, private route: ActivatedRoute) {
-		this.buildUserAddForm();
+		this.buildUserForm();
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 		this.employerId = this.route.snapshot.params['emp_id'];
 		this.getUserRoles();
-		this.getEmployerDetails(this.employerId);
+		this.getEmployerDetails({ 'employerid': this.employerId });
 	}
 
 	getUserRoles(): void {
@@ -43,16 +43,14 @@ export class AddUserComponent implements OnInit {
 	}
 
 	// Build Employer Add Form
-	buildUserAddForm(): void {
-		this.UserAddForm = this.fb.group({
+	buildUserForm(): void {
+		this.UserForm = this.fb.group({
 			companyid: [this.route.snapshot.params['emp_id']],
 			name: ['', [Validators.required]],
 			type: ['', [Validators.required]],
 			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(8)]), this.isPatternMatch.bind(this)],
-			verify: ['', [Validators.required]],
-			activestatus: ['true'],
-			registeredby: ['Admin'],
+			verify: ['', [Validators.required]]
 		});
 	}
 
@@ -117,16 +115,17 @@ export class AddUserComponent implements OnInit {
 	}
 
 	// Submit handler for Employer Add
-	public userAddSubmit() {
-		if (!this.UserAddForm.valid) { return false; }
-
-		this.busy = this._httpService.createExtraUser(this.UserAddForm.value)
+	createExtraUser() {
+		if (!this.UserForm.valid) { return false; }
+		console.log(this.UserForm.value);
+		return false;
+		this.busy = this._httpService.createExtraUser(this.UserForm.value)
 			.subscribe(
 				response => {
 					// Response is success
 					if (response.success) {
 						// Reset form
-						this.resetUserAddForm.resetForm();
+						this.resetUserForm.resetForm();
 						// Show Success Snackbar
 						const snackBarRef = this.snackBar.open('User Added Successfully.', 'Close', {
 							duration: 5000,
@@ -147,12 +146,12 @@ export class AddUserComponent implements OnInit {
 			);
 	}
 
-	getEmployerDetails(employerId) {
-		this.busy = this._httpService.getEmployerDetails({ 'companyid': employerId })
+	getEmployerDetails(employerid) {
+		this.busy = this._httpService.getEmployer(employerid)
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.employerDetails = response.employer;
+						this.employerDetails = response.result[0];
 					} else if (!response.success) {
 						console.log(response);
 					}

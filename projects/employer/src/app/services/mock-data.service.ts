@@ -12,8 +12,8 @@ import { JobLocation } from '../classes/jobLocation';
 import { JobLocations } from '../mock-datas/JobLocations';
 
 import { Specialization } from '../classes/Specialization';
-import { FullTimeSpecializations } from '../mock-datas/fullTimeSpecializations';
-import { PartTimeSpecializations } from '../mock-datas/partTimeSpecializations';
+// import { FullTimeSpecializations } from '../mock-datas/fullTimeSpecializations';
+// import { PartTimeSpecializations } from '../mock-datas/partTimeSpecializations';
 
 import { UserRole } from '../classes/userRole';
 import { UserRoles } from '../mock-datas/userRoles';
@@ -22,6 +22,7 @@ import { graceperiods, overtimeroundings } from '../mock-datas/simpleDatas';
 
 import { Observable, of } from 'rxjs';
 import * as _ from 'lodash';
+import { Specializations } from '../mock-datas/specializations';
 
 @Injectable({
 	providedIn: 'root'
@@ -50,13 +51,17 @@ export class MockDataService {
 		return of(JobLocations);
 	}
 
-	getFullTimeSpecializations(): Observable<Specialization[]> {
-		return of(FullTimeSpecializations);
+	getSpecializations(): Observable<Specialization[]> {
+		return of(Specializations);
 	}
 
-	getPartTimeSpecializations(): Observable<Specialization[]> {
-		return of(PartTimeSpecializations);
-	}
+	// getFullTimeSpecializations(): Observable<Specialization[]> {
+	// 	return of(FullTimeSpecializations);
+	// }
+
+	// getPartTimeSpecializations(): Observable<Specialization[]> {
+	// 	return of(PartTimeSpecializations);
+	// }
 
 	getGracePeriods(): Observable<number[]> {
 		return of(graceperiods);

@@ -1,10 +1,12 @@
 <div class="container">
 	<h3 mat-dialog-title>Are you sure?</h3>
 	<div mat-dialog-content>
-		Holiday Date: {{data.holidaydate | date:'dd/MM/yyyy'}}
-		<p></p>
-		Holiday Name: {{data.holidayname}}
-		<p></p>
+		<p>
+			Holiday Date: {{data.date | date:'dd/MM/yyyy'}}
+		</p>
+		<p>
+			Holiday Name: {{data.name}}
+		</p>
 	</div>
 
 	<div mat-dialog-actions>

@@ -4,7 +4,8 @@
 	<div fxLayout="row wrap">
 		<div class="flex-p" fxFlex="1 1 100%">
 			<mat-card class="mat-breadcrumb" fxLayout="row">
-				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row"
+					fxLayoutAlign="flex-start center">
 					<mat-icon>home</mat-icon>
 					<span class="breadcrumb-title">Home</span>
 				</a>
@@ -37,17 +38,17 @@
 
 				<ng-container matColumnDef="holiday_date">
 					<mat-header-cell *matHeaderCellDef mat-sort-header>Holiday Date</mat-header-cell>
-					<mat-cell *matCellDef="let row"> {{row.holidaydate}}</mat-cell>
+					<mat-cell *matCellDef="let row"> {{row.date}}</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="holiday_name">
 					<mat-header-cell *matHeaderCellDef mat-sort-header>Holiday Name</mat-header-cell>
-					<mat-cell *matCellDef="let row"> {{row.holidayname}}</mat-cell>
+					<mat-cell *matCellDef="let row"> {{row.name}}</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="actions">
 					<mat-header-cell *matHeaderCellDef>
-						<button mat-mini-fab color="primary" (click)="addNew()">
+						<button mat-mini-fab color="primary" (click)="addNewHoliday()">
 							<mat-icon>add</mat-icon>
 						</button>
 						<!-- &nbsp;
@@ -57,11 +58,11 @@
 					</mat-header-cell>
 
 					<mat-cell *matCellDef="let row; let i=index;">
-						<button mat-icon-button color="accent" (click)="startEdit(i, row._id, row.holidaydate, row.holidayname)">
+						<button mat-icon-button color="accent" (click)="startEdit(i, row.id, row.date, row.name)">
 							<mat-icon aria-label="Edit">edit</mat-icon>
 						</button>
 
-						<button mat-icon-button color="warn" (click)="deleteItem(i, row._id, row.holidaydate, row.holidayname)">
+						<button mat-icon-button color="warn" (click)="deleteItem(i, row.id, row.date, row.name)">
 							<mat-icon aria-label="Delete">delete</mat-icon>
 						</button>
 					</mat-cell>
@@ -75,7 +76,8 @@
 				No Holidays
 			</div>
 
-			<mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+			<mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10"
+				[pageSizeOptions]="[5, 10, 25, 100]">
 			</mat-paginator>
 		</div>
 	</div>

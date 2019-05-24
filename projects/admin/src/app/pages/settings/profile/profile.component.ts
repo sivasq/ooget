@@ -42,6 +42,7 @@ export class ProfileComponent implements OnInit {
 	@ViewChild('imgFileInput') myProfileImageInputVariable: ElementRef;
 
 	adminProfileForm: FormGroup;
+	adminPasswordForm: FormGroup;
 	homePageContentForm: FormGroup;
 
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -53,6 +54,7 @@ export class ProfileComponent implements OnInit {
 		this.baseUrl = urlconfig.base_url;
 
 		this.buildAdminProfileForm();
+		this.buildAdminPasswordForm();
 		this.buildHomePageContentForm();
 
 		this.getProfileDetails();
@@ -64,7 +66,12 @@ export class ProfileComponent implements OnInit {
 		this.adminProfileForm = this.fb.group({
 			// Profile Details
 			username: ['', Validators.compose([Validators.required])],
-			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],
+			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)]
+		});
+	}
+
+	buildAdminPasswordForm(): void {
+		this.adminPasswordForm = this.fb.group({
 			password: ['', Validators.compose([Validators.required, Validators.minLength(8)]), this.isPatternMatch.bind(this)],
 			verify: ['', [Validators.required]],
 		});
@@ -161,6 +168,7 @@ export class ProfileComponent implements OnInit {
 			reader.readAsDataURL(event.target.files[0]); // read file as data url
 			reader.onload = (event: any) => { // called once readAsDataURL is completed
 				this.profileImage = event.target.result;
+				this.uploadProfileDocs();
 				// console.log(event.target.result);
 				// this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage })
 			};
@@ -204,32 +212,55 @@ export class ProfileComponent implements OnInit {
 	// Update Admin Profile Datas
 	adminProfileUpdate() {
 		if (!this.adminProfileForm.valid) { return false; }
-		console.log(this.adminProfileForm.value);
 
 		this.busy = this._httpService.adminProfileUpdate(this.adminProfileForm.value)
 			.subscribe(
 				response => {
 					if (response.success) {
-						const profileImage = this.myProfileImageInputVariable.nativeElement;
+						// const profileImage = this.myProfileImageInputVariable.nativeElement;
+						// if (profileImage.files[0]) {
+						// 	localStorage.setItem('ogUserName', this.adminProfileForm.get('username').value);
+						// 	localStorage.setItem('ogUserEmail', this.adminProfileForm.get('email').value);
+						// 	this.uploadProfileDocs();
+						// } else {
+						localStorage.setItem('ogUserName', this.adminProfileForm.get('username').value);
+						localStorage.setItem('ogUserEmail', this.adminProfileForm.get('email').value);
+						// location.reload();
+						this.asyncSubscriber.setProfileDetails({ 'Image': this.profileImage });
 
-						if (profileImage.files[0]) {
-							localStorage.setItem('ogUserName', this.adminProfileForm.get('username').value);
-							localStorage.setItem('ogUserEmail', this.adminProfileForm.get('email').value);
-							this.uploadProfileDocs();
-						} else {
-							localStorage.setItem('ogUserName', this.adminProfileForm.get('username').value);
-							localStorage.setItem('ogUserEmail', this.adminProfileForm.get('email').value);
-							// location.reload();
-							this.asyncSubscriber.setProfileDetails({ 'Image': this.profileImage });
+						const snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
+							duration: 5000,
+						});
 
-							const snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
-								duration: 5000,
-							});
+						snackBarRef.onAction().subscribe(() => {
+							snackBarRef.dismiss();
+						});
+						// }
+					} else if (!response.success) {
+					}
+				},
+				error => {
+					console.log(error);
+				}
+			);
+	}
 
-							snackBarRef.onAction().subscribe(() => {
-								snackBarRef.dismiss();
-							});
-						}
+	// Update Admin Profile Datas
+	adminPasswordUpdate() {
+		if (!this.adminPasswordForm.valid) { return false; }
+
+		this.busy = this._httpService.adminProfileUpdate(this.adminPasswordForm.value)
+			.subscribe(
+				response => {
+					if (response.success) {
+						const snackBarRef = this.snackBar.open('Password Updated Successfully.', 'Close', {
+							duration: 5000,
+						});
+
+						snackBarRef.onAction().subscribe(() => {
+							snackBarRef.dismiss();
+						});
+
 					} else if (!response.success) {
 					}
 				},
@@ -254,7 +285,7 @@ export class ProfileComponent implements OnInit {
 				.subscribe(
 					response => {
 						if (response.success) {
-							localStorage.setItem('ogProfileimage', response.adminimage);
+							localStorage.setItem('ogProfileimage', response.imgpath);
 							// location.reload();
 							this.asyncSubscriber.setProfileDetails({ 'Image': this.profileImage });
 
@@ -272,7 +303,6 @@ export class ProfileComponent implements OnInit {
 					}
 				);
 		}
-
 	}
 
 	// Get Home Page Contents

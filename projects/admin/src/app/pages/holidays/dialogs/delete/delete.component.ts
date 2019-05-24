@@ -1,6 +1,6 @@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Component, Inject } from '@angular/core';
-import { DataService } from '../../../../services/data.service';
+import { HolidayDataService } from '../../../../services/holiday-data.service';
 
 @Component({
 	selector: 'app-delete',
@@ -10,15 +10,15 @@ import { DataService } from '../../../../services/data.service';
 export class DeleteComponent {
 
 	constructor(public dialogRef: MatDialogRef<DeleteComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: any, public dataService: DataService) { }
+		@Inject(MAT_DIALOG_DATA) public data: any, public holidayDataService: HolidayDataService) { }
 
 	onNoClick(): void {
 		this.dialogRef.close();
 	}
 
 	confirmDelete(): void {
-		let holidayId = { "holidayid": this.data.holidayid};
+		let holidayId = { 'id': this.data.id };
 		this.dialogRef.close(holidayId);
-		// this.dataService.deleteIssue(holidayId);
+		// this.dataService.deleteholiday(holidayId);
 	}
 }

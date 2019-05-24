@@ -5,17 +5,18 @@
 	<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
 		<div class="flex-p" fxFlex="100">
 			<mat-card class="mat-breadcrumb" fxLayout="row">
-				<a class="breadcrumb-item" routerLink="/employer/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+				<a class="breadcrumb-item" routerLink="/employer/dashboard" fxLayout="row"
+					fxLayoutAlign="flex-start center">
 					<mat-icon>home</mat-icon>
 					<span class="breadcrumb-title">Home</span>
 				</a>
 
-				<a class="breadcrumb-item" routerLink="/admin/employers/{{employerDetails?._id}}/view" fxLayout="row"
+				<a class="breadcrumb-item" routerLink="/admin/employers/{{employerDetails?.id}}/view" fxLayout="row"
 					fxLayoutAlign="center center">
-					<span class="breadcrumb-title">{{employerDetails?.companyname}}</span>
+					<span class="breadcrumb-title">{{employerDetails?.name}}</span>
 				</a>
 
-				<a class="breadcrumb-item" routerLink="/admin/employers/{{employerDetails?._id}}/users" fxLayout="row"
+				<a class="breadcrumb-item" routerLink="/admin/employers/{{employerDetails?.id}}/users" fxLayout="row"
 					fxLayoutAlign="center center">
 					<span class="breadcrumb-title">Users</span>
 				</a>
@@ -36,11 +37,14 @@
 					<h3>User Details</h3>
 				</div>
 				<mat-card-content>
-					<form [formGroup]="UserUpdateForm" (ngSubmit)="UserUpdateSubmit()" fxLayout="row wrap" fxLayoutAlign="space-between center">
+					<form [formGroup]="UserUpdateForm" (ngSubmit)="updateUser()" fxLayout="row wrap"
+						fxLayoutAlign="space-between center">
 
 						<!-- Profile Pic -->
-						<div fxFlex="100" fxLayout="row" fxLayoutAlign="center center" style="margin-top: 25px;margin-bottom: 25px;">
-							<div class="drop-zone content" (change)="logochange($event)" (click)="imgFileInput.click() " style="cursor: pointer; ">
+						<div fxFlex="100" fxLayout="row" fxLayoutAlign="center center"
+							style="margin-top: 25px;margin-bottom: 25px;">
+							<div class="drop-zone content" (change)="logochange($event)" (click)="imgFileInput.click() "
+								style="cursor: pointer; ">
 								<input hidden type="file" #imgFileInput>
 								<img style="height:100%; width:100%; border-radius: 50px;" alt="" [src]="profileImage">
 							</div>
@@ -49,8 +53,8 @@
 						<!-- user Name -->
 						<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 							<mat-label>Name of User</mat-label>
-							<input matInput placeholder="Name of User" name="username" autocomplete="off" formControlName="username"
-							 required>
+							<input matInput placeholder="Name of User" name="username" autocomplete="off"
+								formControlName="username" required>
 							<mat-error *ngIf="UserUpdateForm.get('username').hasError('required')" align="start">
 								Name Required
 							</mat-error>
@@ -61,7 +65,8 @@
 							<mat-label>Role</mat-label>
 							<mat-select placeholder="Role" name="role" formControlName="role" required>
 								<mat-option>--Select User Role--</mat-option>
-								<mat-option *ngFor="let Role of Roles" [value]="Role.RoleValue">{{ Role.RoleView }}</mat-option>
+								<mat-option *ngFor="let Role of Roles" [value]="Role.RoleValue">{{ Role.RoleView }}
+								</mat-option>
 							</mat-select>
 							<mat-error *ngIf="UserUpdateForm.get('role').hasError('required')" align="start">
 								Role Required
@@ -71,8 +76,8 @@
 						<!-- Login Mail -->
 						<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 							<mat-label>Login Email</mat-label>
-							<input matInput type="email" placeholder="Login Email" name="email" autocomplete="off" formControlName="email"
-							 required>
+							<input matInput type="email" placeholder="Login Email" name="email" autocomplete="off"
+								formControlName="email" required>
 							<mat-error *ngIf="UserUpdateForm.get('email').hasError('required')" align="start">
 								Email Required
 							</mat-error>
@@ -87,9 +92,11 @@
 						<!--- Password -->
 						<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 							<mat-label>Password</mat-label>
-							<input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" name="password" autocomplete="off"
-							 formControlName="password" advs-compare="verify" parent='true' required>
-							<mat-icon class="pointer" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+							<input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" name="password"
+								autocomplete="off" formControlName="password" advs-compare="verify" parent='true'
+								required>
+							<mat-icon class="pointer" matSuffix (click)="hide = !hide">
+								{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
 							<mat-error *ngIf="UserUpdateForm.get('password').hasError('required')" align="start">
 								Password is Required
 							</mat-error>
@@ -104,9 +111,11 @@
 						<!-- Verify Password -->
 						<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 							<mat-label>Confirm Password</mat-label>
-							<input matInput [type]="rehide ? 'password' : 'text'" placeholder="Confirm Password" name="verify" autocomplete="off"
-							 formControlName="verify" advs-compare="password" parent='false' required>
-							<mat-icon class="pointer" matSuffix (click)="rehide = !rehide">{{rehide ? 'visibility_off' : 'visibility'}}</mat-icon>
+							<input matInput [type]="rehide ? 'password' : 'text'" placeholder="Confirm Password"
+								name="verify" autocomplete="off" formControlName="verify" advs-compare="password"
+								parent='false' required>
+							<mat-icon class="pointer" matSuffix (click)="rehide = !rehide">
+								{{rehide ? 'visibility_off' : 'visibility'}}</mat-icon>
 							<mat-error *ngIf="UserUpdateForm.get('verify').hasError('required')" align="start">
 								Verify Password is required
 							</mat-error>
@@ -117,7 +126,8 @@
 
 						<!--- Buttons Block -->
 						<div fxFlex="100" fxLayout="row" fxLayoutAlign="center stretch" style="margin-top:25px;">
-							<button mat-raised-button color="primary" type="submit" [disabled]="!UserUpdateForm.valid">Update</button>
+							<button mat-raised-button color="primary" type="submit"
+								[disabled]="!UserUpdateForm.valid">Update</button>
 						</div>
 					</form>
 				</mat-card-content>

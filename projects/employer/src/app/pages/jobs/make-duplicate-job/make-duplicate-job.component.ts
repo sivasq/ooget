@@ -138,12 +138,16 @@ export class MakeDuplicateJobComponent implements OnInit {
 			.subscribe(Locations => this.Locations = Locations);
 	}
 	getFullTimeSpecializations(): void {
-		this.mockDataService.getFullTimeSpecializations()
-			.subscribe(Specializations => this.FullTimeSpecializations = Specializations);
+		this.mockDataService.getSpecializations()
+			.subscribe(Specializations => {
+				this.FullTimeSpecializations = Specializations.filter(specialization => specialization.type === 1 || specialization.type === 3);
+			});
 	}
 	getPartTimeSpecializations(): void {
-		this.mockDataService.getPartTimeSpecializations()
-			.subscribe(Specializations => this.PartTimeSpecializations = Specializations);
+		this.mockDataService.getSpecializations()
+			.subscribe(Specializations => {
+				this.PartTimeSpecializations = Specializations.filter(specialization => specialization.type === 2 || specialization.type === 3);
+			});
 	}
 	getGracePeriods(): void {
 		this.mockDataService.getGracePeriods()

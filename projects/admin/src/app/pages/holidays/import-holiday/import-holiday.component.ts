@@ -51,7 +51,7 @@ export class ImportHolidayComponent implements OnInit {
 	}
 
 	getAllPHHolidays() {
-		this._httpService.getAllPHHolidays()
+		this._httpService.getAllPHHolidays({ 'from': '2019-06-17', 'to': '2019-06-21' })
 			.subscribe(
 				response => {
 					if (response.success) {

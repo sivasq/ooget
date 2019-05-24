@@ -30,9 +30,9 @@ export class EditUserComponent implements OnInit {
 		email: '',
 		role: '',
 		password: ''
-	}
+	};
 
-	public imgBaseUrl;
+	public baseUrl;
 
 	public profileImage: any = 'assets/img/avatars/profile-placeholder.png';
 	@ViewChild('imgFileInput') myProfileImageInputVariable: ElementRef;
@@ -44,12 +44,12 @@ export class EditUserComponent implements OnInit {
 	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber, private urlconfig: ConfigService, private route: ActivatedRoute, private mockDataService: MockDataService) {
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
-		this.imgBaseUrl = urlconfig.img_base_url;
+		this.baseUrl = urlconfig.base_url;
 
 		this.buildUserUpdateForm();
 
-		this.getProfileDetails(this.route.snapshot.params['userId']);
-		this.getEmployerDetails(this.route.snapshot.params['emp_id']);
+		this.getProfileDetails({ 'userid': this.route.snapshot.params['userId'] });
+		this.getEmployerDetails({ 'employerid': this.route.snapshot.params['emp_id'] });
 
 		this.getUserRoles();
 	}
@@ -68,7 +68,7 @@ export class EditUserComponent implements OnInit {
 			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(8)]), this.isPatternMatch.bind(this)],
 			verify: ['', [Validators.required]],
-		})
+		});
 	}
 
 	// Check Password Pattern Match
@@ -78,37 +78,37 @@ export class EditUserComponent implements OnInit {
 
 				let regAll = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\^&*)(+=._-])/;
 				if (!regAll.test(control.value)) {
-					this.passwordPatternError = "at least one number, one lowercase and one uppercase letter, one special charcter";
+					this.passwordPatternError = 'at least one number, one lowercase and one uppercase letter, one special charcter';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regNumber = /[0-9]/;
 				if (!regNumber.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one number (0-9)";
+					this.passwordPatternError = 'password must contain at least one number (0-9)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regSmallAlp = /[a-z]/;
 				if (!regSmallAlp.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one lowercase letter(a - z)";
+					this.passwordPatternError = 'password must contain at least one lowercase letter(a - z)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regCapsAlp = /[A-Z]/;
 				if (!regCapsAlp.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one uppercase letter (A-Z)";
+					this.passwordPatternError = 'password must contain at least one uppercase letter (A-Z)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regSpecChar = /[!@#$%\^&*)(+=._-]/;
 				if (!regSpecChar.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one Special character (!@#$%\^&*)(+=._-)";
+					this.passwordPatternError = 'password must contain at least one Special character (!@#$%\^&*)(+=._-)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				var regSpace = /\s/;
 				if (regSpace.test(control.value)) {
-					this.passwordPatternError = "space not allowed";
+					this.passwordPatternError = 'space not allowed';
 					resolve({ 'isPatternMatch': true });
 				}
 				resolve(null);
@@ -145,25 +145,27 @@ export class EditUserComponent implements OnInit {
 			reader.readAsDataURL(event.target.files[0]); // read file as data url
 			reader.onload = (event: any) => { // called once readAsDataURL is completed
 				this.profileImage = event.target.result;
+				this.uploadProfileDocs();
 				// console.log(event.target.result);
-			}
+			};
 		}
 	}
 
 	// Get Admin Profile Details
 	getProfileDetails(userid) {
-		this.busy = this._httpService.getExtraUserProfileDetails({ "supervisorid": userid })
+		this.busy = this._httpService.getUserProfileDetails(userid)
 			.subscribe(
 				response => {
 					// console.log(response);
 					if (response.success) {
+						let userDetails = response.result;
 						// Profile Tab
-						this.userProfile.username = response.profile.username ? response.profile.username : '';
-						this.userProfile.role = response.profile.role.rolename ? response.profile.role.rolename : '';
-						this.userProfile.email = response.profile.email ? response.profile.email : '';
-						this.userProfile.password = response.profile.password ? response.profile.password : '';
+						this.userProfile.username = userDetails.firstname ? userDetails.firstname : '';
+						this.userProfile.role = userDetails.type ? userDetails.type : '';
+						this.userProfile.email = userDetails.email ? userDetails.email : '';
+						this.userProfile.password = userDetails.password ? userDetails.password : '';
 						// Documents
-						this.profileImage = response.profile.userimage ? this.imgBaseUrl + '/admin/' + response.profile.userimage : 'assets/img/avatars/profile-placeholder.png';
+						this.profileImage = userDetails.imgpath ? this.baseUrl + userDetails.imgpath : 'assets/img/avatars/profile-placeholder.png';
 
 						// Patch Form Value
 						this.UserUpdateForm.patchValue({
@@ -172,7 +174,7 @@ export class EditUserComponent implements OnInit {
 							'role': this.userProfile.role,
 							'password': this.userProfile.password,
 							'verify': this.userProfile.password,
-						})
+						});
 
 					} else if (!response.success) {
 						// console.log(response);
@@ -185,35 +187,22 @@ export class EditUserComponent implements OnInit {
 	}
 
 	// Submit handler for Employer Add
-	UserUpdateSubmit() {
-		if (!this.UserUpdateForm.valid) return false;
+	updateUser() {
+		if (!this.UserUpdateForm.valid) { return false; }
 
 		this.busy = this._httpService.updateUserProfile(this.UserUpdateForm.value)
 			.subscribe(
 				response => {
 					// Response is success
 					if (response.success) {
-						let profileImage = this.myProfileImageInputVariable.nativeElement;
+						let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
+							duration: 5000,
+						});
 
-						if (profileImage.files[0]) {
-							// localStorage.setItem('ogUserName', this.UserUpdateForm.get('username').value);
-							// localStorage.setItem('ogUserEmail', this.UserUpdateForm.get('email').value);
+						snackBarRef.onAction().subscribe(() => {
+							snackBarRef.dismiss();
+						});
 
-							this.uploadProfileDocs();
-						} else {
-							// localStorage.setItem('ogUserName', this.UserUpdateForm.get('username').value);
-							// localStorage.setItem('ogUserEmail', this.UserUpdateForm.get('email').value);
-							// location.reload();
-							// this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
-
-							let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
-								duration: 5000,
-							});
-
-							snackBarRef.onAction().subscribe(() => {
-								snackBarRef.dismiss();
-							});
-						}
 						// Response is failed
 					} else if (!response.success) {
 						console.log(response);
@@ -232,41 +221,37 @@ export class EditUserComponent implements OnInit {
 		const formData: FormData = new FormData();
 
 		if (profileImage.files && profileImage.files[0]) {
-			formData.append('userimage', profileImage.files[0]);
+			formData.append('fileToUpload', profileImage.files[0]);
+			formData.append('userid', this.route.snapshot.params['userId']);
 		}
 
-		// if (profileImage.files[0]) {
-		// 	this.busy = this._httpService.uploadUserProfilePic(formData)
-		// 		.subscribe(
-		// 			response => {
-		// 				if (response.success) {
-		// 					localStorage.setItem('ogProfileimage', response.adminimage);
-		// 					// location.reload();
-		// 					this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
-
-		// 					let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
-		// 						duration: 5000,
-		// 					});
-		// 					snackBarRef.onAction().subscribe(() => {
-		// 						snackBarRef.dismiss();
-		// 						// console.log('The snack-bar action was triggered!');
-		// 					});
-		// 				}
-		// 			},
-		// 			error => {
-		// 				// console.log(error);
-		// 			}
-		// 		);
-		// }
-
+		if (profileImage.files[0]) {
+			this.busy = this._httpService.uploadUserProfilePic(formData)
+				.subscribe(
+					response => {
+						if (response.success) {
+							let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
+								duration: 5000,
+							});
+							snackBarRef.onAction().subscribe(() => {
+								snackBarRef.dismiss();
+								// console.log('The snack-bar action was triggered!');
+							});
+						}
+					},
+					error => {
+						// console.log(error);
+					}
+				);
+		}
 	}
 
-	getEmployerDetails(employerId) {
-		this.busy = this._httpService.getEmployerDetails({ 'companyid': employerId })
+	getEmployerDetails(employerid) {
+		this.busy = this._httpService.getEmployer(employerid)
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.employerDetails = response.employer;
+						this.employerDetails = response.result[0];
 					} else if (!response.success) {
 						console.log(response);
 					}

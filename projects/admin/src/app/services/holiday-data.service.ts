@@ -2,44 +2,45 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
-import { Issue } from '../pages/holidays/models/issue';
+import { Holiday } from '../pages/holidays/models/holiday';
 import { ConfigService } from './config.service';
+import { ApiCallService } from './api-call.service';
 
 @Injectable()
-export class DataService {
-	public API_URL = "http://localhost:3051/ooget/admin";
+export class HolidayDataService {
+	public API_URL = 'http://192.168.1.14/ooget/';
 	// public API_URL = "http://104.197.80.225:3010/ooget/admin";
 	// public API_URL = "https://api.ooget.com.sg/ooget/admin";
 	headers;
 
-	dataChange: BehaviorSubject<Issue[]> = new BehaviorSubject<Issue[]>([]);
+	dataChange: BehaviorSubject<Holiday[]> = new BehaviorSubject<Holiday[]>([]);
 
 	// Temporarily stores data from dialogs
-	dialogData: any;
+	// dialogData: any;
 
-	constructor(private httpClient: HttpClient, public snackBar?: MatSnackBar) {
+	constructor(private httpClient: HttpClient, public snackBar?: MatSnackBar, private _httpService?: ApiCallService) {
 		let userToken = localStorage.getItem('ogToken');
 		this.headers = new HttpHeaders(
 			{
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': '*',
 				'token': userToken
-			})
+			});
 	}
 
-	get data(): Issue[] {
+	get data(): Holiday[] {
 		return this.dataChange.value;
 	}
 
-	getDialogData() {
-		return this.dialogData;
-	}
+	// getDialogData() {
+	// 	return this.dialogData;
+	// }
 
 	/** CRUD METHODS */
-	getAllIssues(): void {
-		let data: '';
-		this.httpClient.post<any>(this.API_URL + '/fetchholidaylist', data, { headers: this.headers }).subscribe(response => {
-			this.dataChange.next(response.holidays);
+	getAllHolidays(): void {
+		let date = { 'from': '2019-05-06', 'to': '2019-06-25' };
+		this.httpClient.post<any>(this.API_URL + '?module=Holiday&mode=GetHolidayList', date, { headers: this.headers }).subscribe(response => {
+			this.dataChange.next(response.result);
 			// console.log(data.message);
 		},
 			(error: HttpErrorResponse) => {
@@ -48,9 +49,9 @@ export class DataService {
 	}
 
 	// DEMO ONLY, you can find working methods below
-	addIssue(issue: Issue) {
-		// this.dialogData = issue;
-		return this.httpClient.post<any>(this.API_URL + '/addholiday', issue, { headers: this.headers })
+	addHoliday(holiday: Holiday) {
+		// this.dialogData = holiday;
+		return this.httpClient.post<any>(this.API_URL + '?module=Holiday&mode=CreateHoliday', holiday, { headers: this.headers })
 		// .subscribe(responses => {
 		// 	this.dialogData = responses.holiday;
 		// 	this.snackBar.open('Successfully added', 'close', {
@@ -64,11 +65,11 @@ export class DataService {
 		// 	});
 	}
 
-	updateIssue(issue: Issue) {
-		// this.dialogData = issue;
-		return this.httpClient.post<any>(this.API_URL + '/editholiday', issue, { headers: this.headers })
+	updateHoliday(holiday: Holiday) {
+		// this.dialogData = holiday;
+		return this.httpClient.post<any>(this.API_URL + '?module=Holiday&mode=UpdateHoliday', holiday, { headers: this.headers })
 		// .subscribe(data => {
-		// 	this.dialogData = issue;
+		// 	this.dialogData = holiday;
 		// 	this.snackBar.open('Successfully Updated', 'close', {
 		// 		duration: 2000,
 		// 	});
@@ -80,10 +81,10 @@ export class DataService {
 		// 	});
 	}
 
-	deleteIssue(holidayid: any) {
+	deleteHoliday(holidayid: any) {
 		// console.log(id);
 		// let id = { 'holidayid': holidayid }
-		return this.httpClient.post<any>(this.API_URL + '/deleteholiday', holidayid, { headers: this.headers })
+		return this.httpClient.post<any>(this.API_URL + '?module=Holiday&mode=DeleteHoliday', holidayid, { headers: this.headers })
 		// .subscribe(data => {
 		// 	console.log(data);
 		// 	this.snackBar.open('Successfully Deleted', 'close', {
@@ -100,9 +101,9 @@ export class DataService {
 
 	// REAL LIFE CRUD Methods I've used in my projects. ToasterService uses Material Toasts for displaying messages:
 	// ADD, POST METHOD
-	// addItem(issue: Issue): void {
-	// 	this.httpClient.post(this.API_URL, issue).subscribe(data => {
-	// 		this.dialogData = issue;
+	// addItem(holiday: Holiday): void {
+	// 	this.httpClient.post(this.API_URL, holiday).subscribe(data => {
+	// 		this.dialogData = holiday;
 	// 		this.snackBar.open('Successfully added', 'close', {
 	// 			duration: 2000,
 	// 		});
@@ -115,9 +116,9 @@ export class DataService {
 	// }
 
 	// UPDATE, PUT METHOD
-	// updateItem(issue: Issue): void {
-	// 	this.httpClient.put(this.API_URL + issue.id, issue).subscribe(data => {
-	// 		this.dialogData = issue;
+	// updateItem(holiday: Holiday): void {
+	// 	this.httpClient.put(this.API_URL + holiday.id, holiday).subscribe(data => {
+	// 		this.dialogData = holiday;
 	// 		this.snackBar.open('Successfully added', 'close', {
 	// 			duration: 2000,
 	// 		});

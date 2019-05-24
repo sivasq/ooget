@@ -1030,22 +1030,23 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 						if (profileImage !== '' || idProofFront !== '' || idProofBack !== '') {
 							this.uploadProfileDocs();
-						}
-					} else {
-						localStorage.setItem('ogUserName', this.jobSeekerProfileForm.get('firstname').value);
-						localStorage.setItem('ogUserEmail', this.jobSeekerProfileForm.get('email').value);
-						// location.reload();
-						this.asyncSubscriber.setProfileDetails({ 'Image': this.profileImage });
-						this.getProfileDetails();
-						// this.router.navigate(['main/jobs/list']);
-						let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
-							duration: 5000,
-						});
 
-						// snackBarRef.onAction().subscribe(() => {
-						// 	snackBarRef.dismiss();
-						// });
-						// }
+						} else {
+							localStorage.setItem('ogUserName', this.jobSeekerProfileForm.get('firstname').value);
+							localStorage.setItem('ogUserEmail', this.jobSeekerProfileForm.get('email').value);
+							// location.reload();
+							this.asyncSubscriber.setProfileDetails({ 'Image': this.profileImage });
+							this.getProfileDetails();
+							// this.router.navigate(['main/jobs/list']);
+							let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
+								duration: 5000,
+							});
+
+							// snackBarRef.onAction().subscribe(() => {
+							// 	snackBarRef.dismiss();
+							// });
+							// }
+						}
 					}
 				},
 				error => {

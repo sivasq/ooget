@@ -41,7 +41,7 @@
 											style="margin-top: 25px;">
 											<div class="drop-zone content" (change)="logochange($event)"
 												(click)="imgFileInput.click() " style="cursor: pointer; ">
-												<input hidden type="file" #imgFileInput>
+												<input hidden type="file" #imgFileInput accept="image/*">
 												<img style="height:100%; width:100%; border-radius: 50px;" alt=""
 													[src]="profileImage">
 											</div>
@@ -79,7 +79,24 @@
 													This Email Already Registered
 												</mat-error>
 											</mat-form-field>
+										</div>
 
+										<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
+											<button mat-raised-button color="primary" type="submit">Submit</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</mat-tab>
+
+						<mat-tab label="Password Update">
+							<div style="padding:25px;">
+								<!-- <div class="view"> </div> -->
+								<div class="edit">
+									<form fxLayout="row wrap" [formGroup]="adminPasswordForm"
+										(ngSubmit)="adminPasswordUpdate()">
+										<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center"
+											style="margin-top:25px;">
 											<!--- Password -->
 											<mat-form-field fxFlex="100" fxFlex.gt-sm="75"
 												[appearance]="appearance$ | async">
@@ -90,17 +107,18 @@
 													required>
 												<mat-icon matSuffix (click)="hide = !hide">
 													{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-												<mat-error *ngIf="adminProfileForm.get('password').hasError('required')"
+												<mat-error
+													*ngIf="adminPasswordForm.get('password').hasError('required')"
 													align="start">
 													Password is Required
 												</mat-error>
 												<mat-error
-													*ngIf="adminProfileForm.get('password').hasError('minlength')"
+													*ngIf="adminPasswordForm.get('password').hasError('minlength')"
 													align="start">
 													Min 8 chars Required
 												</mat-error>
 												<mat-error
-													*ngIf="adminProfileForm.get('password').hasError('isPatternMatch')"
+													*ngIf="adminPasswordForm.get('password').hasError('isPatternMatch')"
 													align="start">
 													{{passwordPatternError}}
 												</mat-error>
@@ -116,11 +134,11 @@
 													required>
 												<mat-icon matSuffix (click)="rehide = !rehide">
 													{{rehide ? 'visibility_off' : 'visibility'}}</mat-icon>
-												<mat-error *ngIf="adminProfileForm.get('verify').hasError('required')"
+												<mat-error *ngIf="adminPasswordForm.get('verify').hasError('required')"
 													align="start">
 													Verify Password is required
 												</mat-error>
-												<mat-error *ngIf="adminProfileForm.get('verify').hasError('compare')"
+												<mat-error *ngIf="adminPasswordForm.get('verify').hasError('compare')"
 													align="start">
 													Password Mismatch
 												</mat-error>

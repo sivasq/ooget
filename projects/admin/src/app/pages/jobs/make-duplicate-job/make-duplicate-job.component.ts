@@ -158,12 +158,16 @@ export class MakeDuplicateJobComponent implements OnInit {
 			.subscribe(Locations => this.Locations = Locations);
 	}
 	getFullTimeSpecializations(): void {
-		this.mockDataService.getFullTimeSpecializations()
-			.subscribe(Specializations => this.FullTimeSpecializations = Specializations);
+		this.mockDataService.getSpecializations()
+			.subscribe(Specializations => {
+				this.FullTimeSpecializations = Specializations.filter(specialization => specialization.type === 1 || specialization.type === 3);
+			});
 	}
 	getPartTimeSpecializations(): void {
-		this.mockDataService.getPartTimeSpecializations()
-			.subscribe(Specializations => this.PartTimeSpecializations = Specializations);
+		this.mockDataService.getSpecializations()
+			.subscribe(Specializations => {
+				this.PartTimeSpecializations = Specializations.filter(specialization => specialization.type === 2 || specialization.type === 3);
+			});
 	}
 	getGracePeriods(): void {
 		this.mockDataService.getGracePeriods()
@@ -248,22 +252,21 @@ export class MakeDuplicateJobComponent implements OnInit {
 		console.log(event);
 		if (event == null) return false;
 
-		if (this.isInArray(event, "Full Time")) {
+		if (this.isInArray(event, 2)) {
 			this.isPartTimeJob = false;
 		} else {
 			this.isPartTimeJob = true;
 		}
 
-		if (this.isInArray(event, "Full Time")) {
+		if (this.isInArray(event, 2)) {
 			this.showfulltimespeccilization = true;
 		} else {
 			this.showfulltimespeccilization = false;
 		}
 
-		if (this.isInArray(event, "Part Time")) {
+		if (this.isInArray(event, 1)) {
 			this.showparttimespeccilization = true;
-		}
-		else {
+		} else {
 			this.showparttimespeccilization = false;
 		}
 	}

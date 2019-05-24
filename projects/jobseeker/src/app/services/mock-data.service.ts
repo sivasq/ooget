@@ -12,8 +12,8 @@ import { JobLocations, JobRegions } from '../mock-datas/JobLocations';
 
 import { Specialization } from '../classes/Specialization';
 import { Specializations } from '../mock-datas/Specializations';
-import { FullTimeSpecializations } from '../mock-datas/fullTimeSpecializations';
-import { PartTimeSpecializations } from '../mock-datas/partTimeSpecializations';
+// import { FullTimeSpecializations } from '../mock-datas/fullTimeSpecializations';
+// import { PartTimeSpecializations } from '../mock-datas/partTimeSpecializations';
 import { BankDetail } from '../classes/bankDetail';
 import { Race } from '../classes/race';
 import { Nationality } from '../classes/Nationality';

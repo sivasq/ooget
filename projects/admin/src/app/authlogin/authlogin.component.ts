@@ -60,9 +60,9 @@ export class AuthloginComponent implements OnInit {
 						const apiHttpResponse = response.result;
 						localStorage.setItem('isLoggedIn', 'true');
 						localStorage.setItem('ogToken', apiHttpResponse.token);
-						localStorage.setItem('ogUserName', `${apiHttpResponse.firstname} ${apiHttpResponse.lastname}`);
+						localStorage.setItem('ogUserName', `${apiHttpResponse.firstname}`);
 						localStorage.setItem('ogUserEmail', apiHttpResponse.email);
-						localStorage.setItem('ogProfileimage', apiHttpResponse.image);
+						localStorage.setItem('ogProfileimage', apiHttpResponse.imgpath);
 						localStorage.setItem('ogUserObjID', apiHttpResponse.id);
 						localStorage.setItem('ogUserRole', apiHttpResponse.role);
 

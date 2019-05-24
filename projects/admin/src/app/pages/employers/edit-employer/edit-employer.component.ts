@@ -87,7 +87,7 @@ export class EditEmployerComponent implements OnInit {
 	// Build Employer Add Form
 	buildEmployerUpdateForm(): void {
 		this.employerUpdateForm = this.fb.group({
-			companyid: this.route.snapshot.params['emp_id'],
+			employerid: this.route.snapshot.params['emp_id'],
 			name: ['', Validators.compose([Validators.required])],
 			profile: ['', Validators.compose([Validators.required])],
 			uen: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]{7,9}[A-Za-z]{1}$')]), this.isUENUnique.bind(this)],
@@ -100,7 +100,7 @@ export class EditEmployerComponent implements OnInit {
 			// activestatus: ['true'],
 			// registeredby: ['ooget-team'],
 			// termsaccepted: ['false'],
-		})
+		});
 	}
 
 	// Check Password Pattern Match

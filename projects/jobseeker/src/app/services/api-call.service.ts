@@ -84,9 +84,7 @@ export class ApiCallService {
 
 	createAuthorizationHeaderFormData() {
 		const headers = {};
-		// headers['Content-Type'] = 'multipart/form-data';
 		// headers['Access-Control-Allow-Origin'] = '*';
-		// headers['Accept'] = 'application/json';
 		headers['token'] = this._token;
 		return headers;
 	}
@@ -156,6 +154,7 @@ export class ApiCallService {
 
 
 
+	// ======================================================
 
 	getHomePageContents(): Observable<any> {
 		const dummyData = '';

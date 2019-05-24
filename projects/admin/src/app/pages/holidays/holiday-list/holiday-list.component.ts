@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MatDialog, MatPaginator, MatSort, MatSnackBar } from '@angular/material';
-import { Issue } from '../models/issue';
+import { Holiday } from '../models/holiday';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { DataSource } from '@angular/cdk/collections';
 import { AddComponent } from '../dialogs/add/add.component';
@@ -16,7 +16,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-import { DataService } from '../../../services/data.service';
+import { HolidayDataService } from '../../../services/holiday-data.service';
 
 @Component({
 	selector: 'app-holiday-list',
@@ -25,14 +25,13 @@ import { DataService } from '../../../services/data.service';
 })
 export class HolidayListComponent implements OnInit {
 
-	// displayedColumns = ['id', 'title', 'state', 'url', 'created_at', 'updated_at', 'actions'];
 	displayedColumns = ['holiday_date', 'holiday_name', 'actions'];
-	exampleDatabase: DataService | null;
-	dataSource: ExampleDataSource | null;
+	holidayDatabase: HolidayDataService | null;
+	dataSource: HolidayDataSource | null;
 	index: number;
 	id: number;
 
-	constructor(public httpClient: HttpClient, public dialog: MatDialog, public dataService: DataService, public snackBar: MatSnackBar) { }
+	constructor(public httpClient: HttpClient, public dialog: MatDialog, public holidayDataService: HolidayDataService, public snackBar: MatSnackBar) { }
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
@@ -46,36 +45,48 @@ export class HolidayListComponent implements OnInit {
 		this.loadData();
 	}
 
-	addNew(issue: Issue) {
+	addNewHoliday() {
 		const dialogRef = this.dialog.open(AddComponent, {
-			data: { issue: issue }
+			data: {}
 		});
 
 		dialogRef.afterClosed().subscribe(result => {
-			if (result == undefined) return false;
+			console.log(result);
+			if (result === undefined) { return false; }
 
-			this.dataService.addIssue(result)
-				.subscribe(responses => {
-					this.dataService.dialogData = responses.holiday;
+			this.holidayDataService.addHoliday(result)
+				.subscribe(
+					responses => {
+						if (responses.success) {
+							// this.holidayDataService.dialogData = responses.holiday;
+							// this.holidayDatabase.dataChange.value.push(this.holidayDataService.getDialogData());
 
-					this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
-					this.refreshTable();
+							this.holidayDatabase.dataChange.value.push(result);
+							this.refreshTable();
 
-					this.snackBar.open('Successfully added', 'close', {
-						duration: 2000,
-					});
-				},
+							this.snackBar.open('Successfully added', 'close', {
+								duration: 2000,
+							});
+						} else {
+							this.snackBar.open('This Is Duplicate Entry', 'close', {
+								duration: 2000,
+							});
+						}
+					},
 					(err: HttpErrorResponse) => {
-						this.snackBar.open('Error occurred. Details: ' + err.name + ' ' + err.message, 'close', {
-							duration: 5000,
+						// this.snackBar.open('Error occurred. Details: ' + err.name + ' ' + err.message, 'close', {
+						// 	duration: 5000,
+						// });
+						this.snackBar.open('This Is Duplicate Entry', 'close', {
+							duration: 2000,
 						});
 					});
 
 			// if (result === 1) {
 			// 	// After dialog is closed we're doing frontend updates
-			// 	// For add we're just pushing a new row inside DataService
+			// 	// For add we're just pushing a new row inside HolidayDataService
 			// 	setTimeout(() => {
-			// 		this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
+			// 		this.holidayDatabase.dataChange.value.push(this.holidayDataService.getDialogData());
 			// 		this.refreshTable();
 			// 	},5000)
 
@@ -83,29 +94,33 @@ export class HolidayListComponent implements OnInit {
 		});
 	}
 
-	startEdit(i: number, id: string, holidaydate: string, holidayname: string) {
+	startEdit(i: number, id: string, date: string, name: string) {
 		// this.id = id;
 		// index row is used just for debugging proposes and can be removed
 		this.index = i;
 		// console.log(this.index);
 		const dialogRef = this.dialog.open(EditComponent, {
-			data: { holidayid: id, holidaydate: new Date(holidaydate), holidayname: holidayname }
+			data: { id: id, date: new Date(date), name: name }
 		});
 
 		dialogRef.afterClosed().subscribe(result => {
-			if (result == undefined) return false;
+			if (result === undefined) { return false; }
 
-			this.dataService.updateIssue(result)
-				.subscribe(responses => {
-					this.dataService.dialogData = responses.holiday;
+			this.holidayDataService.updateHoliday(result)
+				.subscribe(
+					responses => {
+						if (responses.success) {
+							// this.holidayDataService.dialogData = result;
+							// this.holidayDatabase.dataChange.value[i] = this.holidayDataService.getDialogData();
 
-					this.exampleDatabase.dataChange.value[i] = this.dataService.getDialogData();
-					this.refreshTable();
+							this.holidayDatabase.dataChange.value[i] = result;
+							this.refreshTable();
 
-					this.snackBar.open('Successfully Updated', 'close', {
-						duration: 2000,
-					});
-				},
+							this.snackBar.open('Successfully Updated', 'close', {
+								duration: 2000,
+							});
+						}
+					},
 					(err: HttpErrorResponse) => {
 						this.snackBar.open('Error occurred. Details: ' + err.name + ' ' + err.message, 'close', {
 							duration: 5000,
@@ -113,42 +128,47 @@ export class HolidayListComponent implements OnInit {
 					});
 
 			// if (result === 1) {
-			// 	// When using an edit things are little different, firstly we find record inside DataService by id
-			// 	// const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.i === this.id);
+			// 	// When using an edit things are little different, firstly we find record inside HolidayDataService by id
+			// 	// const foundIndex = this.holidayDatabase.dataChange.value.findIndex(x => x.i === this.id);
 			// 	// Then you update that record using data from dialogData (values you enetered)
-			// 	this.exampleDatabase.dataChange.value[i] = this.dataService.getDialogData();
+			// 	this.holidayDatabase.dataChange.value[i] = this.holidayDataService.getDialogData();
 			// 	// And lastly refresh table
 			// 	this.refreshTable();
 			// }
 		});
 	}
 
-	deleteItem(i: number, id: string, holidaydate: string, holidayname: string) {
+	deleteItem(i: number, id: string, date: string, name: string) {
 		this.index = i;
 		// this.id = id;
 		const dialogRef = this.dialog.open(DeleteComponent, {
-			data: { holidayid: id, holidaydate: new Date(holidaydate), holidayname: holidayname }
+			data: { id: id, date: new Date(date), name: name }
 		});
 
 		dialogRef.afterClosed().subscribe(result => {
-			this.dataService.deleteIssue(result)
-				.subscribe(responses => {
-					this.exampleDatabase.dataChange.value.splice(i, 1);
-					this.refreshTable();
+			if (result === undefined) { return false; }
+			console.log(result);
+			this.holidayDataService.deleteHoliday(result)
+				.subscribe(
+					responses => {
+						if (responses.success) {
+							this.holidayDatabase.dataChange.value.splice(i, 1);
+							this.refreshTable();
 
-					this.snackBar.open('Successfully Deleted', 'close', {
-						duration: 2000,
-					});
-				},
+							this.snackBar.open('Successfully Deleted', 'close', {
+								duration: 2000,
+							});
+						}
+					},
 					(err: HttpErrorResponse) => {
 						this.snackBar.open('Error occurred. Details: ' + err.name + ' ' + err.message, 'close', {
 							duration: 5000,
 						});
 					});
 			// if (result === 1) {
-			// 	// const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
-			// 	// for delete we use splice in order to remove single object from DataService
-			// 	this.exampleDatabase.dataChange.value.splice(i, 1);
+			// 	// const foundIndex = this.holidayDatabase.dataChange.value.findIndex(x => x.id === this.id);
+			// 	// for delete we use splice in order to remove single object from HolidayDataService
+			// 	this.holidayDatabase.dataChange.value.splice(i, 1);
 			// 	this.refreshTable();
 			// }
 		});
@@ -172,8 +192,8 @@ export class HolidayListComponent implements OnInit {
 	}
 
 	public loadData() {
-		this.exampleDatabase = new DataService(this.httpClient);
-		this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
+		this.holidayDatabase = new HolidayDataService(this.httpClient);
+		this.dataSource = new HolidayDataSource(this.holidayDatabase, this.paginator, this.sort);
 		Observable.fromEvent(this.filter.nativeElement, 'keyup')
 			.debounceTime(150)
 			.distinctUntilChanged()
@@ -186,7 +206,7 @@ export class HolidayListComponent implements OnInit {
 	}
 }
 
-export class ExampleDataSource extends DataSource<Issue> {
+export class HolidayDataSource extends DataSource<Holiday> {
 	_filterChange = new BehaviorSubject('');
 
 	get filter(): string {
@@ -197,33 +217,32 @@ export class ExampleDataSource extends DataSource<Issue> {
 		this._filterChange.next(filter);
 	}
 
-	filteredData: Issue[] = [];
-	renderedData: Issue[] = [];
+	filteredData: Holiday[] = [];
+	renderedData: Holiday[] = [];
 
-	constructor(public _exampleDatabase: DataService, public _paginator: MatPaginator, public _sort: MatSort) {
+	constructor(public _holidayDatabase: HolidayDataService, public _paginator: MatPaginator, public _sort: MatSort) {
 		super();
-		console.log(super());
 		// Reset to the first page when the user changes the filter.
 		this._filterChange.subscribe(() => this._paginator.pageIndex = 0);
 	}
 
 	/** Connect function called by the table to retrieve one stream containing the data to render. */
-	connect(): Observable<Issue[]> {
+	connect(): Observable<Holiday[]> {
 		// Listen for any changes in the base data, sorting, filtering, or pagination
 		const displayDataChanges = [
-			this._exampleDatabase.dataChange,
+			this._holidayDatabase.dataChange,
 			this._sort.sortChange,
 			this._filterChange,
 			this._paginator.page
 		];
 
-		this._exampleDatabase.getAllIssues();
+		this._holidayDatabase.getAllHolidays();
 
 		return Observable.merge(...displayDataChanges).map(() => {
 			// Filter data
-			this.filteredData = this._exampleDatabase.data.slice().filter((issue: any) => {
-				// console.log(issue.holidayname);
-				const searchStr = (issue.holidayname + issue.holidaydate).toLowerCase();
+			this.filteredData = this._holidayDatabase.data.slice().filter((holiday: any) => {
+				// console.log(holiday.holidayname);
+				const searchStr = (holiday.name + holiday.date).toLowerCase();
 				return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
 			});
 
@@ -234,13 +253,14 @@ export class ExampleDataSource extends DataSource<Issue> {
 			const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
 			this.renderedData = sortedData.splice(startIndex, this._paginator.pageSize);
 			return this.renderedData;
+
 		});
 	}
 
 	disconnect() { }
 
 	/** Returns a sorted copy of the database data. */
-	sortData(data: Issue[]): Issue[] {
+	sortData(data: Holiday[]): Holiday[] {
 		if (!this._sort.active || this._sort.direction === '') {
 			return data;
 		}
@@ -250,8 +270,8 @@ export class ExampleDataSource extends DataSource<Issue> {
 			let propertyB: number | string = '';
 
 			switch (this._sort.active) {
-				case 'holiday_name': [propertyA, propertyB] = [a.holidayname, b.holidayname]; break;
-				case 'holiday_date': [propertyA, propertyB] = [a.holidaydate, b.holidaydate]; break;
+				case 'holiday_name': [propertyA, propertyB] = [a.name, b.name]; break;
+				case 'holiday_date': [propertyA, propertyB] = [a.date, b.date]; break;
 			}
 
 			const valueA = isNaN(+propertyA) ? propertyA : +propertyA;

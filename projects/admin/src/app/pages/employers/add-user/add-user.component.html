@@ -15,12 +15,12 @@
 					<span class="breadcrumb-title">Employers</span>
 				</a> -->
 
-				<a class="breadcrumb-item" routerLink="/admin/employers/{{employerDetails?._id}}/view" fxLayout="row"
+				<a class="breadcrumb-item" routerLink="/admin/employers/{{employerDetails?.id}}/view" fxLayout="row"
 					fxLayoutAlign="center center">
-					<span class="breadcrumb-title">{{employerDetails?.companyname}}</span>
+					<span class="breadcrumb-title">{{employerDetails?.name}}</span>
 				</a>
 
-				<a class="breadcrumb-item" routerLink="/admin/employers/{{employerDetails?._id}}/users" fxLayout="row"
+				<a class="breadcrumb-item" routerLink="/admin/employers/{{employerDetails?.id}}/users" fxLayout="row"
 					fxLayoutAlign="center center">
 					<span class="breadcrumb-title">Users</span>
 				</a>
@@ -41,14 +41,14 @@
 					<h3>User Details</h3>
 				</div>
 				<mat-card-content>
-					<form [formGroup]="UserAddForm" (ngSubmit)="userAddSubmit()" fxLayout="row wrap"
+					<form [formGroup]="UserForm" (ngSubmit)="createExtraUser()" fxLayout="row wrap"
 						fxLayoutAlign="space-between center">
 						<!-- user Name -->
 						<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 							<mat-label>Name of User</mat-label>
 							<input matInput placeholder="Name of User" name="name" autocomplete="off"
 								formControlName="name" required>
-							<mat-error *ngIf="UserAddForm.get('name').hasError('required')" align="start">
+							<mat-error *ngIf="UserForm.get('name').hasError('required')" align="start">
 								Name Required
 							</mat-error>
 						</mat-form-field>
@@ -61,7 +61,7 @@
 								<mat-option *ngFor="let Role of Roles" [value]="Role.RoleValue">{{ Role.RoleView }}
 								</mat-option>
 							</mat-select>
-							<mat-error *ngIf="UserAddForm.get('type').hasError('required')" align="start">
+							<mat-error *ngIf="UserForm.get('type').hasError('required')" align="start">
 								Role Required
 							</mat-error>
 						</mat-form-field>
@@ -71,13 +71,13 @@
 							<mat-label>Login Email</mat-label>
 							<input matInput type="email" placeholder="Login Email" name="email" autocomplete="off"
 								formControlName="email" required>
-							<mat-error *ngIf="UserAddForm.get('email').hasError('required')" align="start">
+							<mat-error *ngIf="UserForm.get('email').hasError('required')" align="start">
 								Email Required
 							</mat-error>
-							<mat-error *ngIf="UserAddForm.get('email').hasError('pattern')" align="start">
+							<mat-error *ngIf="UserForm.get('email').hasError('pattern')" align="start">
 								Invalid Email Format
 							</mat-error>
-							<mat-error *ngIf="UserAddForm.get('email').hasError('isEmailUnique')" align="start">
+							<mat-error *ngIf="UserForm.get('email').hasError('isEmailUnique')" align="start">
 								This Email Already Registered
 							</mat-error>
 						</mat-form-field>
@@ -90,13 +90,13 @@
 								required>
 							<mat-icon class="pointer" matSuffix (click)="hide = !hide">
 								{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-							<mat-error *ngIf="UserAddForm.get('password').hasError('required')" align="start">
+							<mat-error *ngIf="UserForm.get('password').hasError('required')" align="start">
 								Password is Required
 							</mat-error>
-							<mat-error *ngIf="UserAddForm.get('password').hasError('minlength')" align="start">
+							<mat-error *ngIf="UserForm.get('password').hasError('minlength')" align="start">
 								Min 8 chars Required
 							</mat-error>
-							<mat-error *ngIf="UserAddForm.get('password').hasError('isPatternMatch')" align="start">
+							<mat-error *ngIf="UserForm.get('password').hasError('isPatternMatch')" align="start">
 								{{passwordPatternError}}
 							</mat-error>
 						</mat-form-field>
@@ -109,17 +109,17 @@
 								parent='false' required>
 							<mat-icon class="pointer" matSuffix (click)="rehide = !rehide">
 								{{rehide ? 'visibility_off' : 'visibility'}}</mat-icon>
-							<mat-error *ngIf="UserAddForm.get('verify').hasError('required')" align="start">
+							<mat-error *ngIf="UserForm.get('verify').hasError('required')" align="start">
 								Verify Password is required
 							</mat-error>
-							<mat-error *ngIf="UserAddForm.get('verify').hasError('compare')" align="start">
+							<mat-error *ngIf="UserForm.get('verify').hasError('compare')" align="start">
 								Password Mismatch
 							</mat-error>
 						</mat-form-field>
 
 						<!--- Buttons Block -->
 						<div fxFlex="100" fxLayout="row" fxLayoutAlign="center stretch" style="margin-top:25px;">
-							<button mat-raised-button color="primary" type="submit" [disabled]="!UserAddForm.valid">Add
+							<button mat-raised-button color="primary" type="submit" [disabled]="!UserForm.valid">Add
 								New user</button>
 						</div>
 					</form>

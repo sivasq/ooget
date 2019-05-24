@@ -32,7 +32,6 @@ export class ApiCallService {
 
 	createAuthorizationHeaderFormData() {
 		const headers = {};
-		headers['Content-Type'] = 'multipart/form-data';
 		headers['Access-Control-Allow-Origin'] = '*';
 		// headers['Accept'] = 'application/json';
 		headers['token'] = this._token;
@@ -132,14 +131,40 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, employerData, { headers: headers, params: params });
 	}
 
+	// Get users list
+	getListOfUsers(employerid): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Users', 'GetUserList');
+		return this.http.post(this._baseUrl, employerid, { headers: headers, params: params });
+	}
 
+	// Get Current User Profile Details
+	getUserProfileDetails(userid): Observable<any> {
+		const headers = this.createAuthorizationHeaderJson();
+		const params = this.createUrlParams('Users', 'GetUser');
+		return this.http.post(this._baseUrl, userid, { headers: headers, params: params });
+	}
 
+	// Get Current User Profile Details
+	deleteUserProfile(userid): Observable<any> {
+		const headers = this.createAuthorizationHeaderJson();
+		const params = this.createUrlParams('Users', 'DeleteUser');
+		return this.http.post(this._baseUrl, userid, { headers: headers, params: params });
+	}
 
+	// Upload Extra User Profile Image
+	uploadUserProfilePic(formData): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Users', 'ImageUpload');
+		return this.http.post(this._baseUrl, formData, { headers: headers, params: params });
+	}
 
-
-
-
-
+	// Get All Public Holidays
+	getAllPHHolidays(date): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Holiday', 'GetHolidayList');
+		return this.http.post(this._baseUrl, date, { headers: headers, params: params });
+	}
 
 
 
@@ -589,17 +614,7 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl + '/contract/removeoffday', Data, { headers: headers });
 	}
 
-	getAllPHHolidays(): Observable<any> {
-		let dummydata;
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/fetchholidaylist', dummydata, { headers: headers });
-	}
+
 
 	getJobContractors(jobId): Observable<any> {
 		const jobIds = jobId;
@@ -780,18 +795,7 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl + '/contract/fetchoffdayssheetforparticularjob', args, { headers: headers });
 	}
 
-	getListOfUsers(comapnyid): Observable<any> {
-		const dummyData = '';
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/employer/listsupervisors', comapnyid, { headers: headers })
-			.map(res => res);
-	}
+
 
 	getExtraUserProfileDetails(userid): Observable<any> {
 		const dummyData = '';
@@ -821,17 +825,6 @@ export class ApiCallService {
 
 
 
-	deleteUserProfile(employerData): Observable<any> {
-		const dummyData = '';
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/employer/deletesupervisor', employerData, { headers: headers })
-			.map(res => res);
-	}
+
 }
 
