@@ -34,8 +34,8 @@ export class SubLocationFilter implements PipeTransform {
 		if (!items || !filter) {
 			return items;
 		}
-		console.log(items.filter(item => item.mainlocation.toLowerCase() == filter.toLowerCase()));
-		return items.filter(item => item.mainlocation.toLowerCase() == filter.toLowerCase());
+		// console.log(items.filter(item => item.mainlocation.toLowerCase() == filter.toLowerCase()));
+		return items.filter(item => item.region == filter);
 	}
 }
 
@@ -69,18 +69,18 @@ export class SearchPipe implements PipeTransform {
 }
 
 @Pipe({
-  name: 'age'
+	name: 'age'
 })
 export class AgePipe implements PipeTransform {
-  transform(value: string): string {
-    let newvalue = new Date(value);
-    let today = moment();
-    let birthdate = moment(newvalue);
-    let years = today.diff(birthdate, 'years');
-    let html: string = years + " yr ";
-    html += today.subtract(years, 'years').diff(birthdate, 'months') + " mo";
-    return html;
-  }
+	transform(value: string): string {
+		let newvalue = new Date(value);
+		let today = moment();
+		let birthdate = moment(newvalue);
+		let years = today.diff(birthdate, 'years');
+		let html: string = years + " yr ";
+		html += today.subtract(years, 'years').diff(birthdate, 'months') + " mo";
+		return html;
+	}
 }
 
 // @Pipe({

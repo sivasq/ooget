@@ -44,8 +44,9 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 			email: [{ value: '', disabled: true }, Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), true],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
 			verify: ['', [Validators.required]],
-		})
+		});
 	}
+
 
 	// Check Password Pattern Match
 	isPatternMatch(control: FormControl) {

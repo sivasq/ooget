@@ -1,69 +1,77 @@
 <div class="inner-sidenav-content transition-2">
-    <!-- Breadcrumb Start -->
-    <div fxLayout="row wrap">
-        <div class="flex-p" fxFlex="1 1 100%">
-            <mat-card class="mat-breadcrumb" fxLayout="row">
-                <a class="breadcrumb-item" routerLink="/employer/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
-                    <mat-icon>home</mat-icon>
-                    <span class="breadcrumb-title">Home</span>
-                </a>
+	<!-- Breadcrumb Start -->
+	<div fxLayout="row wrap">
+		<div class="flex-p" fxFlex="1 1 100%">
+			<mat-card class="mat-breadcrumb" fxLayout="row">
+				<a class="breadcrumb-item" routerLink="/employer/dashboard" fxLayout="row"
+					fxLayoutAlign="flex-start center">
+					<mat-icon>home</mat-icon>
+					<span class="breadcrumb-title">Home</span>
+				</a>
 
-                <a class="breadcrumb-item" routerLink="/employer/jobs/list" fxLayout="row" fxLayoutAlign="center center">
-                    <span class="breadcrumb-title">Jobs</span>
-                </a>
+				<a class="breadcrumb-item" routerLink="/employer/jobs/list" fxLayout="row"
+					fxLayoutAlign="center center">
+					<span class="breadcrumb-title">Jobs</span>
+				</a>
 
-                <div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
-                    <span class="breadcrumb-title active">Add</span>
-                </div>
-            </mat-card>
-        </div>
-    </div>
-    <!-- Breadcrumb End -->
+				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+					<span class="breadcrumb-title active">Add</span>
+				</div>
+			</mat-card>
+		</div>
+	</div>
+	<!-- Breadcrumb End -->
 
-    <div [ngBusy]="{busy:busy}"></div>
+	<div [ngBusy]="{busy:busy}"></div>
 
-    <div fxLayout="row wrap" fxLayoutAlign="center stretch">
-        <div class="flex-p" fxFlex="100" fxFlex.gt-sm="70" fxFlex.sm="90">
-            <mat-card class="list">
-                <mat-card fxLayout="row" fxLayoutAlign="center stretch" class="title">
-                    <h3>Job Details</h3>
-                </mat-card>
+	<div fxLayout="row wrap" fxLayoutAlign="center stretch">
+		<div class="flex-p" fxFlex="100" fxFlex.gt-sm="70" fxFlex.sm="90">
+			<mat-card class="list">
+				<mat-card fxLayout="row" fxLayoutAlign="center stretch" class="title">
+					<h3>Job Details</h3>
+				</mat-card>
 
 				<mat-card-content>
-					<form (ngSubmit)="jobAddToEmployer(employerJobForm.value, employerJobForm)" #employerJobForm="ngForm">
-						<mat-tab-group ngClass.gt-sm="vertical-tabs" ngClass.lt-md="horizontal-tabs" #tabGroup dynamicHeight="true">
+					<form (ngSubmit)="jobAddToEmployer(employerJobForm.value, employerJobForm)"
+						#employerJobForm="ngForm">
+						<mat-tab-group ngClass.gt-sm="vertical-tabs" ngClass.lt-md="horizontal-tabs" #tabGroup
+							dynamicHeight="true">
 							<mat-tab label="Basic">
 								<div fxLayout="row wrap" fxLayoutAlign="space-between center">
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Project</mat-label>
-										<input matInput placeholder="Project" name="project" autocomplete="off" [(ngModel)]="jobDetails.project" required>
+										<input matInput placeholder="Project" name="project_name" autocomplete="off"
+											[(ngModel)]="jobDetails.project_name" required>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Department</mat-label>
-										<input matInput placeholder="Department" name="department" autocomplete="off" [(ngModel)]="jobDetails.department"
-										 required>
+										<input matInput placeholder="Department" name="department" autocomplete="off"
+											[(ngModel)]="jobDetails.department" required>
 									</mat-form-field>
 
 									<mat-form-field class="w-100" [appearance]="appearance$ | async">
 										<mat-label>Employment Type</mat-label>
-										<mat-select placeholder="Employment Type" name="employmenttype" (ngModelChange)="employmenttypeChange($event)"
-										 [(ngModel)]="jobDetails.employmenttype">
-											<mat-option *ngFor="let EmploymentType of EmploymentTypes" [value]="EmploymentType.EmploymentType">{{
-												EmploymentType.EmploymentType }}</mat-option>
+										<mat-select placeholder="Employment Type" name="employement_type"
+											(ngModelChange)="employmenttypeChange($event)"
+											[(ngModel)]="jobDetails.employement_type">
+											<mat-option *ngFor="let EmploymentType of EmploymentTypes"
+												[value]="EmploymentType.id">{{
+												EmploymentType.name }}</mat-option>
 										</mat-select>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Job Title</mat-label>
-										<input matInput placeholder="Job Title" name="jobtitle" autocomplete="off" [(ngModel)]="jobDetails.jobtitle"
-										 required>
+										<input matInput placeholder="Job Title" name="job_name" autocomplete="off"
+											[(ngModel)]="jobDetails.job_name" required>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Job Descriptions and Requirements</mat-label>
-										<textarea matInput placeholder="Job Descriptions and Requirements" name="jobdescription" autocomplete="off"
-										 [(ngModel)]="jobDetails.jobdescription" required></textarea>
+										<textarea matInput placeholder="Job Descriptions and Requirements"
+											name="description" autocomplete="off" [(ngModel)]="jobDetails.description"
+											required></textarea>
 									</mat-form-field>
 
 									<mat-toolbar class="next_action" color="primary">
@@ -79,8 +87,8 @@
 								<div fxLayout="row wrap" fxLayoutAlign="space-between center">
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Job Specialization</mat-label>
-										<mat-select placeholder="Job Specialization" name="jobspecialization" [(ngModel)]="jobDetails.jobspecialization"
-										 required>
+										<mat-select placeholder="Job Specialization" name="specializations"
+											[(ngModel)]="jobDetails.specializations" required>
 											<!-- <mat-option *ngFor="let Specialization of Specializations" [value]="Specialization.specialization">{{
 												Specialization.specialization }}</mat-option>
 											<mat-option value="Others">Others</mat-option> -->
@@ -88,33 +96,37 @@
 												<p style="padding:10px 20px;font-weight: 500; background: #eee;">FULL
 													TIME</p>
 												<mat-option *ngFor="let Specialization of FullTimeSpecializations"
-													[value]="Specialization.specialization">{{
-													Specialization.specialization }}</mat-option>
+													[value]="Specialization.id">{{
+													Specialization.name }}</mat-option>
 												<mat-option value="Others">Others</mat-option>
 											</div>
 											<div *ngIf="showparttimespeccilization">
 												<p style="padding:10px 20px;font-weight: 500; background: #eee;">PART
 													TIME</p>
 												<mat-option *ngFor="let Specialization of PartTimeSpecializations"
-													[value]="Specialization.specialization">{{
-													Specialization.specialization }}</mat-option>
+													[value]="Specialization.id">{{
+													Specialization.name }}</mat-option>
 												<mat-option value="Others">Others</mat-option>
 											</div>
 										</mat-select>
 									</mat-form-field>
 
-									<mat-form-field fxFlex="100" [appearance]="appearance$ | async" *ngIf="jobDetails.jobspecialization =='Others'">
+									<mat-form-field fxFlex="100" [appearance]="appearance$ | async"
+										*ngIf="jobDetails.jobspecialization =='Others'">
 										<mat-label>Job Specialization - Others</mat-label>
-										<input matInput placeholder="If others, please specify" name="otherjobspecialization" autocomplete="off"
-										 [(ngModel)]="jobDetails.otherjobspecialization" required>
+										<input matInput placeholder="If others, please specify"
+											name="otherjobspecialization" autocomplete="off"
+											[(ngModel)]="jobDetails.otherjobspecialization" required>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Working Environment</mat-label>
-										<mat-select placeholder="Working Environment" name="workingenvironment" multiple [(ngModel)]="jobDetails.workingenvironment">
+										<mat-select placeholder="Working Environment" name="working_environment"
+											multiple [(ngModel)]="jobDetails.working_environment">
 											<!-- <mat-option></mat-option> -->
-											<mat-option *ngFor="let WorkingEnvironment of WorkingEnvironments" [value]="WorkingEnvironment.Environment">{{
-												WorkingEnvironment.Environment }}</mat-option>
+											<mat-option *ngFor="let WorkingEnvironment of WorkingEnvironments"
+												[value]="WorkingEnvironment.id">{{
+												WorkingEnvironment.name }}</mat-option>
 										</mat-select>
 									</mat-form-field>
 
@@ -134,116 +146,143 @@
 								<div fxLayout="row wrap" fxLayoutAlign="space-between center">
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>No of Pax</mat-label>
-										<mat-select placeholder="No of Pax Required" name="numberofpax" [(ngModel)]="jobDetails.numberofpax" required>
-											<mat-option *ngFor="let pax of maxpax" [value]="pax+1">{{ pax+1 }}</mat-option>
+										<mat-select placeholder="No of Pax Required" name="pax_total"
+											[(ngModel)]="jobDetails.pax_total" required>
+											<mat-option *ngFor="let pax of maxpax" [value]="pax+1">{{ pax+1 }}
+											</mat-option>
 										</mat-select>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 										<mat-label>Grace Period</mat-label>
-										<mat-select placeholder="Grace Period" name="graceperiod" [(ngModel)]="jobDetails.graceperiod" required>
-											<mat-option *ngFor="let graceperiod of graceperiods" [value]="graceperiod">{{graceperiod}} Min</mat-option>
+										<mat-select placeholder="Grace Period" name="grace_period"
+											[(ngModel)]="jobDetails.grace_period" required>
+											<mat-option *ngFor="let graceperiod of graceperiods" [value]="graceperiod">
+												{{graceperiod}} Min</mat-option>
 										</mat-select>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 										<mat-label>OverTime Rounding</mat-label>
-										<mat-select placeholder="OverTime Rounding" name="overtimerounding" [(ngModel)]="jobDetails.overtimerounding"
-										 required>
-											<mat-option *ngFor="let overtimerounding of overtimeroundings" [value]="overtimerounding">{{overtimerounding}}
+										<mat-select placeholder="OverTime Rounding" name="over_time_rounding"
+											[(ngModel)]="jobDetails.over_time_rounding" required>
+											<mat-option *ngFor="let overtimerounding of overtimeroundings"
+												[value]="overtimerounding">{{overtimerounding}}
 												Min</mat-option>
 										</mat-select>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 										<mat-label>Job Period From</mat-label>
-										<input matInput [matDatepicker]="frompicker" placeholder="Job Period From" name="jobperiodfrom" autocomplete="off"
-										 [(ngModel)]="jobDetails.jobperiodfrom" (ngModelChange)="jobperiodfrom = $event" (click)="frompicker.open()"
-										 required>
+										<input matInput [matDatepicker]="frompicker" placeholder="Job Period From"
+											name="jobperiodfrom" autocomplete="off"
+											[(ngModel)]="jobDetails.jobperiodfrom"
+											(ngModelChange)="jobperiodfrom = $event" (click)="frompicker.open()"
+											required>
 										<mat-datepicker-toggle matSuffix [for]="frompicker"></mat-datepicker-toggle>
 										<mat-datepicker touchUi="true" #frompicker></mat-datepicker>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 										<mat-label>Job Period To</mat-label>
-										<input matInput [min]="jobDetails.jobperiodfrom" [matDatepicker]="topicker" placeholder="Job Period To" name="jobperiodto"
-										 autocomplete="off" [(ngModel)]="jobDetails.jobperiodto" (ngModelChange)="jobperiodto = $event" (click)="topicker.open()"
-										 required>
+										<input matInput [min]="jobDetails.jobperiodfrom" [matDatepicker]="topicker"
+											placeholder="Job Period To" name="jobperiodto" autocomplete="off"
+											[(ngModel)]="jobDetails.jobperiodto" (ngModelChange)="jobperiodto = $event"
+											(click)="topicker.open()" required>
 										<mat-datepicker-toggle matSuffix [for]="topicker"></mat-datepicker-toggle>
 										<mat-datepicker touchUi="true" #topicker></mat-datepicker>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 										<mat-label>Start Time</mat-label>
-										<input matInput (dateTimeChange)="startTimeChange($event)" [owlDateTime]="triggerstarttime" [owlDateTimeTrigger]="triggerstarttime"
-										 placeholder="Start Time" name="starttime" autocomplete="off" [(ngModel)]="jobDetails.starttime" readonly
-										 required>
+										<input matInput (dateTimeChange)="startTimeChange($event)"
+											[owlDateTime]="triggerstarttime" [owlDateTimeTrigger]="triggerstarttime"
+											placeholder="Start Time" name="starttime" autocomplete="off"
+											[(ngModel)]="jobDetails.starttime" readonly required>
 										<a mat-icon-button matSuffix>
-											<mat-icon class="trigger" [owlDateTimeTrigger]="triggerstarttime">access_time</mat-icon>
+											<mat-icon class="trigger" [owlDateTimeTrigger]="triggerstarttime">
+												access_time</mat-icon>
 										</a>
-										<owl-date-time [hour12Timer]="false" [pickerType]="'timer'" [pickerMode]="'dialog'" #triggerstarttime></owl-date-time>
+										<owl-date-time [hour12Timer]="false" [pickerType]="'timer'"
+											[pickerMode]="'dialog'" #triggerstarttime></owl-date-time>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 										<mat-label>End Time</mat-label>
-										<input matInput [min]="workMinEndTime" (dateTimeChange)="endTimeChange($event)" [owlDateTime]="triggerendtime"
-										 [owlDateTimeTrigger]="triggerendtime" placeholder="End Time" name="endtime" autocomplete="off" [(ngModel)]="jobDetails.endtime"
-										 readonly required>
+										<input matInput [min]="workMinEndTime" (dateTimeChange)="endTimeChange($event)"
+											[owlDateTime]="triggerendtime" [owlDateTimeTrigger]="triggerendtime"
+											placeholder="End Time" name="endtime" autocomplete="off"
+											[(ngModel)]="jobDetails.endtime" readonly required>
 										<a mat-icon-button matSuffix>
-											<mat-icon class="trigger" [owlDateTimeTrigger]="triggerendtime">access_time</mat-icon>
+											<mat-icon class="trigger" [owlDateTimeTrigger]="triggerendtime">access_time
+											</mat-icon>
 										</a>
-										<owl-date-time [pickerType]="'timer'" [hour12Timer]="false" [pickerMode]="'dialog'" #triggerendtime></owl-date-time>
+										<owl-date-time [pickerType]="'timer'" [hour12Timer]="false"
+											[pickerMode]="'dialog'" #triggerendtime></owl-date-time>
 									</mat-form-field>
 
 									<div style="margin-top:15px;" fxFlex="100" fxLayout="row wrap">
 										<b>WorkDays Type
 											<span style="color: #767676">*</span> :</b>
-										<mat-radio-group name="workdaystype" [(ngModel)]="jobDetails.workdaystype" required>
-											<mat-radio-button value="normal" matTooltip="Working Days: Monday - Friday, Off-Days: Saturday - Sunday"
-											 matTooltipPosition="below">Normal</mat-radio-button>
-											<mat-radio-button value="flexible" matTooltip="Working days and off days may vary" matTooltipPosition="below">
+										<mat-radio-group name="work_days_type" [(ngModel)]="jobDetails.work_days_type"
+											required>
+											<mat-radio-button value="1"
+												matTooltip="Working Days: Monday - Friday, Off-Days: Saturday - Sunday"
+												matTooltipPosition="below">Normal</mat-radio-button>
+											<mat-radio-button value="2" matTooltip="Working days and off days may vary"
+												matTooltipPosition="below">
 												Flexible</mat-radio-button>
 										</mat-radio-group>
 									</div>
 
-									<div *ngIf="jobDetails.workdaystype=='flexible'" style="margin-top:15px; color:gray;" fxFlex="100" fxLayout="row wrap">
-										Note*: You have to proceed to go "Jobs List -> Select Respective Job -> Jobseeker's Timesheet -> Roster(Off Days)" to set the roster
+									<div *ngIf="jobDetails.work_days_type=='2'" style="margin-top:15px; color:gray;"
+										fxFlex="100" fxLayout="row wrap">
+										Note*: You have to proceed to go "Jobs List -> Select Respective Job ->
+										Jobseeker's Timesheet -> Roster(Off Days)" to set the roster
 									</div>
 
-									<div *ngIf="jobDetails.workdaystype=='normal'" style="margin-top:15px;" fxFlex="100" fxLayout="row wrap">
+									<div *ngIf="jobDetails.work_days_type=='1'" style="margin-top:15px;" fxFlex="100"
+										fxLayout="row wrap">
 										<!-- <p fxFlex="100" style="padding-bottom: 10px; font-weight: 600;">Note : Please Select WorkDays</p> -->
-										<mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary" [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.sunday"
-										 disabled>
+										<mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary"
+											[ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.sunday"
+											disabled>
 											Sunday
 										</mat-checkbox>
 										<input type="hidden" name="sunday" [(ngModel)]="jobDetails.sunday">
-										<mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary" [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.monday"
-										 disabled>
+										<mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary"
+											[ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.monday"
+											disabled>
 											Monday
 										</mat-checkbox>
 										<input type="hidden" name="monday" [(ngModel)]="jobDetails.monday">
-										<mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary" [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.tuesday"
-										 disabled>
+										<mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary"
+											[ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.tuesday"
+											disabled>
 											Tuesday
 										</mat-checkbox>
 										<input type="hidden" name="tuesday" [(ngModel)]="jobDetails.tuesday">
-										<mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary" [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.wednesday"
-										 disabled>
+										<mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary"
+											[ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.wednesday"
+											disabled>
 											Wednesday
 										</mat-checkbox>
 										<input type="hidden" name="wednesday" [(ngModel)]="jobDetails.wednesday">
-										<mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary" [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.thursday"
-										 disabled>
+										<mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary"
+											[ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.thursday"
+											disabled>
 											Thursday
 										</mat-checkbox>
 										<input type="hidden" name="thursday" [(ngModel)]="jobDetails.thursday">
-										<mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary" [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.friday"
-										 disabled>
+										<mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary"
+											[ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.friday"
+											disabled>
 											Friday
 										</mat-checkbox>
 										<input type="hidden" name="friday" [(ngModel)]="jobDetails.friday">
-										<mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary" [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.saturday"
-										 disabled>
+										<mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary"
+											[ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.saturday"
+											disabled>
 											Saturday
 										</mat-checkbox>
 										<input type="hidden" name="saturday" [(ngModel)]="jobDetails.saturday">
@@ -267,7 +306,8 @@
 									<div fxHide fxShow.gt-sm="true" (click)="addBreak()">
 										<a mat-raised-button color="primary">Add Break</a>
 									</div>
-									<div fxShow fxHide.gt-sm="true" (click)="addBreak()" class="pointer" matTooltip="Add Break" matTooltipPosition="before">
+									<div fxShow fxHide.gt-sm="true" (click)="addBreak()" class="pointer"
+										matTooltip="Add Break" matTooltipPosition="before">
 										<mat-icon mat-list-icon color="primary">add_circle</mat-icon>
 									</div>
 								</div>
@@ -276,30 +316,38 @@
 				                                trackByIndex">
 									<mat-form-field fxFlex="30" [appearance]="appearance$ | async">
 										<mat-label>Break Name</mat-label>
-										<input matInput placeholder="Break Name" name="breakname{{breakIndex}}" #breakname{{breakIndex}}="ngModel"
-										 [(ngModel)]="break.breakname" autocomplete="off" required>
+										<input matInput placeholder="Break Name" name="breakname{{breakIndex}}"
+											#breakname{{breakIndex}}="ngModel" [(ngModel)]="break.breakname"
+											autocomplete="off" required>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="25" [appearance]="appearance$ | async">
 										<mat-label>From Time</mat-label>
-										<input matInput [min]="breakMinStartTime" (dateTimeChange)="breakStartTimeChange($event,breakIndex)"
-										 [owlDateTime]="breakfrompicker" [owlDateTimeTrigger]="breakfrompicker" placeholder="From Time" name="break{{breakIndex}}starttime"
-										 autocomplete="off" [(ngModel)]="break.starttime" readonly required>
+										<input matInput [min]="breakMinStartTime"
+											(dateTimeChange)="breakStartTimeChange($event,breakIndex)"
+											[owlDateTime]="breakfrompicker" [owlDateTimeTrigger]="breakfrompicker"
+											placeholder="From Time" name="break{{breakIndex}}starttime"
+											autocomplete="off" [(ngModel)]="break.starttime" readonly required>
 										<a mat-icon-button matSuffix>
-											<mat-icon class="trigger" [owlDateTimeTrigger]="breakfrompicker">access_time</mat-icon>
+											<mat-icon class="trigger" [owlDateTimeTrigger]="breakfrompicker">access_time
+											</mat-icon>
 										</a>
-										<owl-date-time [pickerType]="'timer'" [hour12Timer]="false" [pickerMode]="'dialog'" #breakfrompicker></owl-date-time>
+										<owl-date-time [pickerType]="'timer'" [hour12Timer]="false"
+											[pickerMode]="'dialog'" #breakfrompicker></owl-date-time>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="25" [appearance]="appearance$ | async">
 										<mat-label>To Time</mat-label>
-										<input matInput [min]="break.starttime" [max]="breakMaxEndTime" [owlDateTime]="breaktopicker"
-										 [owlDateTimeTrigger]="breaktopicker" placeholder="End Time" name="break{{breakIndex}}endtime" autocomplete="off"
-										 [(ngModel)]="break.endtime" readonly required>
+										<input matInput [min]="break.starttime" [max]="breakMaxEndTime"
+											[owlDateTime]="breaktopicker" [owlDateTimeTrigger]="breaktopicker"
+											placeholder="End Time" name="break{{breakIndex}}endtime" autocomplete="off"
+											[(ngModel)]="break.endtime" readonly required>
 										<a mat-icon-button matSuffix>
-											<mat-icon class="trigger" [owlDateTimeTrigger]="breaktopicker">access_time</mat-icon>
+											<mat-icon class="trigger" [owlDateTimeTrigger]="breaktopicker">access_time
+											</mat-icon>
 										</a>
-										<owl-date-time [pickerType]="'timer'" [hour12Timer]="false" [pickerMode]="'dialog'" #breaktopicker></owl-date-time>
+										<owl-date-time [pickerType]="'timer'" [hour12Timer]="false"
+											[pickerMode]="'dialog'" #breaktopicker></owl-date-time>
 									</mat-form-field>
 
 									<div fxFlex="10" fxLayoutAlign="end center">
@@ -325,8 +373,8 @@
 								<div fxLayout="row wrap" fxLayoutAlign="space-between center">
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Postal Code</mat-label>
-										<input matInput placeholder="Postal Code" name="addresspostalcode" autocomplete="off" [(ngModel)]="jobDetails.addresspostalcode"
-										 pattern="([0-9]{6})?" required>
+										<input matInput placeholder="Postal Code" name="postal_code" autocomplete="off"
+											[(ngModel)]="jobDetails.postal_code" pattern="([0-9]{6})?" required>
 									</mat-form-field>
 
 									<!-- <mat-form-field fxFlex="100" [appearance]="appearance$ | async"> 										<mat-label></mat-label>
@@ -335,29 +383,32 @@
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Street Address</mat-label>
-										<input matInput placeholder="Street Address" name="addressstreet" autocomplete="off" [(ngModel)]="jobDetails.addressstreet"
-										 required>
+										<input matInput placeholder="Street Address" name="address" autocomplete="off"
+											[(ngModel)]="jobDetails.address" required>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Unit No.</mat-label>
-										<input matInput placeholder="Unit No." name="addressunit" autocomplete="off" [(ngModel)]="jobDetails.addressunit"
-										 required>
+										<input matInput placeholder="Unit No." name="unit_no" autocomplete="off"
+											[(ngModel)]="jobDetails.unit_no" required>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Region</mat-label>
-										<mat-select placeholder="Region" name="addressregion" [(ngModel)]="jobDetails.locationmain" required>
-											<mat-option *ngFor="let Location of Locations | uniquemainlocation" [value]="Location.mainlocation">{{
-												Location.mainlocation }}</mat-option>
+										<mat-select placeholder="Region" name="region" [(ngModel)]="jobDetails.region"
+											required>
+											<mat-option *ngFor="let Region of Regions" [value]="Region.id">
+												{{ Region.name }}</mat-option>
 										</mat-select>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Location</mat-label>
-										<mat-select placeholder="Location" name="addresslocation" [(ngModel)]="jobDetails.addresslocation" required>
-											<mat-option *ngFor="let Location of Locations | sublocationfilter:jobDetails.locationmain" [value]="Location.sublocation">{{
-												Location.sublocation }}</mat-option>
+										<mat-select placeholder="Location" name="location"
+											[(ngModel)]="jobDetails.location" required>
+											<mat-option
+												*ngFor="let Location of Locations | sublocationfilter:jobDetails.region"
+												[value]="Location.id">{{Location.name }}</mat-option>
 										</mat-select>
 									</mat-form-field>
 
@@ -435,13 +486,15 @@
 							<mat-tab label="Others">
 								<div fxLayout="row wrap" fxLayoutAlign="space-between center">
 									<div fxFlex="100" style="margin-top:15px;">
-										<mat-checkbox color="primary" name="autooffer" [(ngModel)]="jobDetails.autooffer">
+										<mat-checkbox color="primary" name="auto_offered"
+											[(ngModel)]="jobDetails.auto_offered">
 											Employer can Auto Select Applied JobSeekers.
 										</mat-checkbox>
 									</div>
 
 									<div fxFlex="100" style="margin-top:15px;">
-										<mat-checkbox color="primary" name="autoofferaccept" [(ngModel)]="jobDetails.autoofferaccept">
+										<mat-checkbox color="primary" name="auto_accepted"
+											[(ngModel)]="jobDetails.auto_accepted">
 											Jobseekers Auto Accepted for Job Applied.
 										</mat-checkbox>
 									</div>
@@ -457,12 +510,13 @@
 						</mat-tab-group>
 
 						<mat-card fxLayout="row" fxLayoutAlign="center stretch" class="action">
-							<button mat-raised-button color="primary" type="submit" [disabled]="!employerJobForm.form.valid">Add New Job</button>
+							<button mat-raised-button color="primary" type="submit"
+								[disabled]="!employerJobForm.form.valid">Add New Job</button>
 							<!-- [disabled]="!employerJobForm.form.valid" -->
 						</mat-card>
 					</form>
 				</mat-card-content>
-            </mat-card>
-        </div>
-    </div>
+			</mat-card>
+		</div>
+	</div>
 </div>

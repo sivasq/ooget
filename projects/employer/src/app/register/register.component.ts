@@ -140,7 +140,7 @@ export class RegisterComponent implements OnInit {
 	public onSubmitReg() {
 		if (!this.employerRegForm.valid) { return false; }
 
-		this.busy = this._httpService.createEmployer(this.employerRegForm.value)
+		this.busy = this._httpService.registerEmployer(this.employerRegForm.value)
 			.subscribe(
 				response => {
 					// Response is success

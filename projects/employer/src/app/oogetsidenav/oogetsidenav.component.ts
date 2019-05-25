@@ -33,13 +33,17 @@ export class OogetsidenavComponent implements OnInit {
 			this.userEmail = localStorage.getItem('ogUserEmail');
 			this.UserName = localStorage.getItem('ogUserName');
 			// this.UserRole = localStorage.getItem('ogUserRole');
-			this.UserRole = "Employer";
-			let companyLogo = localStorage.getItem('ogCompanyLogo');
+			this.UserRole = 'Employer';
+			let userLogo = localStorage.getItem('ogProfileimage');
 
-			if (companyLogo == null) {
-				this.profileImage = "assets/img/avatars/profile-placeholder.png";
+			if (userLogo == null) {
+				this.profileImage = 'assets/img/avatars/profile-placeholder.png';
 			} else {
-				this.profileImage = this.baseUrl + "/ooget/user/" + companyLogo;
+				this.profileImage = 'assets/img/avatars/profile-placeholder.png';
+				setTimeout(() => {
+					console.log('Test');
+					this.profileImage = this.baseUrl + userLogo;
+				}, 1000 / 60);
 			}
 		});
 	}
@@ -55,7 +59,7 @@ export class OogetsidenavComponent implements OnInit {
 	onLogout() {
 		localStorage.clear();
 		this.router.navigate(['logout']);
-		console.log("Logout Success");
+		console.log('Logout Success');
 	}
 
 	refreshLS() {
@@ -66,13 +70,13 @@ export class OogetsidenavComponent implements OnInit {
 		this.userEmail = localStorage.getItem('ogUserEmail');
 		this.UserName = localStorage.getItem('ogUserName');
 		// this.UserRole = localStorage.getItem('ogUserRole');
-		this.UserRole = "Employer";
-		let companyLogo = localStorage.getItem('ogCompanyLogo');
+		this.UserRole = 'Employer';
+		let userLogo = localStorage.getItem('ogProfileimage');
 
-		if (companyLogo == null) {
-			this.profileImage = "assets/img/avatars/profile-placeholder.png";
+		if (userLogo == null) {
+			this.profileImage = 'assets/img/avatars/profile-placeholder.png';
 		} else {
-			this.profileImage = this.baseUrl + "/ooget/user/" + companyLogo;
+			this.profileImage = this.baseUrl + userLogo;
 		}
 	}
 

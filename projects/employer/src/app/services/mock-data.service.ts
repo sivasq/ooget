@@ -8,8 +8,8 @@ import { EmploymentTypes } from '../mock-datas/EmploymentTypes';
 import { WorkingEnvironment } from '../classes/WorkingEnvironment';
 import { WorkingEnvironments } from '../mock-datas/WorkingEnvironments';
 
-import { JobLocation } from '../classes/jobLocation';
-import { JobLocations } from '../mock-datas/JobLocations';
+import { JobLocation, JobRegion } from '../classes/jobLocation';
+import { JobLocations, JobRegions } from '../mock-datas/JobLocations';
 
 import { Specialization } from '../classes/Specialization';
 // import { FullTimeSpecializations } from '../mock-datas/fullTimeSpecializations';
@@ -45,6 +45,10 @@ export class MockDataService {
 
 	getWorkingEnvironments(): Observable<WorkingEnvironment[]> {
 		return of(WorkingEnvironments);
+	}
+
+	getJobRegions(): Observable<JobRegion[]> {
+		return of(JobRegions);
 	}
 
 	getJobLocations(): Observable<JobLocation[]> {

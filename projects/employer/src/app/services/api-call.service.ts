@@ -33,8 +33,6 @@ export class ApiCallService {
 
 	createAuthorizationHeaderFormData() {
 		const headers = {};
-		headers['Content-Type'] = 'multipart/form-data';
-		headers['Access-Control-Allow-Origin'] = '*';
 		// headers['Accept'] = 'application/json';
 		headers['token'] = this._token;
 		return headers;
@@ -64,7 +62,7 @@ export class ApiCallService {
 	}
 
 	// Create New Employer with Default User
-	createEmployer(employerData): Observable<any> {
+	registerEmployer(employerData): Observable<any> {
 		const headers = this.createNonAuthorizationHeaderJson();
 		const params = this.createUrlParams('Employer', 'CreateEmployer');
 		return this.http.post(this._baseUrl, employerData, { headers: headers, params: params });
@@ -75,6 +73,20 @@ export class ApiCallService {
 		const headers = this.createNonAuthorizationHeaderJson();
 		const params = this.createUrlParams('Users', 'Login');
 		return this.http.post(this._baseUrl, authData, { headers: headers, params: params });
+	}
+
+	// Get Current User Profile Details
+	getCurrentUserProfileDetails(): Observable<any> {
+		const headers = this.createAuthorizationHeaderJson();
+		const params = this.createUrlParams('Users', 'GetUser');
+		return this.http.post(this._baseUrl, {}, { headers: headers, params: params });
+	}
+
+	// Upload Current User Profile Image
+	uploadCurrentUserProfilePic(formData): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Users', 'ImageUpload');
+		return this.http.post(this._baseUrl, formData, { headers: headers, params: params });
 	}
 
 	// Get Particular Employers
@@ -91,10 +103,40 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, employerData, { headers: headers, params: params });
 	}
 
+	// Get users list
+	getListOfUsers(): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Users', 'GetUserList');
+		return this.http.post(this._baseUrl, {}, { headers: headers, params: params });
+	}
 
+	// Get User Profile Details
+	getUserProfileDetails(userid): Observable<any> {
+		const headers = this.createAuthorizationHeaderJson();
+		const params = this.createUrlParams('Users', 'GetUser');
+		return this.http.post(this._baseUrl, userid, { headers: headers, params: params });
+	}
 
+	// Upload Extra User Profile Image
+	uploadUserProfilePic(formData): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Users', 'ImageUpload');
+		return this.http.post(this._baseUrl, formData, { headers: headers, params: params });
+	}
 
+	// Create Extra User
+	createExtraUser(userDetails): Observable<any> {
+		const headers = this.createAuthorizationHeaderJson();
+		const params = this.createUrlParams('Users', 'CreateUser');
+		return this.http.post(this._baseUrl, userDetails, { headers: headers, params: params });
+	}
 
+	// Add New Job
+	addNewJob(JobDetails): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'CreateJob');
+		return this.http.post(this._baseUrl, JobDetails, { headers: headers, params: params });
+	}
 
 
 
@@ -122,10 +164,6 @@ export class ApiCallService {
 			.append('Access-Control-Allow-Origin', '*');
 		return this.http.post(this._baseUrl + '/changepasswordnoauth', data, { headers: headers })
 	}
-
-
-
-
 
 
 	getSingleEmployersJobsList(employerId): Observable<any> {
@@ -244,18 +282,6 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl + '/job/offerjob', ids, { headers: headers })
 	}
 
-	jobAddToEmployer(employerJobData): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
-		let userToken = localStorage.getItem('ogToken');
-		let headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			})
-		return this.http.post(this._baseUrl + '/job/createjob', employerJobData, { headers: headers })
-			.map(res => res)
-	}
 
 	jobUpdateToEmployer(employerJobData): Observable<any> {
 		//var authDatas = JSON.stringify(authData);
@@ -415,19 +441,6 @@ export class ApiCallService {
 			.map(res => res)
 	}
 
-	createsupervisor(employerData): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
-		let userToken = localStorage.getItem('ogToken');
-		let headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			})
-		return this.http.post(this._baseUrl + '/createsupervisor', employerData, { headers: headers })
-			.map(res => res)
-	}
-
 	updateUserProfile(employerData): Observable<any> {
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
@@ -464,58 +477,6 @@ export class ApiCallService {
 			})
 		return this.http.post(this._baseUrl + '/createemployer', employerData, { headers: headers })
 			.map(res => res)
-	}
-
-
-
-	getUserProfileDetails(): Observable<any> {
-		let dummyData = '';
-		let userToken = localStorage.getItem('ogToken');
-		let headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			})
-		return this.http.post(this._baseUrl + '/fetchownprofile', dummyData, { headers: headers })
-			.map(res => res)
-	}
-
-	uploadUserProfilePic(formData): Observable<any> {
-		let userToken = localStorage.getItem('ogToken');
-		let headers = new HttpHeaders(
-			{
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken,
-			})
-		return this.http.post(this._baseUrl + '/updateprofileimage', formData, { headers: headers })
-	}
-
-
-
-	getExtraUserProfileDetails(userid): Observable<any> {
-		let dummyData = '';
-		let userToken = localStorage.getItem('ogToken');
-		let headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			})
-		return this.http.post(this._baseUrl + '/fetchsupervisor', userid, { headers: headers })
-			.map(res => res)
-	}
-
-	getListOfUsers(): Observable<any> {
-		let dummyData = '';
-		let userToken = localStorage.getItem('ogToken');
-		let headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			})
-		return this.http.post(this._baseUrl + '/listsupervisors', dummyData, { headers: headers })
 	}
 
 	getRolesAndPermissions(): Observable<any> {

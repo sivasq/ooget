@@ -1,13 +1,14 @@
 <div class="inner-sidenav-content transition-2">
 	<!-- Http Progress Bar -->
-	
+
 
 	<!-- Breadcrumb Start -->
 	<div fxLayout="row wrap">
 		<div [ngBusy]="busy"></div>
 		<div class="flex-p" fxFlex="100">
 			<mat-card class="mat-breadcrumb" fxLayout="row">
-				<a class="breadcrumb-item" routerLink="/employer/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+				<a class="breadcrumb-item" routerLink="/employer/dashboard" fxLayout="row"
+					fxLayoutAlign="flex-start center">
 					<mat-icon>home</mat-icon>
 					<span class="breadcrumb-title">Home</span>
 				</a>
@@ -39,11 +40,13 @@
 					<div fxFlex fxLayout="row" fxLayoutAlign="end center">
 						<form class="user-search" [ngClass]="tab1search ? 'show' : ''">
 							<mat-form-field fxFlex>
-								<input matInput name="tab1Filter" [(ngModel)]="tab1Filter" placeholder="Search Users...">
+								<input matInput name="tab1Filter" [(ngModel)]="tab1Filter"
+									placeholder="Search Users...">
 							</mat-form-field>
 						</form>
 
-						<button style="color: darkgray;" mat-icon-button fxLayoutAlign="center end" (click)="tab1search=!tab1search">
+						<button style="color: darkgray;" mat-icon-button fxLayoutAlign="center end"
+							(click)="tab1search=!tab1search">
 							<mat-icon>search</mat-icon>
 						</button>
 					</div>
@@ -61,19 +64,17 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let user of users_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
-						<td>{{user.username | ucfirst}}</td>
+					<tr
+						*ngFor="let user of users_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;">
+						<td>{{user.firstname | ucfirst}}</td>
 						<td>{{user.email}}</td>
+						<td>{{user.type | ucfirst}}</td>
 						<td>
-							{{user.roleid.rolename == "superemployer" ? "Super Admin" : user.roleid.rolename == "normalemployer" ? "Admin" :
-							user.roleid.rolename == "verifier" ? "Verifier" : user.roleid.rolename}}
-						</td>
-						<td>
-							<span *ngIf="user.roleid.rolename != 'superemployer'">
-								<a mat-icon-button color="primary" routerLink="/employer/settings/edituser/{{user._id}}">
+							<span *ngIf="user.type != 1">
+								<a mat-icon-button color="primary" routerLink="/employer/settings/edituser/{{user.id}}">
 									<mat-icon>border_color</mat-icon>
 								</a>
-								<button mat-icon-button color="warn" (click)="deleteUser(user._id)">
+								<button mat-icon-button color="warn" (click)="deleteUser(user.id)">
 									<mat-icon aria-label="Delete">delete</mat-icon>
 								</button>
 							</span>
@@ -95,7 +96,8 @@
 							Items per page:
 						</div>
 						<mat-form-field class="mat-paginator-page-size-select mat-form-field-hide-placeholder">
-							<mat-select placeholder="" [(ngModel)]="tab1PaginateConfig.itemsPerPage" name="itemsPerPage">
+							<mat-select placeholder="" [(ngModel)]="tab1PaginateConfig.itemsPerPage"
+								name="itemsPerPage">
 								<mat-option *ngFor="let pageSizeOption of pageSizeOptions" [value]="pageSizeOption">
 									{{pageSizeOption}}
 								</mat-option>
@@ -103,8 +105,9 @@
 						</mat-form-field>
 					</div>
 					<div class="mat-paginator-range-actions">
-						<pagination-controls class="ooget-pagination" [id]="tab1PaginateConfig.id" [maxSize]="tab1PaginateControlMaxSize"
-						 [autoHide]="tab1PaginateControlAutoHide" (pageChange)="tab1PaginateConfig.currentPage = $event"></pagination-controls>
+						<pagination-controls class="ooget-pagination" [id]="tab1PaginateConfig.id"
+							[maxSize]="tab1PaginateControlMaxSize" [autoHide]="tab1PaginateControlAutoHide"
+							(pageChange)="tab1PaginateConfig.currentPage = $event"></pagination-controls>
 					</div>
 				</div>
 			</mat-card>

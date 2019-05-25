@@ -16,7 +16,7 @@ export class ListUserComponent implements OnInit {
 	employerId;
 	empJobId;
 
-	//Mat Menu Configuration
+	// Mat Menu Configuration
 	@Input() xPosition: MenuPositionX
 	@Input() overlapTrigger: boolean
 
@@ -33,7 +33,7 @@ export class ListUserComponent implements OnInit {
 	public tab1PaginateControlMaxSize: number = 10;
 	public tab1PaginateControlAutoHide: boolean = true;
 
-	//set Company Details
+	// set Company Details
 	public companyDetails: any;
 	public jobDetails: any;
 
@@ -57,12 +57,12 @@ export class ListUserComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						if ((response.supervisors).length > 0) {
+						if ((response.result).length > 0) {
 							this.isUserAvailable = true;
 						} else {
 							this.isUserAvailable = false;
 						}
-						this.users_list = response.supervisors;
+						this.users_list = response.result;
 
 					} else if (!response.success) {
 						console.log(response);

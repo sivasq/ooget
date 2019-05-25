@@ -2,12 +2,8 @@ import { UserRole } from '../classes/userRole';
 
 export const UserRoles: UserRole[] = [
 	{
-		'RoleView': 'Super Admin',
-		'RoleValue': 'superemployer'
-	},
-	{
-		'RoleView': 'Admin',
-		'RoleValue': 'normalemployer'
+		'RoleView': 'Admin Employer',
+		'RoleValue': 'employer'
 	},
 	{
 		'RoleView': 'Verifier',

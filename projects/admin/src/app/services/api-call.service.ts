@@ -138,14 +138,14 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, employerid, { headers: headers, params: params });
 	}
 
-	// Get Current User Profile Details
+	// Get User Profile Details
 	getUserProfileDetails(userid): Observable<any> {
 		const headers = this.createAuthorizationHeaderJson();
 		const params = this.createUrlParams('Users', 'GetUser');
 		return this.http.post(this._baseUrl, userid, { headers: headers, params: params });
 	}
 
-	// Get Current User Profile Details
+	// Delete User Profile Details
 	deleteUserProfile(userid): Observable<any> {
 		const headers = this.createAuthorizationHeaderJson();
 		const params = this.createUrlParams('Users', 'DeleteUser');
@@ -165,6 +165,14 @@ export class ApiCallService {
 		const params = this.createUrlParams('Holiday', 'GetHolidayList');
 		return this.http.post(this._baseUrl, date, { headers: headers, params: params });
 	}
+
+	// Add New Job
+	addNewJob(JobDetails): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'CreateJob');
+		return this.http.post(this._baseUrl, JobDetails, { headers: headers, params: params });
+	}
+
 
 
 
@@ -318,18 +326,6 @@ export class ApiCallService {
 			});
 		return this.http.post(this._baseUrl + '/employer/updatetermsandconditions', formData, { headers: headers })
 			.map(res => res);
-	}
-
-	getEmployerDetails(employerId): Observable<any> {
-		const employerIds = employerId;
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/employer/viewparticularemployer', employerIds, { headers: headers });
 	}
 
 	activateJob(jobStatus): Observable<any> {
@@ -497,19 +493,6 @@ export class ApiCallService {
 				'token': userToken
 			});
 		return this.http.post(this._baseUrl + '/job/fetchlivejobs', employerIds, { headers: headers });
-	}
-
-	jobAddToEmployer(employerJobData): Observable<any> {
-		// var authDatas = JSON.stringify(authData);
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/job/createjob', employerJobData, { headers: headers })
-			.map(res => res);
 	}
 
 	jobUpdateToEmployer(employerJobData): Observable<any> {

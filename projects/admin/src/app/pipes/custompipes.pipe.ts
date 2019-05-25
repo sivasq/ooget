@@ -26,7 +26,7 @@ export class UniqueMainLocation implements PipeTransform {
 	}
 }
 
-//Filter SubLocation Once Choose Main Location
+// Filter SubLocation Once Choose Main Location
 @Pipe({
 	name: 'sublocationfilter'
 })
@@ -36,11 +36,11 @@ export class SubLocationFilter implements PipeTransform {
 			return items;
 		}
 		// console.log(items.filter(item => item.mainlocation.toLowerCase() == filter.toLowerCase()));
-		return items.filter(item => item.mainlocation.toLowerCase() == filter.toLowerCase());
+		return items.filter(item => item.region == filter);
 	}
 }
 
-//Filter SubLocation Once Choose Main Location
+// Filter SubLocation Once Choose Main Location
 @Pipe({
 	name: 'datex'
 })

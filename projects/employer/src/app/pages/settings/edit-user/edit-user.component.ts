@@ -31,7 +31,7 @@ export class EditUserComponent implements OnInit {
 		password: ''
 	}
 
-	public imgBaseUrl;
+	public baseUrl;
 
 	public profileImage: any = 'assets/img/avatars/profile-placeholder.png';
 	@ViewChild('imgFileInput') myProfileImageInputVariable: ElementRef;
@@ -43,7 +43,7 @@ export class EditUserComponent implements OnInit {
 	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber, private urlconfig: ConfigService, private route: ActivatedRoute, private mockDataService: MockDataService) {
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
-		this.imgBaseUrl = urlconfig.img_base_url;
+		this.baseUrl = urlconfig.base_url;
 
 		this.buildUserUpdateForm();
 
@@ -76,37 +76,37 @@ export class EditUserComponent implements OnInit {
 
 				let regAll = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\^&*)(+=._-])/;
 				if (!regAll.test(control.value)) {
-					this.passwordPatternError = "at least one number, one lowercase and one uppercase letter, one special charcter";
+					this.passwordPatternError = 'at least one number, one lowercase and one uppercase letter, one special charcter';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regNumber = /[0-9]/;
 				if (!regNumber.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one number (0-9)";
+					this.passwordPatternError = 'password must contain at least one number (0-9)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regSmallAlp = /[a-z]/;
 				if (!regSmallAlp.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one lowercase letter(a - z)";
+					this.passwordPatternError = 'password must contain at least one lowercase letter(a - z)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regCapsAlp = /[A-Z]/;
 				if (!regCapsAlp.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one uppercase letter (A-Z)";
+					this.passwordPatternError = 'password must contain at least one uppercase letter (A-Z)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regSpecChar = /[!@#$%\^&*)(+=._-]/;
 				if (!regSpecChar.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one Special character (!@#$%\^&*)(+=._-)";
+					this.passwordPatternError = 'password must contain at least one Special character (!@#$%\^&*)(+=._-)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				var regSpace = /\s/;
 				if (regSpace.test(control.value)) {
-					this.passwordPatternError = "space not allowed";
+					this.passwordPatternError = 'space not allowed';
 					resolve({ 'isPatternMatch': true });
 				}
 				resolve(null);
@@ -150,18 +150,19 @@ export class EditUserComponent implements OnInit {
 
 	// Get Admin Profile Details
 	getProfileDetails(userid) {
-		this.busy = this._httpService.getExtraUserProfileDetails({ "supervisorid": userid })
+		this.busy = this._httpService.getUserProfileDetails({ 'userid': userid })
 			.subscribe(
 				response => {
 					// console.log(response);
 					if (response.success) {
+						let userData = response.result;
 						// Profile Tab
-						this.userProfile.username = response.profile.username ? response.profile.username : '';
-						this.userProfile.role = response.profile.role.rolename ? response.profile.role.rolename : '';
-						this.userProfile.email = response.profile.email ? response.profile.email : '';
-						this.userProfile.password = response.profile.password ? response.profile.password : '';
+						this.userProfile.username = userData.firstname ? userData.firstname : '';
+						this.userProfile.role = userData.type ? userData.type : '';
+						this.userProfile.email = userData.email ? userData.email : '';
+						this.userProfile.password = userData.password ? userData.password : '';
 						// Documents
-						this.profileImage = response.profile.userimage ? this.imgBaseUrl + '/admin/' + response.profile.userimage : 'assets/img/avatars/profile-placeholder.png';
+						this.profileImage = userData.imgpath ? this.baseUrl + userData.imgpath : 'assets/img/avatars/profile-placeholder.png';
 
 						// Patch Form Value
 						this.UserUpdateForm.patchValue({
@@ -240,7 +241,7 @@ export class EditUserComponent implements OnInit {
 						if (response.success) {
 							localStorage.setItem('ogProfileimage', response.adminimage);
 							// location.reload();
-							this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
+							this.asyncSubscriber.setProfileDetails({ 'Image': this.profileImage });
 
 							let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
 								duration: 5000,

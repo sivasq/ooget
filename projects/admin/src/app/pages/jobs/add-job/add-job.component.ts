@@ -8,11 +8,12 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { DatePipe } from '@angular/common';
 import { Subscription, Observable } from 'rxjs';
 import { AsyncSubscriber } from '../../../services/async.service';
-import { JobLocation } from '../../../classes/jobLocation';
+import { JobLocation, JobRegion } from '../../../classes/jobLocation';
 import { Specialization } from '../../../classes/specialization';
 import { WorkingEnvironment } from '../../../classes/workingEnvironment';
 import { EmploymentType } from '../../../classes/employmentType';
 import { MockDataService } from '../../../services/mock-data.service';
+import { isArray } from 'util';
 
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
@@ -42,24 +43,24 @@ export class AddJobComponent implements OnInit {
 	appearance$: Observable<any>;
 
 	public jobDetails: any = {
-		project: '',
+		project_name: '',
 		department: '',
-		employmenttype: '',
-		jobtitle: '',
-		jobdescription: '',
+		employement_type: '',
+		job_name: '',
+		description: '',
 
-		jobspecialization: '',
+		specializations: '',
 		otherjobspecialization: '',
-		workingenvironment: [],
+		working_environment: [],
 
-		numberofpax: '',
-		graceperiod: '',
-		overtimerounding: 15,
+		pax_total: '',
+		grace_period: '',
+		over_time_rounding: 15,
 		jobperiodfrom: '',
 		jobperiodto: '',
 		starttime: '',
 		endtime: '',
-		workdaystype: '',
+		work_days_type: '',
 		sunday: false,
 		monday: true,
 		tuesday: true,
@@ -68,30 +69,30 @@ export class AddJobComponent implements OnInit {
 		friday: true,
 		saturday: false,
 
-		addresspostalcode: '',
+		postal_code: '',
 		// addressblock: '',
-		addressstreet: '',
-		addressunit: '',
-		locationmain: '',
-		addresslocation: '',
+		address: '',
+		unit_no: '',
+		region: '',
+		location: '',
 
-		chargerate: '',
-		markuprate: '',
-		markupratetype: '',
-		salary: '',
-		markuprateincurrency: '',
+		charge_rate: '',
+		markup_rate: '',
+		markup_in: '',
+		jobseeker_salary: '',
+		markup_amount: '',
 
-		autooffer: true,
-		autoofferaccept: true,
+		auto_offered: true,
+		auto_accepted: true,
 
 		breaks: [],
-	}
+	};
 
 	public workMinEndTime;
 	public breakMinStartTime;
 	public breakMaxEndTime;
 
-	public locationmain: string;
+	public region: string;
 
 	public companyid: string;
 	public jobperiodfrom: any;
@@ -109,7 +110,7 @@ export class AddJobComponent implements OnInit {
 
 	public companyDetails: any = [];
 
-	//busy Config
+	// busy Config
 	busy: Subscription;
 
 	public maxpax: number[];
@@ -117,6 +118,7 @@ export class AddJobComponent implements OnInit {
 	public overtimeroundings: number[];
 	public FullTimeSpecializations: Specialization[];
 	public PartTimeSpecializations: Specialization[];
+	public Regions: JobRegion[];
 	public Locations: JobLocation[];
 	public WorkingEnvironments: WorkingEnvironment[];
 	public EmploymentTypes: EmploymentType[];
@@ -127,10 +129,11 @@ export class AddJobComponent implements OnInit {
 
 		this.companyid = this.route.snapshot.params['emp_id'];
 
-		this.getEmployerDetails({ companyid: this.companyid });
+		this.getEmployerDetails({ employerid: this.companyid });
 
 		this.getEmploymentTypes();
 		this.getWorkingEnvironments();
+		this.getJobRegions();
 		this.getJobLocations();
 		this.getFullTimeSpecializations();
 		this.getPartTimeSpecializations();
@@ -146,6 +149,10 @@ export class AddJobComponent implements OnInit {
 	getWorkingEnvironments(): void {
 		this.mockDataService.getWorkingEnvironments()
 			.subscribe(WorkingEnvironments => this.WorkingEnvironments = WorkingEnvironments);
+	}
+	getJobRegions(): void {
+		this.mockDataService.getJobRegions()
+			.subscribe(Regions => this.Regions = Regions);
 	}
 	getJobLocations(): void {
 		this.mockDataService.getJobLocations()
@@ -198,7 +205,7 @@ export class AddJobComponent implements OnInit {
 	breakStartTimeChange(event, index) {
 		// console.log(event);
 		// console.log(index);
-		let endtime = new Date(event.value.getTime() + 3600000); // + 1 hr in ms
+		const endtime = new Date(event.value.getTime() + 3600000); // + 1 hr in ms
 		endtime.toLocaleDateString();
 		this.jobDetails.breaks[index].endtime = endtime;
 	}
@@ -224,52 +231,51 @@ export class AddJobComponent implements OnInit {
 	// If Employment Type Change
 	employmenttypeChange(event) {
 		console.log(event);
-		if (event == null) return false;
+		if (event == null) { return false; }
 
-		if (this.isInArray(event, "Full Time")) {
+		if (event == 2) {
 			this.isPartTimeJob = false;
 		} else {
 			this.isPartTimeJob = true;
 		}
 
-		if (this.isInArray(event, "Full Time")) {
+		if (event == 2) {
 			this.showfulltimespeccilization = true;
 		} else {
 			this.showfulltimespeccilization = false;
 		}
 
-		if (this.isInArray(event, "Part Time")) {
+		if (event == 1) {
 			this.showparttimespeccilization = true;
-		}
-		else {
+		} else {
 			this.showparttimespeccilization = false;
 		}
 	}
 
 	vlidateChargingRate() {
-		if ((this.jobDetails.chargerate != undefined && this.jobDetails.chargerate != "") && (this.jobDetails.markuprate != undefined && this.jobDetails.markuprate != "") && this.jobDetails.markupratetype != undefined) {
-			// console.log(this.jobDetails.chargerate);
-			// console.log(this.jobDetails.markuprate);
-			// console.log(this.jobDetails.markupratetype);
+		if ((this.jobDetails.charge_rate != undefined && this.jobDetails.charge_rate != '') && (this.jobDetails.markup_rate != undefined && this.jobDetails.markup_rate != '') && this.jobDetails.markup_in != undefined) {
+			// console.log(this.jobDetails.charge_rate);
+			// console.log(this.jobDetails.markup_rate);
+			// console.log(this.jobDetails.markup_in);
 
-			if (this.jobDetails.markupratetype == "percentage") {
-				this.jobDetails.salary = (((1 - (Number(this.jobDetails.markuprate) / 100)) * Number(this.jobDetails.chargerate)).toFixed(1));
-				this.jobDetails.markuprateincurrency = ((Number(this.jobDetails.chargerate) - (1 - (Number(this.jobDetails.markuprate) / 100)) * Number(this.jobDetails.chargerate)).toFixed(1));
+			if (this.jobDetails.markup_in == 'percentage') {
+				this.jobDetails.jobseeker_salary = (((1 - (Number(this.jobDetails.markup_rate) / 100)) * Number(this.jobDetails.charge_rate)).toFixed(1));
+				this.jobDetails.markup_amount = ((Number(this.jobDetails.charge_rate) - (1 - (Number(this.jobDetails.markup_rate) / 100)) * Number(this.jobDetails.charge_rate)).toFixed(1));
 			}
 
-			if (this.jobDetails.markupratetype == "sgdollar") {
-				this.jobDetails.salary = (Number(this.jobDetails.chargerate) - Number(this.jobDetails.markuprate)).toFixed(1);
-				this.jobDetails.markuprateincurrency = Number(this.jobDetails.markuprate).toFixed(1);
+			if (this.jobDetails.markup_in == 'sgdollar') {
+				this.jobDetails.jobseeker_salary = (Number(this.jobDetails.charge_rate) - Number(this.jobDetails.markup_rate)).toFixed(1);
+				this.jobDetails.markup_amount = Number(this.jobDetails.markup_rate).toFixed(1);
 			}
 		}
 	}
 
 	getEmployerDetails(employerId) {
-		this.busy = this._httpService.getEmployerDetails(employerId)
+		this.busy = this._httpService.getEmployer(employerId)
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.companyDetails = response.employer;
+						this.companyDetails = response.result[0];
 						// console.log(this.companyDetails);
 					} else if (!response.success) {
 						console.log(response);
@@ -281,29 +287,39 @@ export class AddJobComponent implements OnInit {
 			);
 	}
 
-	jobAddToEmployer(employerJobData: any, employerJobForm) {
-		let companyid = { "companyid": this.companyid };
+	addNewJob(employerJobData: any, employerJobForm) {
+		const companyid = { 'employer_id': this.companyid };
 		employerJobData = Object.assign(employerJobData, companyid);
 
-		let jobperiodfrom = { "jobperiodfrom": this.datePipe.transform(employerJobData.jobperiodfrom, 'yyyy/MM/dd') };
+		const minOverTime = { 'over_time_minimum': 30 };
+		employerJobData = Object.assign(employerJobData, minOverTime);
+
+		// Job Perid From
+		const jobperiodfrom = { 'from': this.datePipe.transform(employerJobData.jobperiodfrom, 'yyyy-MM-dd') };
 		employerJobData = Object.assign(employerJobData, jobperiodfrom);
 
-		let jobperiodto = { "jobperiodto": this.datePipe.transform(employerJobData.jobperiodto, 'yyyy/MM/dd') };
+		// Job Perid To
+		const jobperiodto = { 'to': this.datePipe.transform(employerJobData.jobperiodto, 'yyyy-MM-dd') };
 		employerJobData = Object.assign(employerJobData, jobperiodto);
 
-		let starttime = { "starttime": this.datePipe.transform(employerJobData.starttime, 'HH:mm') };
+		// Job Start Time
+		const starttime = { 'start_time': this.datePipe.transform(employerJobData.starttime, 'HH:mm') };
 		employerJobData = Object.assign(employerJobData, starttime);
 
-		let endtime = { "endtime": this.datePipe.transform(employerJobData.endtime, 'HH:mm') };
+		// Job End Time
+		const endtime = { 'end_time': this.datePipe.transform(employerJobData.endtime, 'HH:mm') };
 		employerJobData = Object.assign(employerJobData, endtime);
+
+		const workingEnvironment = { 'working_environment': this.ArrayToString(employerJobData.working_environment) };
+		employerJobData = Object.assign(employerJobData, workingEnvironment);
 
 		// let jobspecialization = { "jobspecialization": employerJobData.jobspecialization.specialization };
 		// employerJobData = Object.assign(employerJobData, jobspecialization);
 
-		// let autooffer = { "autooffer": employerJobData.autooffer == true ? "true" : "false" };
+		// let autooffer = { "auto_offered": employerJobData.auto_offered == true ? "true" : "false" };
 		// employerJobData = Object.assign(employerJobData, autooffer);
 
-		// let autoofferaccept = { "autoofferaccept": employerJobData.autoofferaccept == true ? "true" : "false" };
+		// let autoofferaccept = { "auto_accepted": employerJobData.auto_accepted == true ? "true" : "false" };
 		// employerJobData = Object.assign(employerJobData, autoofferaccept);
 
 		// let jobaddedby = { "jobaddedby": "ooget-team" };
@@ -312,29 +328,30 @@ export class AddJobComponent implements OnInit {
 		// let jobstatus = { "jobstatus": "live" };
 		// employerJobData = Object.assign(employerJobData, jobstatus);
 
-		let newBreaks: any[] = [];
-		let oldBresks = this.jobDetails.breaks;
-		if (oldBresks.length > 0) {
-			for (let i = 0; i < oldBresks.length; i++) {
+		const newBreaks: any[] = [];
+		const oldBreaks = this.jobDetails.breaks;
+		if (oldBreaks.length > 0) {
+			for (let i = 0; i < oldBreaks.length; i++) {
 				newBreaks.push({
-					breakname: oldBresks[i].breakname,
-					breakstart: this.datePipe.transform(oldBresks[i].starttime, 'HH:mm'),
-					breakend: this.datePipe.transform(oldBresks[i].endtime, 'HH:mm'),
-				})
+					break_name: oldBreaks[i].breakname,
+					from: this.datePipe.transform(oldBreaks[i].starttime, 'HH:mm'),
+					to: this.datePipe.transform(oldBreaks[i].endtime, 'HH:mm'),
+				});
 			}
 		}
 
-		let Breaks = { "breaktime": newBreaks };
+		const Breaks = { 'break': newBreaks };
 		employerJobData = Object.assign(employerJobData, Breaks);
 
 		console.log(employerJobData);
-		this._httpService.jobAddToEmployer(employerJobData)
+		// return false;
+		this._httpService.addNewJob(employerJobData)
 			.subscribe(
 				response => {
 					if (response.success) {
 						employerJobForm.resetForm();
-						console.log("Job Added Successfully");
-						let snackBarRef = this.snackBar.open('Job Added Successfully.', 'Close', {
+						console.log('Job Added Successfully');
+						const snackBarRef = this.snackBar.open('Job Added Successfully.', 'Close', {
 							duration: 5000,
 						});
 
@@ -357,12 +374,36 @@ export class AddJobComponent implements OnInit {
 	addBreak() {
 		this.jobDetails.breaks.push({ breakname: '', starttime: '', endtime: '' });
 	}
+
 	removeBreak(index) {
 		index = Number(index);
 		this.jobDetails.breaks.splice(index, 1);
 	}
-	public trackByIndex(index: number, item) {
+
+	trackByIndex(index: number, item) {
 		return index;
+	}
+
+	ArrayToString(dataArray) {
+		if (isArray(dataArray)) {
+			dataArray.map(function (e) {
+				// return JSON.stringify(e);
+				return e;
+			});
+			return dataArray.join(',');
+		}
+	}
+
+	stringToArray(dataString) {
+		if (typeof dataString !== 'undefined' && dataString) {
+			if (dataString.includes(',')) {
+				return dataString.split(',').map(Number);
+			} else {
+				return [dataString].map(Number);
+			}
+		} else {
+			return [];
+		}
 	}
 
 	ngOnInit() { }
