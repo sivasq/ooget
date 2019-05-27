@@ -17,7 +17,7 @@
 
 		<div fxLayout="row" *ngIf="companyDetails">
 			<mat-button-toggle matTooltip="Add New Job" matTooltipPosition="right"
-				routerLink="/admin/employers/{{companyDetails._id}}/jobs/add">
+				routerLink="/admin/employers/{{companyDetails.id}}/jobs/add">
 				<mat-icon>playlist_add</mat-icon>
 			</mat-button-toggle>
 		</div>
@@ -32,7 +32,7 @@
 				<div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
 					<div style="line-height: 40px; width: 100%;">
 						<h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below"
-							routerLink="/admin/employers/{{job.companyid._id}}/jobs/{{job._id}}/view">{{job.jobnumber}}
+							routerLink="/admin/employers/{{companyDetails.id}}/jobs/{{job.id}}/view">{{job.job_no}}
 						</h3>
 					</div>
 					<button mat-icon-button [matMenuTriggerFor]=i>
@@ -40,32 +40,32 @@
 					</button>
 				</div>
 				<mat-menu #i="matMenu" xPosition="before" overlapTrigger=true>
-					<button mat-menu-item routerLink="/admin/employers/{{job.companyid._id}}/jobs/{{job._id}}/view">
+					<button mat-menu-item routerLink="/admin/employers/{{companyDetails.id}}/jobs/{{job.id}}/view">
 						<mat-icon>description</mat-icon>
 						<span>View Job Details</span>
 					</button>
 
-					<button *ngIf="job.jobstatus != 'pending'" mat-menu-item
-						routerLink="/admin/employers/{{job.companyid._id}}/jobs/{{job._id}}/candidates/applied">
+					<button *ngIf="job.status != 1" mat-menu-item
+						routerLink="/admin/employers/{{companyDetails.id}}/jobs/{{job.id}}/candidates/applied">
 						<mat-icon>list</mat-icon>
 						<span>Applied Candidates</span>
 					</button>
 
-					<button *ngIf="job.jobstatus == 'live' && job.hiringstatus == 'open'" mat-menu-item
-						(click)="closeJob(job.companyid._id, job._id)">
+					<button *ngIf="job.status == 2 && job.recruitment_open == 1" mat-menu-item
+						(click)="closeJob(companyDetails.id, job.id)">
 						<mat-icon>remove_circle</mat-icon>
 						<span>Close This Job</span>
 					</button>
 				</mat-menu>
 
 				<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
-					<div fxFlex="30" fxLayout="column" fxLayoutAlign="center center" *ngIf="job.jobstatus == 'pending'">
+					<div fxFlex="30" fxLayout="column" fxLayoutAlign="center center">
 						<div class="user-img" *ngIf="!job.companylogo">
 							<img class="transition-2 ng-star-inserted" src="assets/img/avatars/logo-placeholder.png">
 						</div>
 						<div class="user-social">
-							<mat-slide-toggle color="primary" (change)="ActivateJob($event, job.companyid._id, job._id)"
-								[checked]="job.jobstatus == 'pending' ? false : true"></mat-slide-toggle>
+							<mat-slide-toggle color="primary" (change)="ActivateJob($event, job.companyid.id, job.id)"
+								[checked]="job.status"></mat-slide-toggle>
 						</div>
 					</div>
 					<div class="user-details transition-2" fxFlex="100" fxLayout="column">
@@ -74,7 +74,7 @@
 							</mat-icon>
 							<span matTooltip="Job Title" matTooltipPosition="right">
 								<span class="key">Job Title : </span>
-								<span class="value">{{job.jobtitle | titlecase}}</span>
+								<span class="value">{{job.job_name | titlecase}}</span>
 							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
@@ -90,8 +90,8 @@
 							</mat-icon>
 							<span matTooltip="PAX" matTooltipPosition="right">
 								<span class="key">Vacancies / PAX Required : </span>
-								<span class="value">{{job.numberofpax-job.numberofcontracts}} /
-									{{job.numberofpax}}</span>
+								<span class="value">{{job.pax_total-job.required}} /
+									{{job.pax_total}}</span>
 							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
@@ -99,7 +99,7 @@
 							</mat-icon>
 							<span matTooltip="Job Type" matTooltipPosition="right">
 								<span class="key">Job Type : </span>
-								<span class="value">{{job.employmenttype}}</span>
+								<span class="value">{{employmentType[job.employement_type]}}</span>
 							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
@@ -107,8 +107,8 @@
 								date_range</mat-icon>
 							<span matTooltip="Job Period" matTooltipPosition="right">
 								<span class="key">Job Period : </span>
-								<span class="value">{{job.jobperiodfrom | date:'dd/MM/yyyy'}} to
-									{{job.jobperiodto | date:'dd/MM/yyyy'}}</span>
+								<span class="value">{{job.from | date:'dd-MM-yyyy'}} to
+									{{job.to | date:'dd-MM-yyyy'}}</span>
 							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
@@ -116,7 +116,7 @@
 							</mat-icon>
 							<span matTooltip="Job Status" matTooltipPosition="right">
 								<span class="key">Status : </span>
-								<span class="value">{{job.jobstatus | titlecase}}</span>
+								<span class="value">{{jobStatus[job.status] | titlecase}}</span>
 							</span>
 						</p>
 					</div>

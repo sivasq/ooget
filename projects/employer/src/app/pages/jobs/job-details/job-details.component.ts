@@ -24,7 +24,7 @@ export class JobDetailsComponent implements OnInit {
 	public offersAccepted: any[];
 	public jobContractors: any[];
 
-	//busy Config
+	// busy Config
 	busy: Subscription;
 
 	constructor(private urlconfig: ConfigService, public router: Router, private _httpService: ApiCallService, private route: ActivatedRoute, public dialog: MatDialog, public snackBar: MatSnackBar, private datePipe: DatePipe) {
@@ -34,24 +34,24 @@ export class JobDetailsComponent implements OnInit {
 			jobid: this.route.snapshot.params['job_id'],
 			companyid: localStorage.getItem('ogCompanyObjID'),
 		}
-		this.getJobDetails(jobId);
+		this.getJobDetails();
 		this.getJobContractors(jobId);
 	}
 
-	getJobDetails(jobId) {
-		this.busy = this._httpService.getJobDetails(jobId)
+	getJobDetails() {
+		this.busy = this._httpService.getJobDetails({ 'jobid': this.route.snapshot.params['job_id'] })
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.jobDetails = response.job;
-						this.companyDetails = response.job.companyid;
-						this.candidatesApplied = response.job.candidatesapplied;
-						this.candidatesOffered = response.job.candidatesseleceted;
-						this.offersAccepted = response.job.candidatessigned;
+						this.jobDetails = response.result;
+						// this.companyDetails = response.job.companyid;
+						// this.candidatesApplied = response.job.candidatesapplied;
+						// this.candidatesOffered = response.job.candidatesseleceted;
+						// this.offersAccepted = response.job.candidatessigned;
 						// console.log(this.jobDetails.jobperiodfrom);
 						// console.log(this.jobDetails.jobperiodfrom.split("/").reverse().join("/"));
-						this.jobDetails.jobperiodfrom = this.jobDetails.jobperiodfrom.split("/").reverse().join("/");
-						this.jobDetails.jobperiodto = this.jobDetails.jobperiodto.split("/").reverse().join("/");
+						this.jobDetails.jobperiodfrom = this.jobDetails.jobperiodfrom.split('-').reverse().join('-');
+						this.jobDetails.jobperiodto = this.jobDetails.jobperiodto.split('-').reverse().join('-');
 						// this.getDateArray(startDate, endDate);
 						console.log(this.jobDetails);
 					} else if (!response.success) {

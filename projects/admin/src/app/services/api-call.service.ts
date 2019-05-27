@@ -173,12 +173,26 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, JobDetails, { headers: headers, params: params });
 	}
 
+	// Get Single Employers All Jobs List
+	getSingleEmployersJobsList(employerId): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'GetAllJobList');
+		return this.http.post(this._baseUrl, employerId, { headers: headers, params: params });
+	}
 
+	// Change Job Status
+	changeJobHiringStatus(hiringStatus): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'ChangeRecruitmentOpen');
+		return this.http.post(this._baseUrl, hiringStatus, { headers: headers, params: params });
+	}
 
-
-
-
-
+	// Get Job Details
+	getJobDetails(jobId): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'GetJobDetails');
+		return this.http.post(this._baseUrl, jobId, { headers: headers, params: params });
+	}
 
 
 
@@ -352,17 +366,7 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl + '/job/updatejobstatuswithpayinfo', jobStatus, { headers: headers });
 	}
 
-	closeJobHiring(jobStatus): Observable<any> {
-		// let jobStatus = jobStatus;
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/job/changehiringstatus', jobStatus, { headers: headers });
-	}
+
 
 	changeEmployerStatus(jobStatus): Observable<any> {
 		// let jobStatus = jobStatus;
@@ -403,17 +407,7 @@ export class ApiCallService {
 			.map(res => res);
 	}
 
-	getSingleEmployersJobsList(employerId): Observable<any> {
-		const employerIds = employerId;
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/job/jobslistbyemployer', employerIds, { headers: headers });
-	}
+
 
 	getAppliedCandidates(jobId): Observable<any> {
 		const userToken = localStorage.getItem('ogToken');
@@ -506,18 +500,6 @@ export class ApiCallService {
 			});
 		return this.http.post(this._baseUrl + '/job/updatejob', employerJobData, { headers: headers })
 			.map(res => res);
-	}
-
-	getJobDetails(jobId): Observable<any> {
-		const jobIds = jobId;
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/job/fetchparticularjob', jobIds, { headers: headers });
 	}
 
 	getContractDetails(contractId): Observable<any> {

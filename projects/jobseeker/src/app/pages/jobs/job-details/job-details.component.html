@@ -5,7 +5,8 @@
 	<div fxLayout="row wrap">
 		<div class="flex-p" fxFlex="1 1 100%">
 			<mat-card class="mat-breadcrumb" fxLayout="row">
-				<a class="breadcrumb-item" routerLink="/main/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+				<a class="breadcrumb-item" routerLink="/main/dashboard" fxLayout="row"
+					fxLayoutAlign="flex-start center">
 					<mat-icon>home</mat-icon>
 					<span class="breadcrumb-title">Home</span>
 				</a>
@@ -35,9 +36,11 @@
 				</div>
 
 				<div *ngIf="isOffered" fxLayout="row" fxLayoutAlign="start center">
-					<button mat-raised-button color="primary" (click)="acceptOffer(jobDetails._id)">{{btnName}}</button> &nbsp;
+					<button mat-raised-button color="primary" (click)="acceptOffer(jobDetails.id)">{{btnName}}</button>
+					&nbsp;
 					<!-- <div>({{helpTxt1}})</div> -->
-					<button mat-raised-button color="warn" (click)="rejectOffer(jobDetails._id)">{{rejectBtnName}}</button> &nbsp;
+					<button mat-raised-button color="warn"
+						(click)="rejectOffer(jobDetails.id)">{{rejectBtnName}}</button> &nbsp;
 				</div>
 
 				<div *ngIf="isApplied" fxLayout="row" fxLayoutAlign="start center">
@@ -45,13 +48,16 @@
 				</div>
 
 				<div *ngIf="isNotApplied" fxLayout="row" fxLayoutAlign="start center">
-					<button mat-raised-button color="primary" (click)="sendApplication(jobDetails._id)">{{btnName}}</button>
+					<button mat-raised-button color="primary"
+						(click)="sendApplication(jobDetails.id)">{{btnName}}</button>
 				</div>
 
 				<div fxLayout="row" fxLayoutAlign="start center">
-					<button mat-raised-button color="primary" *ngIf="!jobDetails.saved" (click)="saveJob(jobDetails._id)">Save Job</button>
+					<button mat-raised-button color="primary" *ngIf="!jobDetails.saved"
+						(click)="saveJob(jobDetails.id)">Save Job</button>
 
-					<button mat-raised-button color="primary" *ngIf="jobDetails.saved" (click)="unSaveJob(jobDetails._id)">Un Save Job</button>
+					<button mat-raised-button color="primary" *ngIf="jobDetails.saved"
+						(click)="unSaveJob(jobDetails.id)">Un Save Job</button>
 				</div>
 			</mat-card>
 		</div>
@@ -60,8 +66,8 @@
 	<div fxLayout="row wrap">
 		<mat-card class="flex-p section_container" style="margin-top: 8px;" fxFlex="100" fxLayout="column">
 			<!-- <mat-card-header>
-                            <img *ngIf="!companyDetails?.companylogo" mat-card-avatar src="assets/img/avatars/logo-placeholder.png" alt="">
-                            <img *ngIf="companyDetails?.companylogo" mat-card-avatar src="{{imgBaseUrl}}/company/{{companyDetails?.companylogo}}" alt="">
+                            <img *ngIf="!jobDetails?.companylogo" mat-card-avatar src="assets/img/avatars/logo-placeholder.png" alt="">
+                            <img *ngIf="jobDetails?.companylogo" mat-card-avatar src="{{imgBaseUrl}}/company/{{jobDetails?.companylogo}}" alt="">
                             <mat-card-title>{{jobDetails.jobnumber}}</mat-card-title>
                             <mat-card-subtitle style="text-transform: capitalize;">Job Status: {{jobDetails.jobstatus}}</mat-card-subtitle>
                             <div fxFlex></div>
@@ -74,21 +80,21 @@
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
 							<span fxLayout.xs="column" fxLayoutAlign.xs="start start">
 								<span class="key">Company Name <span fxHide.xs>:</span></span>
-								<span class="value"> {{companyDetails.companyname | titlecase}} </span>
+								<span class="value"> {{jobDetails.employer_name | titlecase}} </span>
 							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="mat-icon material-icons">check_circle</mat-icon>
 							<span fxLayout.xs="column" fxLayoutAlign.xs="start start">
 								<span class="key">Company Profile <span fxHide.xs>:</span></span>
-								<span class="value">{{companyDetails.profile | titlecase}}</span>
+								<span class="value">{{jobDetails.company_profile | titlecase}}</span>
 							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
 							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Industry Type
 									<span fxHide.xs>:</span></span>
-								<span class="value">{{companyDetails.industry | titlecase}}</span>
+								<span class="value">{{getIndustryName(jobDetails.industry) | titlecase}}</span>
 							</span>
 						</p>
 					</div>
@@ -99,33 +105,36 @@
 					<div class="user-details transition-2" fxFlex="100" fxLayout="column">
 						<p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job Number <span fxHide.xs>:</span></span>
-								<span class="value">{{jobDetails.jobnumber | titlecase}}</span>
+							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job Number
+									<span fxHide.xs>:</span></span>
+								<span class="value">{{jobDetails.job_no | titlecase}}</span>
 							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
 							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Project Name
 									<span fxHide.xs>:</span></span>
-								<span class="value">{{jobDetails.project | titlecase}}</span>
+								<span class="value">{{jobDetails.project_name | titlecase}}</span>
 							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job Title <span fxHide.xs>:</span></span>
-								<span class="value">{{jobDetails.jobtitle | titlecase}}</span>
+							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job Title <span
+										fxHide.xs>:</span></span>
+								<span class="value">{{jobDetails.job_name | titlecase}}</span>
 							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
 							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Employment Type
 									<span fxHide.xs>:</span></span>
-								<span class="value">{{jobDetails.employmenttype | titlecase}}</span>
+								<span class="value">{{employmentType[jobDetails.employement_type] | titlecase}}</span>
 							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Department <span fxHide.xs>:</span></span>
+							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Department
+									<span fxHide.xs>:</span></span>
 								<span class="value">{{jobDetails.department | titlecase}}</span>
 							</span>
 						</p>
@@ -133,7 +142,7 @@
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
 							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Description
 									<span fxHide.xs>:</span></span>
-								<span class="value">{{jobDetails.jobdescription | titlecase}}</span>
+								<span class="value">{{jobDetails.description | titlecase}}</span>
 							</span>
 						</p>
 					</div>
@@ -142,25 +151,30 @@
 				<!-- Job Specialization Details -->
 				<div>
 					<div class="user-details transition-2" fxFlex="100" fxLayout="column">
-						<p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobDetails.jobspecialization !== 'others'">
+						<p fxLayout="row" fxLayoutAlign="start center"
+							*ngIf="jobDetails.jobspecialization !== 'others'">
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job Specialization
+							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job
+									Specialization
 									<span fxHide.xs>:</span></span>
-								<span class="value">{{jobDetails.jobspecialization | titlecase}}</span>
+								<span
+									class="value">{{getJobSpecializationName(jobDetails.specializations) | titlecase}}</span>
 							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobDetails.jobspecialization == 'others'">
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job Specialization
+							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job
+									Specialization
 									<span fxHide.xs>:</span></span>
 								<span class="value">{{jobDetails.otherjobspecialization | titlecase}}</span>
 							</span>
 						</p>
-						<p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobDetails.workingenvironment">
+						<p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobDetails.working_environment">
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Working Environment
+							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Working
+									Environment
 									<span fxHide.xs>:</span></span>
-								<span class="value">{{jobDetails.workingenvironment}}</span>
+								<span class="value">{{getWorkingEnvironmentName(jobDetails.working_environment)}}</span>
 							</span>
 						</p>
 					</div>
@@ -173,35 +187,37 @@
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
 							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Pax Required
 									<span fxHide.xs>:</span></span>
-								<span class="value">{{jobDetails.numberofpax - jobDetails.numberofcontracts}}
-									/ {{jobDetails.numberofpax}}</span>
+								<span class="value">{{jobDetails.pax_total - jobDetails.required}} /
+									{{jobDetails.pax_total}}</span>
 							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job period <span fxHide.xs>:</span></span>
-								<span class="value">{{jobDetails.jobperiodfrom | date:'dd/MM/yyyy'}} to {{jobDetails.jobperiodto
-									| date:'dd/MM/yyyy'}}</span>
+							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Job period
+									<span fxHide.xs>:</span></span>
+								<span class="value">{{jobDetails.from | date:'dd-MM-yyyy'}} to {{jobDetails.to
+									| date:'dd-MM-yyyy'}}</span>
 							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
 							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Grace Period
 									<span fxHide.xs>:</span></span>
-								<span class="value">{{jobDetails.graceperiod}} Mins</span>
+								<span class="value">{{jobDetails.grace_period}} Mins</span>
 							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Work Time <span fxHide.xs>:</span></span>
-								<span class="value">{{jobDetails.starttime}} to {{jobDetails.endtime}}</span>
+							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Work Time <span
+										fxHide.xs>:</span></span>
+								<span class="value">{{jobDetails.start_time}} to {{jobDetails.end_time}}</span>
 							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
 							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Work Days Type
 									<span fxHide.xs>:</span></span>
-								<span class="value">{{jobDetails.workdaystype | titlecase}}</span>
+								<span class="value">{{workDaysType[jobDetails.work_days_type]}}</span>
 							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobDetails.workdays">
@@ -227,11 +243,12 @@
 							</span>
 						</p>
 						<!-- Break Details -->
-						<p fxLayout="row" fxLayoutAlign="start center" *ngFor="let break of jobDetails.breaktime">
+						<p fxLayout="row" fxLayoutAlign="start center" *ngFor="let break of jobDetails.breaklist">
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">{{break.breakname | titlecase}}
+							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span
+									class="key">{{break.break_name | titlecase}}
 									<span fxHide.xs>:</span></span>
-								<span class="value">{{break.breakstart}} to {{break.breakend}}</span>
+								<span class="value">{{break.from}} to {{break.to}}</span>
 							</span>
 						</p>
 					</div>
@@ -244,7 +261,7 @@
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
 							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Postal Code
 									<span fxHide.xs>:</span></span>
-								<span class="value">{{jobDetails.addresspostalcode}}</span>
+								<span class="value">{{jobDetails.postal_code}}</span>
 							</span>
 						</p>
 						<!-- <p fxLayout="row" fxLayoutAlign="start center">
@@ -255,26 +272,30 @@
                                         </span></p> -->
 						<p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Street <span fxHide.xs>:</span></span>
-								<span class="value">{{jobDetails.addressstreet | titlecase}}</span>
+							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Street <span
+										fxHide.xs>:</span></span>
+								<span class="value">{{jobDetails.address | titlecase}}</span>
 							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Unit <span fxHide.xs>:</span></span>
-								<span class="value">{{jobDetails.addressunit | titlecase}}</span>
+							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Unit <span
+										fxHide.xs>:</span></span>
+								<span class="value">{{jobDetails.unit_no | titlecase}}</span>
 							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Region <span fxHide.xs>:</span></span>
-								<span class="value">{{jobDetails.addressregion | titlecase}}</span>
+							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Region <span
+										fxHide.xs>:</span></span>
+								<span class="value">{{getRegionName(jobDetails.region) | titlecase}}</span>
 							</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Location <span fxHide.xs>:</span></span>
-								<span class="value">{{jobDetails.addresslocation | titlecase}}</span>
+							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Location <span
+										fxHide.xs>:</span></span>
+								<span class="value">{{getJobLocationName(jobDetails.location) | titlecase}}</span>
 							</span>
 						</p>
 					</div>
@@ -285,8 +306,9 @@
 					<div class="user-details transition-2" fxFlex="100" fxLayout="column">
 						<p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="mat-icon material-icons" role="img">check_circle</mat-icon>
-							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Salary <span fxHide.xs>:</span></span>
-								<span class="value">&#x24;&nbsp;{{jobDetails.salary}}</span>
+							<span fxLayout.xs="column" fxLayoutAlign.xs="start start"> <span class="key">Salary <span
+										fxHide.xs>:</span></span>
+								<span class="value">&#x24;&nbsp;{{jobDetails.jobseeker_salary}}</span>
 							</span>
 						</p>
 					</div>

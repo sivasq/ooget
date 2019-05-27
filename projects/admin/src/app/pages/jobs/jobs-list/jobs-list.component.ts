@@ -13,50 +13,51 @@ import { ConfirmDialogComponent } from '../../../confirm-dialog/confirm-dialog.c
 })
 export class JobsListComponent implements OnInit {
 
-	//set filtered jobs
+	// set filtered jobs
 	public allJobs: any[] = [];
 	public pendingJobs: any[] = [];
 	public liveJobs: any[] = [];
 	public closedJobs: any[] = [];
 
-	//set Job Lists
+	// set Job Lists
 	public isJobsAvailable: boolean;
 
-	//set Company Details
+	// set Company Details
 	public companyDetails: any = '';
 
-	//busy Config
+	// busy Config
 	busy: Subscription;
 
 	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar, public dialog: MatDialog) {
 	}
 
-	//get employers jobs list
+	// get employers jobs list
 	getSingleEmployersJobsList(employerId): any {
 		this.busy = this._httpService.getSingleEmployersJobsList(employerId)
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.companyDetails = response.company;
-						if (response.jobs.length > 0) {
+						if (response.result.length > 0) {
+							let jobsList = response.result;
 							this.isJobsAvailable = true;
 
 							// let jobs = response.jobs;
-							response.jobs.map(job => {
-								return Object.assign(job, { "companyid": this.companyDetails });
-							});
+							// jobsList.map(job => {
+							// 	return Object.assign(job, { 'companyid': this.companyDetails });
+							// });
 
-							//get all jobs
-							this.allJobs = response.jobs;
+							// get all jobs
+							this.allJobs = jobsList;
 
-							//filter pending Jobs
-							this.pendingJobs = response.jobs.filter((book: any) => book.jobstatus === "pending");
+							// filter pending Jobs
+							this.pendingJobs = jobsList.filter((job: any) => job.status == 1);
 
-							//filter live jobs
-							this.liveJobs = response.jobs.filter((book: any) => book.jobstatus === "live");
+							// filter live jobs
+							this.liveJobs = jobsList.filter((job: any) => job.status == 2);
 
-							//filter closed jobs
-							this.closedJobs = response.jobs.filter((book: any) => book.jobstatus === "closed");
+							// filter closed jobs
+							this.closedJobs = jobsList.filter((job: any) => job.status == 3);
+							console.log(jobsList);
 						} else {
 							this.isJobsAvailable = false;
 						}
@@ -77,10 +78,10 @@ export class JobsListComponent implements OnInit {
 		dialogConfig.autoFocus = true;
 		dialogConfig.data = {
 			// boxTitle:"Confirmation",
-			confirmMsg: "<h4>Do you want to close Hiring for this Job ?</h4>",
-			okButtonText: "Yes",
-			noButtonText: "No",
-			actionalign: "center"
+			confirmMsg: '<h4>Do you want to close Hiring for this Job ?</h4>',
+			okButtonText: 'Yes',
+			noButtonText: 'No',
+			actionalign: 'center'
 		};
 		let dialogref = this.dialog.open(ConfirmDialogComponent, dialogConfig);
 
@@ -96,12 +97,12 @@ export class JobsListComponent implements OnInit {
 	}
 
 	ConfirmCloseJob(employerId, jobId) {
-		this.busy = this._httpService.closeJobHiring({ jobid: jobId, hiringstatus: 'closed' })
+		this.busy = this._httpService.changeJobHiringStatus({ jobid: jobId, recruitmentopen: 0 })
 			.subscribe(
 				response => {
 					if (response.success) {
 						console.log(response);
-						this.getSingleEmployersJobsList({ 'companyid': employerId });
+						this.getSingleEmployersJobsList({ 'employerid': employerId });
 						let snackBarRef = this.snackBar.open('Hiring Closed Successfully.', 'Close', {
 							duration: 5000,
 						});
@@ -121,10 +122,28 @@ export class JobsListComponent implements OnInit {
 			);
 	}
 
+	getEmployerDetails(employerId) {
+		this.busy = this._httpService.getEmployer(employerId)
+			.subscribe(
+				response => {
+					if (response.success) {
+						this.companyDetails = response.result[0];
+						// console.log(this.companyDetails);
+					} else if (!response.success) {
+						console.log(response);
+					}
+				},
+				error => {
+					console.log(error);
+				}
+			);
+	}
+
 	ngOnInit() {
-		let employerId = {
-			companyid: this.route.snapshot.params['emp_id'],
-		}
-		this.getSingleEmployersJobsList(employerId);
+		// let employerId = {
+		// 	companyid: this.route.snapshot.params['emp_id'],
+		// };
+		this.getSingleEmployersJobsList({ 'employerid': this.route.snapshot.params['emp_id'] });
+		this.getEmployerDetails({ 'employerid': this.route.snapshot.params['emp_id'] });
 	}
 }

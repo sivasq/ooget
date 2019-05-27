@@ -25,6 +25,9 @@ export class JobsGridViewComponent implements OnInit {
 		return this._jobs.getValue();
 	}
 
+	employmentType = ['Part Time', 'Full Time'];
+	jobStatus = ['', 'Pending', 'Live', 'Closed'];
+
 	toggleShowSearch: boolean = false;
 	public pageSizeOptions = [1, 2, 3, 6, 12, 24, 48, 96];
 	public PaginateControlMaxSize: number = 10;

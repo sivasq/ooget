@@ -85,7 +85,7 @@ export class JobDetailsComponent implements OnInit {
 	}
 
 	exportAsExcel() {
-		const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.ELEMENT_DATA);//converts a DOM TABLE element to a worksheet
+		const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.ELEMENT_DATA);// converts a DOM TABLE element to a worksheet
 		const wb: XLSX.WorkBook = XLSX.utils.book_new();
 		XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
@@ -105,30 +105,30 @@ export class JobDetailsComponent implements OnInit {
 	public offersAccepted: any[];
 	public jobContractors: any[];
 
-	//busy Config
+	// busy Config
 	busy: Subscription;
 
 	// public holidaysList: any[] = [];
 
 	public serverResponseData = [
 		{
-			OrganizationID: "ORGID",
-			CompanyName: "COMPANYNAME",
-			ProductType: "LVT",
-			OriginatingAccountNumber: "123456789",
-			OriginatingAccountCurrency: "SGD",
-			PaymentCurrency: "SGD",
-			BatchID: "1",
-			BenificaryName: "BENEFICIARYNAME",
-			BenificaryAccountNumber: "0018765432",
-			ReceivingBankCode: "7171",
-			ReceivingBranchCode: "001",
-			Amount: "123456.78",
-			DeliveryMode: "E",
-			Email1: "example@domain.com",
-			InvoiceDetails: "NVOICEDETAILS",
-			TotalNoofTransactions: "1",
-			TotalTransactionAmount: "123456.78"
+			OrganizationID: 'ORGID',
+			CompanyName: 'COMPANYNAME',
+			ProductType: 'LVT',
+			OriginatingAccountNumber: '123456789',
+			OriginatingAccountCurrency: 'SGD',
+			PaymentCurrency: 'SGD',
+			BatchID: '1',
+			BenificaryName: 'BENEFICIARYNAME',
+			BenificaryAccountNumber: '0018765432',
+			ReceivingBankCode: '7171',
+			ReceivingBranchCode: '001',
+			Amount: '123456.78',
+			DeliveryMode: 'E',
+			Email1: 'example@domain.com',
+			InvoiceDetails: 'NVOICEDETAILS',
+			TotalNoofTransactions: '1',
+			TotalTransactionAmount: '123456.78'
 		}
 	];
 
@@ -141,17 +141,16 @@ export class JobDetailsComponent implements OnInit {
 		title: 'Your title',
 		useBom: true,
 		noDownload: false,
-		headers: ["H01 Record Type", "H02 File Creation Date", "H03 Organization ID", "H04 Sender Name", "D01 Record Type", "D02 Product Type", "D03 Originating Account Number", "D04 Originating Account Currency", "D05 Customer Reference or Batch Reference", "D06 Payment Currency", "D07 Batch ID", "D08 Payment Date", "D09 Bank Charges", "D10 Debit Account for Bank Charges", "D11 Receiving Party Name", "D12 Payable To", "D13 Receiving Party Address 1", "D14 Receiving Party Address 2", "D15 Receiving Party Address 3", "D16 Receiving Account Number/IBAN", "D17 Country Specific", "D18 Receiving Bank Code", "D19 Receiving Branch Code", "D20 Clearing Code", "D21 Beneficiary Bank SWIFT BIC", "D22 Beneficiary Bank Name", "D23 Beneficiary Bank Address", "D24 Beneficiary Bank Country", "D25 Routing Code", "D26 Intermediary Bank SWIFT BIC", "D27 Amount Currency", "D28 Amount", "D29 FX Contract Reference 1", "D30 Amount to be Utilized 1", "D31 FX Contract Reference 2", "D32 Amount to be Utilized 2", "D33 Transaction Code", "D34 Particulars / Beneficary or Payer Reference", "D35 DDA Reference (SG HK collection) or Reference", "D36 Payment Details", "D37 Instruction to Ordering Bank", "D38 Beneficiary Resident Status", "D39 Beneficiary Category", "D40 Transaction Relationship", "D41 Payee Role", "D42 Remitter Identity", "D43 Purpose of Payment", "D44 Supplementary Info", "D45 Delivery Mode", "D46 Print At Location/Pick Up Location", "D47 Payable Location", "D48 Mail to Party Name", "D49 Mail to Party Address 1", "D50 Mail to Party Address 2", "D51 Mail to Party Address 3", "D52 Reserved Field", "D53 Postal Code", "D54 Email 1", "D55 Email 2", "D56 Email 3", "D57 Email 4", "D58 Email 5", "D59 Phone Number 1", "D60 Phone Number 2", "D61 Phone Number 3", "D62 Phone Number 4", "D63 Phone Number 5", "D64 Invoice Details", "D65 Client Reference 1", "D66 Client Reference 2", "D67 Client Reference 3", "D68 Client Reference 4", "T01 Record Type", "T02 Total No. of Transactions", "T03 Total Transaction Amount"]
+		headers: ['H01 Record Type', 'H02 File Creation Date', 'H03 Organization ID', 'H04 Sender Name', 'D01 Record Type', 'D02 Product Type', 'D03 Originating Account Number', 'D04 Originating Account Currency', 'D05 Customer Reference or Batch Reference', 'D06 Payment Currency', 'D07 Batch ID', 'D08 Payment Date', 'D09 Bank Charges', 'D10 Debit Account for Bank Charges', 'D11 Receiving Party Name', 'D12 Payable To', 'D13 Receiving Party Address 1', 'D14 Receiving Party Address 2', 'D15 Receiving Party Address 3', 'D16 Receiving Account Number/IBAN', 'D17 Country Specific', 'D18 Receiving Bank Code', 'D19 Receiving Branch Code', 'D20 Clearing Code', 'D21 Beneficiary Bank SWIFT BIC', 'D22 Beneficiary Bank Name', 'D23 Beneficiary Bank Address', 'D24 Beneficiary Bank Country', 'D25 Routing Code', 'D26 Intermediary Bank SWIFT BIC', 'D27 Amount Currency', 'D28 Amount', 'D29 FX Contract Reference 1', 'D30 Amount to be Utilized 1', 'D31 FX Contract Reference 2', 'D32 Amount to be Utilized 2', 'D33 Transaction Code', 'D34 Particulars / Beneficary or Payer Reference', 'D35 DDA Reference (SG HK collection) or Reference', 'D36 Payment Details', 'D37 Instruction to Ordering Bank', 'D38 Beneficiary Resident Status', 'D39 Beneficiary Category', 'D40 Transaction Relationship', 'D41 Payee Role', 'D42 Remitter Identity', 'D43 Purpose of Payment', 'D44 Supplementary Info', 'D45 Delivery Mode', 'D46 Print At Location/Pick Up Location', 'D47 Payable Location', 'D48 Mail to Party Name', 'D49 Mail to Party Address 1', 'D50 Mail to Party Address 2', 'D51 Mail to Party Address 3', 'D52 Reserved Field', 'D53 Postal Code', 'D54 Email 1', 'D55 Email 2', 'D56 Email 3', 'D57 Email 4', 'D58 Email 5', 'D59 Phone Number 1', 'D60 Phone Number 2', 'D61 Phone Number 3', 'D62 Phone Number 4', 'D63 Phone Number 5', 'D64 Invoice Details', 'D65 Client Reference 1', 'D66 Client Reference 2', 'D67 Client Reference 3', 'D68 Client Reference 4', 'T01 Record Type', 'T02 Total No. of Transactions', 'T03 Total Transaction Amount']
 	};
 
 	constructor(private urlconfig: ConfigService, public router: Router, private _httpService: ApiCallService, private route: ActivatedRoute, public dialog: MatDialog, public snackBar: MatSnackBar, private datePipe: DatePipe) {
 		this.imgBaseUrl = urlconfig.img_base_url;
 		this.companyid = this.route.snapshot.params['emp_id'];
 		let jobId = {
-			jobid: this.route.snapshot.params['job_id'],
-			companyid: this.route.snapshot.params['emp_id'],
-		}
-		this.getJobDetails(jobId);
+			jobid: this.route.snapshot.params['job_id']
+		};
+		this.getJobDetails();
 		this.getJobContractors(jobId);
 	}
 
@@ -184,7 +183,7 @@ export class JobDetailsComponent implements OnInit {
 
 					'D16 Receiving Account Number/IBAN': oldData[i].BenificaryAccountNumber ? oldData[i].BenificaryAccountNumber : '',
 
-					'D17 Country Specific': oldData[i].CountrySpecific ? oldData[i].CountrySpecific : "01",
+					'D17 Country Specific': oldData[i].CountrySpecific ? oldData[i].CountrySpecific : '01',
 
 					'D18 Receiving Bank Code': oldData[i].ReceivingBankCode ? oldData[i].ReceivingBankCode : '',
 					'D19 Receiving Branch Code': oldData[i].ReceivingBranchCode ? oldData[i].ReceivingBranchCode : '',
@@ -257,20 +256,21 @@ export class JobDetailsComponent implements OnInit {
 		// new Angular5Csv(newData, 'My Report', this.csvOptions);
 	}
 
-	getJobDetails(jobId) {
-		this.busy = this._httpService.getJobDetails(jobId)
+	getJobDetails() {
+		this.busy = this._httpService.getJobDetails({ 'jobid': this.route.snapshot.params['job_id'] })
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.jobDetails = response.job;
-						this.companyDetails = response.job.companyid;
-						this.candidatesApplied = response.job.candidatesapplied;
-						this.candidatesOffered = response.job.candidatesseleceted;
-						this.offersAccepted = response.job.candidatessigned;
+						this.jobDetails = response.result;
+
+						// this.companyDetails = response.job.companyid;
+						// this.candidatesApplied = response.job.candidatesapplied;
+						// this.candidatesOffered = response.job.candidatesseleceted;
+						// this.offersAccepted = response.job.candidatessigned;
 						// console.log(this.jobDetails.jobperiodfrom);
 						// console.log(this.jobDetails.jobperiodfrom.split("/").reverse().join("/"));
-						this.jobDetails.jobperiodfrom = this.jobDetails.jobperiodfrom.split("/").reverse().join("/");
-						this.jobDetails.jobperiodto = this.jobDetails.jobperiodto.split("/").reverse().join("/");
+						this.jobDetails.from = this.jobDetails.from.split('-').reverse().join('-');
+						this.jobDetails.to = this.jobDetails.to.split('-').reverse().join('-');
 						// this.getDateArray(startDate, endDate);
 
 					} else if (!response.success) {
@@ -314,12 +314,12 @@ export class JobDetailsComponent implements OnInit {
 
 		dialogRef.afterClosed().subscribe(response => {
 			// if (response.callback) {
-				this.getJobDetails({ jobid: jobId, companyid: employerId });
-				// },
-				// error => {
-				// 	console.log(error);
-				}
-			);
+			this.getJobDetails();
+			// },
+			// error => {
+			// 	console.log(error);
+		}
+		);
 	}
 
 	duplicateJobConfirm(companyid, jobid) {
@@ -360,10 +360,10 @@ export class JobDetailsComponent implements OnInit {
 		dialogConfig.autoFocus = true;
 		dialogConfig.data = {
 			// boxTitle:"Confirmation",
-			confirmMsg: "<h4>Do you want remove this contractor from This Contract ?</h4>",
-			okButtonText: "Yes",
-			noButtonText: "No",
-			actionalign: "center"
+			confirmMsg: '<h4>Do you want remove this contractor from This Contract ?</h4>',
+			okButtonText: 'Yes',
+			noButtonText: 'No',
+			actionalign: 'center'
 		};
 		let dialogref = this.dialog.open(ConfirmDialogComponent, dialogConfig);
 
@@ -375,7 +375,7 @@ export class JobDetailsComponent implements OnInit {
 					// this.removeContractorFromJob(contractId, index)
 					this.getReasonForRemoveContractorFromJob(contractId, index)
 				} else if (data == 'no') {
-					//this.accept_terms = "true";
+					// this.accept_terms = "true";
 					console.log('no');
 				}
 			}
@@ -389,11 +389,11 @@ export class JobDetailsComponent implements OnInit {
 		dialogConfig.disableClose = true;
 		dialogConfig.autoFocus = true;
 		dialogConfig.data = {
-			boxTitle: "Please Enter Valid Reason",
-			textPlaceHolder: "Valid Reason",
-			okButtonText: "Submit",
-			noButtonText: "Cancel",
-			actionalign: "center"
+			boxTitle: 'Please Enter Valid Reason',
+			textPlaceHolder: 'Valid Reason',
+			okButtonText: 'Submit',
+			noButtonText: 'Cancel',
+			actionalign: 'center'
 		};
 		let dialogRef = this.dialog.open(SingleTextareaComponent, dialogConfig);
 
@@ -410,11 +410,11 @@ export class JobDetailsComponent implements OnInit {
 		// this.jobContractors.splice(index, 1);
 
 		let snackBarRef = this.snackBar.open('This Function not Done.', 'Close', {
-							duration: 10000,
-						});
-						snackBarRef.onAction().subscribe(() => {
-							snackBarRef.dismiss();
-						});
+			duration: 10000,
+		});
+		snackBarRef.onAction().subscribe(() => {
+			snackBarRef.dismiss();
+		});
 		// this.busy = this._httpService.removeContractorFromJob({ 'contractid': contractId })
 		// 	.subscribe(
 		// 		response => {

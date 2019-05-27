@@ -35,8 +35,11 @@ export class MatchedJobsComponent implements OnInit, OnDestroy {
 
 	jobs = [];
 
+	employmentType = ['Part Time', 'Full Time'];
+	jobStatus = ['', 'Pending', 'Live', 'Closed'];
+
 	public imgBaseUrl;
-	//busy Config
+	// busy Config
 	busy: Subscription;
 
 	public Specializations: any = [
@@ -302,7 +305,7 @@ export class MatchedJobsComponent implements OnInit, OnDestroy {
 		}
 	]
 
-	//Mat Menu Configuration
+	// Mat Menu Configuration
 	@Input() xPosition: MenuPositionX
 	@Input() overlapTrigger: boolean
 
@@ -319,11 +322,11 @@ export class MatchedJobsComponent implements OnInit, OnDestroy {
 	public tab1PaginateControlMaxSize: number = 10;
 	public tab1PaginateControlAutoHide: boolean = true;
 
-	//set jobs availability
+	// set jobs availability
 	public isJobsListAllAvailable: boolean;
 	public matchedJobsCount: Number;
 
-	//set jobs array
+	// set jobs array
 	public matched_jobs_list: any[] = [];
 
 	constructor(private urlconfig: ConfigService, private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar) {

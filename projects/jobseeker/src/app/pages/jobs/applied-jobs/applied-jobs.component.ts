@@ -7,6 +7,9 @@ import { Subscription } from 'rxjs';
 import { ConfigService } from '../../../services/config.service';
 import { Options, ChangeContext } from 'ng5-slider';
 import { NgModel } from '@angular/forms';
+import { JobLocation } from '../../../classes/jobLocation';
+import { Specialization } from '../../../classes/Specialization';
+import { MockDataService } from '../../../services/mock-data.service';
 
 @Component({
 	selector: 'app-applied-jobs',
@@ -32,15 +35,21 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 		minsalary: 0,
 		maxsalary: 100,
 		jobspecialization: []
-	}
+	};
 
-	//busy Config
+	// busy Config
 	busy: Subscription;
-	public imgBaseUrl;
+	public baseUrl;
+
+	employmentType = ['', 'Part Time', 'Full Time'];
+	jobStatus = ['', 'Pending', 'Live', 'Closed'];
 
 	jobs: any = [];
 
-	public Specializations: any = [
+	JobLocations: JobLocation[];
+	Specializations: Specialization[];
+
+	public Specializationsa: any = [
 		{
 			"_id": "432424",
 			"specialization": "Actuarial Science/Statistics"
@@ -303,9 +312,9 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 		}
 	]
 
-	//Mat Menu Configuration
-	@Input() xPosition: MenuPositionX
-	@Input() overlapTrigger: boolean
+	// Mat Menu Configuration
+	@Input() xPosition: MenuPositionX;
+	@Input() overlapTrigger: boolean;
 
 	public pageSizeOptions = [3, 6, 12, 24, 48, 96];
 
@@ -321,16 +330,36 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 	public tab1PaginateControlMaxSize: number = 10;
 	public tab1PaginateControlAutoHide: boolean = true;
 
-	//set jobs availability
+	// set jobs availability
 	public isJobsListAllAvailable: boolean;
 	public matchedJobsCount: Number;
 
-	//set jobs array
+	// set jobs array
 	public applied_jobs_list: any[] = [];
 
-	constructor(private urlconfig: ConfigService, private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar) {
-		this.imgBaseUrl = urlconfig.img_base_url;
+	constructor(private urlconfig: ConfigService, private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar, private mockDataService: MockDataService) {
+		this.baseUrl = urlconfig.img_base_url;
 		this.getAppliedJobsList();
+		this.getSpecializations();
+		this.getJobLocations();
+	}
+
+	getSpecializations(): void {
+		this.mockDataService.getSpecializations()
+			.subscribe(Specializations => {
+				this.Specializations = Specializations;
+			});
+	}
+	getJobLocations(): void {
+		this.mockDataService.getJobLocations()
+			.subscribe(JobLocations => {
+				this.JobLocations = JobLocations;
+			});
+	}
+
+	getJobLocationName(locationId) {
+		let filteredLocation = this.JobLocations.filter(location => location.id == locationId);
+		return filteredLocation[0].name;
 	}
 
 	getAppliedJobsList() {
@@ -338,11 +367,9 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 			.subscribe(
 				response => {
 					if (response.success) {
-						if ((response.appliedjobs).length > 0) {
-							// this.jobs = response.appliedjobs;
-							// this.applied_jobs_list = response.appliedjobs;
-							this.jobs = response.appliedjobs;
-							this.applied_jobs_list = response.appliedjobs;
+						if ((response.result).length > 0) {
+							this.jobs = response.result;
+							this.applied_jobs_list = response.result;
 							this.isJobsListAllAvailable = true;
 
 							// Create Salary Arr
@@ -385,29 +412,33 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 			this.applied_jobs_list = [];
 			this.applied_jobs_list = this.jobs.filter((jobs: any) => {
 				if (this.search.parttime && !this.search.fulltime) {
-					return jobs.employmenttype === "Part Time" && (jobs.salary >= this.search.minsalary && jobs.salary <= this.search.maxsalary)
+					return jobs.employement_type == 1 && (jobs.jobseeker_salary >= this.search.minsalary && jobs.jobseeker_salary <= this.search.maxsalary);
 				}
 
 				if (!this.search.parttime && this.search.fulltime) {
-					return jobs.employmenttype === "Full Time" && (jobs.salary >= this.search.minsalary && jobs.salary <= this.search.maxsalary)
+					return jobs.employement_type == 2 && (jobs.jobseeker_salary >= this.search.minsalary && jobs.jobseeker_salary <= this.search.maxsalary);
 				}
 
 				if (this.search.parttime && this.search.fulltime) {
-					return (jobs.employmenttype === "Full Time" || jobs.employmenttype === "Part Time") && (jobs.salary >= this.search.minsalary && jobs.salary <= this.search.maxsalary)
+					return (jobs.employement_type == 2 || jobs.employement_type == 1) && (jobs.jobseeker_salary >= this.search.minsalary && jobs.jobseeker_salary <= this.search.maxsalary);
 				}
 
 				if (!this.search.parttime && !this.search.fulltime) {
-					return (jobs.employmenttype === "Full Time" || jobs.employmenttype === "Part Time") && (jobs.salary >= this.search.minsalary && jobs.salary <= this.search.maxsalary)
+					return (jobs.employement_type == 2 || jobs.employement_type == 1) && (jobs.jobseeker_salary >= this.search.minsalary && jobs.jobseeker_salary <= this.search.maxsalary);
 				}
-			})
+			});
 
 			if (this.search.jobspecialization.length > 0) {
+				console.log(this.search.jobspecialization);
 				this.applied_jobs_list = this.applied_jobs_list.filter((job: any) => {
 					var newData = this.search.jobspecialization.filter(search => {
-						return job.jobspecialization === search;
+						console.log(job);
+						console.log(search);
+						return job.specializations == search;
 					});
-					return job.jobspecialization === newData[0];
+					return job.specializations == newData[0];
 				});
+				return this.applied_jobs_list;
 			}
 		}, 0)
 		// console.log('this.applied_jobs_list', this.applied_jobs_list);
@@ -421,13 +452,12 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 
 	/** Selects all rows if they are not all selected; otherwise clear selection. */
 	masterToggle(checkAll, select: NgModel) {
-		let values = this.Specializations.map(x => x.specialization);
+		let values = this.Specializations.map(x => x.id);
 		if (checkAll) {
 			select.update.emit(values);
 			// this.search.jobspecialization = values;
 			this.jobSearch();
-		}
-		else {
+		} else {
 			select.update.emit([]);
 			// this.search.jobspecialization = '';
 			this.jobSearch();
@@ -516,7 +546,7 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-		this.search.jobspecialization = this.Specializations.map(x => x.specialization);
+		this.search.jobspecialization = this.Specializations.map(x => x.id);
 		this.search.parttime = true;
 		this.search.fulltime = true;
 	}

@@ -15,9 +15,9 @@
 					fxLayoutAlign="center center">
 					<span class="breadcrumb-title">Employers</span>
 				</a>
-				<a class="breadcrumb-item" routerLink="/admin/employers/{{companyDetails?._id}}/view" fxLayout="row"
+				<a class="breadcrumb-item" routerLink="/admin/employers/{{companyDetails?.id}}/view" fxLayout="row"
 					fxLayoutAlign="center center">
-					<span class="breadcrumb-title">{{companyDetails?.companyname | titlecase}}</span>
+					<span class="breadcrumb-title">{{companyDetails?.name | titlecase}}</span>
 				</a>
 				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
 					<span class="breadcrumb-title active">Jobs List</span>
@@ -34,20 +34,20 @@
 				<div style="font-size:16px;">
 					<span style="font-weight:600;">Company Name</span> :
 					<span style="font-style:italic; text-decoration: underline; color: blue; cursor: pointer;"
-						routerLink="/admin/employers/{{companyDetails?._id}}/view">{{companyDetails?.companyname
+						routerLink="/admin/employers/{{companyDetails?.id}}/view">{{companyDetails?.name
 						| titlecase}}</span>
 				</div>
 
 				<div style="font-size:16px;" *ngIf="companyDetails?.companycode;">
 					<span style="font-weight:600;">Company Code</span> :
 					<span style="font-style:italic; text-decoration: underline; color: blue; cursor: pointer;"
-						routerLink="/admin/employers/{{companyDetails?._id}}/view">{{companyDetails?.companycode
+						routerLink="/admin/employers/{{companyDetails?.id}}/view">{{companyDetails?.companycode
 						| titlecase}}</span>
 				</div>
 
 				<div style="font-size:16px;" *ngIf="!companyDetails?.companycode;">
 					<span style="font-style:italic; text-decoration: underline; color: blue; cursor: pointer;"
-						routerLink="/admin/employers/{{companyDetails?._id}}/view">Generate
+						routerLink="/admin/employers/{{companyDetails?.id}}/view">Generate
 						Company Code</span>
 				</div>
 			</mat-card>
@@ -59,7 +59,8 @@
 	<!-- Jobs List -->
 	<mat-tab-group *ngIf="isJobsAvailable">
 		<mat-tab label="All Jobs">
-			<app-jobs-grid-view [setJobs]="allJobs" [companyDetails]="companyDetails" (emitCloseJob)="closeJob($event)"></app-jobs-grid-view>
+			<app-jobs-grid-view [setJobs]="allJobs" [companyDetails]="companyDetails" (emitCloseJob)="closeJob($event)">
+			</app-jobs-grid-view>
 			<!-- <div *ngIf="allJobs.length > 0"> -->
 			<!-- Search Data and More.. Start -->
 			<!-- <div class="flex-p" fxLayout="row" fxLayoutAlign="space-between center">
@@ -319,7 +320,8 @@
 		</mat-tab>
 
 		<mat-tab label="Live">
-			<app-jobs-grid-view [setJobs]="liveJobs" [companyDetails]="companyDetails" (emitCloseJob)="closeJob($event)"></app-jobs-grid-view>
+			<app-jobs-grid-view [setJobs]="liveJobs" [companyDetails]="companyDetails"
+				(emitCloseJob)="closeJob($event)"></app-jobs-grid-view>
 			<!-- <div *ngIf="liveJobs.length > 0"> -->
 			<!-- Search Data and More.. Start -->
 			<!-- <div class="flex-p" fxLayout="row" fxLayoutAlign="space-between center">

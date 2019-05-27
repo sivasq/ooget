@@ -5,6 +5,9 @@ import { ApiCallService } from '../../../services/api-call.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ConfigService } from '../../../services/config.service';
+import { MockDataService } from '../../../services/mock-data.service';
+import { JobLocation } from '../../../classes/jobLocation';
+import { Specialization } from '../../../classes/Specialization';
 
 @Component({
 	selector: 'app-job-offers',
@@ -12,16 +15,19 @@ import { ConfigService } from '../../../services/config.service';
 	styleUrls: ['./job-offers.component.scss']
 })
 export class JobOffersComponent implements OnInit, OnDestroy {
-	//busy Config
+	// busy Config
 	busy: Subscription;
-	public imgBaseUrl;
+	public baseUrl;
 
 	@Input() selectedIndex: number | null;
 	currentlyActiveIndexTab: number | null = 0;
 
-	//Mat Menu Configuration
-	@Input() xPosition: MenuPositionX
-	@Input() overlapTrigger: boolean
+	employmentType = ['', 'Part Time', 'Full Time'];
+	jobStatus = ['', 'Pending', 'Live', 'Closed'];
+
+	// Mat Menu Configuration
+	@Input() xPosition: MenuPositionX;
+	@Input() overlapTrigger: boolean;
 
 	public pageSizeOptions = [3, 6, 12, 24, 48, 96];
 
@@ -69,23 +75,46 @@ export class JobOffersComponent implements OnInit, OnDestroy {
 	public tab4PaginateControlMaxSize: number = 5;
 	public tab4PaginateControlAutoHide: boolean = true;
 
-	//set jobs availability
+	JobLocations: JobLocation[];
+	Specializations: Specialization[];
+
+	// set jobs availability
 	public isJobOffersAvailable: boolean;
 	public isPendingJobOffersAvailable: boolean;
 	public isAcceptedJobOffersAvailable: boolean;
 	public isRejectedJobOffersAvailable: boolean;
 	public isExpiredJobOffersAvailable: boolean;
 
-	//set jobs array
+	// set jobs array
 	public jobOffers: any[];
 	public pendingJobOffers: any[];
 	public acceptedJobOffers: any[];
 	public rejectedJobOffers: any[];
 	public expiredJobOffers: any[];
 
-	constructor(private urlconfig: ConfigService, private _httpService: ApiCallService, private route: ActivatedRoute) {
+	constructor(private urlconfig: ConfigService, private _httpService: ApiCallService, private route: ActivatedRoute, private mockDataService: MockDataService) {
+		this.baseUrl = urlconfig.base_url;
 		this.getMyJobOffersList();
-		this.imgBaseUrl = urlconfig.img_base_url;
+		this.getSpecializations();
+		this.getJobLocations();
+	}
+
+	getSpecializations(): void {
+		this.mockDataService.getSpecializations()
+			.subscribe(Specializations => {
+				this.Specializations = Specializations;
+			});
+	}
+	getJobLocations(): void {
+		this.mockDataService.getJobLocations()
+			.subscribe(JobLocations => {
+				this.JobLocations = JobLocations;
+			});
+	}
+
+	getJobLocationName(locationId) {
+		let filteredLocation = this.JobLocations.filter(location => location.id == locationId);
+		return filteredLocation[0].name;
 	}
 
 	// set currently active tab index
@@ -250,41 +279,41 @@ export class JobOffersComponent implements OnInit, OnDestroy {
 	// }
 
 	getMyJobOffersList() {
-		this.busy = this._httpService.getMyJobOffersList()
+		this.busy = this._httpService.getAppliedJobsList()
 			.subscribe(
 				response => {
 					if (response.success) {
-						if ((response.offeredjobs).length > 0) {
+						if ((response.result).length > 0) {
 
-							this.jobOffers = response.offeredjobs;
+							this.jobOffers = response.result;
 							if ((this.jobOffers).length > 0) {
 								this.isJobOffersAvailable = true;
 							} else {
 								this.isJobOffersAvailable = false;
 							}
 
-							this.pendingJobOffers = response.offeredjobs.filter((e) => e.offered && !e.rejected && !e.accepted && e.jobdetails.hiringstatus !== 'closed');
+							this.pendingJobOffers = response.result.filter((e) => e.offered_on && !e.offer_rejected && !e.offer_accepted && e.recruitment_open !== 0);
 							if ((this.pendingJobOffers).length > 0) {
 								this.isPendingJobOffersAvailable = true;
 							} else {
 								this.isPendingJobOffersAvailable = false;
 							}
 
-							this.acceptedJobOffers = response.offeredjobs.filter((e) => e.offered && !e.rejected && e.accepted);
+							this.acceptedJobOffers = response.result.filter((e) => e.offered_on && !e.offer_rejected && e.offer_accepted);
 							if ((this.acceptedJobOffers).length > 0) {
 								this.isAcceptedJobOffersAvailable = true;
 							} else {
 								this.isAcceptedJobOffersAvailable = false;
 							}
 
-							this.rejectedJobOffers = response.offeredjobs.filter((e) => e.offered && e.rejected && !e.accepted);
+							this.rejectedJobOffers = response.result.filter((e) => e.offered_on && e.offer_rejected && !e.offer_accepted);
 							if ((this.rejectedJobOffers).length > 0) {
 								this.isRejectedJobOffersAvailable = true;
 							} else {
 								this.isRejectedJobOffersAvailable = false;
 							}
 
-							this.expiredJobOffers = response.offeredjobs.filter((e) => e.offered && !e.rejected && !e.accepted && e.jobdetails.hiringstatus == 'closed');
+							this.expiredJobOffers = response.result.filter((e) => e.offered_on && !e.offer_rejected && !e.offer_accepted && e.recruitment_open == 0);
 							if ((this.expiredJobOffers).length > 0) {
 								this.isExpiredJobOffersAvailable = true;
 							} else {

@@ -4,6 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatRadioChange, MatDialogConfig, MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../../../confirm-dialog/confirm-dialog.component';
 import { Subscription } from 'rxjs';
+import { JobRegion, JobLocation } from '../../../classes/jobLocation';
+import { Specialization } from '../../../classes/Specialization';
+import { WorkingEnvironment } from '../../../classes/workingEnvironment';
+import { MockDataService } from '../../../services/mock-data.service';
+import { Industry } from '../../../classes/industry';
+import { isArray } from 'util';
 
 @Component({
 	selector: 'app-job-details',
@@ -16,12 +22,12 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 
 	public companyDetails: any = [];
 
-	//busy Config
+	// busy Config
 	busy: Subscription;
 
 	objectKeys = Object.keys;
-	public btnName: string = "";
-	public rejectBtnName: string = "";
+	public btnName: string = '';
+	public rejectBtnName: string = '';
 	public isApplied: boolean = false;
 	public isNotApplied: boolean = false;
 	public isOffered: boolean = false;
@@ -35,15 +41,82 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 	public offerRejected: any = [];
 	userId;
 
-	constructor(public router: Router, private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar, public dialog: MatDialog) {
-		this.userId = localStorage.getItem('ogUserObjID');
+	employmentType = ['', 'Part Time', 'Full Time'];
+	jobStatus = ['', 'Pending', 'Live', 'Closed'];
+	workDaysType = ['', 'Normal', 'Flexible'];
+	Regions: JobRegion[];
+	JobLocations: JobLocation[];
+	Specializations: Specialization[];
+	WorkingEnvironments: WorkingEnvironment[];
+	Industries: Industry[];
 
+	constructor(public router: Router, private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar, public dialog: MatDialog, private mockDataService: MockDataService) {
+		this.userId = localStorage.getItem('ogUserObjID');
+		this.getWorkingEnvironments();
+		this.getJobRegions();
+		this.getJobLocations();
+		this.getSpecializations();
+		this.getIndustries();
 		let jobId = {
 			jobid: this.route.snapshot.params['job_id'],
 		}
-		this.getJobDetails(jobId);
+		this.getJobDetails();
 		// this.getProfileActiveStatus();
 	}
+
+	getWorkingEnvironments(): void {
+		this.mockDataService.getWorkingEnvironments()
+			.subscribe(WorkingEnvironments => this.WorkingEnvironments = WorkingEnvironments);
+	}
+	getJobRegions(): void {
+		this.mockDataService.getJobRegions()
+			.subscribe(Regions => this.Regions = Regions);
+	}
+	getJobLocations(): void {
+		this.mockDataService.getJobLocations()
+			.subscribe(Locations => this.JobLocations = Locations);
+	}
+	getSpecializations(): void {
+		this.mockDataService.getSpecializations()
+			.subscribe(Specializations => this.Specializations = Specializations);
+	}
+	getIndustries(): void {
+		this.mockDataService.getIndustries()
+			.subscribe(Industries => this.Industries = Industries);
+	}
+
+	getJobSpecializationName(SpecializationId) {
+		if (SpecializationId == '' || SpecializationId == undefined) { return false; }
+
+		let filteredSpecializations = this.Specializations.filter(specialization => specialization.id == SpecializationId);
+		return filteredSpecializations[0].name;
+	}
+	getRegionName(regionId) {
+		if (regionId == '' || regionId == undefined) { return false; }
+		let filteredRegions = this.Regions.filter(region => region.id == regionId);
+		return filteredRegions[0].name;
+	}
+	getJobLocationName(locationId) {
+		if (locationId == '' || locationId == undefined) { return false; }
+		let filteredLocation = this.JobLocations.filter(location => location.id == locationId);
+		return filteredLocation[0].name;
+	}
+	getIndustryName(industryId) {
+		if (industryId == '' || industryId == undefined) { return false; }
+		let filteredIndustry = this.Industries.filter(industry => industry.id == industryId);
+		return filteredIndustry[0].name;
+	}
+
+	getWorkingEnvironmentName(envId) {
+		if (envId == '' || envId == undefined) { return false; }
+		let envIds = this.stringToArray(envId);
+		let filteredEnv = envIds.map(envid => {
+			return this.WorkingEnvironments.filter(workEnv => workEnv.id == envid);
+		});
+		let filteredName = filteredEnv.map(env => env[0].name);
+		return this.ArrayToString(filteredName);
+	}
+
 
 	isInArray(array, word) {
 		// console.log(array.indexOf(word));
@@ -57,14 +130,15 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 		return arrayOfObjects.filter(e => e.name === word).length > 0;
 	}
 
-	getJobDetails(jobId) {
-		this.busy = this._httpService.getJobDetails(jobId)
+	getJobDetails() {
+		this.busy = this._httpService.getJobDetails({ 'jobid': this.route.snapshot.params['job_id'] })
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.jobDetails = response.job[0];
-						this.companyDetails = response.job[0].companydetails[0];
-						this.appliedCandidates = response.job[0].jobseekers;
+						this.jobDetails = response.result;
+						// this.companyDetails = response.result.companydetails[0];
+						this.appliedCandidates = response.result;
+
 						// this.offeredCandidates = response.job.candidatesseleceted;
 						// this.CandidatesUnderContract = response.job.candidatessigned;
 						// this.offerRejected = response.job.rejectedcandidates;
@@ -74,12 +148,12 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 						// let isUnderOffered = this.isInArray(this.offeredCandidates, this.userId);
 						// let isUnderApplied = this.isInArray(this.appliedCandidates, this.userId);
 
-						let isUnderContract = this.appliedCandidates.filter(e => e.jobseekerid === this.userId && e.accepted).length > 0;
-						let isOfferRejected = this.appliedCandidates.filter(e => e.jobseekerid === this.userId && e.rejected).length > 0;
-						let isUnderOffered = this.appliedCandidates.filter(e => e.jobseekerid === this.userId && e.offered).length > 0;
-						let isUnderApplied = this.appliedCandidates.filter(e => e.jobseekerid === this.userId && e.applied).length > 0;
+						// let isUnderContract = this.appliedCandidates.filter(e => e.jobseekerid === this.userId && e.accepted).length > 0;
+						// let isOfferRejected = this.appliedCandidates.filter(e => e.jobseekerid === this.userId && e.rejected).length > 0;
+						// let isUnderOffered = this.appliedCandidates.filter(e => e.jobseekerid === this.userId && e.offered).length > 0;
+						// let isUnderApplied = this.appliedCandidates.filter(e => e.jobseekerid === this.userId && e.applied).length > 0;
 
-						if (isUnderContract) {
+						if (this.jobDetails.AppliedDetails.offer_accepted) {
 							this.isUnderContract = true;
 							this.isOfferRejected = false;
 							this.isOffered = false;
@@ -87,7 +161,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 							this.isNotApplied = false;
 							this.btnName = '';
 							this.helpTxt1 = 'Contract Signed In';
-						} else if (isOfferRejected) {
+						} else if (this.jobDetails.AppliedDetails.offer_rejected) {
 							this.isUnderContract = false;
 							this.isOfferRejected = true;
 							this.isOffered = false;
@@ -95,7 +169,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 							this.isNotApplied = false;
 							this.btnName = '';
 							this.helpTxt1 = 'Offer Rejected';
-						} else if (isUnderOffered) {
+						} else if (this.jobDetails.AppliedDetails.offered_on) {
 							this.isUnderContract = false;
 							this.isOfferRejected = false;
 							this.isOffered = true;
@@ -104,21 +178,21 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 							this.btnName = 'Accept This Job Offer';
 							this.rejectBtnName = 'Reject This Job Offer';
 							this.helpTxt1 = 'Job Offered';
-						} else if (isUnderApplied) {
+						} else if (this.jobDetails.AppliedDetails.applied_on) {
 							this.isUnderContract = false;
 							this.isOfferRejected = false;
 							this.isOffered = false;
 							this.isApplied = true;
 							this.isNotApplied = false;
-							this.btnName = "";
-							this.helpTxt1 = "Pending Job Offer";
-						} else if (!isUnderApplied) {
+							this.btnName = '';
+							this.helpTxt1 = 'Pending Job Offer';
+						} else {
 							this.isUnderContract = false;
 							this.isOfferRejected = false;
 							this.isOffered = false;
 							this.isApplied = false;
 							this.isNotApplied = true;
-							this.btnName = "Apply This Job";
+							this.btnName = 'Apply This Job';
 						}
 
 						// console.log(this.isUnderContract);
@@ -147,10 +221,10 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 			dialogConfig.autoFocus = true;
 			dialogConfig.data = {
 				// boxTitle:"Confirmation",
-				confirmMsg: "<h4>Oh! Sorry! Your Account Still not Activated.</h4>",
-				okButtonText: "Ok",
-				noButtonText: "",
-				actionalign: "center"
+				confirmMsg: '<h4>Oh! Sorry! Your Account Still not Activated.</h4>',
+				okButtonText: 'Ok',
+				noButtonText: '',
+				actionalign: 'center'
 			};
 			let dialogref = this.dialog.open(ConfirmDialogComponent, dialogConfig);
 
@@ -170,16 +244,16 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 
 						this.isNotApplied = false;
 
-						if (response.message == "contractsigned") {
+						if (response.message == 'contractsigned') {
 							this.isUnderContract = true;
 							this.isOfferRejected = false;
 							this.isOffered = false;
 							this.isApplied = false;
 							this.btnName = '';
-							this.helpTxt1 = "You have Successfully Applied & Contract Signed In for this Job.";
+							this.helpTxt1 = 'You have Successfully Applied & Contract Signed In for this Job.';
 						}
 
-						if (response.message == "joboffered") {
+						if (response.message == 'joboffered') {
 							this.isUnderContract = false;
 							this.isOfferRejected = false;
 							this.isOffered = true;
@@ -188,16 +262,16 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 							this.helpTxt1 = 'You have been offered to this job'
 						}
 
-						if (response.message == "applicationsuccess") {
+						if (response.message == 'applicationsuccess') {
 							this.isUnderContract = false;
 							this.isOfferRejected = false;
 							this.isOffered = false;
 							this.isApplied = true;
-							this.btnName = "";
-							this.helpTxt1 = "Application Sent";
+							this.btnName = '';
+							this.helpTxt1 = 'Application Sent';
 						}
 
-						if (response.message == "contractsigned") {
+						if (response.message == 'contractsigned') {
 							let snackBarRef = this.snackBar.open(this.helpTxt1, 'Goto TimeSheet', {
 								duration: 10000,
 							});
@@ -221,7 +295,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 
 					} else if (!response.success) {
 						console.log(response);
-						if (response.message == "conflictjob") {
+						if (response.message == 'conflictjob') {
 							let snackBarRef = this.snackBar.open('The job you are applying clashes with a job applied', 'Close', {
 								duration: 10000,
 							});
@@ -244,11 +318,11 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 		dialogConfig.disableClose = true;
 		dialogConfig.autoFocus = true;
 		dialogConfig.data = {
-			boxTitle: "Confirmation",
-			confirmMsg: "<p>Are You Sure to Accept This Job Offer ?</p>",
-			okButtonText: "Yes",
-			noButtonText: "No",
-			actionalign: "center"
+			boxTitle: 'Confirmation',
+			confirmMsg: '<p>Are You Sure to Accept This Job Offer ?</p>',
+			okButtonText: 'Yes',
+			noButtonText: 'No',
+			actionalign: 'center'
 		};
 		let dialogref = this.dialog.open(ConfirmDialogComponent, dialogConfig);
 
@@ -288,7 +362,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 
 					} else if (!response.success) {
 						console.log(response);
-						if (response.message == "conflictjob") {
+						if (response.message == 'conflictjob') {
 							let snackBarRef = this.snackBar.open('The Job you are applying is clashing with other job(Already you are under Contract) Timing', 'Close', {
 								duration: 10000,
 							});
@@ -311,11 +385,11 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 		dialogConfig.disableClose = true;
 		dialogConfig.autoFocus = true;
 		dialogConfig.data = {
-			boxTitle: "Confirmation",
-			confirmMsg: "<p>Are You Sure to Reject This Job Offer ?</p>",
-			okButtonText: "Yes",
-			noButtonText: "No",
-			actionalign: "center"
+			boxTitle: 'Confirmation',
+			confirmMsg: '<p>Are You Sure to Reject This Job Offer ?</p>',
+			okButtonText: 'Yes',
+			noButtonText: 'No',
+			actionalign: 'center'
 		};
 		let dialogref = this.dialog.open(ConfirmDialogComponent, dialogConfig);
 
@@ -364,16 +438,38 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 			);
 	}
 
+	ArrayToString(dataArray) {
+		if (isArray(dataArray)) {
+			dataArray.map(function (e) {
+				// return JSON.stringify(e);
+				return e;
+			});
+			return dataArray.join(',');
+		}
+	}
+
+	stringToArray(dataString) {
+		if (typeof dataString !== 'undefined' && dataString) {
+			if (dataString.includes(',')) {
+				return dataString.split(',').map(Number);
+			} else {
+				return [dataString].map(Number);
+			}
+		} else {
+			return [];
+		}
+	}
+
 	ngOnInit() {
-		let userId = "5aaf96720bb68d18dcfcffb3";
+		let userId = '5aaf96720bb68d18dcfcffb3';
 		let appliedjobseekers: any = [
 			{
-				"jobseekerid": "5aaf96720bb68d18dcfcffb3",
-				"status": "applied",
-				"applied": true,
-				"offered": true,
-				"appliedAt": "2018/08/09 11:43:59",
-				"_id": "5b6bdba72007d827506c38e5"
+				'jobseekerid': '5aaf96720bb68d18dcfcffb3',
+				'status': 'applied',
+				'applied': true,
+				'offered': true,
+				'appliedAt': '2018/08/09 11:43:59',
+				'_id': '5b6bdba72007d827506c38e5'
 			}
 		]
 
@@ -394,7 +490,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.getJobDetails({ 'jobid': jobId });
+						this.getJobDetails();
 						let snackBarRef = this.snackBar.open('Job Saved Successfully.', 'Close', {
 							duration: 5000,
 						});
@@ -425,7 +521,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.getJobDetails({ 'jobid': jobId });
+						this.getJobDetails();
 						let snackBarRef = this.snackBar.open('Job UnSaved Successfully.', 'Close', {
 							duration: 5000,
 						});

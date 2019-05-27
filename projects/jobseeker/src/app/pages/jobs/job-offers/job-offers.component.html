@@ -47,8 +47,8 @@
 									<div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
 										<div style="line-height: 40px; width: 100%;">
 											<h3 class="user-name pointer ellipsis" matTooltip="Click to View Details"
-												matTooltipPosition="below" routerLink="/main/jobs/{{job.jobid}}/view">{{job.jobdetails?.jobtitle
-											| titlecase}} ( {{job.jobdetails?.companydetails[0]?.companyname | titlecase}}
+												matTooltipPosition="below" routerLink="/main/jobs/{{job.id}}/view">{{job.job_name
+											| titlecase}} ( {{job.employer_name | titlecase}}
 												) </h3>
 										</div>
 										<button mat-icon-button [matMenuTriggerFor]=i>
@@ -65,13 +65,11 @@
 
 									<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
 										<div fxFlex="30" fxLayout="column" fxLayoutAlign="center center">
-											<div class="user-img" style="text-align: center;"
-												*ngIf="job.jobdetails?.companydetails[0]?.companylogo">
+											<div class="user-img" style="text-align: center;" *ngIf="job.companylogo">
 												<img class="transition-2 ng-star-inserted"
-													src="{{imgBaseUrl}}/company/{{job.jobdetails?.companydetails[0]?.companylogo}}">
+													src="{{baseUrl}}/{{job.companylogo}}">
 											</div>
-											<div class="user-img" style="text-align: center;"
-												*ngIf="!job.jobdetails?.companydetails[0]?.companylogo">
+											<div class="user-img" style="text-align: center;" *ngIf="!job.companylogo">
 												<img class="transition-2 ng-star-inserted"
 													src="assets/img/avatars/logo-placeholder.png">
 											</div>
@@ -81,47 +79,47 @@
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">book</mat-icon>
 												<span matTooltip="Job Title" matTooltipPosition="right">Job Title :
-													{{job.jobdetails?.jobtitle | titlecase}}</span>
+													{{job.job_name | titlecase}}</span>
 											</p>
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">event_seat</mat-icon>
 												<span matTooltip="Department" matTooltipPosition="right">Dept :
-													{{job.jobdetails?.department}}</span>
+													{{job.department}}</span>
 											</p>
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">event_seat</mat-icon>
 												<span matTooltip="Department" matTooltipPosition="right">Location :
-													{{job.jobdetails?.addresslocation}}</span>
+													{{job.location}}</span>
 											</p>
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">pan_tool</mat-icon>
 												<span matTooltip="PAX" matTooltipPosition="right">Vacancies / Pax
-													Required : {{job.jobdetails?.numberofpax
-												- job.jobdetails?.numberofcontracts}} / {{job.jobdetails?.numberofpax}}</span>
+													Required : {{job.pax_total
+												- job.required}} / {{job.pax_total}}</span>
 											</p>
 
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">broken_image</mat-icon>
 												<span matTooltip="Job Type" matTooltipPosition="right">Job Type :
-													{{job.jobdetails?.employmenttype}}</span>
+													{{employmentType[job.employement_type]}}</span>
 											</p>
 
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">date_range</mat-icon>
-												<span matTooltip="Job Period" matTooltipPosition="right">Job Period : {{job.jobdetails?.jobperiodfrom
-												| date:'dd/MM/yyyy'}} - {{job.jobdetails?.jobperiodto | date:'dd/MM/yyyy'}}</span>
+												<span matTooltip="Job Period" matTooltipPosition="right">Job Period : {{job.job_start_date
+												| date:'dd-MM-yyyy'}} - {{job.job_end_date | date:'dd-MM-yyyy'}}</span>
 											</p>
 
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">security</mat-icon>
 												<span matTooltip="Job Status" matTooltipPosition="right">Salary :
-													S$&nbsp;{{job.jobdetails?.salary}}</span>
+													S$&nbsp;{{job.jobseeker_salary}}</span>
 											</p>
 										</div>
 									</div>
@@ -195,12 +193,12 @@
 								*ngFor="let job of acceptedJobOffers | filter:tab2Filter | paginate: tab2PaginateConfig; let i=index;">
 								<mat-card class="p-0">
 									<div class="bg-primary"
-										[style.background]="job.jobdetails?.jobstatus == 'closed' ? 'gray' : ''"
+										[style.background]="job.job_status == 'closed' ? 'gray' : ''"
 										fxLayout="row" fxLayoutAlign="space-between center">
 										<div style="line-height: 40px; width: 100%;">
 											<h3 class="user-name pointer ellipsis" matTooltip="Click to View Details"
-												matTooltipPosition="below" routerLink="/main/jobs/{{job.jobid}}/view">{{job.jobdetails?.jobtitle
-											| titlecase}} ( {{job.jobdetails?.companydetails[0]?.companyname | titlecase}}
+												matTooltipPosition="below" routerLink="/main/jobs/{{job.jobid}}/view">{{job.job_name
+											| titlecase}} ( {{job.employer_name | titlecase}}
 												) </h3>
 										</div>
 										<button mat-icon-button [matMenuTriggerFor]=i>
@@ -218,12 +216,12 @@
 									<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
 										<div fxFlex="30" fxLayout="column" fxLayoutAlign="center center">
 											<div class="user-img" style="text-align: center;"
-												*ngIf="job.jobdetails?.companydetails[0]?.companylogo">
+												*ngIf="job.companylogo">
 												<img class="transition-2 ng-star-inserted"
-													src="{{imgBaseUrl}}/company/{{job.jobdetails?.companydetails[0]?.companylogo}}">
+													src="{{baseUrl}}/{{job.companylogo}}">
 											</div>
 											<div class="user-img" style="text-align: center;"
-												*ngIf="!job.jobdetails?.companydetails[0]?.companylogo">
+												*ngIf="!job.companylogo">
 												<img class="transition-2 ng-star-inserted"
 													src="assets/img/avatars/logo-placeholder.png">
 											</div>
@@ -233,47 +231,47 @@
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">book</mat-icon>
 												<span matTooltip="Job Title" matTooltipPosition="right">Job Title :
-													{{job.jobdetails?.jobtitle | titlecase}}</span>
+													{{job.job_name | titlecase}}</span>
 											</p>
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">event_seat</mat-icon>
 												<span matTooltip="Department" matTooltipPosition="right">Dept :
-													{{job.jobdetails?.department}}</span>
+													{{job.department}}</span>
 											</p>
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">event_seat</mat-icon>
 												<span matTooltip="Department" matTooltipPosition="right">Location :
-													{{job.jobdetails?.addresslocation}}</span>
+													{{job.location}}</span>
 											</p>
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">pan_tool</mat-icon>
 												<span matTooltip="PAX" matTooltipPosition="right">Vacancies / Pax
-													Required : {{job.jobdetails?.numberofpax
-												- job.jobdetails?.numberofcontracts}} / {{job.jobdetails?.numberofpax}}</span>
+													Required : {{job.pax_total
+												- job.required}} / {{job.pax_total}}</span>
 											</p>
 
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">broken_image</mat-icon>
 												<span matTooltip="Job Type" matTooltipPosition="right">Job Type :
-													{{job.jobdetails?.employmenttype}}</span>
+													{{employmentType[job.employement_type]}}</span>
 											</p>
 
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">date_range</mat-icon>
-												<span matTooltip="Job Period" matTooltipPosition="right">Job Period : {{job.jobdetails?.jobperiodfrom
-												| date:'dd/MM/yyyy'}} - {{job.jobdetails?.jobperiodto | date:'dd/MM/yyyy'}}</span>
+												<span matTooltip="Job Period" matTooltipPosition="right">Job Period : {{job.job_start_date
+												| date:'dd-MM-yyyy'}} - {{job.job_end_date | date:'dd-MM-yyyy'}}</span>
 											</p>
 
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">security</mat-icon>
 												<span matTooltip="Job Status" matTooltipPosition="right">Salary :
-													S$&nbsp;{{job.jobdetails?.salary}}</span>
+													S$&nbsp;{{job.jobseeker_salary}}</span>
 											</p>
 										</div>
 									</div>
@@ -347,12 +345,12 @@
 								*ngFor="let job of rejectedJobOffers | filter:tab3Filter | paginate: tab3PaginateConfig; let i=index;">
 								<mat-card class="p-0">
 									<div class="bg-primary"
-										[style.background]="job.jobdetails?.jobstatus == 'closed' ? 'gray' : ''"
+										[style.background]="job.job_status == 'closed' ? 'gray' : ''"
 										fxLayout="row" fxLayoutAlign="space-between center">
 										<div style="line-height: 40px; width: 100%;">
 											<h3 class="user-name pointer ellipsis" matTooltip="Click to View Details"
-												matTooltipPosition="below" routerLink="/main/jobs/{{job.jobid}}/view">{{job.jobdetails?.jobtitle
-											| titlecase}} ( {{job.jobdetails?.companydetails[0]?.companyname | titlecase}}
+												matTooltipPosition="below" routerLink="/main/jobs/{{job.jobid}}/view">{{job.job_name
+											| titlecase}} ( {{job.employer_name | titlecase}}
 												) </h3>
 										</div>
 										<button mat-icon-button [matMenuTriggerFor]=i>
@@ -370,12 +368,12 @@
 									<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
 										<div fxFlex="30" fxLayout="column" fxLayoutAlign="center center">
 											<div class="user-img" style="text-align: center;"
-												*ngIf="job.jobdetails?.companydetails[0]?.companylogo">
+												*ngIf="job.companylogo">
 												<img class="transition-2 ng-star-inserted"
-													src="{{imgBaseUrl}}/company/{{job.jobdetails?.companydetails[0]?.companylogo}}">
+													src="{{baseUrl}}/{{job.companylogo}}">
 											</div>
 											<div class="user-img" style="text-align: center;"
-												*ngIf="!job.jobdetails?.companydetails[0]?.companylogo">
+												*ngIf="!job.companylogo">
 												<img class="transition-2 ng-star-inserted"
 													src="assets/img/avatars/logo-placeholder.png">
 											</div>
@@ -385,47 +383,47 @@
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">book</mat-icon>
 												<span matTooltip="Job Title" matTooltipPosition="right">Job Title :
-													{{job.jobdetails?.jobtitle | titlecase}}</span>
+													{{job.job_name | titlecase}}</span>
 											</p>
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">event_seat</mat-icon>
 												<span matTooltip="Department" matTooltipPosition="right">Dept :
-													{{job.jobdetails?.department}}</span>
+													{{job.department}}</span>
 											</p>
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">event_seat</mat-icon>
 												<span matTooltip="Department" matTooltipPosition="right">Location :
-													{{job.jobdetails?.addresslocation}}</span>
+													{{job.location}}</span>
 											</p>
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">pan_tool</mat-icon>
 												<span matTooltip="PAX" matTooltipPosition="right">Vacancies / Pax
-													Required : {{job.jobdetails?.numberofpax
-												- job.jobdetails?.numberofcontracts}} / {{job.jobdetails?.numberofpax}}</span>
+													Required : {{job.pax_total
+												- job.required}} / {{job.pax_total}}</span>
 											</p>
 
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">broken_image</mat-icon>
 												<span matTooltip="Job Type" matTooltipPosition="right">Job Type :
-													{{job.jobdetails?.employmenttype}}</span>
+													{{employmentType[job.employement_type]}}</span>
 											</p>
 
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">date_range</mat-icon>
-												<span matTooltip="Job Period" matTooltipPosition="right">Job Period : {{job.jobdetails?.jobperiodfrom
-												| date:'dd/MM/yyyy'}} - {{job.jobdetails?.jobperiodto | date:'dd/MM/yyyy'}}</span>
+												<span matTooltip="Job Period" matTooltipPosition="right">Job Period : {{job.job_start_date
+												| date:'dd-MM-yyyy'}} - {{job.job_end_date | date:'dd-MM-yyyy'}}</span>
 											</p>
 
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">security</mat-icon>
 												<span matTooltip="Job Status" matTooltipPosition="right">Salary :
-													S$&nbsp;{{job.jobdetails?.salary}}</span>
+													S$&nbsp;{{job.jobseeker_salary}}</span>
 											</p>
 										</div>
 									</div>
@@ -500,12 +498,12 @@
 								*ngFor="let job of expiredJobOffers | filter:tab4Filter | paginate: tab4PaginateConfig; let i=index;">
 								<mat-card class="p-0">
 									<div class="bg-primary"
-										[style.background]="job.jobdetails?.jobstatus == 'closed' ? 'gray' : ''"
+										[style.background]="job.job_status == 'closed' ? 'gray' : ''"
 										fxLayout="row" fxLayoutAlign="space-between center">
 										<div style="line-height: 40px; width: 100%;">
 											<h3 class="user-name pointer ellipsis" matTooltip="Click to View Details"
-												matTooltipPosition="below" routerLink="/main/jobs/{{job.jobid}}/view">{{job.jobdetails?.jobtitle
-											| titlecase}} ( {{job.jobdetails?.companydetails[0]?.companyname | titlecase}}
+												matTooltipPosition="below" routerLink="/main/jobs/{{job.jobid}}/view">{{job.job_name
+											| titlecase}} ( {{job.employer_name | titlecase}}
 												) </h3>
 										</div>
 										<button mat-icon-button [matMenuTriggerFor]=i>
@@ -523,12 +521,12 @@
 									<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
 										<div fxFlex="30" fxLayout="column" fxLayoutAlign="center center">
 											<div class="user-img" style="text-align: center;"
-												*ngIf="job.jobdetails?.companydetails[0]?.companylogo">
+												*ngIf="job.companylogo">
 												<img class="transition-2 ng-star-inserted"
-													src="{{imgBaseUrl}}/company/{{job.jobdetails?.companydetails[0]?.companylogo}}">
+													src="{{baseUrl}}/{{job.companylogo}}">
 											</div>
 											<div class="user-img" style="text-align: center;"
-												*ngIf="!job.jobdetails?.companydetails[0]?.companylogo">
+												*ngIf="!job.companylogo">
 												<img class="transition-2 ng-star-inserted"
 													src="assets/img/avatars/logo-placeholder.png">
 											</div>
@@ -538,47 +536,47 @@
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">book</mat-icon>
 												<span matTooltip="Job Title" matTooltipPosition="right">Job Title :
-													{{job.jobdetails?.jobtitle | titlecase}}</span>
+													{{job.job_name | titlecase}}</span>
 											</p>
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">event_seat</mat-icon>
 												<span matTooltip="Department" matTooltipPosition="right">Dept :
-													{{job.jobdetails?.department}}</span>
+													{{job.department}}</span>
 											</p>
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">event_seat</mat-icon>
 												<span matTooltip="Department" matTooltipPosition="right">Location :
-													{{job.jobdetails?.addresslocation}}</span>
+													{{job.location}}</span>
 											</p>
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">pan_tool</mat-icon>
 												<span matTooltip="PAX" matTooltipPosition="right">Vacancies / Pax
-													Required : {{job.jobdetails?.numberofpax
-												- job.jobdetails?.numberofcontracts}} / {{job.jobdetails?.numberofpax}}</span>
+													Required : {{job.pax_total
+												- job.required}} / {{job.pax_total}}</span>
 											</p>
 
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">broken_image</mat-icon>
 												<span matTooltip="Job Type" matTooltipPosition="right">Job Type :
-													{{job.jobdetails?.employmenttype}}</span>
+													{{employmentType[job.employement_type]}}</span>
 											</p>
 
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">date_range</mat-icon>
-												<span matTooltip="Job Period" matTooltipPosition="right">Job Period : {{job.jobdetails?.jobperiodfrom
-												| date:'dd/MM/yyyy'}} - {{job.jobdetails?.jobperiodto | date:'dd/MM/yyyy'}}</span>
+												<span matTooltip="Job Period" matTooltipPosition="right">Job Period : {{job.job_start_date
+												| date:'dd-MM-yyyy'}} - {{job.job_end_date | date:'dd-MM-yyyy'}}</span>
 											</p>
 
 											<p fxLayout="row" fxLayoutAlign="start center">
 												<mat-icon class="muted-text mat-icon material-icons" role="img"
 													aria-hidden="true">security</mat-icon>
 												<span matTooltip="Job Status" matTooltipPosition="right">Salary :
-													S$&nbsp;{{job.jobdetails?.salary}}</span>
+													S$&nbsp;{{job.jobseeker_salary}}</span>
 											</p>
 										</div>
 									</div>

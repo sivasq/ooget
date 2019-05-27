@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 })
 export class JobsListComponent implements OnInit {
 
-	//Mat Menu Configuration
+	// Mat Menu Configuration
 	@Input() xPosition: MenuPositionX
 	@Input() overlapTrigger: boolean
 
@@ -62,24 +62,27 @@ export class JobsListComponent implements OnInit {
 	public tab4PaginateControlMaxSize: number = 10;
 	public tab4PaginateControlAutoHide: boolean = true;
 
-	//set filtered jobs
+	// set filtered jobs
 	public jobs_list_all: any[];
 	public jobs_list_pending: any[];
 	public jobs_list_live: any[];
 	public jobs_list_closed: any[];
 
-	//set Job Lists
+	// set Job Lists
 	public isJobsListAllAvailable: boolean;
 	public isJobsListPendingAvailable: boolean;
 	public isJobsListLiveAvailable: boolean;
 	public isJobsListClosedAvailable: boolean;
 
-	//busy Config
+	employmentType = ['Part Time', 'Full Time'];
+	jobStatus = ['', 'Pending', 'Live', 'Closed'];
+
+	// busy Config
 	busy: Subscription;
 
 	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar) {
 		let employerId = {
-			companyid: localStorage.getItem('ogCompanyObjID'),
+			employerid: localStorage.getItem('ogCompanyObjID'),
 		}
 		this.getSingleEmployersJobsList(employerId);
 	}
@@ -89,33 +92,33 @@ export class JobsListComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						if ((response.jobs).length > 0) {
-							//get all jobs
-							this.jobs_list_all = response.jobs;
+						if ((response.result).length > 0) {
+							// get all jobs
+							this.jobs_list_all = response.result;
 							if ((this.jobs_list_all).length > 0) {
 								this.isJobsListAllAvailable = true;
 							} else {
 								this.isJobsListAllAvailable = false;
 							}
 
-							//filter pending Jobs
-							this.jobs_list_pending = response.jobs.filter((book: any) => book.jobstatus === "pending");
+							// filter pending Jobs
+							this.jobs_list_pending = response.jobs.filter((book: any) => book.status == 1);
 							if ((this.jobs_list_pending).length > 0) {
 								this.isJobsListPendingAvailable = true;
 							} else {
 								this.isJobsListPendingAvailable = false;
 							}
 
-							//filter live jobs
-							this.jobs_list_live = response.jobs.filter((book: any) => book.jobstatus === "live");
+							// filter live jobs
+							this.jobs_list_live = response.jobs.filter((book: any) => book.status == 2);
 							if ((this.jobs_list_live).length > 0) {
 								this.isJobsListLiveAvailable = true;
 							} else {
 								this.isJobsListLiveAvailable = false;
 							}
 
-							//filter closed jobs
-							this.jobs_list_closed = response.jobs.filter((book: any) => book.jobstatus === "closed");
+							// filter closed jobs
+							this.jobs_list_closed = response.jobs.filter((book: any) => book.status == 3);
 							if ((this.jobs_list_closed).length > 0) {
 								this.isJobsListClosedAvailable = true;
 							} else {
@@ -138,12 +141,12 @@ export class JobsListComponent implements OnInit {
 	}
 
 	closeJob(jobId) {
-		this.busy = this._httpService.closeJob({ 'companyid': localStorage.getItem('ogCompanyObjID'), jobid: jobId, jobstatus: 'closed' })
+		this.busy = this._httpService.changeJobHiringStatus({ jobid: jobId, jobstatus: 0 })
 			.subscribe(
 				response => {
 					if (response.success) {
 						console.log(response);
-						this.getSingleEmployersJobsList({ 'companyid': localStorage.getItem('ogCompanyObjID') });
+						this.getSingleEmployersJobsList({ 'employerid': localStorage.getItem('ogCompanyObjID') });
 						let snackBarRef = this.snackBar.open('Job Closed Successfully.', 'Close', {
 							duration: 5000,
 						});
@@ -153,7 +156,6 @@ export class JobsListComponent implements OnInit {
 						});
 
 					} else if (!response.success) {
-
 						console.log(response);
 					}
 				},
