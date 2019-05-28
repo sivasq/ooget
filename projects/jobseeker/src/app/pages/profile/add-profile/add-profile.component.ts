@@ -354,7 +354,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
 				if (this.myProfile.email != control.value) {
-					this._httpService.checkEmail({ 'email': control.value }).subscribe((response) => {
+					this._httpService.checkUniqueEmail({ 'email': control.value }).subscribe((response) => {
 						if (response.success) {
 							resolve(null);
 						} else {
@@ -446,8 +446,8 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		// console.log(array.includes(word));
 		// console.log(array.indexOf(word) > -1);
 		// console.log(array.indexOf(word.toLowerCase()) > -1);
-		console.log(array);
-		console.log(word);
+		// console.log(array);
+		// console.log(word);
 		return array.includes(word);
 	}
 
@@ -509,7 +509,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 	// If Employment Type Change
 	employmenttypeChange(event) {
-		console.log(event);
+		// console.log(event);
 		if (this.isInArray(event, 2)) {
 			this.isPartTimeJob = false;
 		} else {
@@ -785,7 +785,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 					// console.log(response);
 					if (response.success) {
 						let userdata = response.result[0];
-						console.log(userdata);
+						// console.log(userdata);
 						this.isActive = userdata.activestatus ? userdata.activestatus : 0;
 						// Profile Tab
 						this.myProfile.firstname = userdata.firstname ? userdata.firstname : '';
@@ -841,7 +841,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 						let newExp: any[] = [];
 						let pastExp = userdata.experience_details !== '' ? JSON.parse(userdata.experience_details) : [];
-						console.log(pastExp);
+						// console.log(pastExp);
 						if (pastExp.length > 0) {
 							for (let i = 0; i < pastExp.length; i++) {
 								newExp.push({
@@ -849,7 +849,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 								});
 							}
 							this.myProfile.experience_details = newExp;
-							console.log(this.myProfile.experience_details);
+							// console.log(this.myProfile.experience_details);
 						}
 						// this.myProfile.experience_details = userdata.experience_details;
 						// Documents
@@ -859,7 +859,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 						this.isIdProofEditable = userdata.jobseekeridproofeditable ? userdata.jobseekeridproofeditable == 'true' ? false : true : false;
 
-						console.log(userdata);
+						// console.log(userdata);
 						// Patch Form Value
 						this.jobSeekerProfileForm.patchValue({
 							'firstname': `${this.myProfile.firstname}`,
@@ -895,7 +895,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 							'experience_in': this.myProfile.experience_in,
 							'experience_year': this.myProfile.experience_year,
 						});
-						console.log(this.myProfile.experience_details);
+						// console.log(this.myProfile.experience_details);
 						this.jobSeekerProfileForm.patchValue({
 							dob_data: {
 								dob_day: this.myProfile.dob_day,
@@ -1050,7 +1050,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -1191,7 +1191,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			this.months.push({ 'monthValue': String(month), 'monthName': this.monthLongValues[month - 1] });
 		}
 
-		console.log(this.months);
+		// console.log(this.months);
 	}
 
 	// Years Generate

@@ -16,7 +16,7 @@ import 'moment-duration-format';
 export class PunchInOutComponent implements OnInit, OnDestroy {
 	defaultActiveContract = 5;
 	showActiveContract = 5;
-	busy: Subscription;//busy Config
+	busy: Subscription; // busy Config
 	busyA: Subscription;
 
 	public contract_jobs_list: any[] = [];
@@ -39,7 +39,7 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 	public ispunchedOut;
 	public currentTimeSheetLayout: any;
 
-	public punchBehaviour = "Normal";
+	public punchBehaviour = 'Normal';
 	public punchLateReason;
 
 	public isContractStarted: boolean;
@@ -64,6 +64,7 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 
 	waitUntillInMin;
 	contractId;
+	contractStatus;
 
 	public waitTime = new Observable<any>((observer: Subscriber<any>) => {
 		let CurrentDate = moment().format("YYYY/MM/DD");
@@ -130,18 +131,18 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 			.subscribe(
 				response => {
 					if (response.success) {
-						if ((response.contracts).length > 0) {
+						if ((response.result).length > 0) {
 							this.isContractJobsAvailable = true;
-							this.contract_jobs_list = response.contracts;
+							this.contract_jobs_list = response.result;
 
-							this.activeContracts = response.contracts.filter((data: any) => data.contractstatus === "open");
+							this.activeContracts = response.result.filter((data: any) => data.deleted === 0);
 							if ((this.activeContracts).length > 0) {
 								this.isActiveContractsAvailable = true;
 							} else {
 								this.isActiveContractsAvailable = false;
 							}
 
-							this.completedContracts = response.contracts.filter((data: any) => data.contractstatus === "closed");
+							this.completedContracts = response.result.filter((data: any) => data.deleted === 1);
 							if ((this.completedContracts).length > 0) {
 								this.isCompletedContractsAvailable = true;
 							} else {
@@ -170,22 +171,30 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 	getContractTodayTimesheet(contractId) {
 		this.isContractDetails = false;
 		this.waitUntillInMin == 0;
-		this.busy = this._httpService.getContractTodayTimesheet({ 'contractid': contractId })
+		this.busy = this._httpService.getContractTodayTimesheet({ 'contract_id': contractId })
 			.subscribe(
 				response => {
 					if (response.success) {
 						this.isContractDetails = true;
-						this.currentTimeSheetLayout = response;
+						this.currentTimeSheetLayout = response.result;
+						console.log(typeof response.result);
 						this.waitUntillInMin = response.waittill;
 						this.contractId = response.contractid;
-						if (this.currentTimeSheetLayout.contractstatus == 'open' && this.currentTimeSheetLayout.timesheet) {
-							this.ispunchedIn = this.currentTimeSheetLayout.timesheet.punchedin;
-							this.ispunchedOut = this.currentTimeSheetLayout.timesheet.punchedout;
-
-							this.inTime = this.currentTimeSheetLayout.timesheet.punchintime;
-							this.outTime = this.currentTimeSheetLayout.timesheet.punchouttime;
+						if (typeof this.currentTimeSheetLayout.result === 'object') {
+							this.contractStatus = 'open';
+							this.ispunchedIn = this.currentTimeSheetLayout.result.clock_in == null ? false : true;
+							this.ispunchedOut = this.currentTimeSheetLayout.result.clock_out == null ? false : true;
+							console.log(this.ispunchedIn);
+							this.inTime = this.currentTimeSheetLayout.result.clock_in;
+							this.outTime = this.currentTimeSheetLayout.result.clock_out;
 							console.log(this.inTime);
 						}
+
+						if (this.currentTimeSheetLayout.includes('')) {
+
+						}
+
+
 					} else if (!response.success) {
 						console.log(response);
 					}

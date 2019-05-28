@@ -44,7 +44,7 @@
 				<div style="font-size:16px;">
 					<span style="font-weight:600;">Company Name</span> :
 					<span style="font-style:italic; text-decoration: underline; color: blue; cursor: pointer;"
-						routerLink="/admin/employers/{{companyDetails?.id}}/view">{{companyDetails?.companyname
+						routerLink="/admin/employers/{{companyDetails?.id}}/view">{{companyDetails?.name
 						| titlecase}}</span>
 				</div>
 
@@ -68,8 +68,7 @@
 				</mat-card>
 
 				<mat-card-content>
-					<form (ngSubmit)="addNewJob(employerJobForm.value, employerJobForm)"
-						#employerJobForm="ngForm">
+					<form (ngSubmit)="addNewJob(employerJobForm.value, employerJobForm)" #employerJobForm="ngForm">
 						<mat-tab-group ngClass.gt-sm="vertical-tabs" ngClass.lt-md="horizontal-tabs" #tabGroup
 							dynamicHeight="true">
 							<mat-tab label="Basic">
@@ -106,8 +105,8 @@
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Job Descriptions and Requirements</mat-label>
 										<textarea matInput placeholder="Job Descriptions and Requirements"
-											name="description" autocomplete="off"
-											[(ngModel)]="jobDetails.description" required></textarea>
+											name="description" autocomplete="off" [(ngModel)]="jobDetails.description"
+											required></textarea>
 									</mat-form-field>
 
 									<mat-toolbar class="next_action" color="primary">
@@ -157,8 +156,8 @@
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Working Environment</mat-label>
-										<mat-select placeholder="Working Environment" name="working_environment" multiple
-											[(ngModel)]="jobDetails.working_environment">
+										<mat-select placeholder="Working Environment" name="working_environment"
+											multiple [(ngModel)]="jobDetails.working_environment">
 											<!-- <mat-option></mat-option> -->
 											<mat-option *ngFor="let WorkingEnvironment of WorkingEnvironments"
 												[value]="WorkingEnvironment.id">{{
@@ -265,14 +264,13 @@
 											<mat-radio-button value="1"
 												matTooltip="Working Days: Monday - Friday, Off-Days: Saturday - Sunday"
 												matTooltipPosition="below">Normal</mat-radio-button>
-											<mat-radio-button value="2"
-												matTooltip="Working days and off days may vary"
+											<mat-radio-button value="2" matTooltip="Working days and off days may vary"
 												matTooltipPosition="below">Flexible</mat-radio-button>
 										</mat-radio-group>
 									</div>
 
-									<div *ngIf="jobDetails.work_days_type=='normal'" style="margin-top:15px;" fxFlex="100"
-										fxLayout="row wrap">
+									<div *ngIf="jobDetails.work_days_type=='1'" style="margin-top:15px;"
+										fxFlex="100" fxLayout="row wrap">
 										<!-- <p fxFlex="100" style="padding-bottom: 10px; font-weight: 600;">Note : Please Select WorkDays</p> -->
 										<mat-checkbox fxFlex="100" fxFlex.gt-sm="30" color="primary"
 											[ngModelOptions]="{standalone: true}" [(ngModel)]="jobDetails.sunday"
@@ -403,9 +401,8 @@
 								<div fxLayout="row wrap" fxLayoutAlign="space-between center">
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Postal Code</mat-label>
-										<input matInput placeholder="Postal Code" name="postal_code"
-											autocomplete="off" [(ngModel)]="jobDetails.postal_code"
-											pattern="([0-9]{6})?" required>
+										<input matInput placeholder="Postal Code" name="postal_code" autocomplete="off"
+											[(ngModel)]="jobDetails.postal_code" pattern="([0-9]{6})?" required>
 									</mat-form-field>
 
 									<!-- <mat-form-field fxFlex="100" [appearance]="appearance$ | async"> 									<mat-label></mat-label>
@@ -426,8 +423,8 @@
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Region</mat-label>
-										<mat-select placeholder="Region" name="region"
-											[(ngModel)]="jobDetails.region" required>
+										<mat-select placeholder="Region" name="region" [(ngModel)]="jobDetails.region"
+											required>
 											<mat-option *ngFor="let Region of Regions" [value]="Region.id">{{
 												Region.name }}</mat-option>
 										</mat-select>
@@ -471,17 +468,17 @@
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
-										<mat-label>Markup Rate {{jobDetails.markup_in == 'sgdollar' ? '(S$)' : jobDetails.markup_in ==
-											'percentage' ? '(%)' : ''
+										<mat-label>Markup Rate {{jobDetails.markup_in == '$' ? '(S$)' : jobDetails.markup_in ==
+											'%' ? '(%)' : ''
 											}}</mat-label>
-										<span matPrefix *ngIf="jobDetails.markup_in == 'sgdollar'">
+										<span matPrefix *ngIf="jobDetails.markup_in == '$'">
 											<span style="font-size: 17px;">S</span>
 											<span style="font-size: 19px;">$ &nbsp;</span>
 										</span>
-										<span matPrefix *ngIf="jobDetails.markup_in == 'percentage'"
-											style="font-size: 17px;">% &nbsp;</span>
+										<span matPrefix *ngIf="jobDetails.markup_in == '%'" style="font-size: 17px;">%
+											&nbsp;</span>
 										<input matInput
-											placeholder="Markup Rate {{jobDetails.markup_in == 'sgdollar' ? '(S$)' : jobDetails.markup_in == 'percentage' ? '(%)' : '' }}"
+											placeholder="Markup Rate {{jobDetails.markup_in == '$' ? '(S$)' : jobDetails.markup_in == '%' ? '(%)' : '' }}"
 											name="markup_rate" autocomplete="off" [(ngModel)]="jobDetails.markup_rate"
 											pattern="([0-9]*[.])?[0-9]+" (ngModelChange)="vlidateChargingRate()"
 											required>
@@ -490,10 +487,10 @@
 									<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 										<mat-label>Markup Rate In</mat-label>
 										<mat-select placeholder="Markup Rate In" name="markup_in"
-											[(ngModel)]="jobDetails.markup_in"
-											(selectionChange)="vlidateChargingRate()" required>
-											<mat-option value="sgdollar">SG Dollar(S$)</mat-option>
-											<mat-option value="percentage">Percentage(%)</mat-option>
+											[(ngModel)]="jobDetails.markup_in" (selectionChange)="vlidateChargingRate()"
+											required>
+											<mat-option value="$">SG Dollar(S$)</mat-option>
+											<mat-option value="%">Percentage(%)</mat-option>
 										</mat-select>
 									</mat-form-field>
 
@@ -506,10 +503,9 @@
 
 									<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 										<mat-label>Markup Rate In Currency(S$)</mat-label>
-										<input matInput placeholder="Markup Rate In Currency(S$)"
-											name="markup_amount" autocomplete="off"
-											[(ngModel)]="jobDetails.markup_amount" pattern="([0-9]*[.])?[0-9]+"
-											readonly required>
+										<input matInput placeholder="Markup Rate In Currency(S$)" name="markup_amount"
+											autocomplete="off" [(ngModel)]="jobDetails.markup_amount"
+											pattern="([0-9]*[.])?[0-9]+" readonly required>
 									</mat-form-field>
 
 									<mat-toolbar class="next_action" style="margin-top:25px;">

@@ -25,8 +25,7 @@
 				*ngIf="applied_jobs_list.length > 0">
 				<div fxLayout="row">
 					<mat-button-toggle matTooltip="Search" matTooltipPosition="right" (click)="tab1search=!tab1search"
-						(click)="tab1search ? tab1FilterRef.focus()
-                : false">
+						(click)="tab1search ? tab1FilterRef.focus() : false">
 						<mat-icon>search</mat-icon>
 					</mat-button-toggle>
 				</div>
@@ -47,17 +46,17 @@
 					<mat-card class="p-0">
 						<div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
 							<h3 class="user-name pointer ellipsis" matTooltip="Click to View Details"
-								matTooltipPosition="below" routerLink="/main/jobs/{{job.id}}/view">{{job.job_name
+								matTooltipPosition="below" routerLink="/main/jobs/{{job.job_id}}/view">{{job.job_name
 								| titlecase}}
 								( {{job.employer_name | titlecase}} )</h3>
 							<div>
 								<button mat-icon-button matTooltip="Click to UnSave Job" color="accent"
-									matTooltipPosition="below" *ngIf="job.saved" (click)="unSaveJob(job.id)">
+									matTooltipPosition="below" *ngIf="job.saved" (click)="unSaveJob(job.job_id)">
 									<mat-icon>favorite</mat-icon>
 								</button>
 
 								<button mat-icon-button matTooltip="Click to Save Job" color="accent"
-									matTooltipPosition="below" *ngIf="!job.saved" (click)="saveJob(job.id)">
+									matTooltipPosition="below" *ngIf="!job.saved" (click)="saveJob(job.job_id)">
 									<mat-icon>favorite_border</mat-icon>
 								</button>
 								<button mat-icon-button [matMenuTriggerFor]=i>
@@ -66,7 +65,7 @@
 							</div>
 						</div>
 						<mat-menu #i="matMenu" xPosition="before">
-							<button mat-menu-item routerLink="/main/jobs/{{job.id}}/view">
+							<button mat-menu-item routerLink="/main/jobs/{{job.job_id}}/view">
 								<mat-icon>visibility</mat-icon>
 								<span>View Details</span>
 							</button>
@@ -94,7 +93,7 @@
 									<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 										event_seat</mat-icon>
 									<span matTooltip="Department" matTooltipPosition="right">Dept :
-										{{job.department}}</span>
+										{{job.department | titlecase}}</span>
 								</p>
 								<p fxLayout="row" fxLayoutAlign="start center">
 									<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
@@ -171,55 +170,47 @@
 			</div>
 			<!-- Pagination End -->
 
+			<!-- If No Data Exists Start -->
 			<div *ngIf="applied_jobs_list.length == 0" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px"
 				style="height:100px; border: 2px solid #eee; margin:8px;">
 				<h1 style="color: #bbbbbb; text-transform: uppercase; text-align: center;">You have not Applied Any jobs
 				</h1>
 			</div>
+			<!-- If No Data Exists End -->
 		</div>
 
+		<!-- Filtering Section -->
 		<div fxFlex="100" class="flex-p" fxFlex.gt-sm="25" [fxFlexOrder.lt-md]=1>
 			<mat-card>
 				<div fxFlex="100" fxLayout="row wrap">
 					<div fxFlex="100" fxLayout="row wrap" style="padding: 10px 0px; margin-bottom: 15px;">
 						<div>
-							<h3 style="width:100%; color: gray; font-size: 15px;">FILTER BY JOB TYPE</h3>
+							<h4 style="width:100%; color: gray;">FILTER BY JOB TYPE</h4>
 						</div>
 						<hr />
 					</div>
 
 					<mat-radio-group fxFlex="100" fxLayout="row wrap" fxLayoutGap="10px">
 						<mat-checkbox color="primary" [(ngModel)]="search.parttime" (ngModelChange)="jobSearch()"
-							[checked]="search.parttime" value="Part Time">Part
+							[checked]="search.parttime" value="1">Part
 							Time</mat-checkbox>
 
 						<div fxFlex.gt-sm></div>
 
 						<mat-checkbox color="primary" [(ngModel)]="search.fulltime" (ngModelChange)="jobSearch()"
-							[checked]="search.fulltime" value="Full Time">Full
+							[checked]="search.fulltime" value="2">Full
 							Time</mat-checkbox>
 					</mat-radio-group>
-
-					<!-- <mat-form-field fxFlex="100" class="m-t-10">
-						<mat-label>Job Specialization</mat-label>
-						<mat-select placeholder="Job Specialization" name="jobspecialization" [(ngModel)]="search.jobspecialization"
-						 (ngModelChange)="makeSearch()" multiple>
-							<mat-option #allS [value]="-1">All</mat-option>
-							<mat-option [disabled]="allS.selected" *ngFor="let Specialization of Specializations" [value]="Specialization.specialization">{{
-								Specialization.specialization }}</mat-option>
-							<mat-option value="Others">Others</mat-option>
-						</mat-select>
-					</mat-form-field> -->
 
 					<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center"
 						style="padding: 10px 0px; margin-top: 15px;">
 						<div>
-							<h3 style="width:100%; color: gray; font-size: 15px;">FILTER BY JOB SPECIALIZATION</h3>
+							<h4 style="width:100%; color: gray;">FILTER BY JOB SPECIALIZATION</h4>
 						</div>
 						<hr />
 					</div>
 
-					<mat-form-field fxFlex="100" class="m-t-10" color="primary">
+					<mat-form-field fxFlex="100" class="m-t-10" color="primary" appearance="outline">
 						<mat-label>Job Specialization</mat-label>
 						<mat-select placeholder="Job Specialization" name="jobspecialization"
 							[(ngModel)]="search.jobspecialization" (selectionChange)="jobSearch()" #specSelect="ngModel"
@@ -241,7 +232,7 @@
 					<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center"
 						style="padding: 10px 0px; margin-top: 15px;">
 						<div>
-							<h3 style="width:100%; color: gray; font-size: 15px;">FILTER BY SALARY</h3>
+							<h4 style="width:100%; color: gray;">FILTER BY SALARY</h4>
 						</div>
 						<hr />
 					</div>
@@ -250,7 +241,6 @@
 						<ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"
 							(userChangeEnd)="onUserChangeEnd($event)"></ng5-slider>
 					</div>
-
 				</div>
 			</mat-card>
 		</div>

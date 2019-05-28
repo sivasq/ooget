@@ -46,7 +46,7 @@
 						<div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
 							<h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below"
 								routerLink="/main/jobs/{{job.id}}/view">{{job.job_name
-								| titlecase}} - {{job.job_no | titlecase}} ( {{job.company}} )</h3>
+								| titlecase}} ({{job.job_no | titlecase}}) - {{job.company}}</h3>
 							<div>
 								<button mat-icon-button matTooltip="Click to Unsave Job" color="accent"
 									matTooltipPosition="below" *ngIf="job.saved" (click)="unSaveJob(job.id)">
@@ -72,8 +72,7 @@
 						<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
 							<div fxFlex="30" fxLayout="column" fxLayoutAlign="center center">
 								<div class="user-img" style="text-align: center;" *ngIf="job.companylogo">
-									<img class="transition-2 ng-star-inserted"
-										src="{{baseUrl}}/{{job.companylogo}}">
+									<img class="transition-2 ng-star-inserted" src="{{baseUrl}}/{{job.companylogo}}">
 								</div>
 								<div class="user-img" style="text-align: center;" *ngIf="!job.companylogo">
 									<img class="transition-2 ng-star-inserted"
@@ -164,20 +163,23 @@
 			</div>
 			<!-- Pagination End -->
 
+			<!-- If No Data Exists Start -->
 			<div *ngIf="jobs_list_all.length == 0" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px"
 				style="height:100px; border: 2px solid #eee; margin:8px;">
 				<h1 style="color: #bbbbbb; text-transform: uppercase; text-align: center;">
 					No Jobs Found
 				</h1>
 			</div>
+			<!-- If No Data Exists End -->
 		</div>
 
+		<!-- Filtering Section -->
 		<div fxFlex="100" class="flex-p" fxFlex.gt-sm="25" [fxFlexOrder.lt-md]=1>
 			<mat-card>
 				<div fxFlex="100" fxLayout="row wrap">
 					<div fxFlex="100" fxLayout="row wrap" style="padding: 10px 0px; margin-bottom: 15px;">
 						<div>
-							<h3 style="width:100%; color: gray; font-size: 15px;">FILTER BY JOB TYPE</h3>
+							<h4 style="width:100%; color: gray;">FILTER BY JOB TYPE</h4>
 						</div>
 						<hr />
 					</div>
@@ -192,28 +194,17 @@
 							[checked]="search.fulltime" value="2">Full Time</mat-checkbox>
 					</mat-radio-group>
 
-					<!-- <mat-form-field fxFlex="100" class="m-t-10">
-						<mat-label>Job Specialization</mat-label>
-						<mat-select placeholder="Job Specialization" name="jobspecialization" [(ngModel)]="search.jobspecialization"
-						 (ngModelChange)="makeSearch()" multiple>
-							<mat-option #allS  [value]="-1">All</mat-option>
-							<mat-option [disabled]="allS.selected" *ngFor="let Specialization of Specializations" [value]="Specialization.specialization">{{
-								Specialization.specialization }}</mat-option>
-							<mat-option value="Others">Others</mat-option>
-						</mat-select>
-					</mat-form-field> -->
-
 					<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center"
 						style="padding: 10px 0px; margin-top: 15px;">
 						<div>
-							<h3 style="width:100%; color: gray; font-size: 15px;">FILTER BY JOB SPECIALIZATION</h3>
+							<h4 style="width:100%; color: gray;">FILTER BY JOB SPECIALIZATION</h4>
 						</div>
 						<hr />
 					</div>
 
-					<mat-form-field fxFlex="100" class="m-t-10" color="primary">
+					<mat-form-field fxFlex="100" class="m-t-10" color="primary" appearance="outline">
 						<mat-label>Job Specialization</mat-label>
-						<mat-select placeholder="Job Specialization" name="jobspecialization"
+						<mat-select placeholder="Job Specialization" name="jobspecialization" layout="outline"
 							[(ngModel)]="search.jobspecialization" (selectionChange)="jobSearch()" #specSelect="ngModel"
 							multiple>
 							<div style="padding:15px 15px;font-weight: 500;">
@@ -233,7 +224,7 @@
 					<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center"
 						style="padding: 10px 0px; margin-top: 15px;">
 						<div>
-							<h3 style="width:100%; color: gray; font-size: 15px;">FILTER BY SALARY</h3>
+							<h4 style="width:100%; color: gray;">FILTER BY SALARY</h4>
 						</div>
 						<hr />
 					</div>
@@ -242,10 +233,8 @@
 						<ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"
 							(userChangeEnd)="onUserChangeEnd($event)"></ng5-slider>
 					</div>
-
 				</div>
 			</mat-card>
-
 			<!-- <app-filter-jobs [Specializations]="Specializations" [jobs]="jobs" [minValue]="minValuee" [maxValue]="maxValuee" (data)="eventHandler($event)"></app-filter-jobs> -->
 		</div>
 	</div>

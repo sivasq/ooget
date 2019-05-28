@@ -99,7 +99,7 @@ export class MakeDuplicateJobComponent implements OnInit {
 	public WorkingEnvironments: WorkingEnvironment[];
 	public EmploymentTypes: EmploymentType[];
 
-	//busy Config
+	// busy Config
 	busy: Subscription;
 
 	constructor(public router: Router, private _httpService: ApiCallService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
@@ -264,12 +264,12 @@ export class MakeDuplicateJobComponent implements OnInit {
 			// console.log(this.jobDetails.markup_rate);
 			// console.log(this.jobDetails.markup_in);
 
-			if (this.jobDetails.markup_in == 'percentage') {
+			if (this.jobDetails.markup_in == '%') {
 				this.jobDetails.jobseeker_salary = (((1 - (Number(this.jobDetails.markup_rate) / 100)) * Number(this.jobDetails.charge_rate)).toFixed(1));
 				this.jobDetails.markup_amount = ((Number(this.jobDetails.charge_rate) - (1 - (Number(this.jobDetails.markup_rate) / 100)) * Number(this.jobDetails.charge_rate)).toFixed(1));
 			}
 
-			if (this.jobDetails.markup_in == 'sgdollar') {
+			if (this.jobDetails.markup_in == '$') {
 				this.jobDetails.jobseeker_salary = (Number(this.jobDetails.charge_rate) - Number(this.jobDetails.markup_rate)).toFixed(1);
 				this.jobDetails.markup_amount = Number(this.jobDetails.markup_rate).toFixed(1);
 			}
@@ -289,74 +289,75 @@ export class MakeDuplicateJobComponent implements OnInit {
 					if (response.success) {
 						let currentDate = this.datePipe.transform(new Date(), 'yyyy/MM/dd');
 
-						this.jobDetails.project = response.job.project;
-						this.jobDetails.department = response.job.department;
-						this.jobDetails.employmenttype = response.job.employmenttype;
-						this.jobDetails.jobtitle = response.job.jobtitle;
-						this.jobDetails.jobdescription = response.job.jobdescription;
+						let result = response.result;
+						this.jobDetails.project_name = result.project_name;
+						this.jobDetails.department = result.department;
+						this.jobDetails.employement_type = result.employement_type;
+						this.jobDetails.job_name = result.job_name;
+						this.jobDetails.description = result.description;
 
-						this.employmenttypeChange(response.job.employmenttype);
+						this.employmenttypeChange(result.employement_type);
 
-						this.jobDetails.jobspecialization = response.job.jobspecialization;
-						this.jobDetails.otherjobspecialization = response.job.otherjobspecialization;
-						this.jobDetails.workingenvironment = response.job.workingenvironment;
+						this.jobDetails.specializations = Number(result.specializations);
+						this.jobDetails.otherjobspecialization = result.otherjobspecialization;
+						this.jobDetails.working_environment = this.stringToArray(result.working_environment);
 
-						this.jobDetails.numberofpax = response.job.numberofpax;
-						this.jobDetails.graceperiod = response.job.graceperiod;
-						this.jobDetails.overtimerounding = response.job.overtimerounding;
-						this.jobDetails.jobperiodfrom = new Date(response.job.jobperiodfrom);
-						this.jobDetails.jobperiodto = new Date(response.job.jobperiodto);
+						this.jobDetails.pax_total = result.pax_total;
+						this.jobDetails.grace_period = Number(result.grace_period);
+						this.jobDetails.over_time_rounding = Number(result.over_time_rounding);
+						this.jobDetails.jobperiodfrom = new Date(result.from);
+						this.jobDetails.jobperiodto = new Date(result.to);
 
-						if (new Date(currentDate + ' ' + response.job.starttime) > new Date(currentDate + ' ' + response.job.endtime)) {
-							this.jobDetails.starttime = new Date(currentDate + ' ' + response.job.starttime);
-							this.jobDetails.endtime = this.convertNextDay(currentDate + ' ' + response.job.endtime);
+						if (new Date(currentDate + ' ' + result.start_time) > new Date(currentDate + ' ' + result.end_time)) {
+							this.jobDetails.starttime = new Date(currentDate + ' ' + result.start_time);
+							this.jobDetails.endtime = this.convertNextDay(currentDate + ' ' + result.end_time);
 						} else {
-							this.jobDetails.starttime = new Date(currentDate + ' ' + response.job.starttime);
-							this.jobDetails.endtime = new Date(currentDate + ' ' + response.job.endtime);
+							this.jobDetails.starttime = new Date(currentDate + ' ' + result.start_time);
+							this.jobDetails.endtime = new Date(currentDate + ' ' + result.end_time);
 						}
 
-						this.jobDetails.workdaystype = response.job.workdaystype;
-						if (response.job.workdays) {
-							this.jobDetails.sunday = response.job.workdays.sunday;
-							this.jobDetails.monday = response.job.workdays.monday;
-							this.jobDetails.tuesday = response.job.workdays.tuesday;
-							this.jobDetails.wednesday = response.job.workdays.wednesday;
-							this.jobDetails.thursday = response.job.workdays.thursday;
-							this.jobDetails.friday = response.job.workdays.friday;
-							this.jobDetails.saturday = response.job.workdays.saturday;
+						this.jobDetails.work_days_type = String(result.work_days_type);
+						if (result.workdays) {
+							this.jobDetails.sunday = result.workdays.sunday;
+							this.jobDetails.monday = result.workdays.monday;
+							this.jobDetails.tuesday = result.workdays.tuesday;
+							this.jobDetails.wednesday = result.workdays.wednesday;
+							this.jobDetails.thursday = result.workdays.thursday;
+							this.jobDetails.friday = result.workdays.friday;
+							this.jobDetails.saturday = result.workdays.saturday;
 						}
 
-						this.jobDetails.addresspostalcode = response.job.addresspostalcode;
-						this.jobDetails.addressblock = response.job.addressblock;
-						this.jobDetails.addressstreet = response.job.addressstreet;
-						this.jobDetails.addressunit = response.job.addressunit;
-						this.jobDetails.locationmain = response.job.addressregion;
-						this.jobDetails.addresslocation = response.job.addresslocation;
+						this.jobDetails.postal_code = result.postal_code;
+						// this.jobDetails.addressblock = response.job.addressblock;
+						this.jobDetails.address = result.address;
+						this.jobDetails.unit_no = result.unit_no;
+						this.jobDetails.region = Number(result.region);
+						this.jobDetails.location = Number(result.location);
 
-						this.jobDetails.chargerate = response.job.chargerate;
-						this.jobDetails.markuprate = response.job.markuprate;
-						this.jobDetails.markupratetype = response.job.markupratetype;
-						this.jobDetails.salary = response.job.salary;
-						this.jobDetails.markuprateincurrency = response.job.markuprateincurrency;
+						this.jobDetails.charge_rate = result.charge_rate;
+						this.jobDetails.markup_rate = result.markup_rate;
+						this.jobDetails.markup_in = result.markup_in;
+						this.jobDetails.jobseeker_salary = result.jobseeker_salary;
+						this.jobDetails.markup_amount = result.markup_amount;
 
-						this.jobDetails.autooffer = response.job.autooffer;
-						this.jobDetails.autoofferaccept = response.job.autoofferaccept;
+						this.jobDetails.auto_offered = result.auto_offered;
+						this.jobDetails.auto_accepted = result.auto_accepted;
 
-						let oldBreaks = response.job.breaktime;
+						const oldBreaks = result.breaklist;
 						if (oldBreaks.length > 0) {
 							for (let i = 0; i < oldBreaks.length; i++) {
 								if (new Date(currentDate + ' ' + oldBreaks[i].breakstart) > new Date(currentDate + ' ' + oldBreaks[i].breakend)) {
 									this.jobDetails.breaks.push({
-										breakname: oldBreaks[i].breakname,
-										starttime: new Date(currentDate + ' ' + oldBreaks[i].breakstart),
-										endtime: this.convertNextDay(currentDate + ' ' + oldBreaks[i].breakend),
-									})
+										breakname: oldBreaks[i].break_name,
+										starttime: new Date(currentDate + ' ' + oldBreaks[i].from),
+										endtime: this.convertNextDay(currentDate + ' ' + oldBreaks[i].to),
+									});
 								} else {
 									this.jobDetails.breaks.push({
-										breakname: oldBreaks[i].breakname,
-										starttime: new Date(currentDate + ' ' + oldBreaks[i].breakstart),
-										endtime: new Date(currentDate + ' ' + oldBreaks[i].breakend),
-									})
+										breakname: oldBreaks[i].break_name,
+										starttime: new Date(currentDate + ' ' + oldBreaks[i].from),
+										endtime: new Date(currentDate + ' ' + oldBreaks[i].to),
+									});
 								}
 							}
 						}
@@ -377,6 +378,9 @@ export class MakeDuplicateJobComponent implements OnInit {
 	jobAddToEmployer(employerJobData: any, employerJobForm) {
 		const companyid = { 'employer_id': this.companyid };
 		employerJobData = Object.assign(employerJobData, companyid);
+
+		const jobId = { 'jobid': this.route.snapshot.params['job_id'] };
+		employerJobData = Object.assign(employerJobData, jobId);
 
 		const minOverTime = { 'over_time_minimum': 30 };
 		employerJobData = Object.assign(employerJobData, minOverTime);
@@ -431,7 +435,7 @@ export class MakeDuplicateJobComponent implements OnInit {
 		employerJobData = Object.assign(employerJobData, Breaks);
 
 		console.log(employerJobData);
-		this._httpService.jobAddToEmployer(employerJobData)
+		this._httpService.addNewJob(employerJobData)
 			.subscribe(
 				response => {
 					if (response.success) {

@@ -57,9 +57,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 		this.getJobLocations();
 		this.getSpecializations();
 		this.getIndustries();
-		let jobId = {
-			jobid: this.route.snapshot.params['job_id'],
-		}
+		// jobid = this.route.snapshot.params['job_id'];
 		this.getJobDetails();
 		// this.getProfileActiveStatus();
 	}
@@ -91,16 +89,19 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 		let filteredSpecializations = this.Specializations.filter(specialization => specialization.id == SpecializationId);
 		return filteredSpecializations[0].name;
 	}
+
 	getRegionName(regionId) {
 		if (regionId == '' || regionId == undefined) { return false; }
 		let filteredRegions = this.Regions.filter(region => region.id == regionId);
 		return filteredRegions[0].name;
 	}
+
 	getJobLocationName(locationId) {
 		if (locationId == '' || locationId == undefined) { return false; }
 		let filteredLocation = this.JobLocations.filter(location => location.id == locationId);
 		return filteredLocation[0].name;
 	}
+
 	getIndustryName(industryId) {
 		if (industryId == '' || industryId == undefined) { return false; }
 		let filteredIndustry = this.Industries.filter(industry => industry.id == industryId);
@@ -153,7 +154,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 						// let isUnderOffered = this.appliedCandidates.filter(e => e.jobseekerid === this.userId && e.offered).length > 0;
 						// let isUnderApplied = this.appliedCandidates.filter(e => e.jobseekerid === this.userId && e.applied).length > 0;
 
-						if (this.jobDetails.AppliedDetails.offer_accepted) {
+						if (this.jobDetails.jobseeker_applied_details !== undefined && this.jobDetails.jobseeker_applied_details.offer_accepted) {
 							this.isUnderContract = true;
 							this.isOfferRejected = false;
 							this.isOffered = false;
@@ -161,7 +162,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 							this.isNotApplied = false;
 							this.btnName = '';
 							this.helpTxt1 = 'Contract Signed In';
-						} else if (this.jobDetails.AppliedDetails.offer_rejected) {
+						} else if (this.jobDetails.jobseeker_applied_details !== undefined && this.jobDetails.jobseeker_applied_details.offer_rejected) {
 							this.isUnderContract = false;
 							this.isOfferRejected = true;
 							this.isOffered = false;
@@ -169,7 +170,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 							this.isNotApplied = false;
 							this.btnName = '';
 							this.helpTxt1 = 'Offer Rejected';
-						} else if (this.jobDetails.AppliedDetails.offered_on) {
+						} else if (this.jobDetails.jobseeker_applied_details !== undefined && this.jobDetails.jobseeker_applied_details.offered_on) {
 							this.isUnderContract = false;
 							this.isOfferRejected = false;
 							this.isOffered = true;
@@ -178,7 +179,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 							this.btnName = 'Accept This Job Offer';
 							this.rejectBtnName = 'Reject This Job Offer';
 							this.helpTxt1 = 'Job Offered';
-						} else if (this.jobDetails.AppliedDetails.applied_on) {
+						} else if (this.jobDetails.jobseeker_applied_details !== undefined && this.jobDetails.jobseeker_applied_details.applied_on) {
 							this.isUnderContract = false;
 							this.isOfferRejected = false;
 							this.isOffered = false;
@@ -214,7 +215,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 	async sendApplication(jobId) {
 		// let activeStatus = localStorage.getItem('ogActiveStatus');
 		let response = await this._httpService.getProfileDetails().toPromise();
-		if (response.message.activestatus == false) {
+		if (response.result[0].status == false) {
 			let dialogConfig = new MatDialogConfig();
 
 			dialogConfig.disableClose = true;
@@ -229,7 +230,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 			let dialogref = this.dialog.open(ConfirmDialogComponent, dialogConfig);
 
 			dialogref.afterClosed().subscribe(data => console.log('Dialog Closed'));
-		} else if (response.message.activestatus == true) {
+		} else if (response.result[0].status == true) {
 			this.continueSendApplication(jobId);
 		}
 	}
@@ -340,7 +341,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 
 	ConfirmAcceptOffer(jobId) {
 		console.log(jobId);
-		this._httpService.acceptOffer({ jobid: jobId, contractstatus: 'open' })
+		this._httpService.acceptOffer({ 'contract_id': jobId })
 			.subscribe(
 				response => {
 					if (response.success) {
@@ -350,7 +351,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 						this.isOffered = false;
 						this.isApplied = false;
 						this.isNotApplied = false;
-						this.helpTxt1 = 'Contract Signed In'
+						this.helpTxt1 = 'Contract Signed In';
 						const snackBarRef = this.snackBar.open('You have Successfully Accepted New Job Contract.', 'Close', {
 							duration: 5000,
 						});
@@ -440,7 +441,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 
 	ArrayToString(dataArray) {
 		if (isArray(dataArray)) {
-			dataArray.map(function (e) {
+			dataArray.map((e) => {
 				// return JSON.stringify(e);
 				return e;
 			});
@@ -461,27 +462,27 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-		let userId = '5aaf96720bb68d18dcfcffb3';
-		let appliedjobseekers: any = [
-			{
-				'jobseekerid': '5aaf96720bb68d18dcfcffb3',
-				'status': 'applied',
-				'applied': true,
-				'offered': true,
-				'appliedAt': '2018/08/09 11:43:59',
-				'_id': '5b6bdba72007d827506c38e5'
-			}
-		]
+		// let userId = '5aaf96720bb68d18dcfcffb3';
+		// let appliedjobseekers: any = [
+		// 	{
+		// 		'jobseekerid': '5aaf96720bb68d18dcfcffb3',
+		// 		'status': 'applied',
+		// 		'applied': true,
+		// 		'offered': true,
+		// 		'appliedAt': '2018/08/09 11:43:59',
+		// 		'_id': '5b6bdba72007d827506c38e5'
+		// 	}
+		// ]
 
-		let isUnderContract = appliedjobseekers.filter(e => e.jobseekerid === userId && e.accepted).length > 0;
-		let isOfferRejected = appliedjobseekers.filter(e => e.jobseekerid === userId && e.rejected).length > 0;
-		let isUnderOffered = appliedjobseekers.filter(e => e.jobseekerid === userId && e.offered).length > 0;
-		let isUnderApplied = appliedjobseekers.filter(e => e.jobseekerid === userId && e.applied).length > 0;
+		// let isUnderContract = appliedjobseekers.filter(e => e.jobseekerid === userId && e.accepted).length > 0;
+		// let isOfferRejected = appliedjobseekers.filter(e => e.jobseekerid === userId && e.rejected).length > 0;
+		// let isUnderOffered = appliedjobseekers.filter(e => e.jobseekerid === userId && e.offered).length > 0;
+		// let isUnderApplied = appliedjobseekers.filter(e => e.jobseekerid === userId && e.applied).length > 0;
 
-		console.log('Applied', isUnderApplied);
-		console.log('Offered', isUnderOffered);
-		console.log('Rejected', isOfferRejected);
-		console.log('Accepted', isUnderContract);
+		// console.log('Applied', isUnderApplied);
+		// console.log('Offered', isUnderOffered);
+		// console.log('Rejected', isOfferRejected);
+		// console.log('Accepted', isUnderContract);
 	}
 
 	saveJob(jobId) {

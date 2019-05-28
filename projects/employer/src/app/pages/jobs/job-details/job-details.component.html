@@ -31,16 +31,16 @@
 					<img *ngIf="!companyDetails?.companylogo" mat-card-avatar
 						src="assets/img/avatars/logo-placeholder.png" alt="">
 					<img *ngIf="companyDetails?.companylogo" mat-card-avatar
-						src="{{imgBaseUrl}}/company/{{companyDetails?.companylogo}}" alt="">
+						src="{{baseUrl}}/{{companyDetails?.companylogo}}" alt="">
 					<mat-card-title>{{jobDetails.job_no}}</mat-card-title>
-					<mat-card-subtitle style="text-transform: capitalize;">Job Status: {{jobDetails.status}}
+					<mat-card-subtitle style="text-transform: capitalize;">Job Status: {{jobStatus[jobDetails.status]}}
 					</mat-card-subtitle>
 
 					<div fxFlex></div>
 					<div *ngxPermissionsOnly="['superemployer']">
 						<div *ngIf="jobDetails != ''">
 							<button mat-raised-button color="primary"
-								routerLink="/employer/jobs/{{ jobDetails.employer_id}}/copyjob">Copy </button>
+								routerLink="/employer/jobs/{{ jobDetails.id}}/copyjob">Copy </button>
 							&nbsp;
 						</div>
 					</div>
@@ -48,7 +48,7 @@
 					<div *ngxPermissionsOnly="['superemployer']">
 						<div *ngIf="jobDetails != ''">
 							<button mat-raised-button color="primary"
-								routerLink="/employer/jobs/{{jobDetails.employer_id}}/edit">Edit </button>
+								routerLink="/employer/jobs/{{jobDetails.id}}/edit">Edit </button>
 						</div>
 					</div>
 
@@ -89,13 +89,13 @@
 								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 									check_circle</mat-icon>
 								<span class="key">Employment Type : </span>
-								<span class="value">{{jobDetails.employement_type}}</span>
+								<span class="value">{{employmentType[jobDetails.employement_type] | titlecase}}</span>
 							</p>
 							<p fxLayout="row" fxLayoutAlign="start center">
 								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 									check_circle</mat-icon>
 								<span class="key">Department : </span>
-								<span class="value">{{jobDetails.department}}</span>
+								<span class="value">{{jobDetails.department | titlecase}}</span>
 							</p>
 							<p fxLayout="row" fxLayoutAlign="start center">
 								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
@@ -114,7 +114,8 @@
 								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 									check_circle</mat-icon>
 								<span class="key">Job Specialization : </span>
-								<span class="value">{{jobDetails.specializations}}</span>
+								<span
+									class="value">{{getJobSpecializationName(jobDetails.specializations) | titlecase}}</span>
 							</p>
 							<p fxLayout="row" fxLayoutAlign="start center"
 								*ngIf="jobDetails.jobspecialization == 'others'">
@@ -123,11 +124,11 @@
 								<span class="key">Job Specialization : </span>
 								<span class="value">{{jobDetails.otherjobspecialization}}</span>
 							</p>
-							<p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobDetails.workingenvironment">
+							<p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobDetails.working_environment">
 								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 									check_circle</mat-icon>
 								<span class="key">Working Environment : </span>
-								<span class="value">{{jobDetails.working_environment}}</span>
+								<span class="value">{{getWorkingEnvironmentName(jobDetails.working_environment)}}</span>
 							</p>
 						</div>
 					</div>
@@ -164,7 +165,7 @@
 								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 									check_circle</mat-icon>
 								<span class="key">Work Days Type : </span>
-								<span class="value">{{jobDetails.work_days_type}}</span>
+								<span class="value">{{workDaysType[jobDetails.work_days_type]}}</span>
 							</p>
 							<p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobDetails.workdays">
 								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
@@ -195,7 +196,7 @@
 								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 									check_circle</mat-icon>
 								<span class="key">{{break.break_name}} : </span>
-								<span class="value">{{break.from}} to {{break.to}}</span>
+								<span class="value">{{break.from}} <i>to</i> {{break.to}}</span>
 							</p>
 						</div>
 					</div>
@@ -231,13 +232,13 @@
 								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 									check_circle</mat-icon>
 								<span class="key">Region : </span>
-								<span class="value">{{jobDetails.region}}</span>
+								<span class="value">{{getRegionName(jobDetails.region) | titlecase}}</span>
 							</p>
 							<p fxLayout="row" fxLayoutAlign="start center">
 								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 									check_circle</mat-icon>
 								<span class="key">Location : </span>
-								<span class="value">{{jobDetails.location}}</span>
+								<span class="value">{{getJobLocationName(jobDetails.location) | titlecase}}</span>
 							</p>
 						</div>
 					</div>

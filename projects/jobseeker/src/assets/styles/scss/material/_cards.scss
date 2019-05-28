@@ -3,7 +3,7 @@
 $mat-card-header-size: 40px !default;
 body {
   .mat-card {
-    padding: 0;
+    padding: 16px;
     margin: ($gutter/3);
     border-radius: $border-radius-base;
     @include mat-elevation(1);
@@ -71,7 +71,7 @@ body {
       margin: 0;
     }
     &.mat-card {
-      padding: 0;
+      padding: 16px;
     }
     [mat-card-float-icon] {
       position: absolute;

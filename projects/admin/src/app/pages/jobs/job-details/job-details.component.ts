@@ -14,6 +14,12 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import * as XLSX from 'xlsx';
 import { JobActivationComponent } from '../dialogs/job-activation/job-activation.component';
 import { SingleTextareaComponent } from '../dialogs/single-textarea/single-textarea.component';
+import { JobRegion, JobLocation } from '../../../classes/jobLocation';
+import { Specialization } from '../../../classes/Specialization';
+import { WorkingEnvironment } from '../../../classes/WorkingEnvironment';
+import { Industry } from '../../../classes/Industry';
+import { MockDataService } from '../../../services/mock-data.service';
+import { isArray } from 'util';
 
 @Component({
 	selector: 'app-job-details',
@@ -93,7 +99,7 @@ export class JobDetailsComponent implements OnInit {
 		XLSX.writeFile(wb, 'SheetJS.xlsx');
 	}
 	// ========================
-	public imgBaseUrl;
+	public baseUrl;
 
 	public jobDetails: any = [];
 	objectKeys = Object.keys;
@@ -144,14 +150,84 @@ export class JobDetailsComponent implements OnInit {
 		headers: ['H01 Record Type', 'H02 File Creation Date', 'H03 Organization ID', 'H04 Sender Name', 'D01 Record Type', 'D02 Product Type', 'D03 Originating Account Number', 'D04 Originating Account Currency', 'D05 Customer Reference or Batch Reference', 'D06 Payment Currency', 'D07 Batch ID', 'D08 Payment Date', 'D09 Bank Charges', 'D10 Debit Account for Bank Charges', 'D11 Receiving Party Name', 'D12 Payable To', 'D13 Receiving Party Address 1', 'D14 Receiving Party Address 2', 'D15 Receiving Party Address 3', 'D16 Receiving Account Number/IBAN', 'D17 Country Specific', 'D18 Receiving Bank Code', 'D19 Receiving Branch Code', 'D20 Clearing Code', 'D21 Beneficiary Bank SWIFT BIC', 'D22 Beneficiary Bank Name', 'D23 Beneficiary Bank Address', 'D24 Beneficiary Bank Country', 'D25 Routing Code', 'D26 Intermediary Bank SWIFT BIC', 'D27 Amount Currency', 'D28 Amount', 'D29 FX Contract Reference 1', 'D30 Amount to be Utilized 1', 'D31 FX Contract Reference 2', 'D32 Amount to be Utilized 2', 'D33 Transaction Code', 'D34 Particulars / Beneficary or Payer Reference', 'D35 DDA Reference (SG HK collection) or Reference', 'D36 Payment Details', 'D37 Instruction to Ordering Bank', 'D38 Beneficiary Resident Status', 'D39 Beneficiary Category', 'D40 Transaction Relationship', 'D41 Payee Role', 'D42 Remitter Identity', 'D43 Purpose of Payment', 'D44 Supplementary Info', 'D45 Delivery Mode', 'D46 Print At Location/Pick Up Location', 'D47 Payable Location', 'D48 Mail to Party Name', 'D49 Mail to Party Address 1', 'D50 Mail to Party Address 2', 'D51 Mail to Party Address 3', 'D52 Reserved Field', 'D53 Postal Code', 'D54 Email 1', 'D55 Email 2', 'D56 Email 3', 'D57 Email 4', 'D58 Email 5', 'D59 Phone Number 1', 'D60 Phone Number 2', 'D61 Phone Number 3', 'D62 Phone Number 4', 'D63 Phone Number 5', 'D64 Invoice Details', 'D65 Client Reference 1', 'D66 Client Reference 2', 'D67 Client Reference 3', 'D68 Client Reference 4', 'T01 Record Type', 'T02 Total No. of Transactions', 'T03 Total Transaction Amount']
 	};
 
-	constructor(private urlconfig: ConfigService, public router: Router, private _httpService: ApiCallService, private route: ActivatedRoute, public dialog: MatDialog, public snackBar: MatSnackBar, private datePipe: DatePipe) {
-		this.imgBaseUrl = urlconfig.img_base_url;
+	employmentType = ['', 'Part Time', 'Full Time'];
+	jobStatus = ['', 'Pending', 'Live', 'Closed'];
+	workDaysType = ['', 'Normal', 'Flexible'];
+	Regions: JobRegion[];
+	JobLocations: JobLocation[];
+	Specializations: Specialization[];
+	WorkingEnvironments: WorkingEnvironment[];
+	Industries: Industry[];
+
+	constructor(private urlconfig: ConfigService, public router: Router, private _httpService: ApiCallService, private route: ActivatedRoute, public dialog: MatDialog, public snackBar: MatSnackBar, private datePipe: DatePipe, private mockDataService: MockDataService) {
+		this.baseUrl = urlconfig.base_url;
 		this.companyid = this.route.snapshot.params['emp_id'];
 		let jobId = {
 			jobid: this.route.snapshot.params['job_id']
 		};
+		this.getWorkingEnvironments();
+		this.getJobRegions();
+		this.getJobLocations();
+		this.getSpecializations();
+		this.getIndustries();
 		this.getJobDetails();
 		this.getJobContractors(jobId);
+	}
+
+	getWorkingEnvironments(): void {
+		this.mockDataService.getWorkingEnvironments()
+			.subscribe(WorkingEnvironments => this.WorkingEnvironments = WorkingEnvironments);
+	}
+	getJobRegions(): void {
+		this.mockDataService.getJobRegions()
+			.subscribe(Regions => this.Regions = Regions);
+	}
+	getJobLocations(): void {
+		this.mockDataService.getJobLocations()
+			.subscribe(Locations => this.JobLocations = Locations);
+	}
+	getSpecializations(): void {
+		this.mockDataService.getSpecializations()
+			.subscribe(Specializations => this.Specializations = Specializations);
+	}
+	getIndustries(): void {
+		this.mockDataService.getIndustries()
+			.subscribe(Industries => this.Industries = Industries);
+	}
+
+	getJobSpecializationName(SpecializationId) {
+		if (SpecializationId == '' || SpecializationId == undefined) { return false; }
+
+		let filteredSpecializations = this.Specializations.filter(specialization => specialization.id == SpecializationId);
+		return filteredSpecializations[0].name;
+	}
+
+	getRegionName(regionId) {
+		if (regionId == '' || regionId == undefined) { return false; }
+		let filteredRegions = this.Regions.filter(region => region.id == regionId);
+		return filteredRegions[0].name;
+	}
+
+	getJobLocationName(locationId) {
+		if (locationId == '' || locationId == undefined) { return false; }
+		let filteredLocation = this.JobLocations.filter(location => location.id == locationId);
+		return filteredLocation[0].name;
+	}
+
+	getIndustryName(industryId) {
+		if (industryId == '' || industryId == undefined) { return false; }
+		let filteredIndustry = this.Industries.filter(industry => industry.id == industryId);
+		return filteredIndustry[0].name;
+	}
+
+	getWorkingEnvironmentName(envId) {
+		if (envId == '' || envId == undefined) { return false; }
+		let envIds = this.stringToArray(envId);
+		let filteredEnv = envIds.map(envid => {
+			return this.WorkingEnvironments.filter(workEnv => workEnv.id == envid);
+		});
+		let filteredName = filteredEnv.map(env => env[0].name);
+		return this.ArrayToString(filteredName);
 	}
 
 	processPayrollGenerate() {
@@ -338,7 +414,7 @@ export class JobDetailsComponent implements OnInit {
 			console.log(employerid);
 			// this.router.navigate(['employers/' + companyid + '/view']);
 			// this.router.navigate(['/admin/employers/' + employerid + '/jobs/' + jobid + '/copyjob'])
-		})
+		});
 	}
 
 	rePostJob(companyid, jobid) { }
@@ -428,6 +504,28 @@ export class JobDetailsComponent implements OnInit {
 		// 			console.log(error);
 		// 		}
 		// 	);
+	}
+
+	ArrayToString(dataArray) {
+		if (isArray(dataArray)) {
+			dataArray.map(function (e) {
+				// return JSON.stringify(e);
+				return e;
+			});
+			return dataArray.join(',');
+		}
+	}
+
+	stringToArray(dataString) {
+		if (typeof dataString !== 'undefined' && dataString) {
+			if (dataString.includes(',')) {
+				return dataString.split(',').map(Number);
+			} else {
+				return [dataString].map(Number);
+			}
+		} else {
+			return [];
+		}
 	}
 
 	ngOnInit() {

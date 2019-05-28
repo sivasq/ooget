@@ -46,8 +46,8 @@
 					<mat-card class="p-0">
 						<div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
 							<h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below"
-								routerLink="/main/jobs/{{job.id}}/view">{{job.job_name
-								| titlecase}}</h3>
+								routerLink="/main/jobs/{{job.id}}/view">{{job.job_name | titlecase}}
+								({{job.job_no | titlecase}}) - {{job.company}}</h3>
 							<div>
 								<button mat-icon-button matTooltip="Click to UnSave Job" color="accent"
 									matTooltipPosition="below" *ngIf="job.saved" (click)="unSaveJob(job.id)">
@@ -72,11 +72,10 @@
 
 						<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
 							<div fxFlex="30" fxLayout="column" fxLayoutAlign="center center">
-								<div class="user-img" style="text-align: center;" *ngIf="job.employer?.companylogo">
-									<img class="transition-2 ng-star-inserted"
-										src="{{imgBaseUrl}}/company/{{job.companyid.companylogo}}">
+								<div class="user-img" style="text-align: center;" *ngIf="job.companylogo">
+									<img class="transition-2 ng-star-inserted" src="{{baseUrl}}/{{job.companylogo}}">
 								</div>
-								<div class="user-img" style="text-align: center;" *ngIf="!employer?.companylogo">
+								<div class="user-img" style="text-align: center;" *ngIf="!job.companylogo">
 									<img class="transition-2 ng-star-inserted"
 										src="assets/img/avatars/logo-placeholder.png">
 								</div>
@@ -99,13 +98,14 @@
 									<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 										event_seat</mat-icon>
 									<span matTooltip="Department" matTooltipPosition="right">Location :
-										{{job.location}}</span>
+										{{getJobLocationName(job.location)}}</span>
 								</p>
 								<p fxLayout="row" fxLayoutAlign="start center">
 									<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 										pan_tool</mat-icon>
-									<span matTooltip="PAX" matTooltipPosition="right">Vacancies / Pax Required : {{job.pax_total
-										- job.required}} / {{job.pax_total}}</span>
+									<span matTooltip="PAX" matTooltipPosition="right">Vacancies / Pax Required :
+										{{job.pax_total-job.required}} /
+										{{job.pax_total}}</span>
 								</p>
 
 								<p fxLayout="row" fxLayoutAlign="start center">
@@ -118,14 +118,16 @@
 								<p fxLayout="row" fxLayoutAlign="start center">
 									<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 										date_range</mat-icon>
-									<span matTooltip="Job Period" matTooltipPosition="right">Job Period : {{job.from
-										| date:'dd-MM-yyyy'}} - {{job.to | date:'dd-MM-yyyy'}}</span>
+									<span matTooltip="Job Period" matTooltipPosition="right">Job Period :
+										{{job.from | date:'dd-MM-yyyy'}} <i>to</i> {{job.to | date:'dd-MM-yyyy'}}</span>
 								</p>
 
 								<!-- <p fxLayout="row" fxLayoutAlign="start center">
-								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">security</mat-icon>
-								<span matTooltip="Job Status" matTooltipPosition="right">Status : {{job.jobstatus | titlecase}}</span>
-							</p> -->
+									<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+										security</mat-icon>
+									<span matTooltip="Job Status" matTooltipPosition="right">Status :
+										{{job.jobstatus | titlecase}}</span>
+								</p> -->
 								<p fxLayout="row" fxLayoutAlign="start center">
 									<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 										security</mat-icon>
@@ -169,55 +171,47 @@
 			</div>
 			<!-- Pagination End -->
 
+			<!-- If No Data Exists Start -->
 			<div *ngIf="matched_jobs_list.length == 0" fxLayout="row" fxLayoutAlign="center center"
 				style="height:100px; margin:8px;">
 				<h3 style="color: #bbbbbb; text-transform: uppercase; text-align: center;">
 					Based On Your Profile No Jobs Matched.<br /> Please Go to Available Jobs And make Search..</h3>
 			</div>
+			<!-- If No Data Exists End -->
 		</div>
 
+		<!-- Filtering Section -->
 		<div fxFlex="100" class="flex-p" fxFlex.gt-sm="25" [fxFlexOrder.lt-md]=1>
 			<mat-card>
 				<div fxFlex="100" fxLayout="row wrap">
 					<div fxFlex="100" fxLayout="row wrap" style="padding: 10px 0px; margin-bottom: 15px;">
 						<div>
-							<h3 style="width:100%; color: gray; font-size: 15px;">FILTER BY JOB TYPE</h3>
+							<h4 style="width:100%; color: gray;">FILTER BY JOB TYPE</h4>
 						</div>
 						<hr />
 					</div>
 
 					<mat-radio-group fxFlex="100" fxLayout="row wrap" fxLayoutGap="10px">
 						<mat-checkbox color="primary" [(ngModel)]="search.parttime" (ngModelChange)="jobSearch()"
-							[checked]="search.parttime" value="Part Time">Part
+							[checked]="search.parttime" value="1">Part
 							Time</mat-checkbox>
 
 						<div fxFlex.gt-sm></div>
 
 						<mat-checkbox color="primary" [(ngModel)]="search.fulltime" (ngModelChange)="jobSearch()"
-							[checked]="search.fulltime" value="Full Time">Full
+							[checked]="search.fulltime" value="2">Full
 							Time</mat-checkbox>
 					</mat-radio-group>
-
-					<!-- <mat-form-field fxFlex="100" class="m-t-10">
-								<mat-label>Job Specialization</mat-label>
-								<mat-select placeholder="Job Specialization" name="jobspecialization" [(ngModel)]="search.jobspecialization"
-								 (ngModelChange)="makeSearch()" multiple>
-									<mat-option #allS  [value]="-1">All</mat-option>
-									<mat-option [disabled]="allS.selected" *ngFor="let Specialization of Specializations" [value]="Specialization.specialization">{{
-										Specialization.specialization }}</mat-option>
-									<mat-option value="Others">Others</mat-option>
-								</mat-select>
-							</mat-form-field> -->
 
 					<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center"
 						style="padding: 10px 0px; margin-top: 15px;">
 						<div>
-							<h3 style="width:100%; color: gray; font-size: 15px;">FILTER BY JOB SPECIALIZATION</h3>
+							<h4 style="width:100%; color: gray;">FILTER BY JOB SPECIALIZATION</h4>
 						</div>
 						<hr />
 					</div>
 
-					<mat-form-field fxFlex="100" class="m-t-10" color="primary">
+					<mat-form-field fxFlex="100" class="m-t-10" color="primary" appearance="outline">
 						<mat-label>Job Specialization</mat-label>
 						<mat-select placeholder="Job Specialization" name="jobspecialization"
 							[(ngModel)]="search.jobspecialization" (selectionChange)="jobSearch()" #specSelect="ngModel"
@@ -231,8 +225,8 @@
 								</mat-checkbox>
 							</div>
 							<mat-option *ngFor="let Specialization of Specializations"
-								[value]="Specialization.specialization">
-								{{Specialization.specialization}}
+								[value]="Specialization.id">
+								{{Specialization.name}}
 							</mat-option>
 						</mat-select>
 					</mat-form-field>
@@ -240,7 +234,7 @@
 					<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center"
 						style="padding: 10px 0px; margin-top: 15px;">
 						<div>
-							<h3 style="width:100%; color: gray; font-size: 15px;">FILTER BY SALARY</h3>
+							<h4 style="width:100%; color: gray;">FILTER BY SALARY</h4>
 						</div>
 						<hr />
 					</div>
@@ -249,10 +243,8 @@
 						<ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"
 							(userChangeEnd)="onUserChangeEnd($event)"></ng5-slider>
 					</div>
-
 				</div>
 			</mat-card>
 		</div>
-
 	</div>
 </div>

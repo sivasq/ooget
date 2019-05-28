@@ -102,7 +102,7 @@ export class JobsListComponent implements OnInit {
 							}
 
 							// filter pending Jobs
-							this.jobs_list_pending = response.jobs.filter((book: any) => book.status == 1);
+							this.jobs_list_pending = response.result.filter((book: any) => book.status == 1);
 							if ((this.jobs_list_pending).length > 0) {
 								this.isJobsListPendingAvailable = true;
 							} else {
@@ -110,7 +110,7 @@ export class JobsListComponent implements OnInit {
 							}
 
 							// filter live jobs
-							this.jobs_list_live = response.jobs.filter((book: any) => book.status == 2);
+							this.jobs_list_live = response.result.filter((book: any) => book.status == 2);
 							if ((this.jobs_list_live).length > 0) {
 								this.isJobsListLiveAvailable = true;
 							} else {
@@ -118,7 +118,7 @@ export class JobsListComponent implements OnInit {
 							}
 
 							// filter closed jobs
-							this.jobs_list_closed = response.jobs.filter((book: any) => book.status == 3);
+							this.jobs_list_closed = response.result.filter((book: any) => book.status == 3);
 							if ((this.jobs_list_closed).length > 0) {
 								this.isJobsListClosedAvailable = true;
 							} else {

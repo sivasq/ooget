@@ -28,8 +28,8 @@ export class DublicateJobConfirmComponent implements OnInit {
 				response => {
 					this.isEmployerLoading = false;
 					if (response.success) {
-						if ((response.employers).length > 0) {
-							this.employers_list = response.employers;
+						if ((response.result).length > 0) {
+							this.employers_list = response.result;
 						}
 					} else if (!response.success) {
 						console.log(response);
@@ -44,7 +44,7 @@ export class DublicateJobConfirmComponent implements OnInit {
 
 	makeDuplicate() {
 		// this.dialogRef.close(this.selectedEmployer);
-		this.router.navigate(['/admin/employers/' + this.selectedEmployer + '/jobs/' + this.data.jobid + '/copyjob'])
+		this.router.navigate(['/admin/employers/' + this.selectedEmployer + '/jobs/' + this.data.jobid + '/copyjob']);
 	}
 
 	submit() { }

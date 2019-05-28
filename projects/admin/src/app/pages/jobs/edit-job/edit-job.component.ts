@@ -286,12 +286,12 @@ export class EditJobComponent implements OnInit {
 			// console.log(this.jobDetails.markup_rate);
 			// console.log(this.jobDetails.markup_in);
 
-			if (this.jobDetails.markup_in == 'percentage') {
+			if (this.jobDetails.markup_in == '%') {
 				this.jobDetails.jobseeker_salary = (((1 - (Number(this.jobDetails.markup_rate) / 100)) * Number(this.jobDetails.charge_rate)).toFixed(1));
 				this.jobDetails.markup_amount = ((Number(this.jobDetails.charge_rate) - (1 - (Number(this.jobDetails.markup_rate) / 100)) * Number(this.jobDetails.charge_rate)).toFixed(1));
 			}
 
-			if (this.jobDetails.markup_in == 'sgdollar') {
+			if (this.jobDetails.markup_in == '$') {
 				this.jobDetails.jobseeker_salary = (Number(this.jobDetails.charge_rate) - Number(this.jobDetails.markup_rate)).toFixed(1);
 				this.jobDetails.markup_amount = Number(this.jobDetails.markup_rate).toFixed(1);
 			}
@@ -327,74 +327,74 @@ export class EditJobComponent implements OnInit {
 				response => {
 					if (response.success) {
 						const currentDate = this.datePipe.transform(new Date(), 'yyyy/MM/dd');
+						let result = response.result;
+						this.jobDetails.project_name = result.project_name;
+						this.jobDetails.department = result.department;
+						this.jobDetails.employement_type = result.employement_type;
+						this.jobDetails.job_name = result.job_name;
+						this.jobDetails.description = result.description;
 
-						this.jobDetails.project_name = response.job.project_name;
-						this.jobDetails.department = response.job.department;
-						this.jobDetails.employement_type = response.job.employement_type;
-						this.jobDetails.job_name = response.job.job_name;
-						this.jobDetails.description = response.job.description;
+						this.employmenttypeChange(result.employement_type);
 
-						this.employmenttypeChange(response.job.employement_type);
+						this.jobDetails.specializations = Number(result.specializations);
+						this.jobDetails.otherjobspecialization = result.otherjobspecialization;
+						this.jobDetails.working_environment = this.stringToArray(result.working_environment);
 
-						this.jobDetails.specializations = response.job.specializations;
-						this.jobDetails.otherjobspecialization = response.job.otherjobspecialization;
-						this.jobDetails.working_environment = response.job.working_environment;
+						this.jobDetails.pax_total = result.pax_total;
+						this.jobDetails.grace_period = Number(result.grace_period);
+						this.jobDetails.over_time_rounding = Number(result.over_time_rounding);
+						this.jobDetails.jobperiodfrom = new Date(result.from);
+						this.jobDetails.jobperiodto = new Date(result.to);
 
-						this.jobDetails.pax_total = response.job.pax_total;
-						this.jobDetails.grace_period = response.job.grace_period;
-						this.jobDetails.over_time_rounding = response.job.over_time_rounding;
-						this.jobDetails.jobperiodfrom = new Date(response.job.jobperiodfrom);
-						this.jobDetails.jobperiodto = new Date(response.job.jobperiodto);
-
-						if (new Date(currentDate + ' ' + response.job.starttime) > new Date(currentDate + ' ' + response.job.endtime)) {
-							this.jobDetails.starttime = new Date(currentDate + ' ' + response.job.starttime);
-							this.jobDetails.endtime = this.convertNextDay(currentDate + ' ' + response.job.endtime);
+						if (new Date(currentDate + ' ' + result.start_time) > new Date(currentDate + ' ' + result.end_time)) {
+							this.jobDetails.starttime = new Date(currentDate + ' ' + result.start_time);
+							this.jobDetails.endtime = this.convertNextDay(currentDate + ' ' + result.end_time);
 						} else {
-							this.jobDetails.starttime = new Date(currentDate + ' ' + response.job.starttime);
-							this.jobDetails.endtime = new Date(currentDate + ' ' + response.job.endtime);
+							this.jobDetails.starttime = new Date(currentDate + ' ' + result.start_time);
+							this.jobDetails.endtime = new Date(currentDate + ' ' + result.end_time);
 						}
 
-						this.jobDetails.work_days_type = response.job.work_days_type;
-						if (response.job.workdays) {
-							this.jobDetails.sunday = response.job.workdays.sunday;
-							this.jobDetails.monday = response.job.workdays.monday;
-							this.jobDetails.tuesday = response.job.workdays.tuesday;
-							this.jobDetails.wednesday = response.job.workdays.wednesday;
-							this.jobDetails.thursday = response.job.workdays.thursday;
-							this.jobDetails.friday = response.job.workdays.friday;
-							this.jobDetails.saturday = response.job.workdays.saturday;
+						this.jobDetails.work_days_type = String(result.work_days_type);
+						if (result.workdays) {
+							this.jobDetails.sunday = result.workdays.sunday;
+							this.jobDetails.monday = result.workdays.monday;
+							this.jobDetails.tuesday = result.workdays.tuesday;
+							this.jobDetails.wednesday = result.workdays.wednesday;
+							this.jobDetails.thursday = result.workdays.thursday;
+							this.jobDetails.friday = result.workdays.friday;
+							this.jobDetails.saturday = result.workdays.saturday;
 						}
 
-						this.jobDetails.postal_code = response.job.postal_code;
+						this.jobDetails.postal_code = result.postal_code;
 						// this.jobDetails.addressblock = response.job.addressblock;
-						this.jobDetails.address = response.job.address;
-						this.jobDetails.unit_no = response.job.unit_no;
-						this.jobDetails.region = response.job.addressregion;
-						this.jobDetails.location = response.job.location;
+						this.jobDetails.address = result.address;
+						this.jobDetails.unit_no = result.unit_no;
+						this.jobDetails.region = Number(result.region);
+						this.jobDetails.location = Number(result.location);
 
-						this.jobDetails.charge_rate = response.job.charge_rate;
-						this.jobDetails.markup_rate = response.job.markup_rate;
-						this.jobDetails.markup_in = response.job.markup_in;
-						this.jobDetails.jobseeker_salary = response.job.jobseeker_salary;
-						this.jobDetails.markup_amount = response.job.markup_amount;
+						this.jobDetails.charge_rate = result.charge_rate;
+						this.jobDetails.markup_rate = result.markup_rate;
+						this.jobDetails.markup_in = result.markup_in;
+						this.jobDetails.jobseeker_salary = result.jobseeker_salary;
+						this.jobDetails.markup_amount = result.markup_amount;
 
-						this.jobDetails.auto_offered = response.job.auto_offered;
-						this.jobDetails.auto_accepted = response.job.auto_accepted;
+						this.jobDetails.auto_offered = result.auto_offered;
+						this.jobDetails.auto_accepted = result.auto_accepted;
 
-						const oldBreaks = response.job.breaktime;
+						const oldBreaks = result.breaklist;
 						if (oldBreaks.length > 0) {
 							for (let i = 0; i < oldBreaks.length; i++) {
 								if (new Date(currentDate + ' ' + oldBreaks[i].breakstart) > new Date(currentDate + ' ' + oldBreaks[i].breakend)) {
 									this.jobDetails.breaks.push({
-										breakname: oldBreaks[i].breakname,
-										starttime: new Date(currentDate + ' ' + oldBreaks[i].breakstart),
-										endtime: this.convertNextDay(currentDate + ' ' + oldBreaks[i].breakend),
+										breakname: oldBreaks[i].break_name,
+										starttime: new Date(currentDate + ' ' + oldBreaks[i].from),
+										endtime: this.convertNextDay(currentDate + ' ' + oldBreaks[i].to),
 									});
 								} else {
 									this.jobDetails.breaks.push({
-										breakname: oldBreaks[i].breakname,
-										starttime: new Date(currentDate + ' ' + oldBreaks[i].breakstart),
-										endtime: new Date(currentDate + ' ' + oldBreaks[i].breakend),
+										breakname: oldBreaks[i].break_name,
+										starttime: new Date(currentDate + ' ' + oldBreaks[i].from),
+										endtime: new Date(currentDate + ' ' + oldBreaks[i].to),
 									});
 								}
 							}
