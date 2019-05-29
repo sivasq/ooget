@@ -50,7 +50,7 @@
 				<h4 class="pl-10">Featured Employers</h4>
 				<ngu-carousel #carousel [inputs]="carouselTile" [dataSource]="featuredEmployers" fxLayoutGap="10px">
 					<ngu-tile *nguCarouselDef="let featuredEmployer; let i = index;">
-						<img style="height: 100%; width: 100%;" src="{{imgBaseUrl}}/featured/{{featuredEmployer.featuredimage}}" />
+						<img style="height: 100%; width: 100%;" src="{{baseUrl}}/featured/{{featuredEmployer.featuredimage}}" />
 					</ngu-tile>
 
 					<!-- <button NguCarouselPrev class="leftRs" style="display: none;">&lt;</button>

@@ -75,7 +75,7 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 	public applied_jobs_list: any[] = [];
 
 	constructor(private urlconfig: ConfigService, private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar, private mockDataService: MockDataService) {
-		this.baseUrl = urlconfig.img_base_url;
+		this.baseUrl = urlconfig.base_url;
 		this.getAppliedJobsList();
 		this.getSpecializations();
 		this.getJobLocations();

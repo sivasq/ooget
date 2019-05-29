@@ -36,9 +36,8 @@ export class OogetsidenavComponent implements OnInit {
 			} else {
 				this.profileImage = 'assets/img/avatars/profile-placeholder.png';
 				setTimeout(() => {
-					console.log('Test');
 					this.profileImage = this.baseUrl + userLogo;
-				}, 1000 / 60);
+				}, 1000);
 			}
 		});
 	}
@@ -51,7 +50,7 @@ export class OogetsidenavComponent implements OnInit {
 	onLogout() {
 		localStorage.clear();
 		this.router.navigate(['logout']);
-		console.log("Logout Success");
+		console.log('Logout Success');
 	}
 
 	refreshLS() {
@@ -63,7 +62,7 @@ export class OogetsidenavComponent implements OnInit {
 		let userLogo = localStorage.getItem('ogUserLogo');
 
 		if (userLogo == null || userLogo == 'undefined') {
-			this.profileImage = "assets/img/avatars/profile-placeholder.png";
+			this.profileImage = 'assets/img/avatars/profile-placeholder.png';
 		} else {
 			this.profileImage = this.baseUrl + userLogo;
 		}
@@ -77,10 +76,10 @@ export class OogetsidenavComponent implements OnInit {
 		dialogConfig.autoFocus = true;
 		dialogConfig.width = '80vw';
 		dialogConfig.data = {
-			boxTitle: "Terms and Conditions",
+			boxTitle: 'Terms and Conditions',
 			// message: this.terms,
-			okButtonText: "Ok",
-			actionalign: "end"
+			okButtonText: 'Ok',
+			actionalign: 'end'
 		};
 		let dialog = this.dialog.open(TermsConditionsDialogComponent, dialogConfig);
 	}

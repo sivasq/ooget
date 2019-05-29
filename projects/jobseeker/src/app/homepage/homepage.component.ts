@@ -12,7 +12,7 @@ import { ConfigService } from '../services/config.service';
 })
 export class HomepageComponent implements OnInit, OnDestroy {
 	busy: Subscription; //busy Config
-	public imgBaseUrl;
+	public baseUrl;
 	public carouselTile: NguCarouselConfig;
 
 	public homePageContent: any = {
@@ -28,7 +28,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
 	public featuredEmployers: any[] = [];
 
 	constructor(private _httpService: ApiCallService, private urlconfig: ConfigService, ) {
-		this.imgBaseUrl = urlconfig.img_base_url1;
+		this.baseUrl = urlconfig.base_url;
 		this.getHomePageContents();
 		this.getFeaturedEmployers();
 	}

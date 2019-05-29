@@ -3,21 +3,16 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ConfigService {
 
-	// Local Testing Server Config
 	// public homePageUrl = "http://www.passafaila.com/ooget/";
-	public base_url = 'http://192.168.1.14/ooget/';
-	// public img_base_url = 'http://localhost:3051/ooget/media';
 
+	// Local Testing Server Config
+	// public base_url = 'http://192.168.1.14/ooget/';
 
 	// Cloud Testing Server Config
-	// public base_url = 'http://104.197.80.225:3010/ooget/jobseeker';
-	public img_base_url = 'http://104.197.80.225:3010/ooget/media/jobseeker';
-	public img_base_url1 = 'http://104.197.80.225:3010/ooget/media';
+	public base_url = 'http://104.197.80.225/ooget/';
 
 	// Main Server Config
 	// public base_url = "https://api.ooget.com.sg/ooget/jobseeker";
-	// public img_base_url = "https://api.ooget.com.sg/ooget/media/jobseeker";
-	// public img_base_url1 = "https://api.ooget.com.sg/ooget/media";
 
 	constructor() { }
 

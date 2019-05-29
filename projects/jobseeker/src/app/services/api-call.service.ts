@@ -39,7 +39,7 @@ export class InternetInterceptor implements HttpInterceptor {
 		if (!window.navigator.onLine) {
 			// if there is no internet, throw a HttpErrorResponse error
 			// since an error is thrown, the function will terminate here
-			return Observable.throw(new HttpErrorResponse({ error: 'Internet is required.' }));
+			return Observable.throwError(new HttpErrorResponse({ error: 'Internet is required.' }));
 
 		} else {
 			// else return the normal request
@@ -224,49 +224,49 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, contractid, { headers: headers, params: params });
 	}
 
-
-
-
-
-
-
-
-	// ======================================================
-
+	// JobSeeker PunchIn
 	punchIn(contractid): Observable<any> {
-		let jobId = '';
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/contract/punchin', contractid, { headers: headers });
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'PunchIn');
+		return this.http.post(this._baseUrl, contractid, { headers: headers, params: params });
 	}
 
+	// JobSeeker PunchOut
 	punchOut(contractid): Observable<any> {
-		let jobId = '';
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/contract/punchout', contractid, { headers: headers });
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'PunchOut');
+		return this.http.post(this._baseUrl, contractid, { headers: headers, params: params });
 	}
+
+
+
+
+
+
+
+
+
+
 
 	sendPunchLateReason(reason): Observable<any> {
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/contract/updatelatereason', reason, { headers: headers });
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'UpdateLateReason');
+		return this.http.post(this._baseUrl, reason, { headers: headers, params: params });
 	}
+
+	getAllFaqItems(): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'GetFaqList');
+		return this.http.post(this._baseUrl, {}, { headers: headers, params: params });
+	}
+
+	getJobseekersTC(): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'GetJobSeekerTerms');
+		return this.http.post(this._baseUrl, {}, { headers: headers, params: params });
+	}
+
+	// ======================================================
 
 	getHomePageContents(): Observable<any> {
 		const dummyData = '';
@@ -328,17 +328,6 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl + '/forgetpassword', userData, { headers: headers });
 	}
 
-	getContractDetails(contractid): Observable<any> {
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/contract/fetchparticularcontract', contractid, { headers: headers });
-	}
-
 	jobSeekerIdProofUpdate(jobSeekerProfileData, userID): Observable<any> {
 		// var authDatas = JSON.stringify(authData);
 		const userToken = localStorage.getItem('ogToken');
@@ -360,32 +349,5 @@ export class ApiCallService {
 				'token': userToken
 			});
 		return this.http.post(this._baseUrl + '/changepassword', jobSeekerPasswordData, { headers: headers });
-	}
-
-	getAllFaqItems(): Observable<any> {
-		// var authDatas = JSON.stringify(authData);
-		let dummy;
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/fetchfaqs', dummy, { headers: headers })
-			.map(res => res);
-	}
-
-	getJobseekersTC(): Observable<any> {
-		const dummyData = '';
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/fetchjobseekerterms', dummyData, { headers: headers })
-			.map(res => res);
 	}
 }

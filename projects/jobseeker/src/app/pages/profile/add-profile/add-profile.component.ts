@@ -1030,7 +1030,6 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 						if (profileImage !== '' || idProofFront !== '' || idProofBack !== '') {
 							this.uploadProfileDocs();
-
 						} else {
 							localStorage.setItem('ogUserName', this.jobSeekerProfileForm.get('firstname').value);
 							localStorage.setItem('ogUserEmail', this.jobSeekerProfileForm.get('email').value);
