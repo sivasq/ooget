@@ -16,12 +16,12 @@ import { JobActivationComponent } from '../dialogs/job-activation/job-activation
 })
 export class PendingJobsComponent implements OnInit {
 
-	//busy Config
+	// busy Config
 	busy: Subscription;
 
-	//set pending jobs array
+	// set pending jobs array
 	public pendingJobs: any[] = [];
-
+	companyDetails = '';
 	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public datePipe: DatePipe, public toUpperCase: UpperCasePipe, public texts: JsonToTextService, public dialog: MatDialog) {
 		this.getPendingJobsList();
 	}
@@ -31,9 +31,7 @@ export class PendingJobsComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-
-						this.pendingJobs = response.pendingjobs;
-
+						this.pendingJobs = response.result;
 					} else if (!response.success) {
 
 						console.log(response);

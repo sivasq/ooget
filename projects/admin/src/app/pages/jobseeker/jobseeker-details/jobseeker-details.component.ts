@@ -4,6 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 import { MenuPositionX, MatSnackBar, MatDialog, MatDialogConfig } from '@angular/material';
 import { ConfirmDialogComponent } from '../../../confirm-dialog/confirm-dialog.component';
 import { Subscription } from 'rxjs';
+import { JobRegion, JobLocation } from '../../../classes/jobLocation';
+import { Specialization } from '../../../classes/Specialization';
+import { WorkingEnvironment } from '../../../classes/WorkingEnvironment';
+import { isArray } from 'util';
+import { MockDataService } from '../../../services/mock-data.service';
 
 @Component({
 	selector: 'app-jobseeker-details',
@@ -26,7 +31,14 @@ export class JobseekerDetailsComponent implements OnInit {
 	public isUnderContract: boolean;
 	public helpTxt;
 
-	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar, public dialog: MatDialog) {
+	gender = ['', 'Male', 'Female'];
+	employmentType = ['', 'Part Time', 'Full Time'];
+	Regions: JobRegion[];
+	JobLocations: JobLocation[];
+	Specializations: Specialization[];
+	WorkingEnvironments: WorkingEnvironment[];
+
+	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar, public dialog: MatDialog, private mockDataService: MockDataService) {
 		this.employerId = this.route.snapshot.params['emp_id'];
 		this.empJobId = this.route.snapshot.params['job_id'];
 		this.jobseekerId = this.route.snapshot.params['js_id'];
@@ -34,10 +46,78 @@ export class JobseekerDetailsComponent implements OnInit {
 		let jobseekerId = {
 			jobseekerid: this.route.snapshot.params['js_id'],
 			jobid: this.empJobId
-		}
-		this.getJobSeekerDetails(jobseekerId);
+		};
+		this.getWorkingEnvironments();
+		this.getJobRegions();
+		this.getJobLocations();
+		this.getSpecializations();
+
+		this.getJobSeekerDetails({ 'jobseekerid': this.route.snapshot.params['js_id'] });
+	}
+	getWorkingEnvironments(): void {
+		this.mockDataService.getWorkingEnvironments()
+			.subscribe(WorkingEnvironments => this.WorkingEnvironments = WorkingEnvironments);
+	}
+	getJobRegions(): void {
+		this.mockDataService.getJobRegions()
+			.subscribe(Regions => this.Regions = Regions);
+	}
+	getJobLocations(): void {
+		this.mockDataService.getJobLocations()
+			.subscribe(Locations => this.JobLocations = Locations);
+	}
+	getSpecializations(): void {
+		this.mockDataService.getSpecializations()
+			.subscribe(Specializations => this.Specializations = Specializations);
+	}
+	getJobSpecializationName(SpecializationId) {
+		if (SpecializationId == '' || SpecializationId == undefined) { return false; }
+
+		// let filteredSpecializations = this.Specializations.filter(specialization => specialization.id == SpecializationId);
+		// return filteredSpecializations[0].name;
+		let SpecializationIds = this.stringToArray(SpecializationId);
+		let filteredEnv = SpecializationIds.map(SpecializationId => {
+			return this.Specializations.filter(Specialization => Specialization.id == SpecializationId);
+		});
+		let filteredName = filteredEnv.map(env => env[0].name);
+		return this.ArrayToString(filteredName);
+		// console.log(this.ArrayToString(filteredName));
+		// return filteredName;
 	}
 
+	getRegionName(regionId) {
+		if (regionId == '' || regionId == undefined) { return false; }
+		// let filteredRegions = this.Regions.filter(region => region.id == regionId);
+		// return filteredRegions[0].name;
+		let regionIds = this.stringToArray(regionId);
+		let filteredEnv = regionIds.map(regionid => {
+			return this.Regions.filter(Region => Region.id == regionid);
+		});
+		let filteredName = filteredEnv.map(env => env[0].name);
+		return this.ArrayToString(filteredName);
+	}
+
+	getJobLocationName(locationId) {
+		if (locationId == '' || locationId == undefined) { return false; }
+		// let filteredLocation = this.JobLocations.filter(location => location.id == locationId);
+		// return filteredLocation[0].name;
+		let locationIds = this.stringToArray(locationId);
+		let filteredEnv = locationIds.map(locationId => {
+			return this.JobLocations.filter(JobLocation => JobLocation.id == locationId);
+		});
+		let filteredName = filteredEnv.map(env => env[0].name);
+		return this.ArrayToString(filteredName);
+	}
+
+	getWorkingEnvironmentName(envId) {
+		if (envId == '' || envId == undefined) { return false; }
+		let envIds = this.stringToArray(envId);
+		let filteredEnv = envIds.map(envid => {
+			return this.WorkingEnvironments.filter(workEnv => workEnv.id == envid);
+		});
+		let filteredName = filteredEnv.map(env => env[0].name);
+		return this.ArrayToString(filteredName);
+	}
 	isInArray(array, word) {
 		// console.log(array.indexOf(word));
 		// console.log(array.includes(word));
@@ -47,11 +127,19 @@ export class JobseekerDetailsComponent implements OnInit {
 	}
 
 	getJobSeekerDetails(jobseekerId) {
-		this.busy = this._httpService.getJobSeekerDetails(jobseekerId)
+		this.busy = this._httpService.getJobseekerApplicationDetails(jobseekerId)
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.jobSeekerDetails = response.jobseeker;
+						if (this.IsJsonString(response.result[0].experience_details)) {
+							let expDetails = JSON.parse(response.result[0].experience_details);
+							response.result[0].experience_details = expDetails;
+							console.log(expDetails);
+						} else {
+							response.result[0].experience_details = [];
+						}
+
+						this.jobSeekerDetails = response.result[0];
 
 						// let jobsselected: any[] = [];
 						// let jobssigned: any[] = [];
@@ -65,9 +153,9 @@ export class JobseekerDetailsComponent implements OnInit {
 						// let isOfferRejected = this.isInArray(jobsrejected, this.empJobId);
 						// let isUnderOffered = this.isInArray(jobsselected, this.empJobId);
 
-						let isUnderContract = this.jobSeekerDetails.jobs.filter(e => e.jobid === this.empJobId && e.accepted).length > 0;
-						let isOfferRejected = this.jobSeekerDetails.jobs.filter(e => e.jobid === this.empJobId && e.rejected).length > 0;
-						let isUnderOffered = this.jobSeekerDetails.jobs.filter(e => e.jobid === this.empJobId && e.offered).length > 0;
+						let isUnderContract = this.jobSeekerDetails.offer_accepted;
+						let isOfferRejected = this.jobSeekerDetails.offer_rejected;
+						let isUnderOffered = this.jobSeekerDetails.offered_on;
 
 						if (isUnderContract) {
 							this.isUnderContract = true;
@@ -95,16 +183,25 @@ export class JobseekerDetailsComponent implements OnInit {
 			);
 	}
 
-	selectApplication() {
+	IsJsonString(str) {
+		try {
+			JSON.parse(str);
+		} catch (e) {
+			return false;
+		}
+		return true;
+	}
+
+	selectApplication(applicationId) {
 		let dialogConfig = new MatDialogConfig();
 		dialogConfig.disableClose = true;
 		dialogConfig.autoFocus = true;
 		dialogConfig.data = {
-			boxTitle: "Confirmation",
-			confirmMsg: "<p>Are You Sure to Select This Candidate ?</p>",
-			okButtonText: "Yes",
-			noButtonText: "No",
-			actionalign: "center"
+			boxTitle: 'Confirmation',
+			confirmMsg: '<p>Are You Sure to Select This Candidate ?</p>',
+			okButtonText: 'Yes',
+			noButtonText: 'No',
+			actionalign: 'center'
 		};
 		let dialogref = this.dialog.open(ConfirmDialogComponent, dialogConfig);
 
@@ -112,7 +209,7 @@ export class JobseekerDetailsComponent implements OnInit {
 			data => {
 				// this.confirmResponse(data)
 				if (data == 'yes') {
-					this.confirmSelectApplication();
+					this.confirmSelectApplication(applicationId);
 				} else if (data == 'no') {
 					console.log('no');
 				}
@@ -120,16 +217,16 @@ export class JobseekerDetailsComponent implements OnInit {
 		);
 	}
 
-	confirmSelectApplication() {
+	confirmSelectApplication(applicationId) {
 		console.log({ jobid: this.empJobId, jobseekerid: this.jobseekerId });
-		this.busy = this._httpService.selectApplication({ jobid: this.empJobId, jobseekerid: this.jobseekerId })
+		this.busy = this._httpService.selectApplication({ contracts_id: applicationId })
 			.subscribe(
 				response => {
 					if (response.success) {
 						this.isUnderContract = false;
 						this.isOfferRejected = false;
 						this.isUnderOffered = true;
-						
+
 						this.helpTxt = 'Offer Sent for this Job';
 
 						let snackBarRef = this.snackBar.open('The Candidate Selected For This Job.', 'Close', {
@@ -155,6 +252,28 @@ export class JobseekerDetailsComponent implements OnInit {
 					console.log(error);
 				}
 			);
+	}
+
+	ArrayToString(dataArray) {
+		if (isArray(dataArray)) {
+			dataArray.map(function (e) {
+				// return JSON.stringify(e);
+				return e;
+			});
+			return dataArray.join(', ');
+		}
+	}
+
+	stringToArray(dataString) {
+		if (typeof dataString !== 'undefined' && dataString) {
+			if (dataString.includes(',')) {
+				return dataString.split(',').map(Number);
+			} else {
+				return [dataString].map(Number);
+			}
+		} else {
+			return [];
+		}
 	}
 
 	ngOnInit() { }

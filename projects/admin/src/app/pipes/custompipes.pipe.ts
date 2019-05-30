@@ -45,10 +45,10 @@ export class SubLocationFilter implements PipeTransform {
 	name: 'datex'
 })
 export class DatexPipe implements PipeTransform {
-	transform(value: string, format: string = ""): any {
+	transform(value: string, format: string = ''): any {
 		// console.log(value);
 		// console.log(format);
-		if (!value || value === "") return "";
+		if (!value || value === '') return '';
 		return moment(value).format(format);
 	}
 }
@@ -92,8 +92,8 @@ export class AgePipe implements PipeTransform {
 		let today = moment();
 		let birthdate = moment(newvalue);
 		let years = today.diff(birthdate, 'years');
-		let html: string = years + " yr ";
-		html += today.subtract(years, 'years').diff(birthdate, 'months') + " mo";
+		let html: string = years + ' yr ';
+		html += today.subtract(years, 'years').diff(birthdate, 'months') + ' month';
 		return html;
 	}
 

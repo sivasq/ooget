@@ -9,7 +9,7 @@ import { ConfigService } from '../../services/config.service';
 	styleUrls: ['./jobseekers-grid-view.component.scss']
 })
 export class JobseekersGridViewComponent implements OnInit {
-	public imgBaseUrl;
+	public baseUrl;
 	public jobSeekers: any[];
 	private _jobSeekers = new BehaviorSubject<any[]>([]);
 
@@ -20,7 +20,7 @@ export class JobseekersGridViewComponent implements OnInit {
 	@Input()
 	set setJobSeekers(value) {
 		this._jobSeekers.next(value);
-	};
+	}
 
 	get getJobSeekers() {
 		return this._jobSeekers.getValue();
@@ -37,18 +37,18 @@ export class JobseekersGridViewComponent implements OnInit {
 	};
 
 	constructor(private urlconfig: ConfigService) {
-		this.imgBaseUrl = urlconfig.img_base_url;
+		this.baseUrl = urlconfig.base_url;
 	}
 
 	toggleJobseekerStatus(event, jobSeekerId) {
-		console.log("event");
+		console.log('event');
 		this.emitToggleJobseekerStatus.emit({ 'jobSeekerId': jobSeekerId, 'activeStatus': event.checked });
 	}
 
 	ngOnInit() {
 		this._jobSeekers.subscribe(x => {
 			this.jobSeekers = this.getJobSeekers;
-			console.log(x);
+			// console.log(x);
 		});
 	}
 

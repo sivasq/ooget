@@ -18,9 +18,9 @@ export class AppliedJobseekerListComponent implements OnInit {
 	employerId;
 	empJobId;
 
-	//Mat Menu Configuration
-	@Input() xPosition: MenuPositionX
-	@Input() overlapTrigger: boolean
+	// Mat Menu Configuration
+	@Input() xPosition: MenuPositionX;
+	@Input() overlapTrigger: boolean;
 
 	public pageSizeOptions = [5, 10, 15, 20, 30, 50, 100, 250];
 
@@ -35,17 +35,17 @@ export class AppliedJobseekerListComponent implements OnInit {
 	public tab1PaginateControlMaxSize: number = 10;
 	public tab1PaginateControlAutoHide: boolean = true;
 
-	//set Company Details
+	// set Company Details
 	public companyDetails: any;
 	public jobDetails: any;
-
+	jobStatus = ['', 'Pending', 'Live', 'Closed'];
 	constructor(private _httpService: ApiCallService, private route: ActivatedRoute) {
 		this.employerId = this.route.snapshot.params['emp_id'];
 		this.empJobId = this.route.snapshot.params['job_id'];
 		let jobId = {
 			jobid: this.route.snapshot.params['job_id'],
 		}
-		this.getAppliedCandidates(jobId);
+		this.getAppliedCandidates({ 'jobid': this.route.snapshot.params['job_id'] });
 	}
 
 	public isCandidatesAvailable: boolean;
@@ -85,16 +85,16 @@ export class AppliedJobseekerListComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						if ((response.appliedjobseekers).length > 0) {
+						if ((response.result).length > 0) {
 							this.isCandidatesAvailable = true;
 						} else {
 							this.isCandidatesAvailable = false;
 						}
 
 						// console.log(response.job.candidatesapplied);
-						this.candidates_list = response.appliedjobseekers;
-						this.companyDetails = response.companydetails[0];
-						this.jobDetails = response.jobdetails;
+						this.candidates_list = response.result;
+						this.companyDetails = response.result[0];
+						this.jobDetails = response.result[0];
 						// console.log(this.companyDetails);
 
 					} else if (!response.success) {
@@ -106,7 +106,5 @@ export class AppliedJobseekerListComponent implements OnInit {
 				}
 			);
 	}
-
 	ngOnInit() { }
-
 }

@@ -181,19 +181,19 @@ export class SavedJobsComponent implements OnInit, OnDestroy {
 			this.saved_jobs_list = [];
 			this.saved_jobs_list = this.jobs.filter((jobs: any) => {
 				if (this.search.parttime && !this.search.fulltime) {
-					return jobs.employement_type == 1 && (jobs.jobseeker_salary >= this.search.minsalary && jobs.jobseeker_salary <= this.search.maxsalary);
+					return jobs.employment_type == 1 && (jobs.jobseeker_salary >= this.search.minsalary && jobs.jobseeker_salary <= this.search.maxsalary);
 				}
 
 				if (!this.search.parttime && this.search.fulltime) {
-					return jobs.employement_type == 2 && (jobs.jobseeker_salary >= this.search.minsalary && jobs.jobseeker_salary <= this.search.maxsalary);
+					return jobs.employment_type == 2 && (jobs.jobseeker_salary >= this.search.minsalary && jobs.jobseeker_salary <= this.search.maxsalary);
 				}
 
 				if (this.search.parttime && this.search.fulltime) {
-					return (jobs.employement_type == 2 || jobs.employement_type == 1) && (jobs.jobseeker_salary >= this.search.minsalary && jobs.jobseeker_salary <= this.search.maxsalary);
+					return (jobs.employment_type == 2 || jobs.employment_type == 1) && (jobs.jobseeker_salary >= this.search.minsalary && jobs.jobseeker_salary <= this.search.maxsalary);
 				}
 
 				if (!this.search.parttime && !this.search.fulltime) {
-					return (jobs.employement_type == 2 || jobs.employement_type == 1) && (jobs.jobseeker_salary >= this.search.minsalary && jobs.jobseeker_salary <= this.search.maxsalary);
+					return (jobs.employment_type == 2 || jobs.employment_type == 1) && (jobs.jobseeker_salary >= this.search.minsalary && jobs.jobseeker_salary <= this.search.maxsalary);
 				}
 			})
 

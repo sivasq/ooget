@@ -22,6 +22,8 @@ import * as _ from 'lodash';
 import { UserRole } from '../classes/userRole';
 import { UserRoles } from '../mock-datas/userRoles';
 import { Specializations } from '../mock-datas/specializations';
+import { BankDetail } from '../classes/bankDetail';
+import { BankDetails } from '../mock-datas/bankDetails';
 
 @Injectable({
 	providedIn: 'root'
@@ -33,6 +35,10 @@ export class MockDataService {
 	// getIndustries(): Industry[] {
 	// 	return Industries;
 	// }
+
+	getBankDetails(): Observable<BankDetail[]> {
+		return of(BankDetails);
+	}
 
 	getIndustries(): Observable<Industry[]> {
 		return of(Industries);

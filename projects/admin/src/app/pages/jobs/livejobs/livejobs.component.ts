@@ -12,14 +12,11 @@ import { Subscription } from 'rxjs';
 })
 export class LivejobsComponent implements OnInit {
 
-	//busy Config
-	busy: Subscription;
-
-	//set Live jobs array
-	public liveJobs: any[] = [];
-
+	public liveJobs: any[] = []; // set Live jobs array
+	busy: Subscription; // busy Config
+	isJobsAvailable;
+	companyDetails = '';
 	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public datePipe: DatePipe, public toUpperCase: UpperCasePipe, public texts: JsonToTextService) {
-		this.getLiveJobsList();
 	}
 
 	getLiveJobsList() {
@@ -27,11 +24,13 @@ export class LivejobsComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-
-						this.liveJobs = response.livejobs;
-
+						if (response.result.length > 0) {
+							this.liveJobs = response.result;
+							this.isJobsAvailable = true;
+						} else {
+							this.isJobsAvailable = false;
+						}
 					} else if (!response.success) {
-
 						console.log(response);
 					}
 				},
@@ -41,5 +40,7 @@ export class LivejobsComponent implements OnInit {
 			);
 	}
 
-	ngOnInit() { }
+	ngOnInit() {
+		this.getLiveJobsList();
+	}
 }

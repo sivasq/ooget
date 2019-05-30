@@ -147,8 +147,9 @@
 		</div>
 	</div> -->
 	<!-- Pagination End -->
-
-	<app-jobs-grid-view [setJobs]="liveJobs"></app-jobs-grid-view>
+	<div *ngIf="isJobsAvailable">
+		<app-jobs-grid-view [setJobs]="liveJobs" [companyDetails]="companyDetails"></app-jobs-grid-view>
+	</div>
 	<!-- <app-jobs-grid-view [setJobs]="liveJobs"></app-jobs-grid-view> -->
 
 	<!-- <div *ngIf="liveJobs.length == 0" fxLayout="column" fxLayoutAlign="center center" class="no-data"

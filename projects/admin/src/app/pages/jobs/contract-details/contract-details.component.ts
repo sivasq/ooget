@@ -374,7 +374,7 @@ export class ContractDetailsComponent implements OnInit {
 
 	// ================================================================================
 	getContractDetails(contractId) {
-		this.busy = this._httpService.getContractDetails(contractId)
+		this.busy = this._httpService.getJobseekerApplicationDetails(contractId)
 			.subscribe(
 				response => {
 					if (response.success) {

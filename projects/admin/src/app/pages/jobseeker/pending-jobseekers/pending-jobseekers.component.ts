@@ -10,16 +10,16 @@ import { MatSnackBar } from '@angular/material';
 })
 export class PendingJobseekersComponent implements OnInit {
 
-	//set employers Array
+	// set employers Array
 	public jobseekers_list: any[] = [];
 
-	//busy Config
+	// busy Config
 	busy: Subscription;
 
 	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar) { }
 
 	toggleJobseekerStatus(event) {
-		this.busy = this._httpService.changeJobseekerStatus({ jobseekerid: event.jobSeekerId, activestatus: event.activeStatus })
+		this.busy = this._httpService.changeJobseekerStatus({ jobseekerid: event.jobSeekerId, status: event.activeStatus })
 			.subscribe(
 				response => {
 					if (response.success) {
@@ -39,6 +39,7 @@ export class PendingJobseekersComponent implements OnInit {
 							});
 						}
 					} else if (!response.success) {
+						console.log(event);
 						console.log(response);
 					}
 				},
@@ -53,7 +54,7 @@ export class PendingJobseekersComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.jobseekers_list = response.pendingjobseekers;
+						this.jobseekers_list = response.result;
 					} else if (!response.success) {
 						console.log(response);
 					}

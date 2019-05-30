@@ -19,13 +19,13 @@ export class JobsGridViewComponent implements OnInit {
 	@Input()
 	set setJobs(value) {
 		this._jobs.next(value);
-	};
+	}
 
 	get getJobs() {
 		return this._jobs.getValue();
 	}
 
-	employmentType = ['Part Time', 'Full Time'];
+	employmentType = ['', 'Part Time', 'Full Time'];
 	jobStatus = ['', 'Pending', 'Live', 'Closed'];
 
 	toggleShowSearch: boolean = false;
@@ -51,9 +51,9 @@ export class JobsGridViewComponent implements OnInit {
 	ngOnInit() {
 		this._jobs.subscribe(x => {
 			this.jobs = this.getJobs.sort((val1, val2) => {
-				return <any>new Date(val1.jobperiodfrom) - <any>new Date(val2.jobperiodfrom)
-				// return new Date(val2.jobperiodfrom).getTime() - new Date(val1.jobperiodfrom).getTime()
-			})
+				return <any>new Date(val1.from) - <any>new Date(val2.from);
+				// return new Date(val2.from).getTime() - new Date(val1.from).getTime()
+			});
 			// console.log(x);
 		});
 	}

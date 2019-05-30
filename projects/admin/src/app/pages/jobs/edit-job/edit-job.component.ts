@@ -45,7 +45,7 @@ export class EditJobComponent implements OnInit {
 	public jobDetails: any = {
 		project_name: '',
 		department: '',
-		employement_type: '',
+		employment_type: '',
 		job_name: '',
 		description: '',
 
@@ -330,11 +330,11 @@ export class EditJobComponent implements OnInit {
 						let result = response.result;
 						this.jobDetails.project_name = result.project_name;
 						this.jobDetails.department = result.department;
-						this.jobDetails.employement_type = result.employement_type;
+						this.jobDetails.employment_type = result.employment_type;
 						this.jobDetails.job_name = result.job_name;
 						this.jobDetails.description = result.description;
 
-						this.employmenttypeChange(result.employement_type);
+						this.employmenttypeChange(result.employment_type);
 
 						this.jobDetails.specializations = Number(result.specializations);
 						this.jobDetails.otherjobspecialization = result.otherjobspecialization;

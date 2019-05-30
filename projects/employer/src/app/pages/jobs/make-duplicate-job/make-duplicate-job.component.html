@@ -53,9 +53,9 @@
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Employment Type</mat-label>
-										<mat-select placeholder="Employment Type" name="employement_type"
+										<mat-select placeholder="Employment Type" name="employment_type"
 											(ngModelChange)="employmenttypeChange($event)"
-											[(ngModel)]="jobDetails.employement_type">
+											[(ngModel)]="jobDetails.employment_type">
 											<mat-option *ngFor="let EmploymentType of EmploymentTypes"
 												[value]="EmploymentType.id">{{
 												EmploymentType.name }}</mat-option>

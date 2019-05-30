@@ -45,7 +45,7 @@ export class AddJobComponent implements OnInit {
 	public jobDetails: any = {
 		project_name: '',
 		department: '',
-		employement_type: '',
+		employment_type: '',
 		job_name: '',
 		description: '',
 

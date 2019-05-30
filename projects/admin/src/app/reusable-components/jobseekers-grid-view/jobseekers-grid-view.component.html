@@ -23,13 +23,13 @@
 			<mat-card class="p-0">
 				<div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
 					<h3 class="user-name pointer" matTooltip="Click to View Details" matTooltipPosition="below"
-						routerLink="/admin/jobseekers/{{jobseeker._id}}/details">{{jobseeker.username | uppercase}}</h3>
+						routerLink="/admin/jobseekers/{{jobseeker.id}}/details">{{jobseeker.firstname | uppercase}}</h3>
 					<button mat-icon-button [matMenuTriggerFor]=i>
 						<mat-icon>more_vert</mat-icon>
 					</button>
 				</div>
 				<mat-menu #i="matMenu" xPosition="before" overlapTrigger=true>
-					<button mat-menu-item routerLink="/admin/jobseekers/{{jobseeker._id}}/details">
+					<button mat-menu-item routerLink="/admin/jobseekers/{{jobseeker.id}}/details">
 						<mat-icon>visibility</mat-icon>
 						<span>View Details</span>
 					</button>
@@ -37,28 +37,28 @@
 
 				<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
 					<div fxFlex="1 1 30%" fxLayout="column" fxLayoutAlign="center center">
-						<div class="user-img" *ngIf="jobseeker.jobseekerimage">
-							<img class="transition-2 ng-star-inserted"
-								src="{{imgBaseUrl}}/jobseeker/{{jobseeker.jobseekerimage}}">
-							<mat-icon *ngIf="!jobseeker.activestatus" color="warn">block</mat-icon>
+						<div class="user-img" *ngIf="jobseeker.imgpath">
+							<img class="transition-2 ng-star-inserted" src="{{baseUrl}}/{{jobseeker.imgpath}}"
+								onError="this.src='assets/img/avatars/profile-placeholder.png'">
+							<mat-icon *ngIf="!jobseeker.status" color="warn">block</mat-icon>
 						</div>
-						<div class="user-img" *ngIf="!jobseeker.jobseekerimage">
+						<div class="user-img" *ngIf="!jobseeker.imgpath">
 							<img class="transition-2 ng-star-inserted" src="assets/img/avatars/profile-placeholder.png">
-							<mat-icon *ngIf="!jobseeker.activestatus" color="warn">block</mat-icon>
+							<mat-icon *ngIf="!jobseeker.status" color="warn">block</mat-icon>
 						</div>
 						<div class="user-social">
-							<mat-slide-toggle color="primary" (change)="toggleJobseekerStatus($event,jobseeker._id)"
-								[checked]=jobseeker.activestatus></mat-slide-toggle>
+							<mat-slide-toggle color="primary" (change)="toggleJobseekerStatus($event,jobseeker.id)"
+								[checked]="jobseeker.status == 1"></mat-slide-toggle>
 						</div>
 					</div>
 
-					<div class="user-details transition-2" [ngClass]="{'blocked' : !jobseeker.activestatus}" fxFlex="70"
+					<div class="user-details transition-2" [ngClass]="{'blocked' : !jobseeker.status}" fxFlex="70"
 						fxLayout="column">
-						<p fxLayout="row" fxLayoutAlign="start center" [ngClass]="{'nulled' : !jobseeker.username}">
+						<p fxLayout="row" fxLayoutAlign="start center" [ngClass]="{'nulled' : !jobseeker.firstname}">
 							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 								perm_identity</mat-icon>
-							<span *ngIf="jobseeker.username">{{jobseeker.username}}</span>
-							<span *ngIf="!jobseeker.username" style="font-style: italic;">Nill</span>
+							<span *ngIf="jobseeker.firstname">{{jobseeker.firstname}}</span>
+							<span *ngIf="!jobseeker.firstname" style="font-style: italic;">Nill</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center" [ngClass]="{'nulled' : !jobseeker.email}">
 							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
@@ -66,11 +66,11 @@
 							<span *ngIf="jobseeker.email">{{jobseeker.email}}</span>
 							<span *ngIf="!jobseeker.email" style="font-style: italic;">Nill</span>
 						</p>
-						<p fxLayout="row" fxLayoutAlign="start center" [ngClass]="{'nulled' : !jobseeker.mobileno}">
+						<p fxLayout="row" fxLayoutAlign="start center" [ngClass]="{'nulled' : !jobseeker.phone}">
 							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">phone
 							</mat-icon>
-							<span *ngIf="jobseeker.mobileno">{{jobseeker.mobileno}}</span>
-							<span *ngIf="!jobseeker.mobileno" style="font-style: italic;">Nill</span>
+							<span *ngIf="jobseeker.phone">{{jobseeker.phone}}</span>
+							<span *ngIf="!jobseeker.phone" style="font-style: italic;">Nill</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center" [ngClass]="{'nulled' : !jobseeker.country}">
 							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">

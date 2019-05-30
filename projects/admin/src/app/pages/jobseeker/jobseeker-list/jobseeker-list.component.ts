@@ -53,7 +53,7 @@ export class JobseekerListComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.jobseekers_list = response.jobseekers;
+						this.jobseekers_list = response.result;
 					} else if (!response.success) {
 						console.log(response);
 					}
