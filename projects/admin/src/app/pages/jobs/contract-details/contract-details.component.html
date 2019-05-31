@@ -14,25 +14,25 @@
 					<span class="breadcrumb-title">Employers</span>
 				</a>
 
-				<a class="breadcrumb-item" routerLink="/admin/employers/{{contractJobDetails?.companyid?._id}}/view"
+				<a class="breadcrumb-item" routerLink="/admin/employers/{{contractJobDetails?.employer_id}}/view"
 					fxLayout="row" fxLayoutAlign="center center">
-					<span class="breadcrumb-title">{{contractJobDetails?.companyid?.companyname}}</span>
+					<span class="breadcrumb-title">{{contractJobDetails?.employer_name}}</span>
 				</a>
 
-				<a class="breadcrumb-item"
-					routerLink="/admin/employers/{{contractJobDetails?.companyid?._id}}/jobs/list" fxLayout="row"
-					fxLayoutAlign="center center">
+				<a class="breadcrumb-item" routerLink="/admin/employers/{{contractJobDetails?.employer_id}}/jobs/list"
+					fxLayout="row" fxLayoutAlign="center center">
 					<span class="breadcrumb-title">Jobs</span>
 				</a>
 
 				<a class="breadcrumb-item"
-					routerLink="/admin/employers/{{contractJobDetails?.companyid?._id}}/jobs/{{contractJobDetails?._id}}/view"
+					routerLink="/admin/employers/{{contractJobDetails?.employer_id}}/jobs/{{contractJobDetails?.job_id}}/view"
 					fxLayout="row" fxLayoutAlign="center center">
-					<span class="breadcrumb-title">{{contractJobDetails?.jobtitle | trim }}</span>
+					<span class="breadcrumb-title">{{contractJobDetails?.job_name | trim }}</span>
 				</a>
 
 				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
-					<span class="breadcrumb-title active">{{contractorDetails?.username | trim }} (Contractor)</span>
+					<span class="breadcrumb-title active">{{contractorDetails?.jobseeker_name | trim }}
+						(Contractor)</span>
 				</div>
 			</mat-card>
 		</div>
@@ -48,28 +48,33 @@
 				<div style="font-size:14px; letter-spacing: 1px;">
 					This Contract is between
 					<a style="color: blue; text-decoration: underline;"
-						routerLink="/admin/employers/{{contractJobDetails?.companyid?._id}}/jobs/{{contractJobDetails?._id}}/view">
+						routerLink="/admin/employers/{{contractJobDetails?.employer_id}}/jobs/{{contractJobDetails?.job_id}}/view">
 						<span
-							style="font-weight: bold; font-style: italic;">{{contractJobDetails?.jobtitle | trim }}</span>
+							style="font-weight: bold; font-style: italic;">{{contractJobDetails?.job_name | trim }}</span>
 					</a>
 					<span style="font-size: smaller;">(Job)</span> by
 
 					<a style="color: blue; text-decoration: underline;"
-						routerLink="/admin/employers/{{contractJobDetails?.companyid?._id}}/view">
+						routerLink="/admin/employers/{{contractJobDetails?.employer_id}}/view">
 						<span
-							style="font-weight: bold; font-style: italic;">{{contractJobDetails?.companyid?.companyname | trim }}</span>
+							style="font-weight: bold; font-style: italic;">{{contractJobDetails?.employer_name | trim }}</span>
 					</a>
 					<span style="font-size: smaller;">(company)</span> and
 
 					<a style="color: blue; text-decoration: underline;"
-						routerLink="/admin/jobseekers/{{contractorDetails?._id}}/details">
+						routerLink="/admin/jobseekers/{{contractorDetails?.jobseeker_id}}/details">
 						<span
-							style="font-weight: bold; font-style: italic;">{{contractorDetails?.username | trim }}</span>
+							style="font-weight: bold; font-style: italic;">{{contractorDetails?.jobseeker_name | trim }}</span>
 					</a>
 					<span style="font-size: smaller;">(Contractor)</span>
 				</div>
 			</mat-card>
 		</div>
+
+		<button mat-raised-button color="primary" (click)="getPreviousDays()">previous</button>
+		<button mat-raised-button color="primary" (click)="getCurrentDays()">current</button>
+		<button mat-raised-button color="primary" (click)="getNextDays()">next</button>
+
 
 		<!-- Contract Details -->
 		<div class="flex-p" fxFlex="100">
@@ -78,23 +83,23 @@
 					<p fxLayout="row" fxLayoutAlign="start center">
 						<!-- <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon> -->
 						<span class="key">Contractor Name : </span>
-						<span class="value">{{contractorDetails?.username}}</span>
+						<span class="value">{{contractorDetails?.jobseeker_name}}</span>
 					</p>
 					<p fxLayout="row" fxLayoutAlign="start center">
 						<!-- <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon> -->
 						<span class="key">Contractor EMail : </span>
-						<span class="value">{{contractorDetails?.email}}</span>
+						<span class="value">{{contractorDetails?.jobseeker_email}}</span>
 					</p>
 					<p fxLayout="row" fxLayoutAlign="start center">
 						<!-- <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon> -->
 						<span class="key">Contractor Mobile : </span>
-						<span class="value">{{contractorDetails?.mobileno}}</span>
+						<span class="value">{{contractorDetails?.jobseeker_phone}}</span>
 					</p>
 
 					<p fxLayout="row" fxLayoutAlign="start center">
 						<!-- <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon> -->
 						<span class="key">Job Period : </span>
-						<span class="value">{{contractJobDetails?.jobperiodfrom | date:'dd/MM/yyyy'}} - {{contractJobDetails?.jobperiodto
+						<span class="value">{{contractJobDetails?.job_start_date | date:'dd/MM/yyyy'}} - {{contractJobDetails?.job_end_date
 							|
 							date:'dd/MM/yyyy'}}
 						</span>
@@ -103,41 +108,42 @@
 					<p fxLayout="row" fxLayoutAlign="start center">
 						<!-- <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon> -->
 						<span class="key">Working Time : </span>
-						<span class="value">{{contractJobDetails?.starttime}} - {{contractJobDetails?.endtime}}</span>
+						<span class="value">{{contractJobDetails?.job_start_time}} -
+							{{contractJobDetails?.job_end_time}}</span>
 					</p>
 
 					<p fxLayout="row" fxLayoutAlign="start center">
 						<!-- <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon> -->
 						<span class="key">Grace Period : </span>
-						<span class="value">{{contractJobDetails?.graceperiod}} Mins</span>
+						<span class="value">{{contractJobDetails?.grace_period}} Mins</span>
 					</p>
 
 					<p fxLayout="row" fxLayoutAlign="start center">
 						<!-- <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon> -->
 						<span class="key">OT Rounding : </span>
-						<span class="value">{{contractJobDetails?.overtimerounding}} Mins</span>
+						<span class="value">{{contractJobDetails?.over_time_rounding}} Mins</span>
 					</p>
 
 					<p fxLayout="row" fxLayoutAlign="start center">
 						<!-- <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon> -->
 						<span class="key">Jobseeker Salary : </span>
-						<span class="value">S$ {{contractJobDetails?.salary}}</span>
+						<span class="value">S$ {{contractJobDetails?.jobseeker_salary}}</span>
 					</p>
 				</div>
 
 				<div class="user-details transition-2" style="padding: 0" fxFlexAlign="start">
-					<h4 style="padding: 5px;">
+					<!-- <h4 style="padding: 5px;">
 						Break Details
-					</h4>
+					</h4> -->
 
-					<p fxLayout="row" fxLayoutAlign="start center" *ngFor="let break of contractJobDetails?.breaktime">
+					<!-- <p fxLayout="row" fxLayoutAlign="start center" *ngFor="let break of contractJobDetails?.breaktime">
 						<span class="key text-capitalize">{{break.breakname}} : </span>
 						<span class="value">{{break.breakstart}} to {{break.breakend}}</span>
-					</p>
+					</p> -->
 
 					<p fxLayout="row" fxLayoutAlign="start center" style="border: 1px solid #ccc;">
 						<span class="key">Contract Status : </span>
-						<span class="value">{{contractDetails?.contractstatus | titlecase}}</span>
+						<span class="value">{{contractStatus[contractDetails?.deleted] | titlecase}}</span>
 					</p>
 				</div>
 			</mat-card>
@@ -158,7 +164,7 @@
 						</button>
 					</div> -->
 
-					<div *ngIf="!contractorDetails?.accountno">
+					<div *ngIf="!contractorDetails?.account_no">
 						<span style="color:orangered; font-size: small;">Contractor didn't update Account Details for
 							Payment</span>
 					</div>
@@ -405,7 +411,7 @@
 		</div> -->
 
 		<!-- Off Days -->
-		<div *ngIf="contractJobDetails?.workdaystype != 'normal'" class="flex-p" fxFlex="50">
+		<div *ngIf="contractJobDetails?.work_days_type != '1'" class="flex-p" fxFlex="50">
 			<mat-card style="padding: 24px 12px;">
 				<mat-card-header fxLayoutAlign="center">
 					<div class="mat-card-header-text">

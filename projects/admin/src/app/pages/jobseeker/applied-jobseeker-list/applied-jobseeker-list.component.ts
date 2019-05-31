@@ -39,6 +39,7 @@ export class AppliedJobseekerListComponent implements OnInit {
 	public companyDetails: any;
 	public jobDetails: any;
 	jobStatus = ['', 'Pending', 'Live', 'Closed'];
+
 	constructor(private _httpService: ApiCallService, private route: ActivatedRoute) {
 		this.employerId = this.route.snapshot.params['emp_id'];
 		this.empJobId = this.route.snapshot.params['job_id'];

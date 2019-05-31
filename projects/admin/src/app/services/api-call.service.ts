@@ -264,6 +264,34 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, jobId, { headers: headers, params: params });
 	}
 
+	// Get Jobseeker Contract Details
+	getContractDetails(contractId): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'GetContractList');
+		return this.http.post(this._baseUrl, contractId, { headers: headers, params: params });
+	}
+
+	// Get Timesheet List for Single Contractor
+	getTimesheetDetails(contractId): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'GetJobseekerTimeSheet');
+		return this.http.post(this._baseUrl, contractId, { headers: headers, params: params });
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -478,17 +506,6 @@ export class ApiCallService {
 			});
 		return this.http.post(this._baseUrl + '/job/updatejob', employerJobData, { headers: headers })
 			.map(res => res);
-	}
-
-	getTimesheetDetails(contractId): Observable<any> {
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/contract/fetchtimesheetdetails', contractId, { headers: headers });
 	}
 
 	getAllOffDays(contractId): Observable<any> {

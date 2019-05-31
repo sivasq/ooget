@@ -106,6 +106,7 @@ export class ContractDetailsComponent implements OnInit {
 	displayedColumns = ['select', 'work_date', 'in_time', 'out_time', 'verifiedpunchintime', 'verifiedpunchouttime', 'normalworkhour', 'ot1workhour', 'ot2workhour', 'totalworkhour', 'normalsalary', 'ot1salary', 'ot2salary', 'totalsalary', 'oogetscommission', 'lateinitimation', 'notedialogtrigger'];
 	selection = new SelectionModel(true, []);
 
+	contractStatus = ['Open', 'Closed'];
 	public csvOptions = {
 		fieldSeparator: ',',
 		quoteStrings: '',
@@ -374,13 +375,13 @@ export class ContractDetailsComponent implements OnInit {
 
 	// ================================================================================
 	getContractDetails(contractId) {
-		this.busy = this._httpService.getJobseekerApplicationDetails(contractId)
+		this.busy = this._httpService.getContractDetails(contractId)
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.contractDetails = response.contract;
-						this.contractJobDetails = response.contract.jobid;
-						this.contractorDetails = response.contract.jobseekerid;
+						this.contractDetails = response.result[0];
+						this.contractJobDetails = response.result[0];
+						this.contractorDetails = response.result[0];
 						// this.timesheets = response.contract.timesheet;
 						// this.dailyTimeSheetDataSource.data = this.timesheets;
 
@@ -548,6 +549,50 @@ export class ContractDetailsComponent implements OnInit {
 					console.log(error);
 				}
 			);
+	}
+
+	getDates(year, month, givenDate) {
+		console.log(moment([year, month - 1]).endOf('month'));
+		// let todayDate = moment().format('DD');
+		if (Number(givenDate) <= 15) {
+			this.activeDatePeriod.startDate = moment([year, month - 1]).startOf('month').format('YYYY-MM-DD');
+			this.activeDatePeriod.endDate = moment([year, month - 1]).format('YYYY-MM-15');
+			console.log(this.activeDatePeriod);
+		} else if (Number(givenDate) > 15) {
+			this.activeDatePeriod.startDate = moment([year, month - 1]).format('YYYY-MM-16');
+			// const endDate = moment([year, month - 1]).endOf('month').format('YYYY-MM-DD')
+			this.activeDatePeriod.endDate = moment([year, month - 1]).format("YYYY-MM-") + moment([year, month - 1]).daysInMonth();
+			console.log(this.activeDatePeriod);
+		}
+	}
+
+	activeDatePeriod = {
+		startDate: '',
+		endDate: ''
+	};
+
+	getPreviousDays() {
+		let givenDate = moment(this.activeDatePeriod.startDate).add(-1, 'days');
+		let Year = givenDate.format('YYYY');
+		let Month = givenDate.format('MM');
+		let Day = givenDate.format('DD');
+		this.getDates(Year, Month, Day);
+	}
+
+	getNextDays() {
+		let givenDate = moment(this.activeDatePeriod.endDate).add(1, 'days');
+		let Year = givenDate.format('YYYY');
+		let Month = givenDate.format('MM');
+		let Day = givenDate.format('DD');
+		this.getDates(Year, Month, Day);
+	}
+
+	getCurrentDays() {
+		let givenDate = moment(new Date());
+		let Year = givenDate.format('YYYY');
+		let Month = givenDate.format('MM');
+		let Day = givenDate.format('DD');
+		this.getDates(Year, Month, Day);
 	}
 
 	ngOnInit() {

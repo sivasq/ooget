@@ -104,11 +104,11 @@
 				<tbody>
 					<tr class="pointer"
 						*ngFor="let candidates of candidates_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;"
-						routerLink="/employer/jobs/{{candidates.job._id}}/candidates/{{candidates.jobseeker._id}}/view">
-						<td>{{candidates.jobseeker.username}}</td>
-						<td>{{candidates.jobseeker.email}}</td>
-						<td>{{candidates.job.jobtitle}} - {{candidates.job.jobnumber}}</td>
-						<td>{{candidates.appliedAt}}</td>
+						routerLink="/employer/jobs/{{candidates.job_id}}/candidates/{{candidates.jobseeker_id}}/view">
+						<td>{{candidates.jobseeker_name}}</td>
+						<td>{{candidates.jobseeker_email}}</td>
+						<td>{{candidates.job_name}} - {{candidates.job_no}}</td>
+						<td>{{candidates.applied_on}}</td>
 					</tr>
 				</tbody>
 			</table>

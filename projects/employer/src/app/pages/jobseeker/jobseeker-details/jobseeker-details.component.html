@@ -1,205 +1,255 @@
 <div class="inner-sidenav-content transition-2">
-    <!-- Breadcrumb Start -->
-    <div fxLayout="row wrap">
-        <div class="flex-p" fxFlex="1 1 100%">
-            <mat-card class="mat-breadcrumb" fxLayout="row">
-                <a class="breadcrumb-item" routerLink="/employer/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
-                    <mat-icon>home</mat-icon>
-                    <span class="breadcrumb-title">Home</span>
-                </a>
+	<!-- Breadcrumb Start -->
+	<div fxLayout="row wrap">
+		<div class="flex-p" fxFlex="1 1 100%">
+			<mat-card class="mat-breadcrumb" fxLayout="row">
+				<a class="breadcrumb-item" routerLink="/employer/dashboard" fxLayout="row"
+					fxLayoutAlign="flex-start center">
+					<mat-icon>home</mat-icon>
+					<span class="breadcrumb-title">Home</span>
+				</a>
 
-                <a class="breadcrumb-item" routerLink="/employer/jobs/list" fxLayout="row" fxLayoutAlign="center center">
-                    <span class="breadcrumb-title">Jobs</span>
-                </a>
+				<a class="breadcrumb-item" routerLink="/employer/jobs/list" fxLayout="row"
+					fxLayoutAlign="center center">
+					<span class="breadcrumb-title">Jobs</span>
+				</a>
 
-                <a class="breadcrumb-item" routerLink="/employer/jobs/{{empJobId}}/view" fxLayout="row" fxLayoutAlign="center center">
-                    <span class="breadcrumb-title">Job Details</span>
-                </a>
+				<a class="breadcrumb-item" routerLink="/employer/jobs/{{empJobId}}/view" fxLayout="row"
+					fxLayoutAlign="center center">
+					<span class="breadcrumb-title">Job Details</span>
+				</a>
 
-                <a class="breadcrumb-item" routerLink="/employer/jobs/{{empJobId}}/candidates/applied" fxLayout="row" fxLayoutAlign="center center">
-                    <span class="breadcrumb-title">Candidates</span>
-                </a>
+				<a class="breadcrumb-item" routerLink="/employer/jobs/{{empJobId}}/candidates/applied" fxLayout="row"
+					fxLayoutAlign="center center">
+					<span class="breadcrumb-title">Candidates</span>
+				</a>
 
-                <div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
-                    <span class="breadcrumb-title active">Candidate Details</span>
-                </div>
-            </mat-card>
-        </div>
-    </div>
-    <!-- Breadcrumb End -->
+				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+					<span class="breadcrumb-title active">Candidate Details</span>
+				</div>
+			</mat-card>
+		</div>
+	</div>
+	<!-- Breadcrumb End -->
 
-    <div fxLayout="row wrap">
-      <div [ngBusy]="{busy:busy}"> </div>
-      <div class="flex-p" fxFlex="100" fxFlex.gt-md="100" fxFlex.md="100">
-        <mat-card class="p-0">
-          <div class="bg-lightgray" fxLayout="row" fxLayoutAlign="space-between center">
-            <h3 class="user-name">JobSeeker Details</h3>
-            <button mat-icon-button [matMenuTriggerFor]=i>
-              <mat-icon>more_vert</mat-icon>
-            </button>
-          </div>
-          <mat-menu #i="matMenu" xPosition="before">
-            <button mat-menu-item (click)="selectApplication()" [disabled]="isUnderOffered || isUnderContract || isOfferRejected">
-              <mat-icon style="color:#057d0f">check_circle</mat-icon>
-              <span>Select Application</span>
-            </button>
-          </mat-menu>
+	<div fxLayout="row wrap">
+		<div [ngBusy]="{busy:busy}"> </div>
+		<div class="flex-p" fxFlex="100" fxFlex.gt-md="100" fxFlex.md="100">
+			<mat-card class="p-0">
+				<div class="bg-lightgray" fxLayout="row" fxLayoutAlign="space-between center">
+					<h3 class="user-name">JobSeeker Details</h3>
+					<button mat-icon-button [matMenuTriggerFor]=i>
+						<mat-icon>more_vert</mat-icon>
+					</button>
+				</div>
+				<mat-menu #i="matMenu" xPosition="before">
+					<button mat-menu-item (click)="selectApplication(jobSeekerDetails.id)"
+						[disabled]="isUnderOffered || isUnderContract || isOfferRejected">
+						<mat-icon style="color:#057d0f">check_circle</mat-icon>
+						<span>Select Application</span>
+					</button>
+				</mat-menu>
 
-          <div class="user-content" fxLayout="row wrap" fxLayoutAlign="space-around center">
-            <div class="user-details transition-2" fxFlex="100" fxLayout="column">
-              <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.username">
-                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
-                <span class="key">Candidate Name : </span>
-                <span class="value" *ngIf="jobSeekerDetails?.username"> {{jobSeekerDetails.username}}</span>
-                <span class="value_not_specified" *ngIf="!jobSeekerDetails?.username"> Not Specified </span>
-              </p>
-              <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.email">
-                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
-                <span class="key">E-Mail : </span>
-                <span class="value" *ngIf="jobSeekerDetails?.email"> {{jobSeekerDetails.email}}</span>
-                <span class="value_not_specified" *ngIf="!jobSeekerDetails?.email"> Not Specified </span>
-              </p>
-              <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.mobileno">
-                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
-                <span class="key">Mobile No : </span>
-                <span class="value" *ngIf="jobSeekerDetails?.mobileno"> {{jobSeekerDetails.mobileno}}</span>
-                <span class="value_not_specified" *ngIf="!jobSeekerDetails?.mobileno"> Not Specified </span>
-              </p>
-              <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.dob">
-                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
-                <span class="key">Age : </span>
-                <span class="value" *ngIf="jobSeekerDetails?.dob"> {{jobSeekerDetails.dob | age}}</span>
-                <span class="value_not_specified" *ngIf="!jobSeekerDetails?.dob"> Not Specified </span>
-              </p>
-              <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.gender">
-                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
-                <span class="key">Gender : </span>
-                <span class="value" *ngIf="jobSeekerDetails?.gender"> {{jobSeekerDetails.gender}}</span>
-                <span class="value_not_specified" *ngIf="!jobSeekerDetails?.gender"> Not Specified </span>
-              </p>
-              <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.address">
-                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
-                <span class="key">Address : </span>
-                <span class="value" *ngIf="jobSeekerDetails?.address"> {{jobSeekerDetails.address}}</span>
-                <span class="value_not_specified" *ngIf="!jobSeekerDetails?.address"> Not Specified </span>
-              </p>
-              <p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.country">
-                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
-                <span class="key">Country : </span>
-                <span class="value" *ngIf="jobSeekerDetails?.country"> {{jobSeekerDetails.country}}</span>
-                <span class="value_not_specified" *ngIf="!jobSeekerDetails?.country"> Not Specified </span>
-              </p>
+				<div class="user-content" fxLayout="row wrap" fxLayoutAlign="space-around center">
+					<div class="user-details transition-2" fxFlex="100" fxLayout="column">
+						<p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.firstname">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+								check_circle</mat-icon>
+							<span class="key">Candidate Name : </span>
+							<span class="value" *ngIf="jobSeekerDetails?.firstname">
+								{{jobSeekerDetails.firstname}}</span>
+							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.firstname"> Not Specified
+							</span>
+						</p>
+						<p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.email">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+								check_circle</mat-icon>
+							<span class="key">E-Mail : </span>
+							<span class="value" *ngIf="jobSeekerDetails?.email"> {{jobSeekerDetails.email}}</span>
+							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.email"> Not Specified </span>
+						</p>
+						<p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.phone">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+								check_circle</mat-icon>
+							<span class="key">Mobile No : </span>
+							<span class="value" *ngIf="jobSeekerDetails?.phone"> {{jobSeekerDetails.phone}}</span>
+							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.phone"> Not Specified </span>
+						</p>
+						<p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.dob">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+								check_circle</mat-icon>
+							<span class="key">Age : </span>
+							<span class="value" *ngIf="jobSeekerDetails?.dob"> {{jobSeekerDetails.dob | age}}</span>
+							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.dob"> Not Specified </span>
+						</p>
+						<p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.gender">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+								check_circle</mat-icon>
+							<span class="key">Gender : </span>
+							<span class="value" *ngIf="jobSeekerDetails?.gender">
+								{{gender[jobSeekerDetails.gender]}}</span>
+							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.gender"> Not Specified </span>
+						</p>
+						<p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.address">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+								check_circle</mat-icon>
+							<span class="key">Address : </span>
+							<span class="value" *ngIf="jobSeekerDetails?.address"> {{jobSeekerDetails.address}}</span>
+							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.address"> Not Specified </span>
+						</p>
+						<p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobSeekerDetails.country">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+								check_circle</mat-icon>
+							<span class="key">Country : </span>
+							<span class="value" *ngIf="jobSeekerDetails?.country"> {{jobSeekerDetails.country}}</span>
+							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.country"> Not Specified </span>
+						</p>
 
-              <p fxLayout="row" fxLayoutAlign="start center">
-                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
-                <span class="key">Employment Type : </span>
-                <span class="value" *ngIf="jobSeekerDetails?.employmenttype"> {{jobSeekerDetails.employmenttype}}</span>
-                <span class="value_not_specified" *ngIf="!jobSeekerDetails?.employmenttype"> Not Specified </span>
-              </p>
-              <p fxLayout="row" fxLayoutAlign="start center">
-                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
-                <span class="key">Region : </span>
-                <span class="value" *ngIf="jobSeekerDetails?.preferredregion"> {{jobSeekerDetails.preferredregion}}</span>
-                <span class="value_not_specified" *ngIf="!jobSeekerDetails?.preferredregion"> Not Specified </span>
-              </p>
-              <p fxLayout="row" fxLayoutAlign="start center">
-                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
-                <span class="key">Location : </span>
-                <span class="value" *ngIf="jobSeekerDetails?.preferredlocation"> {{jobSeekerDetails.preferredlocation}}</span>
-                <span class="value_not_specified" *ngIf="!jobSeekerDetails?.preferredlocation"> Not Specified </span>
-              </p>
-              <p fxLayout="row" fxLayoutAlign="start">
-                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
-                <span class="key">Specialization : </span>
-                <span class="value" *ngIf="jobSeekerDetails?.preferredspecialization">
-                  <ul>
-                    <li style="list-style-type: none;" *ngFor="let specialization of  jobSeekerDetails.preferredspecialization">
-                      {{specialization}}
-                    </li>
-                  </ul>
-                </span>
-                <span class="value_not_specified" *ngIf="!jobSeekerDetails?.preferredspecialization"> Not Specified </span>
-              </p>
-              <p fxLayout="row" fxLayoutAlign="start center">
-                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
-                <span class="key">Working Environment : </span>
-                <span class="value" *ngIf="jobSeekerDetails?.workingenvironment"> {{jobSeekerDetails.workingenvironment}}</span>
-                <span class="value_not_specified" *ngIf="!jobSeekerDetails?.workingenvironment"> Not Specified </span>
-              </p>
+						<p fxLayout="row" fxLayoutAlign="start center">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+								check_circle</mat-icon>
+							<span class="key">Employment Type : </span>
+							<span class="value" *ngIf="jobSeekerDetails?.employment_type">
+								{{employmentType[jobSeekerDetails.employment_type]}}</span>
+							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.employment_type"> Not Specified
+							</span>
+						</p>
+						<p fxLayout="row" fxLayoutAlign="start center">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+								check_circle</mat-icon>
+							<span class="key">Region : </span>
+							<span class="value" *ngIf="jobSeekerDetails?.region">
+								{{getRegionName(jobSeekerDetails.region)}}</span>
+							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.region"> Not Specified
+							</span>
+						</p>
+						<p fxLayout="row" fxLayoutAlign="start center">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+								check_circle</mat-icon>
+							<span class="key">Location : </span>
+							<span class="value" *ngIf="jobSeekerDetails?.location">
+								{{getJobLocationName(jobSeekerDetails.location)}}</span>
+							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.location"> Not
+								Specified </span>
+						</p>
+						<p fxLayout="row" fxLayoutAlign="start">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+								check_circle</mat-icon>
+							<span class="key">Specialization : </span>
+							<span class="value" *ngIf="jobSeekerDetails?.specializations">
+								<!-- <ul>
+									<li style="list-style-type: none;"
+										*ngFor="let specialization of  jobSeekerDetails.preferredspecialization">
+										{{specialization}}
+									</li>
+								</ul> -->
+								{{getJobSpecializationName(jobSeekerDetails.specializations)}}
+							</span>
+							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.specializations"> Not
+								Specified </span>
+						</p>
+						<p fxLayout="row" fxLayoutAlign="start center">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+								check_circle</mat-icon>
+							<span class="key">Working Environment : </span>
+							<span class="value" *ngIf="jobSeekerDetails?.working_environment">
+								{{getWorkingEnvironmentName(jobSeekerDetails.working_environment)}}</span>
+							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.working_environment"> Not
+								Specified </span>
+						</p>
 
-              <p fxLayout="row" fxLayoutAlign="start start">
-                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
-                <span class="key">Experience In : </span>
-                <span class="value" *ngIf="jobSeekerDetails?.experiencein">
-                  <ul>
-                    <li style="list-style-type: none;" *ngFor="let experiencein of jobSeekerDetails.experiencein">
-                      {{experiencein}}
-                    </li>
-                  </ul>
-                </span>
-                <span class="value_not_specified" *ngIf="!jobSeekerDetails?.experiencein"> Not Specified </span>
-              </p>
-              <p fxLayout="row" fxLayoutAlign="start center">
-                <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
-                <span class="key">Total Experience
-                  <small>(in years)</small> : </span>
-                <span class="value" *ngIf="jobSeekerDetails?.totalexperienceinyears">
-                  {{jobSeekerDetails.totalexperienceinyears}}</span>
-                <span class="value_not_specified" *ngIf="!jobSeekerDetails?.totalexperienceinyears"> Not Specified </span>
-              </p>
+						<p fxLayout="row" fxLayoutAlign="start start">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+								check_circle</mat-icon>
+							<span class="key">Experience In : </span>
+							<span class="value" *ngIf="jobSeekerDetails?.experience_in">
+								<!-- <ul>
+									<li style="list-style-type: none;"
+										*ngFor="let experiencein of jobSeekerDetails.experiencein">
+										{{experiencein}}
+									</li>
+								</ul> -->
+								{{getJobSpecializationName(jobSeekerDetails.experience_in)}}
+							</span>
+							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.experience_in"> Not Specified
+							</span>
+						</p>
+						<p fxLayout="row" fxLayoutAlign="start center">
+							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+								check_circle</mat-icon>
+							<span class="key">Total Experience
+								<small>(in years)</small> : </span>
+							<span class="value" *ngIf="jobSeekerDetails?.experience_year">
+								{{jobSeekerDetails.experience_year}}</span>
+							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.experience_year"> Not
+								Specified </span>
+						</p>
 
-              <div style="margin-top: 15px;" *ngFor="let pastExp of jobSeekerDetails.previousexperince; let i=index;">
-                <h4 style="padding-left: 5px;">Experience #{{i+1}}</h4>
-                <p fxLayout="row" fxLayoutAlign="start center">
-                  <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
-                  <span class="key">Company Name : </span>
-                  <span class="value" *ngIf="pastExp?.previouscompanyname"> {{pastExp.previouscompanyname}}</span>
-                  <span class="value_not_specified" *ngIf="!pastExp?.previouscompanyname"> Not Specified </span>
-                </p>
-                <p fxLayout="row" fxLayoutAlign="start center">
-                  <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
-                  <span class="key">Position : </span>
-                  <span class="value" *ngIf="pastExp?.previouscompanyposition"> {{pastExp.previouscompanyposition}}</span>
-                  <span class="value_not_specified" *ngIf="!pastExp?.previouscompanyposition"> Not Specified </span>
-                </p>
-                <p fxLayout="row" fxLayoutAlign="start center">
-                  <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
-                  <span class="key">Job Responsibility : </span>
-                  <span class="value">{{pastExp.previousjobresponsibility ? pastExp.previousjobresponsibility : "Not
+						<div style="margin-top: 15px;"
+							*ngFor="let pastExp of jobSeekerDetails.experience_details; let i=index;">
+							<h4 style="padding-left: 5px;">Experience #{{i+1}}</h4>
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+									check_circle</mat-icon>
+								<span class="key">Company Name : </span>
+								<span class="value" *ngIf="pastExp?.previouscompanyname">
+									{{pastExp.previouscompanyname}}</span>
+								<span class="value_not_specified" *ngIf="!pastExp?.previouscompanyname"> Not Specified
+								</span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+									check_circle</mat-icon>
+								<span class="key">Position : </span>
+								<span class="value" *ngIf="pastExp?.previouscompanyposition">
+									{{pastExp.previouscompanyposition}}</span>
+								<span class="value_not_specified" *ngIf="!pastExp?.previouscompanyposition"> Not
+									Specified </span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+									check_circle</mat-icon>
+								<span class="key">Job Responsibility : </span>
+								<span class="value">{{pastExp.previousjobresponsibility ? pastExp.previousjobresponsibility : "Not
                     Specified"}}</span>
-                  <span class="value" *ngIf="jobSeekerDetails?.previousjobresponsibility">
-                    {{pastExp.previousjobresponsibility}}</span>
-                  <span class="value_not_specified" *ngIf="!pastExp?.previousjobresponsibility"> Not Specified </span>
-                </p>
-                <p fxLayout="row" fxLayoutAlign="start center">
-                  <mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">check_circle</mat-icon>
-                  <span class="key">Working Period : </span>
-                  <span class="value" *ngIf="pastExp?.previousjobfrom"> {{pastExp.previousjobfrom | date:'dd/MM/yyyy'}} -
-                    {{pastExp.previousjobto | date:'dd/MM/yyyy'}}</span>
-                  <span class="value_not_specified" *ngIf="!pastExp?.previousjobfrom"> Not Specified </span>
-                </p>
-              </div>
-            </div>
+								<span class="value" *ngIf="jobSeekerDetails?.previousjobresponsibility">
+									{{pastExp.previousjobresponsibility}}</span>
+								<span class="value_not_specified" *ngIf="!pastExp?.previousjobresponsibility"> Not
+									Specified </span>
+							</p>
+							<p fxLayout="row" fxLayoutAlign="start center">
+								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
+									check_circle</mat-icon>
+								<span class="key">Working Period : </span>
+								<span class="value" *ngIf="pastExp?.previousjobfrom">
+									{{pastExp.previousjobfrom | date:'dd/MM/yyyy'}} -
+									{{pastExp.previousjobto | date:'dd/MM/yyyy'}}</span>
+								<span class="value_not_specified" *ngIf="!pastExp?.previousjobfrom"> Not Specified
+								</span>
+							</p>
+						</div>
+					</div>
 
-            <div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
-              <div *ngIf="isUnderContract">
-                <span style="color:#057d0f;font-weight: 600;"> *Note: {{helpTxt}}</span>
-              </div>
-              <div *ngIf="isOfferRejected">
-                <span style="color:#f50505;font-weight: 600;"> *Note: {{helpTxt}}</span>
-              </div>
-              <div *ngIf="isUnderOffered">
-                <span style="color:#057d0f;font-weight: 600;"> *Note: {{helpTxt}}</span>
-              </div>
+					<div class="user-details transition-2" fxFlex="100" fxLayout="row wrap">
+						<div *ngIf="isUnderContract">
+							<span style="color:#057d0f;font-weight: 600;"> *Note: {{helpTxt}}</span>
+						</div>
+						<div *ngIf="isOfferRejected">
+							<span style="color:#f50505;font-weight: 600;"> *Note: {{helpTxt}}</span>
+						</div>
+						<div *ngIf="isUnderOffered">
+							<span style="color:#057d0f;font-weight: 600;"> *Note: {{helpTxt}}</span>
+						</div>
 
-              <button mat-menu-item (click)="selectApplication()" *ngIf="!isUnderContract && !isOfferRejected && !isUnderOffered">
-                <mat-icon style="color:#057d0f">check_circle</mat-icon>
-                <span>Select Application</span>
-              </button>
+						<button mat-menu-item (click)="selectApplication(jobSeekerDetails.id)"
+							*ngIf="!isUnderContract && !isOfferRejected && !isUnderOffered">
+							<mat-icon style="color:#057d0f">check_circle</mat-icon>
+							<span>Select Application</span>
+						</button>
 
-            </div>
-          </div>
-        </mat-card>
-      </div>
-    </div>
+					</div>
+				</div>
+			</mat-card>
+		</div>
+	</div>
 </div>

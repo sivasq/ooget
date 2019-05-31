@@ -80,7 +80,8 @@
 					<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
 						<div fxFlex="30" fxLayout="column" fxLayoutAlign="center center">
 							<div class="user-img" *ngIf="employer.imgpath">
-								<img class="transition-2 ng-star-inserted" src="{{baseUrl}}/{{employer.imgpath}}">
+								<img class="transition-2 ng-star-inserted" src="{{baseUrl}}/{{employer.imgpath}}"
+									onError="this.src='assets/img/avatars/logo-placeholder.png'">
 							</div>
 							<div class="user-img" *ngIf="!employer.imgpath">
 								<img class="transition-2 ng-star-inserted"

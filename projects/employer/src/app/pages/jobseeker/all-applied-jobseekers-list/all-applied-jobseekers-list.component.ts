@@ -36,6 +36,7 @@ export class AllAppliedJobseekersListComponent implements OnInit {
 	//set Company Details
 	public companyDetails: any;
 	public jobDetails: any;
+	jobStatus = ['', 'Pending', 'Live', 'Closed'];
 
 	constructor(private _httpService: ApiCallService, private route: ActivatedRoute) {
 		// this.employerId = this.route.snapshot.params['emp_id'];
@@ -53,17 +54,17 @@ export class AllAppliedJobseekersListComponent implements OnInit {
 	public candidates_list: any[];
 
 	getAppliedCandidates() {
-		this.busy = this._httpService.getPendingJobApplications()
+		this.busy = this._httpService.getAppliedCandidates('')
 			.subscribe(
 				response => {
 					if (response.success) {
-						if ((response.appliedjobseekers).length > 0) {
+						if ((response.result).length > 0) {
 							this.isCandidatesAvailable = true;
 						} else {
 							this.isCandidatesAvailable = false;
 						}
-						this.candidates_list = response.appliedjobseekers;
-						this.companyDetails = response.company;
+						this.candidates_list = response.result;
+						this.companyDetails = response.result[0];
 
 					} else if (!response.success) {
 						console.log(response);

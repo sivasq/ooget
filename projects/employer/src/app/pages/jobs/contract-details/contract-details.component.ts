@@ -53,6 +53,7 @@ export class ContractDetailsComponent implements OnInit {
 	public dayOffFilter: string = '';
 	public dayOffPaginateControlMaxSize: number = 5;
 	public dayOffPaginateControlAutoHide: boolean = true;
+	contractStatus = ['Open', 'Closed'];
 
 	constructor(public router: Router, private _httpService: ApiCallService, private route: ActivatedRoute, public dialog: MatDialog, private bottomSheet: MatBottomSheet, public snackBar: MatSnackBar, private datePipe: DatePipe, public csv: JsonToCsvService, public texts: JsonToTextService, public payroll: PayrollProcessService) {
 		this.contract_id = this.route.snapshot.params['contract_id'];

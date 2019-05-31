@@ -8,8 +8,8 @@ import { ApiCallService } from './api-call.service';
 
 @Injectable()
 export class HolidayDataService {
-	// public API_URL = 'http://192.168.1.14/ooget/';
-	public API_URL = 'http://104.197.80.225/ooget';
+	public API_URL = 'http://192.168.1.14/ooget/';
+	// public API_URL = 'http://104.197.80.225/ooget';
 	// public API_URL = "https://api.ooget.com.sg/ooget/admin";
 	headers;
 
