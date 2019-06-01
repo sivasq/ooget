@@ -39,71 +39,71 @@ export class ContractDetailsComponent implements OnInit {
 
 	public contractorPayrolls = [
 		{
-			"datefrom": "2018/05/16",
-			"dateto": "2018/05/31",
-			"totalnormalworkhr": "112",
-			"totalotworkhr": "20",
-			"totalnormalworkhrsalary": "1232",
-			"totalothrsalary": "440",
-			"totalsalary": "1672",
-			"paymentstatus": "paid",
-			"paiddate": "2018/05/31",
-			"paymenttype": "neft",
-			"verified": "true",
-			"timesheet": [
-				{ "date": "2018/05/16", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/05/17", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/05/18", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/05/19", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/05/20", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/05/21", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/05/22", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/05/23", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/05/24", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/05/25", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/05/26", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/05/27", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/05/28", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/05/29", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/05/30", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/05/31", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
+			'datefrom': '2018/05/16',
+			'dateto': '2018/05/31',
+			'totalnormalworkhr': '112',
+			'totalotworkhr': '20',
+			'totalnormalworkhrsalary': '1232',
+			'totalothrsalary': '440',
+			'totalsalary': '1672',
+			'paymentstatus': 'paid',
+			'paiddate': '2018/05/31',
+			'paymenttype': 'neft',
+			'verified': 'true',
+			'timesheet': [
+				{ 'date': '2018/05/16', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/05/17', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/05/18', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/05/19', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/05/20', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/05/21', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/05/22', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/05/23', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/05/24', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/05/25', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/05/26', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/05/27', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/05/28', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/05/29', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/05/30', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/05/31', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
 			]
 		},
 		{
-			"datefrom": "2018/06/01",
-			"dateto": "2018/06/15",
-			"totalnormalworkhr": "105",
-			"totalotworkhr": "18",
-			"totalnormalworkhrsalary": "1155",
-			"totalothrsalary": "396",
-			"totalsalary": "1551",
-			"paymentstatus": "not paid",
-			"paiddate": "",
-			"paymenttype": "",
-			"verified": "false",
-			"timesheet": [
-				{ "date": "2018/06/1", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/06/2", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/06/3", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/06/4", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/06/5", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/06/6", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/06/7", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/06/8", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/06/9", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/06/10", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/06/11", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" },
-				{ "date": "2018/06/12", "punchintime": "09:30", "punchouttime": "16:30", "normalworkhr": "7", "otworkhr": "0", "totalworkhr": "7", "normalworkhrsalary": "70", "othrsalary": "0", "totalsalary": "70" }]
+			'datefrom': '2018/06/01',
+			'dateto': '2018/06/15',
+			'totalnormalworkhr': '105',
+			'totalotworkhr': '18',
+			'totalnormalworkhrsalary': '1155',
+			'totalothrsalary': '396',
+			'totalsalary': '1551',
+			'paymentstatus': 'not paid',
+			'paiddate': '',
+			'paymenttype': '',
+			'verified': 'false',
+			'timesheet': [
+				{ 'date': '2018/06/1', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/06/2', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/06/3', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/06/4', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/06/5', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/06/6', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/06/7', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/06/8', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/06/9', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/06/10', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/06/11', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' },
+				{ 'date': '2018/06/12', 'punchintime': '09:30', 'punchouttime': '16:30', 'normalworkhr': '7', 'otworkhr': '0', 'totalworkhr': '7', 'normalworkhrsalary': '70', 'othrsalary': '0', 'totalsalary': '70' }]
 		}
-	]
+	];
 
-	//busy Config
+	// busy Config
 	busy: Subscription;
 
 	timesheets: any = [];
 
 	dailyTimeSheetDataSource = new MatTableDataSource(this.timesheets);
-	displayedColumns = ['select', 'work_date', 'in_time', 'out_time', 'verifiedpunchintime', 'verifiedpunchouttime', 'normalworkhour', 'ot1workhour', 'ot2workhour', 'totalworkhour', 'normalsalary', 'ot1salary', 'ot2salary', 'totalsalary', 'oogetscommission', 'lateinitimation', 'notedialogtrigger'];
+	displayedColumns = ['select', 'work_date', 'in_time', 'out_time', 'clock_verified_in', 'clock_verified_out', 'normalworkhour', 'ot1workhour', 'ot2workhour', 'totalworkhour', 'normalsalary', 'ot1salary', 'ot2salary', 'totalsalary', 'oogetscommission', 'lateinitimation', 'notedialogtrigger'];
 	selection = new SelectionModel(true, []);
 
 	contractStatus = ['Open', 'Closed'];
@@ -116,7 +116,7 @@ export class ContractDetailsComponent implements OnInit {
 		title: 'title',
 		useBom: true,
 		noDownload: false,
-		headers: ["date", "punchintime", "punchouttime", "normalworkhr", "otworkhr", "totalworkhr", "normalworkhrsalary", "othrsalary", "totalsalary", "paystatus", "paiddate", "paymenttype"]
+		headers: ['date', 'punchintime', 'punchouttime', 'normalworkhr', 'otworkhr', 'totalworkhr', 'normalworkhrsalary', 'othrsalary', 'totalsalary', 'paystatus', 'paiddate', 'paymenttype']
 	};
 
 	public pageSizeOptions = [5, 10, 15, 20, 25, 50, 100];
@@ -126,15 +126,16 @@ export class ContractDetailsComponent implements OnInit {
 		itemsPerPage: 5,
 		currentPage: 1
 	};
-	public dayOffFilter: string = '';
-	public dayOffPaginateControlMaxSize: number = 5;
-	public dayOffPaginateControlAutoHide: boolean = true;
+	public dayOffFilter = '';
+	public dayOffPaginateControlMaxSize = 5;
+	public dayOffPaginateControlAutoHide = true;
 
 	constructor(public router: Router, private _httpService: ApiCallService, private route: ActivatedRoute, public dialog: MatDialog, private bottomSheet: MatBottomSheet, public snackBar: MatSnackBar, private datePipe: DatePipe, public csv: JsonToCsvService, public texts: JsonToTextService, public payroll: PayrollProcessService) {
 		this.contract_id = this.route.snapshot.params['contract_id'];
-
+		// this.getCurrentDays();
+		this.getPreviousDays();
 		this.getContractDetails({ 'contractid': this.contract_id });
-		this.getTimesheetDetails({ 'contractid': this.contract_id });
+		// this.getTimesheetDetails({ 'contractid': this.contract_id, 'from': this.activeTimesheetPeriod.startDate, 'to': this.activeTimesheetPeriod.endDate });
 		this.getAllOffDays({ 'contractid': this.contract_id });
 		this.getAllPayrollsInContract({ 'contractid': this.contract_id });
 	}
@@ -144,7 +145,7 @@ export class ContractDetailsComponent implements OnInit {
 		// console.log(this.selection);
 		const numSelected = this.selection.selected.length;
 		// const numRows = this.dailyTimeSheetDataSource.data.length;
-		const numRows = this.dailyTimeSheetDataSource.data.filter((data: any) => !data.verified).length;
+		const numRows = this.dailyTimeSheetDataSource.data.filter((data: any) => !data.sheet_verified).length;
 		return numSelected === numRows;
 	}
 
@@ -161,7 +162,7 @@ export class ContractDetailsComponent implements OnInit {
 
 	// verify selected Timesheets
 	verifyTimeSheets() {
-		if (this.selection.selected.length == 0) return false;
+		if (this.selection.selected.length == 0) { return false; }
 
 		let timesheetids = this.selection.selected.map(data => data._id);
 
@@ -171,7 +172,7 @@ export class ContractDetailsComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log("Selected TimeSheets Verified");
+						console.log('Selected TimeSheets Verified');
 						console.log(this.selection.selected);
 						this.selection.clear();
 						let snackBarRef = this.snackBar.open('Selected TimeSheets Verified Successfully.', 'Close', {
@@ -203,7 +204,7 @@ export class ContractDetailsComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log("Payroll Generated");
+						console.log('Payroll Generated');
 						console.log(response);
 
 						this.getContractDetails({ 'contractid': this.contract_id });
@@ -238,7 +239,7 @@ export class ContractDetailsComponent implements OnInit {
 		const rawValueLength = rawValue.length
 
 		// if (rawValue != emptyString && (rawValue[0].concat(rawValue[1]) > 24)) {
-		// 	this.editableRow.verifiedpunchintime = prefix.concat(rawValue);
+		// 	this.editableRow.clock_verified_in = prefix.concat(rawValue);
 		// }
 		// console.log(this.fieldName1);
 		// console.log(this.fieldName1.nativeElement.validity.valid);
@@ -247,7 +248,7 @@ export class ContractDetailsComponent implements OnInit {
 	// public verifiedTimeMask = [/[0-9]/, /\d/, ':', /\d/, /\d/];
 	// keepCharPositions = true;
 
-	verifiedTimePattern = "^([01]?[0-9]|2[0-3]):[0-5][0-9]$";
+	verifiedTimePattern = '^([01]?[0-9]|2[0-3]):[0-5][0-9]$';
 	editableRow: any;
 	editField: string = '';
 	editRowId: string = '';
@@ -262,13 +263,13 @@ export class ContractDetailsComponent implements OnInit {
 			this.fieldName1.nativeElement.focus();
 		}, 0);
 
-		let verifiedpunchintime = this.datePipe.transform(row.verifiedpunchintime, 'HH:mm');
-		let verifiedpunchouttime = this.datePipe.transform(row.verifiedpunchouttime, 'HH:mm');
+		let clock_verified_in = this.datePipe.transform(row.clock_verified_in, 'HH:mm');
+		let clock_verified_out = this.datePipe.transform(row.clock_verified_out, 'HH:mm');
 
 		this.editableRow = {
 			'timesheetdate': row.date,
-			'verifiedpunchintime': verifiedpunchintime,
-			'verifiedpunchouttime': verifiedpunchouttime,
+			'clock_verified_in': clock_verified_in,
+			'clock_verified_out': clock_verified_out,
 			'contractid': this.contract_id,
 			'timesheetid': row._id
 		}
@@ -282,13 +283,13 @@ export class ContractDetailsComponent implements OnInit {
 			this.fieldName2.nativeElement.focus();
 		}, 0);
 
-		let verifiedpunchintime = this.datePipe.transform(row.verifiedpunchintime, 'HH:mm');
-		let verifiedpunchouttime = this.datePipe.transform(row.verifiedpunchouttime, 'HH:mm');
+		let clock_verified_in = this.datePipe.transform(row.clock_verified_in, 'HH:mm');
+		let clock_verified_out = this.datePipe.transform(row.clock_verified_out, 'HH:mm');
 
 		this.editableRow = {
 			'timesheetdate': row.date,
-			'verifiedpunchintime': verifiedpunchintime,
-			'verifiedpunchouttime': verifiedpunchouttime,
+			'clock_verified_in': clock_verified_in,
+			'clock_verified_out': clock_verified_out,
 			'contractid': this.contract_id,
 			'timesheetid': row._id
 		}
@@ -319,10 +320,10 @@ export class ContractDetailsComponent implements OnInit {
 		// this.editRowId = '';
 		// this.editField = '';
 
-		let jobStartTime: any = this.datePipe.transform(editableRow.timesheetdate + " " + this.contractJobDetails.starttime, 'yyyy/MM/dd HH:mm');
+		let jobStartTime: any = this.datePipe.transform(editableRow.timesheetdate + ' ' + this.contractJobDetails.starttime, 'yyyy/MM/dd HH:mm');
 
-		let inTime: any = this.datePipe.transform(editableRow.timesheetdate + " " + editableRow.verifiedpunchintime, 'yyyy/MM/dd HH:mm');
-		let outTime: any = this.datePipe.transform(editableRow.timesheetdate + " " + editableRow.verifiedpunchouttime, 'yyyy/MM/dd HH:mm')
+		let inTime: any = this.datePipe.transform(editableRow.timesheetdate + ' ' + editableRow.clock_verified_in, 'yyyy/MM/dd HH:mm');
+		let outTime: any = this.datePipe.transform(editableRow.timesheetdate + ' ' + editableRow.clock_verified_out, 'yyyy/MM/dd HH:mm')
 
 		if (inTime > outTime) {
 			outTime = this.convertNextDay(outTime);
@@ -330,11 +331,11 @@ export class ContractDetailsComponent implements OnInit {
 
 		let verifiedTime = {};
 		if (field == 'field1') {
-			let verifiedpunchintime = { "verifiedpunchintime": this.datePipe.transform(inTime, 'yyyy/MM/dd HH:mm') };
-			verifiedTime = Object.assign(verifiedTime, verifiedpunchintime);
+			let clock_verified_in = { 'clock_verified_in': this.datePipe.transform(inTime, 'yyyy/MM/dd HH:mm') };
+			verifiedTime = Object.assign(verifiedTime, clock_verified_in);
 
-			let verifiedpunchouttime = { "verifiedpunchouttime": this.datePipe.transform(outTime, 'yyyy/MM/dd HH:mm') };
-			verifiedTime = Object.assign(verifiedTime, verifiedpunchouttime);
+			let clock_verified_out = { 'clock_verified_out': this.datePipe.transform(outTime, 'yyyy/MM/dd HH:mm') };
+			verifiedTime = Object.assign(verifiedTime, clock_verified_out);
 
 			if (inTime < jobStartTime) {
 
@@ -350,14 +351,14 @@ export class ContractDetailsComponent implements OnInit {
 		}
 
 		if (field == 'field2') {
-			let verifiedpunchouttime = { "verifiedpunchouttime": this.datePipe.transform(outTime, 'yyyy/MM/dd HH:mm') };
-			verifiedTime = Object.assign(verifiedTime, verifiedpunchouttime);
+			let clock_verified_out = { 'clock_verified_out': this.datePipe.transform(outTime, 'yyyy/MM/dd HH:mm') };
+			verifiedTime = Object.assign(verifiedTime, clock_verified_out);
 		}
 
-		let contractid = { "contractid": editableRow.contractid };
+		let contractid = { 'contractid': editableRow.contractid };
 		verifiedTime = Object.assign(verifiedTime, contractid);
 
-		let timesheetid = { "timesheetid": editableRow.timesheetid };
+		let timesheetid = { 'timesheetid': editableRow.timesheetid };
 		verifiedTime = Object.assign(verifiedTime, timesheetid);
 
 		console.log(verifiedTime);
@@ -386,7 +387,7 @@ export class ContractDetailsComponent implements OnInit {
 						// this.dailyTimeSheetDataSource.data = this.timesheets;
 
 						// if (this.timesheets.length > 0) {
-						// 	this.verifiedTimeSheets = this.timesheets.filter(data => data.verified == true);
+						// 	this.verifiedTimeSheets = this.timesheets.filter(data => data.sheet_verified == true);
 						// }
 
 					} else if (!response.success) {
@@ -399,18 +400,18 @@ export class ContractDetailsComponent implements OnInit {
 			);
 	}
 
-	getTimesheetDetails(contractId) {
-		this.busy = this._httpService.getTimesheetDetails(contractId)
+	getTimesheetDetails(TimeSheetArg) {
+		this.busy = this._httpService.getTimesheetDetails(TimeSheetArg)
 			.subscribe(
 				response => {
 					if (response.success) {
 						// this.timesheets = response.timesheetdetails[0].timesheet;
 						// this.dailyTimeSheetDataSource.data = this.timesheets;
 
-						if (response.timesheetdetails.length > 0) {
-							this.timesheets = response.timesheetdetails[0].timesheet;
+						if (response.result.length > 0) {
+							this.timesheets = response.result;
 							this.dailyTimeSheetDataSource.data = this.timesheets;
-							this.verifiedTimeSheets = this.timesheets.filter(data => data.verified == true);
+							this.verifiedTimeSheets = this.timesheets.filter(data => data.sheet_verified == true);
 							// console.log(this.verifiedTimeSheets);
 						}
 
@@ -449,12 +450,12 @@ export class ContractDetailsComponent implements OnInit {
 		dialogConfig.autoFocus = true;
 		dialogConfig.data = {
 			'contractid': this.contract_id,
-			'timesheetid': timesheetData._id,
+			'timesheetid': timesheetData.id,
 			'date': new Date(timesheetData.date),
 			'punchintime': new Date(timesheetData.punchintime),
 			'punchouttime': new Date(timesheetData.punchouttime),
-			'verifiedpunchintime': new Date(timesheetData.verifiedpunchintime),
-			'verifiedpunchouttime': new Date(timesheetData.verifiedpunchouttime)
+			'clock_verified_in': new Date(timesheetData.clock_verified_in),
+			'clock_verified_out': new Date(timesheetData.clock_verified_out)
 		};
 		let dialogRef = this.dialog.open(EditClockInOutComponent, dialogConfig);
 
@@ -475,7 +476,7 @@ export class ContractDetailsComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log("TimeSheet Adjusted");
+						console.log('TimeSheet Adjusted');
 
 						this.getTimesheetDetails({ 'contractid': this.contract_id });
 
@@ -502,7 +503,7 @@ export class ContractDetailsComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log("TimeSheet Adjusted");
+						console.log('TimeSheet Adjusted');
 
 						this.getTimesheetDetails({ 'contractid': this.contract_id });
 
@@ -529,7 +530,7 @@ export class ContractDetailsComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log("TimeSheet Adjusted");
+						console.log('TimeSheet Adjusted');
 
 						this.getTimesheetDetails({ 'contractid': this.contract_id });
 
@@ -555,24 +556,26 @@ export class ContractDetailsComponent implements OnInit {
 		console.log(moment([year, month - 1]).endOf('month'));
 		// let todayDate = moment().format('DD');
 		if (Number(givenDate) <= 15) {
-			this.activeDatePeriod.startDate = moment([year, month - 1]).startOf('month').format('YYYY-MM-DD');
-			this.activeDatePeriod.endDate = moment([year, month - 1]).format('YYYY-MM-15');
-			console.log(this.activeDatePeriod);
+			this.activeTimesheetPeriod.startDate = moment([year, month - 1]).startOf('month').format('YYYY-MM-DD');
+			this.activeTimesheetPeriod.endDate = moment([year, month - 1]).format('YYYY-MM-15');
+			console.log(this.activeTimesheetPeriod);
 		} else if (Number(givenDate) > 15) {
-			this.activeDatePeriod.startDate = moment([year, month - 1]).format('YYYY-MM-16');
+			this.activeTimesheetPeriod.startDate = moment([year, month - 1]).format('YYYY-MM-16');
 			// const endDate = moment([year, month - 1]).endOf('month').format('YYYY-MM-DD')
-			this.activeDatePeriod.endDate = moment([year, month - 1]).format("YYYY-MM-") + moment([year, month - 1]).daysInMonth();
-			console.log(this.activeDatePeriod);
+			this.activeTimesheetPeriod.endDate = moment([year, month - 1]).format('YYYY-MM-') + moment([year, month - 1]).daysInMonth();
+			console.log(this.activeTimesheetPeriod);
 		}
+
+		this.getTimesheetDetails({ 'contractid': this.contract_id, 'from': this.activeTimesheetPeriod.startDate, 'to': this.activeTimesheetPeriod.endDate });
 	}
 
-	activeDatePeriod = {
+	activeTimesheetPeriod = {
 		startDate: '',
 		endDate: ''
 	};
 
 	getPreviousDays() {
-		let givenDate = moment(this.activeDatePeriod.startDate).add(-1, 'days');
+		let givenDate = moment(this.activeTimesheetPeriod.startDate).add(-1, 'days');
 		let Year = givenDate.format('YYYY');
 		let Month = givenDate.format('MM');
 		let Day = givenDate.format('DD');
@@ -580,7 +583,7 @@ export class ContractDetailsComponent implements OnInit {
 	}
 
 	getNextDays() {
-		let givenDate = moment(this.activeDatePeriod.endDate).add(1, 'days');
+		let givenDate = moment(this.activeTimesheetPeriod.endDate).add(1, 'days');
 		let Year = givenDate.format('YYYY');
 		let Month = givenDate.format('MM');
 		let Day = givenDate.format('DD');
@@ -596,7 +599,6 @@ export class ContractDetailsComponent implements OnInit {
 	}
 
 	ngOnInit() {
-
 		// this.contractorTimesheet.sort(
 		// 	function (a, b) {
 		// 		return new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -613,7 +615,7 @@ export class ContractDetailsComponent implements OnInit {
 			});
 		// console.log(this.contractorPayrolls);
 
-		let hrs = moment.duration(0, "minutes").format("hh:mm", {
+		let hrs = moment.duration(0, 'minutes').format('hh:mm', {
 			trim: false
 		});
 		console.log(hrs);
@@ -648,10 +650,10 @@ export class ContractDetailsComponent implements OnInit {
 
 	public addNewOffDay(date) {
 		let offDayData = {};
-		let contractId = { "contractid": this.contract_id };
+		let contractId = { 'contractid': this.contract_id };
 		offDayData = Object.assign(offDayData, contractId);
 
-		let offday = { "offday": this.datePipe.transform(date, 'yyyy/MM/dd') };
+		let offday = { 'offday': this.datePipe.transform(date, 'yyyy/MM/dd') };
 		offDayData = Object.assign(offDayData, offday);
 
 		// let demo = this.OffDays.map((OffDay) => OffDay.date == offday.offday);
@@ -740,7 +742,7 @@ export class ContractDetailsComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log("TimeSheet Notes Updated");
+						console.log('TimeSheet Notes Updated');
 						this.getTimesheetDetails({ 'contractid': this.contract_id });
 
 						let snackBarRef = this.snackBar.open('TimeSheet Notes Added Successfully.', 'Close', {
@@ -811,7 +813,7 @@ export class ContractDetailsComponent implements OnInit {
 			return previous + min
 		}, 0);
 
-		let hrs = moment.duration(totalMin, "minutes").format("hh:mm", {
+		let hrs = moment.duration(totalMin, 'minutes').format('hh:mm', {
 			trim: false
 		});
 		// if (hrs == '0' || hrs == '00') return 'Nil';
@@ -824,7 +826,7 @@ export class ContractDetailsComponent implements OnInit {
 			return previous + min
 		}, 0);
 
-		let hrs = moment.duration(totalMin, "minutes").format("hh:mm", {
+		let hrs = moment.duration(totalMin, 'minutes').format('hh:mm', {
 			trim: false
 		});
 		// if (hrs == '0' || hrs == '00') return 'Nil';
@@ -837,7 +839,7 @@ export class ContractDetailsComponent implements OnInit {
 			return previous + min
 		}, 0);
 
-		let hrs = moment.duration(totalMin, "minutes").format("hh:mm", {
+		let hrs = moment.duration(totalMin, 'minutes').format('hh:mm', {
 			trim: false
 		});
 		// if (hrs == '0' || hrs == '00') return 'Nil';
@@ -850,7 +852,7 @@ export class ContractDetailsComponent implements OnInit {
 			return previous + min
 		}, 0);
 
-		let hrs = moment.duration(totalMin, "minutes").format("hh:mm", {
+		let hrs = moment.duration(totalMin, 'minutes').format('hh:mm', {
 			trim: false
 		});
 		// if (hrs == '0' || hrs == '00') return 'Nil';
@@ -903,7 +905,7 @@ export class ContractDetailsComponent implements OnInit {
 	};
 
 	processPayrollGenerateold(payrollData) {
-		console.log("payroll generated");
+		console.log('payroll generated');
 		let today = new Date();
 		let newData: any[] = [];
 		let oldData: any[] = [];
@@ -933,7 +935,7 @@ export class ContractDetailsComponent implements OnInit {
 
 					'D16 Receiving Account Number/IBAN': oldData[i].benificaryaccountnumber ? oldData[i].benificaryaccountnumber : '',
 
-					'D17 Country Specific': oldData[i].CountrySpecific ? oldData[i].CountrySpecific : "01",
+					'D17 Country Specific': oldData[i].CountrySpecific ? oldData[i].CountrySpecific : '01',
 
 					'D18 Receiving Bank Code': oldData[i].receivingbankcode ? oldData[i].receivingbankcode : '',
 					'D19 Receiving Branch Code': oldData[i].receivingbranchcode ? oldData[i].receivingbranchcode : '',

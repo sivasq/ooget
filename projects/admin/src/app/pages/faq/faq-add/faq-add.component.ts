@@ -22,8 +22,9 @@ export class FaqAddComponent implements OnInit {
 
 	add(form): void {
 		const faqItem: any = {
-			faqquestion: this.question,
-			faqanswer: this.answer
+			name: this.question,
+			body: this.answer,
+			type: 3
 		}
 		this.onFAQItemAdded.emit(faqItem);
 		form.resetForm();

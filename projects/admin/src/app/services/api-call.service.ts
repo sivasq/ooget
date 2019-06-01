@@ -274,14 +274,51 @@ export class ApiCallService {
 	// Get Timesheet List for Single Contractor
 	getTimesheetDetails(contractId): Observable<any> {
 		const headers = this.createAuthorizationHeaderFormData();
-		const params = this.createUrlParams('Job', 'GetJobseekerTimeSheet');
+		const params = this.createUrlParams('Timesheet', 'GetTimeSheet');
 		return this.http.post(this._baseUrl, contractId, { headers: headers, params: params });
 	}
 
+	// Get Roster Off Days
+	getAllOffDays(contractId): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Timesheet', 'GetTimeSheet');
+		return this.http.post(this._baseUrl, contractId, { headers: headers, params: params });
+	}
 
+	// Toggle Roster Day Type
+	addOffDay(Data): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Timesheet', 'TimesheetSetHoliday');
+		return this.http.post(this._baseUrl, Data, { headers: headers, params: params });
+	}
 
+	// Add FAQ
+	faqAdd(faqData): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Faq', 'CreateFaq');
+		return this.http.post(this._baseUrl, faqData, { headers: headers, params: params });
+	}
 
+	// Get All Faq
+	getAllFaqItems(): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Faq', 'GetFaq');
+		return this.http.post(this._baseUrl, {}, { headers: headers, params: params });
+	}
 
+	// Update FAQ
+	faqUpdate(faqData): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Faq', 'UpdateFaq');
+		return this.http.post(this._baseUrl, faqData, { headers: headers, params: params });
+	}
+
+	// Delete FAQ
+	faqDelete(faqId): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Faq', 'DeleteFaq');
+		return this.http.post(this._baseUrl, faqId, { headers: headers, params: params });
+	}
 
 
 
@@ -454,10 +491,6 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl + '/employer/updateactivestatus', jobStatus, { headers: headers });
 	}
 
-
-
-
-
 	updateCompanyCode(companyCode): Observable<any> {
 		// var authDatas = JSON.stringify(authData);
 		const userToken = localStorage.getItem('ogToken');
@@ -508,17 +541,6 @@ export class ApiCallService {
 			.map(res => res);
 	}
 
-	getAllOffDays(contractId): Observable<any> {
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/contract/fetchoffdays', contractId, { headers: headers });
-	}
-
 	getAllPayrollsInContract(contractId): Observable<any> {
 		const userToken = localStorage.getItem('ogToken');
 		const headers = new HttpHeaders(
@@ -528,28 +550,6 @@ export class ApiCallService {
 				'token': userToken
 			});
 		return this.http.post(this._baseUrl + '/contract/fetchpayrollforparticularcontract', contractId, { headers: headers });
-	}
-
-	addOffDay(Data): Observable<any> {
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/contract/addoffday', Data, { headers: headers });
-	}
-
-	removeOffDay(Data): Observable<any> {
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/contract/removeoffday', Data, { headers: headers });
 	}
 
 	removeContractorFromJob(Data): Observable<any> {
@@ -636,59 +636,6 @@ export class ApiCallService {
 				'token': userToken
 			});
 		return this.http.post(this._baseUrl + '/contract/generatepayroll', contractid, { headers: headers })
-			.map(res => res);
-	}
-
-	faqAdd(faqData): Observable<any> {
-		// var authDatas = JSON.stringify(authData);
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/addfaq', faqData, { headers: headers })
-			.map(res => res);
-	}
-
-	getAllFaqItems(): Observable<any> {
-		// var authDatas = JSON.stringify(authData);
-		let dummy;
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/fetchfaqs', dummy, { headers: headers })
-			.map(res => res);
-	}
-
-	faqUpdate(faqData): Observable<any> {
-		// var authDatas = JSON.stringify(authData);
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/updatefaq', faqData, { headers: headers })
-			.map(res => res);
-	}
-
-	faqDelete(faqId): Observable<any> {
-		// var authDatas = JSON.stringify(authData);
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/deletefaq', faqId, { headers: headers })
 			.map(res => res);
 	}
 

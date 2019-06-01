@@ -45,7 +45,7 @@ export class FaqManageComponent implements OnInit {
 					// Response is success
 					if (response.success) {
 						// Show Success Snackbar
-						
+
 						let snackBarRef = this.snackBar.open('FAQ Added Successfully.', 'Close', {
 							duration: 5000,
 						});
@@ -74,7 +74,7 @@ export class FaqManageComponent implements OnInit {
 					// Response is success
 					if (response.success) {
 						// Show Success Snackbar
-						this.faqList = response.faqs;
+						this.faqList = response.result;
 						// Response is failed
 					} else if (!response.success) {
 						console.log(response);

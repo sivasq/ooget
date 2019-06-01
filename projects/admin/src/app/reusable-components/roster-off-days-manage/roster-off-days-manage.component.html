@@ -1,0 +1,54 @@
+<div fxFlex="100" fxFlex.gt-sm="50" fxLayout="row wrap" fxLayoutAlign="center start" class="roster">
+	<div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center">
+		<mat-button-toggle-group #group="matButtonToggleGroup" class="doNotPrint" value="today">
+			<mat-button-toggle value="previous" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+				(viewDateChange)="fetchEvents(viewMode)">
+				<!-- <mat-icon>format_align_left</mat-icon> -->Previous
+			</mat-button-toggle>
+			<mat-button-toggle value="today" mwlCalendarToday [(viewDate)]="viewDate"
+				(viewDateChange)="fetchEvents(viewMode)">
+				<!-- <mat-icon>format_align_center</mat-icon> -->Today
+			</mat-button-toggle>
+			<mat-button-toggle value="next" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+				(viewDateChange)="fetchEvents(viewMode)">
+				<!-- <mat-icon>format_align_right</mat-icon> -->Next
+			</mat-button-toggle>
+		</mat-button-toggle-group>
+
+		<div>
+			<h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+		</div>
+	</div>
+
+	<ng-template #loading>
+		<div style="height: 200px;" fxFlex="100" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+			<mat-spinner diameter="40"></mat-spinner>
+			<div>Loading...</div>
+		</div>
+	</ng-template>
+
+	<ng-template #customCellTemplate let-day="day" let-locale="locale">
+		<div class="cal-cell-top">
+			<span *ngFor="let event of day.events">
+				<span *ngIf="event.title" class="cal-day-badge" style="line-height: inherit;"
+					[style.backgroundColor]="event.color?.primary" [style.border-color]="event.color?.secondary"
+					[style.color]="event.color ? '#ffffff' : '#000000'">{{event.title}}
+				</span>
+			</span>
+			<span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+		</div>
+	</ng-template>
+
+	<div fxFlex="100" style="margin-top: 25px;" *ngIf="events$ | async; else loading; let events">
+		<div [ngSwitch]="view">
+			<mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events"
+				[activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+				(eventClicked)="eventClicked($event.event)" [cellTemplate]="customCellTemplate">
+			</mwl-calendar-month-view>
+
+			<!-- (beforeViewRender)="beforeMonthViewRender($event)" -->
+			<!-- [cellTemplate]="customCellTemplate" -->
+		</div>
+	</div>
+</div>
+<!-- </div> -->
