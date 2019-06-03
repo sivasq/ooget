@@ -16,7 +16,7 @@ export class FaqviewComponent implements OnInit, OnDestroy {
 	displayMode = 'default';
 
 	faqList: any[] = [];
-
+	faqDetail: any = [];
 	public busy: Subscription;
 
 	constructor(private _httpService: ApiCallService) {
@@ -32,6 +32,26 @@ export class FaqviewComponent implements OnInit, OnDestroy {
 					if (response.success) {
 						// Show Success Snackbar
 						this.faqList = response.faqs;
+						// Response is failed
+					} else if (!response.success) {
+						console.log(response);
+					}
+				},
+				error => {
+					console.log(error);
+				}
+			);
+	}
+
+	getFaqItemDetails(faqId) {
+		console.log(faqId);
+		this._httpService.getFaqItemDetails({ 'id': faqId })
+			.subscribe(
+				response => {
+					// Response is success
+					if (response.success) {
+						// Show Success Snackbar
+						this.faqDetail = response.result[0];
 						// Response is failed
 					} else if (!response.success) {
 						console.log(response);

@@ -220,26 +220,37 @@ export class ApiCallService {
 	// Get Today Timesheet
 	getContractTodayTimesheet(contractid): Observable<any> {
 		const headers = this.createAuthorizationHeaderFormData();
-		const params = this.createUrlParams('Job', 'GetTodayJobseekerTimeSheet');
+		const params = this.createUrlParams('Timesheet', 'GetTodayJobseekerTimeSheet');
 		return this.http.post(this._baseUrl, contractid, { headers: headers, params: params });
 	}
 
 	// JobSeeker PunchIn
 	punchIn(contractid): Observable<any> {
 		const headers = this.createAuthorizationHeaderFormData();
-		const params = this.createUrlParams('Job', 'PunchIn');
+		const params = this.createUrlParams('Timesheet', 'PunchIn');
 		return this.http.post(this._baseUrl, contractid, { headers: headers, params: params });
 	}
 
 	// JobSeeker PunchOut
 	punchOut(contractid): Observable<any> {
 		const headers = this.createAuthorizationHeaderFormData();
-		const params = this.createUrlParams('Job', 'PunchOut');
+		const params = this.createUrlParams('Timesheet', 'PunchOut');
 		return this.http.post(this._baseUrl, contractid, { headers: headers, params: params });
 	}
 
+	// Get Faq List
+	getAllFaqItems(): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Faq', 'GetFaqList');
+		return this.http.post(this._baseUrl, {}, { headers: headers, params: params });
+	}
 
-
+	// Get Single Faq
+	getFaqItemDetails(faqId): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Faq', 'GetFaq');
+		return this.http.post(this._baseUrl, faqId, { headers: headers, params: params });
+	}
 
 
 
@@ -254,11 +265,7 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, reason, { headers: headers, params: params });
 	}
 
-	getAllFaqItems(): Observable<any> {
-		const headers = this.createAuthorizationHeaderFormData();
-		const params = this.createUrlParams('Job', 'GetFaqList');
-		return this.http.post(this._baseUrl, {}, { headers: headers, params: params });
-	}
+
 
 	getJobseekersTC(): Observable<any> {
 		const headers = this.createAuthorizationHeaderFormData();

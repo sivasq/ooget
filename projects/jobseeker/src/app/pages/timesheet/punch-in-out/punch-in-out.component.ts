@@ -77,9 +77,6 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 		if (this.toggleGroup2 === undefined) { return false; }
 		this.toggleGroup2.value = null;
 	}
-
-
-
 	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar, private datePipe: DatePipe, public dialog: MatDialog, private mockDataService: MockDataService) {
 		this.getWorkingEnvironments();
 		this.getJobRegions();
@@ -262,7 +259,7 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 						this.isContractDetails = true;
 						this.currentTimeSheetResponse = response.result;
 
-						this.currentTimeSheetLayout = this.currentTimeSheetResponse.result;
+						this.currentTimeSheetLayout = this.currentTimeSheetResponse.result[0];
 						this.jobTimes = this.currentTimeSheetResponse.job_time;
 
 						// this.waitUntillInMin = response.waittill;

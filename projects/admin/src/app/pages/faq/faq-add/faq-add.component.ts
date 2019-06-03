@@ -20,6 +20,7 @@ export class FaqAddComponent implements OnInit {
 		this.question = this.answer = null;
 	}
 
+	// type 1 = employer, 2 = jobseeker, 3 = employer & Jobseeker
 	add(form): void {
 		const faqItem: any = {
 			name: this.question,

@@ -59,6 +59,7 @@ import { AccordionAnchorDirective, AccordionLinkDirective, AccordionDirective } 
 
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { RosterOffDaysManageComponent } from '../reusable-components/roster-off-days-manage/roster-off-days-manage.component';
+import { TimesheetListDetailsComponent } from '../reusable-components/timesheet-list-details/timesheet-list-details.component';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true,
 	wheelPropagation: true,
@@ -126,7 +127,8 @@ export const MY_NATIVE_FORMATS = {
 		AccordionAnchorDirective,
 		AccordionLinkDirective,
 		AccordionDirective,
-		RosterOffDaysManageComponent
+		RosterOffDaysManageComponent,
+		TimesheetListDetailsComponent
 	],
 	entryComponents: [
 		TopProfiledialogComponent,
@@ -155,6 +157,7 @@ export const MY_NATIVE_FORMATS = {
 		JobsGridViewComponent,
 		JobseekersGridViewComponent,
 		RosterOffDaysManageComponent,
+		TimesheetListDetailsComponent,
 		Ng2SearchPipeModule,
 		NgxPaginationModule,
 		OwlDateTimeModule,

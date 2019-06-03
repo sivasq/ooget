@@ -25,9 +25,9 @@ export class FaqEditComponent implements OnInit {
 
 	update(): void {
 		const faqItem: any = {
-			id: this.faqDetails._id,
-			name: this.faqDetails.faqquestion,
-			body: this.faqDetails.faqanswer,
+			id: this.faqDetails.id,
+			name: this.faqDetails.name,
+			body: this.faqDetails.body,
 			type: 3
 		}
 		console.log(faqItem);

@@ -5,7 +5,8 @@
 	<div fxLayout="row wrap">
 		<div class="flex-p" fxFlex="1 1 100%">
 			<mat-card class="mat-breadcrumb" fxLayout="row">
-				<a class="breadcrumb-item" routerLink="/main/dashboard" fxLayout="row" fxLayoutAlign="flex-start center">
+				<a class="breadcrumb-item" routerLink="/main/dashboard" fxLayout="row"
+					fxLayoutAlign="flex-start center">
 					<mat-icon>home</mat-icon>
 					<span class="breadcrumb-title">Home</span>
 				</a>
@@ -21,16 +22,16 @@
 	<div *ngIf="busy.closed" class="flex-p">
 		<mat-toolbar color="primary">{{title}}</mat-toolbar>
 		<mat-accordion *ngIf="faqList.length > 0" [displayMode]="displayMode" [multi]="multi">
-			<mat-expansion-panel *ngFor="let faqItem of faqList">
+			<mat-expansion-panel *ngFor="let faqItem of faqList" (opened)="getFaqItemDetails(faqItem.id)">
 				<mat-expansion-panel-header>
-					<span style="font-weight: bold;">{{faqItem.faqquestion}}</span>
+					<span style="font-weight: bold;">{{faqItem.name}}</span>
 				</mat-expansion-panel-header>
-				<p>{{faqItem.faqanswer}}</p>
+				<p>{{faqDetail.body}}</p>
 			</mat-expansion-panel>
 		</mat-accordion>
 
 		<div *ngIf="faqList.length == 0" style="min-height: 100px;">
-			<div fxFlex fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px" >
+			<div fxFlex fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
 				<h1 style="color: #bbbbbb; text-transform: uppercase; text-align: center;">
 					No FAQ Found
 				</h1>

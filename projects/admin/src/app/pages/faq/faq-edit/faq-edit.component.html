@@ -1,26 +1,26 @@
 <mat-toolbar color="primary">{{title}}</mat-toolbar>
 <mat-card>
-  <mat-card-content fxLayout="column">
-    <mat-form-field class="full-width" appearance="outline">
-      <mat-label>The question</mat-label>
-      <input matInput [(ngModel)]="faqDetails.faqquestion" required>
-      <mat-hint>Add here the question of your clients</mat-hint>
-    </mat-form-field>
+	<mat-card-content fxLayout="column">
+		<mat-form-field class="full-width" appearance="outline">
+			<mat-label>The question</mat-label>
+			<input matInput [(ngModel)]="faqDetails.name" required>
+			<mat-hint>Add here the question of your clients</mat-hint>
+		</mat-form-field>
 
-    <mat-form-field class="full-width" appearance="outline">
-      <mat-label>The answer</mat-label>
-      <textarea matInput [(ngModel)]="faqDetails.faqanswer" matTextareaAutosize required></textarea>
-      <mat-hint>Please type an appropriate answer here to the above question</mat-hint>
-    </mat-form-field>
-  </mat-card-content>
+		<mat-form-field class="full-width" appearance="outline">
+			<mat-label>The answer</mat-label>
+			<textarea matInput [(ngModel)]="faqDetails.body" matTextareaAutosize required></textarea>
+			<mat-hint>Please type an appropriate answer here to the above question</mat-hint>
+		</mat-form-field>
+	</mat-card-content>
 
-  <mat-card-actions fxLayoutAlign="end" style="margin: 0; padding: 0;">
-    <button mat-stroked-button color="primary" (click)="cancel()">
-      Cancel
-    </button>
-    &nbsp;&nbsp;
-    <button mat-stroked-button color="primary" (click)="update()">
-      UPDATE FAQ
-    </button>
-  </mat-card-actions>
+	<mat-card-actions fxLayoutAlign="end" style="margin: 0; padding: 0;">
+		<button mat-stroked-button color="primary" (click)="cancel()">
+			Cancel
+		</button>
+		&nbsp;&nbsp;
+		<button mat-stroked-button color="primary" (click)="update()">
+			UPDATE FAQ
+		</button>
+	</mat-card-actions>
 </mat-card>

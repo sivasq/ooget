@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit, Input } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { CalendarEvent, CalendarView, CalendarMonthViewDay, CalendarEventAction } from 'angular-calendar';
+import { CalendarEvent, CalendarView, CalendarMonthViewDay, CalendarEventAction, CalendarDateFormatter } from 'angular-calendar';
 import {
 	isSameMonth,
 	isSameDay,
@@ -11,19 +11,20 @@ import {
 	endOfWeek,
 	startOfDay,
 	endOfDay,
-	format
+	format,
+	addDays,
+	addWeeks,
+	addMonths,
+	subDays,
+	subWeeks,
+	subMonths
 } from 'date-fns';
 import { Observable, of } from 'rxjs';
 import { ApiCallService } from '../../services/api-call.service';
 import { ConfigService } from '../../services/config.service';
 import { MatSnackBar } from '@angular/material';
+import { CustomDateFormatter } from './custom-date-formatter.provider';
 // import { colors } from '../demo-utils/colors';
-
-interface Film {
-	id: number;
-	title: string;
-	release_date: string;
-}
 
 function getTimezoneOffsetString(date: Date): string {
 	const timezoneOffset = date.getTimezoneOffset();
@@ -57,11 +58,18 @@ export const colors: any = {
 @Component({
 	selector: 'app-roster-off-days-manage',
 	templateUrl: './roster-off-days-manage.component.html',
-	styleUrls: ['./roster-off-days-manage.component.scss']
+	styleUrls: ['./roster-off-days-manage.component.scss'],
+	providers: [
+		{
+			provide: CalendarDateFormatter,
+			useClass: CustomDateFormatter
+		}
+	]
 })
 export class RosterOffDaysManageComponent implements OnInit {
 
 	@Input() contractId;
+
 	responseData = {
 		'page': 1,
 		'total_results': 447,
@@ -166,13 +174,9 @@ export class RosterOffDaysManageComponent implements OnInit {
 
 	view: CalendarView = CalendarView.Month;
 	CalendarView = CalendarView;
-	viewMode = 'all';
-
-	// view: string = 'month';
 
 	viewDate: Date = new Date();
 	events$: Observable<Array<CalendarEvent<{ res: any }>>>;
-	activeDayIsOpen = false;
 
 	actions: CalendarEventAction[] = [
 		{
@@ -199,8 +203,7 @@ export class RosterOffDaysManageComponent implements OnInit {
 		// this.modal.open(this.modalContent, { size: 'lg' });
 	}
 
-	fetchEvents(viewmode): void {
-		console.log('called');
+	fetchEvents(): void {
 		const getStart: any = {
 			month: startOfMonth,
 			week: startOfWeek,
@@ -224,29 +227,54 @@ export class RosterOffDaysManageComponent implements OnInit {
 		// 	)
 		// 	.set('api_key', '0ec33936a68018857d727958dca1424f');
 
-		const headers = this._httpService.createAuthorizationHeaderFormData();
-		const params = this._httpService.createUrlParams('Timesheet', 'GetTimeSheet');
-		this.events$ = this.http.post(this.config.base_url, { 'contractid': this.contractId, 'from': format(getStart(this.viewDate), 'YYYY-MM-DD'), 'to': format(getEnd(this.viewDate), 'YYYY-MM-DD') }, { headers: headers, params: params })
-			.map((response: any) => {
-				if (response.success) {
-					return response.result.map((res: any) => {
-						return {
-							title: res.holiday,
-							start: new Date(
-								res.date + getTimezoneOffsetString(this.viewDate)
-							),
-							color: this.checkDayType(res.holiday),
-							allDay: true,
-							meta: {
-								res
-							},
-							actions: this.actions
-						};
-					});
-				} else {
-					return false;
+		this.events$ = this._httpService.getTimesheetDetails({ 'contractid': this.contractId, 'from': format(getStart(this.viewDate), 'YYYY-MM-DD'), 'to': format(getEnd(this.viewDate), 'YYYY-MM-DD') })
+			.map(
+				response => {
+					if (response.success) {
+						return response.result.map((res: any) => {
+							return {
+								title: res.holiday,
+								start: new Date(
+									res.date + getTimezoneOffsetString(this.viewDate)
+								),
+								color: this.checkDayType(res.holiday),
+								allDay: true,
+								meta: {
+									res
+								},
+								actions: this.actions
+							};
+						});
+					} else if (!response.success) {
+						return [];
+					}
+				},
+				error => {
+					console.log(error);
 				}
-			});
+			);
+
+		// const headers = this._httpService.createAuthorizationHeaderFormData();
+		// const params = this._httpService.createUrlParams('Timesheet', 'GetTimeSheet');
+		// this.events$ = this.http.post(this.config.base_url, { 'contractid': this.contractId, 'from': format(getStart(this.viewDate), 'YYYY-MM-DD'), 'to': format(getEnd(this.viewDate), 'YYYY-MM-DD') }, { headers: headers, params: params })
+		// 	.map((response: any) => {
+		// 		if (response.success) {
+		// 			return response.result.map((res: any) => {
+		// 				return {
+		// 					title: res.holiday,
+		// 					start: new Date(
+		// 						res.date + getTimezoneOffsetString(this.viewDate)
+		// 					),
+		// 					color: this.checkDayType(res.holiday),
+		// 					allDay: true,
+		// 					meta: {
+		// 						res
+		// 					},
+		// 					actions: this.actions
+		// 				};
+		// 			});
+		// 		}
+		// 	});
 	}
 
 	checkDayType(daytype) {
@@ -310,7 +338,7 @@ export class RosterOffDaysManageComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.fetchEvents('demo');
+						this.fetchEvents();
 
 						let snackBarRef = this.snackBar.open('Successfully Updated', 'Close', {
 							duration: 5000,
@@ -338,6 +366,6 @@ export class RosterOffDaysManageComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.fetchEvents(this.viewMode);
+		this.fetchEvents();
 	}
 }

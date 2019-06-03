@@ -306,6 +306,13 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, {}, { headers: headers, params: params });
 	}
 
+	// Get Single Faq
+	getFaqItemDetails(faqId): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Faq', 'GetFaq');
+		return this.http.post(this._baseUrl, faqId, { headers: headers, params: params });
+	}
+
 	// Update FAQ
 	faqUpdate(faqData): Observable<any> {
 		const headers = this.createAuthorizationHeaderFormData();
@@ -319,7 +326,6 @@ export class ApiCallService {
 		const params = this.createUrlParams('Faq', 'DeleteFaq');
 		return this.http.post(this._baseUrl, faqId, { headers: headers, params: params });
 	}
-
 
 
 
