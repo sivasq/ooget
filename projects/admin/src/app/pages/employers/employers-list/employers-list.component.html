@@ -21,9 +21,11 @@
 
 	<div [ngBusy]="{busy:busy}"></div>
 
+	<!-- If Employer Exists -->
 	<div *ngIf="isEmployerAvailable">
 		<!-- Search Data and More.. Start -->
 		<div class="flex-p" fxLayout="row" fxLayoutAlign="space-between center">
+			<!-- Employer Search form Toggle  -->
 			<div fxLayout="row">
 				<mat-button-toggle matTooltip="Search" matTooltipPosition="right" (click)="tab1search=!tab1search"
 					(click)="tab1search ? tab1FilterRef.focus() : false">
@@ -31,6 +33,7 @@
 				</mat-button-toggle>
 			</div>
 
+			<!-- Employer Search Input Form -->
 			<form class="user-search" [ngClass]="tab1search ? 'show' : ''">
 				<mat-form-field>
 					<input matInput #tab1FilterRef name="tab1Filter" [(ngModel)]="tab1Filter"
@@ -38,6 +41,7 @@
 				</mat-form-field>
 			</form>
 
+			<!-- Add Employer Button -->
 			<div fxLayout="row">
 				<mat-button-toggle matTooltip="Add New Employer" matTooltipPosition="left"
 					routerLink="/admin/employers/add">
@@ -88,9 +92,13 @@
 									src="assets/img/avatars/logo-placeholder.png">
 							</div>
 							<div class="user-social">
-								<mat-slide-toggle color="primary" (change)="changeEmployerStatus($event,employer._id)"
-									[checked]="employer.status == 0 ? false : employer.status == 2 ? false : true">
+								<!-- If Company Code Generated, Toggle Activate/Block Company -->
+								<mat-slide-toggle color="primary" *ngIf="employer.status != 1"
+									(change)="changeEmployerStatus($event, employer.id)"
+									[checked]="employer.status == 3 ? false : employer.status == 2 ? true : false">
 								</mat-slide-toggle>
+								<!-- If Company not Activated & company code not generated -->
+								<h5 *ngIf="employer.status == 1" class="m-t-15">Pending</h5>
 							</div>
 						</div>
 
@@ -157,9 +165,11 @@
 		<!-- Pagination End -->
 	</div>
 
-	<div *ngIf="!isEmployerAvailable" fxLayout="column" fxLayoutAlign="center center" class="no-data"
-		fxLayoutGap="10px">
-		<p>Currently No Employers Found. Please Add New One..</p>
+	<!-- If Employer Not Exists -->
+	<div *ngIf="!isEmployerAvailable" fxLayout="column" fxLayoutAlign="space-around center" class="no-data">
+		<!-- No Employer Message -->
+		<h4 class="text-muted">Currently No Employers Found. Please Add New One..</h4>
+		<!-- Employer Add Button -->
 		<button mat-raised-button color="primary" routerLink="/admin/employers/add">
 			Add New Employer
 		</button>

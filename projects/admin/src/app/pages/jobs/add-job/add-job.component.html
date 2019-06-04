@@ -476,17 +476,17 @@
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
-										<mat-label>Markup Rate {{jobDetails.markup_in == 'sgdollar' ? '(S$)' : jobDetails.markup_in ==
+										<mat-label>Markup Rate {{jobDetails.markup_in == '$' ? '(S$)' : jobDetails.markup_in ==
 											'percentage' ? '(%)' : ''
 											}}</mat-label>
-										<span matPrefix *ngIf="jobDetails.markup_in == 'sgdollar'">
+										<span matPrefix *ngIf="jobDetails.markup_in == '$'">
 											<span style="font-size: 17px;">S</span>
 											<span style="font-size: 19px;">$ &nbsp;</span>
 										</span>
-										<span matPrefix *ngIf="jobDetails.markup_in == 'percentage'"
+										<span matPrefix *ngIf="jobDetails.markup_in == '%'"
 											style="font-size: 17px;">% &nbsp;</span>
 										<input matInput
-											placeholder="Markup Rate {{jobDetails.markup_in == 'sgdollar' ? '(S$)' : jobDetails.markup_in == 'percentage' ? '(%)' : '' }}"
+											placeholder="Markup Rate {{jobDetails.markup_in == '$' ? '(S$)' : jobDetails.markup_in == '%' ? '(%)' : '' }}"
 											name="markup_rate" autocomplete="off" [(ngModel)]="jobDetails.markup_rate"
 											pattern="([0-9]*[.])?[0-9]+" (ngModelChange)="vlidateChargingRate()"
 											required>
@@ -497,8 +497,8 @@
 										<mat-select placeholder="Markup Rate In" name="markup_in"
 											[(ngModel)]="jobDetails.markup_in" (selectionChange)="vlidateChargingRate()"
 											required>
-											<mat-option value="sgdollar">SG Dollar(S$)</mat-option>
-											<mat-option value="percentage">Percentage(%)</mat-option>
+											<mat-option value="$">SG Dollar(S$)</mat-option>
+											<mat-option value="%">Percentage(%)</mat-option>
 										</mat-select>
 									</mat-form-field>
 

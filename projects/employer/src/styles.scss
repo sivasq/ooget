@@ -5,9 +5,12 @@
 @import "../../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
 @import "../../../node_modules/ng-busy/src/style/busy.css";
 @import '../../../node_modules/perfect-scrollbar/css/perfect-scrollbar.css';
+@import "../../../node_modules/angular-calendar/css/angular-calendar.css";
+@import '~saturn-datepicker/bundle.css';
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
 @import "variables.scss";
+
 body {
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
@@ -2002,31 +2005,31 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #e1e1e1;
-    border: 0 #fff;
-    border-radius: 0
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #ccc
-}
-
-::-webkit-scrollbar-thumb:active {
-    background: #888
-}
-
-::-webkit-scrollbar-track {
     background: #666;
     border: 0 #fff;
     border-radius: 0
 }
 
+::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: #666;
+}
+
+::-webkit-scrollbar-track {
+    background: #eee;
+    border: 0 #fff;
+    border-radius: 0
+}
+
 ::-webkit-scrollbar-track:hover {
-    background: #666
+    background: #eee;
 }
 
 ::-webkit-scrollbar-track:active {
-    background: #333
+    background: #eee;
 }
 
 ::-webkit-scrollbar-corner {
@@ -12133,4 +12136,40 @@ form.mat-dialog-content {
 
 .no-shadow {
     box-shadow: none !important;
+}
+
+
+.odd-cell {
+    background-color: pink !important;
+}
+
+@media print {
+    .doNotPrint {
+        display: none !important;
+    }
+}
+
+
+.roster .cal-month-view .cal-day-cell {
+    min-height: auto !important;
+}
+
+.roster .cal-month-view .cal-cell-top {
+    min-height: auto;
+}
+
+.roster .cal-month-view .cal-day-badge {
+    line-height: inherit;
+    border-radius: 50px;
+    font-weight: 400;
+    margin-top: 15px;
+}
+
+.roster .cal-month-view .cal-day-cell.cal-today .cal-day-number {
+    font-size: inherit;
+}
+
+.cal-month-view .cal-day-number {
+    font-weight: 400;
+    opacity: 0.7;
 }

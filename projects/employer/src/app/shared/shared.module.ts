@@ -47,6 +47,8 @@ import { SidemenuComponent } from '../sidemenu/sidemenu.component';
 
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { AccordionAnchorDirective, AccordionLinkDirective, AccordionDirective } from '../directives/menu-accordion';
+import { RosterOffDaysManageComponent } from '../reusable-components/roster-off-days-manage/roster-off-days-manage.component';
+import { TimesheetListDetailsComponent } from '../reusable-components/timesheet-list-details/timesheet-list-details.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true,
@@ -90,6 +92,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		TopProfiledialogComponent,
 		TopShortcutdialogComponent,
 		TermsConditionsDialogComponent,
+		RosterOffDaysManageComponent,
+		TimesheetListDetailsComponent,
 		ConfirmDialogComponent,
 		UniqueMainLocation,
 		SubLocationFilter,
@@ -121,6 +125,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		ReactiveFormsModule,
 		TopProfiledialogComponent,
 		TopShortcutdialogComponent,
+		RosterOffDaysManageComponent,
+		TimesheetListDetailsComponent,
 		Ng2SearchPipeModule,
 		NgxPaginationModule,
 		TermsConditionsDialogComponent,

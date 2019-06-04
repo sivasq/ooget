@@ -1,5 +1,5 @@
 <mat-card class="flex-p" fxLayout="row wrap">
-	<mat-card-header fxFlex="100" fxLayoutAlign="center" class="p-b-25">
+	<mat-card-header fxFlex="100" fxLayoutAlign="center" class="p-b-10">
 		<mat-card-subtitle>
 			<h2>TimeSheets</h2>
 		</mat-card-subtitle>
@@ -8,7 +8,7 @@
 	<!-- Timesheet List Date Period Navigation -->
 	<div fxFlex fxLayout="column" fxLayoutAlign="center center">
 		<mat-card-subtitle>
-			<h3>{{activeTimesheetPeriod.startDate}} - {{activeTimesheetPeriod.endDate}}</h3>
+			<h3>{{activeTimesheetPeriod.startDate}} <i>to</i> {{activeTimesheetPeriod.endDate}}</h3>
 		</mat-card-subtitle>
 		<mat-button-toggle-group value="CurrentDay">
 			<mat-button-toggle value="PreviousDay" (click)="getPreviousDays()">Previous 15 Days</mat-button-toggle>
@@ -17,7 +17,8 @@
 		</mat-button-toggle-group>
 	</div>
 
-	<div *ngIf="timesheets.length > 0" fxFlex="100">
+	<div fxFlex="100">
+		<!-- *ngIf="timesheets.length > 0" -->
 		<div fxLayout="row wrap">
 			<!-- Timesheet Data's Table(Payroll not generated list) Actions -->
 			<div fxFlex="100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="m-b-10">

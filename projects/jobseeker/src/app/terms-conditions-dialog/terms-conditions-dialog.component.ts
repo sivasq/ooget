@@ -17,8 +17,8 @@ export class TermsConditionsDialogComponent implements OnInit {
 	busy: Subscription;
 
 	constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _httpService: ApiCallService, public dialogRef: MatDialogRef<RegisterComponent>) {
-		data.message = this.terms;
-		// this.getTC();
+		// data.message = this.terms;
+		this.getTC();
 	}
 
 	dialogClose() {
@@ -30,7 +30,8 @@ export class TermsConditionsDialogComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.data.message = response.jobseekerterms[0].jobseekerterm;
+						this.data.message = atob(response.result.body); // Decode
+						// btoa() // Encode
 					} else if (!response.success) {
 						console.log(response);
 					}

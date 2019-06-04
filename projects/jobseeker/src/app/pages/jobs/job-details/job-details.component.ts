@@ -215,7 +215,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 	async sendApplication(jobId) {
 		// let activeStatus = localStorage.getItem('ogActiveStatus');
 		let response = await this._httpService.getProfileDetails().toPromise();
-		if (response.result[0].status == false) {
+		if (!response.result[0].status) {
 			let dialogConfig = new MatDialogConfig();
 
 			dialogConfig.disableClose = true;
@@ -230,7 +230,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 			let dialogref = this.dialog.open(ConfirmDialogComponent, dialogConfig);
 
 			dialogref.afterClosed().subscribe(data => console.log('Dialog Closed'));
-		} else if (response.result[0].status == true) {
+		} else if (response.result[0].status) {
 			this.continueSendApplication(jobId);
 		}
 	}

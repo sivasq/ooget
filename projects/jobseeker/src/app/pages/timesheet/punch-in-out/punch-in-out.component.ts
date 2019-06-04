@@ -259,23 +259,13 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 						this.isContractDetails = true;
 						this.currentTimeSheetResponse = response.result;
 
-						this.currentTimeSheetLayout = this.currentTimeSheetResponse.result[0];
-						this.jobTimes = this.currentTimeSheetResponse.job_time;
-
-						// this.waitUntillInMin = response.waittill;
-						// this.contractId = response.contractid;
-
-						// this.currentTimeSheetLayout = "demo";
-						// response.result.contract_status = false;
-
-						if (typeof this.currentTimeSheetLayout !== 'object' && !response.result.contract_status) {
-							this.contractStatus = 'notstarted';
-						}
-
-						if (typeof this.currentTimeSheetLayout === 'object') {
+						if (this.currentTimeSheetResponse.contract_status === 'open' && isArray(this.currentTimeSheetResponse.result)) {
 							this.contractStatus = 'open';
 
-							this.currentTimeSheetLayout.lateintimation = 'yes'; // temporary
+							this.currentTimeSheetLayout = this.currentTimeSheetResponse.result[0];
+							this.jobTimes = this.currentTimeSheetResponse.job_time;
+
+							// this.currentTimeSheetLayout.late_info = 'yes'; // temporary
 							// console.log(this.contractStatus);
 
 							this.ispunchedIn = this.currentTimeSheetLayout.clock_in == null ? false : true;
@@ -286,12 +276,15 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 							// console.log(this.inTime);
 						}
 
-						if (typeof this.currentTimeSheetLayout !== 'object' && response.result.contract_status) {
-							this.contractStatus = 'contractclosed';
+						if (this.currentTimeSheetResponse.contract_status === 'open' && !isArray(this.currentTimeSheetResponse.result)) {
+							this.contractStatus = 'notstarted';
+							this.currentTimeSheetLayout = this.currentTimeSheetResponse.result;
+							this.jobTimes = this.currentTimeSheetResponse.job_time;
 						}
 
-						// if (this.currentTimeSheetLayout.includes('')) { }
-
+						if (this.currentTimeSheetResponse.contract_status === 'closed' && !isArray(this.currentTimeSheetResponse.result)) {
+							this.contractStatus = 'contractclosed';
+						}
 					} else if (!response.success) {
 						console.log(response);
 					}
@@ -497,10 +490,10 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 			dialogConfig.autoFocus = true;
 			dialogConfig.data = {
 				// boxTitle:"Confirmation",
-				confirmMsg: "<h4>Please contact Ooget Admin at 62483537</h4>",
-				okButtonText: "Ok",
-				noButtonText: "",
-				actionalign: "center"
+				confirmMsg: '<h4>Please contact Ooget Admin at 62483537</h4>',
+				okButtonText: 'Ok',
+				noButtonText: '',
+				actionalign: 'center'
 			};
 			let dialogref = this.dialog.open(ConfirmDialogComponent, dialogConfig);
 
@@ -513,29 +506,28 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 	}
 
 	submitLateReason(contractid, timesheetid, lateReasonForm) {
-		this._httpService.sendPunchLateReason({ 'contractid': contractid, 'timesheetid': timesheetid, 'latereason': this.punchLateReason })
+		this._httpService.sendPunchLateReason({ 'contractid': contractid, 'timesheetid': timesheetid, 'lateinfo': this.punchLateReason })
 			.subscribe(
 				response => {
 					if (response.success) {
 						console.log(response);
-						this.currentTimeSheetLayout.timesheet.lateintimation = true;
+						// this.currentTimeSheetLayout.timesheet.late_info = true;
+						this.currentTimeSheetLayout.late_info = true;
 						lateReasonForm.resetForm();
-						let snackBarRef = this.snackBar.open("Your Late Intimation Sent Successfully", 'Close', {
+						let snackBarRef = this.snackBar.open('Your Late Intimation Sent Successfully', 'Close', {
 							duration: 5000,
 						});
 
 						snackBarRef.afterDismissed().subscribe(() => {
-							this.punchBehaviour = "Normal";
+							this.punchBehaviour = 'Normal';
 							console.log('The snack-bar was dismissed');
 						});
 
 						snackBarRef.onAction().subscribe(() => {
-							this.punchBehaviour = "Normal";
+							this.punchBehaviour = 'Normal';
 							console.log('The snack-bar action was triggered!');
 						});
-
 						snackBarRef.dismiss();
-
 					} else if (!response.success) {
 						console.log(response);
 					}

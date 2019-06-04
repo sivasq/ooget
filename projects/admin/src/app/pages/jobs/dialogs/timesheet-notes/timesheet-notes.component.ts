@@ -16,7 +16,7 @@ export class TimesheetNotesComponent implements OnInit {
 	}
 
 	public TimesheetNotes;
-	public editText = "Edit";
+	public editText = 'Edit';
 	public showNotesEditor: boolean = true;
 	public haveNotes: boolean;
 
@@ -31,16 +31,16 @@ export class TimesheetNotesComponent implements OnInit {
 	stopEdit(): void {
 		let verifiedTime = {};
 
-		let contractid = { "contractid": this.data.contractid };
+		let contractid = { 'contractid': this.data.contractid };
 		verifiedTime = Object.assign(verifiedTime, contractid);
 
-		let timesheetid = { "timesheetid": this.data.timesheetid };
+		let timesheetid = { 'timesheetid': this.data.timesheetid };
 		verifiedTime = Object.assign(verifiedTime, timesheetid);
 
-		let notes = { "notes": this.TimesheetNotes };
+		let notes = { 'notes': this.TimesheetNotes };
 		verifiedTime = Object.assign(verifiedTime, notes);
 
-		let callback = { "callback": true };
+		let callback = { 'callback': true };
 		verifiedTime = Object.assign(verifiedTime, callback);
 
 		this.bottomSheetRef.dismiss(verifiedTime);
@@ -86,9 +86,9 @@ export class TimesheetNotesComponent implements OnInit {
 	toggleShowEditor() {
 		this.showNotesEditor = !this.showNotesEditor;
 		if (this.showNotesEditor) {
-			this.editText = "Cancel";
+			this.editText = 'Cancel';
 		} else {
-			this.editText = "Edit";
+			this.editText = 'Edit';
 		}
 	}
 

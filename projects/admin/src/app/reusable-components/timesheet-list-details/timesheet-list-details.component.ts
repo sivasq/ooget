@@ -109,7 +109,7 @@ export class TimesheetListDetailsComponent implements OnInit {
 		// console.log(rawValue);
 		const emptyString = '';
 		const prefix = '0';
-		const rawValueLength = rawValue.length
+		const rawValueLength = rawValue.length;
 
 		// if (rawValue != emptyString && (rawValue[0].concat(rawValue[1]) > 24)) {
 		// 	this.editableRow.clock_verified_in = prefix.concat(rawValue);
@@ -135,7 +135,7 @@ export class TimesheetListDetailsComponent implements OnInit {
 			'clock_verified_out': clock_verified_out,
 			'contractid': row.contracts_id,
 			'timesheetid': row.id
-		}
+		};
 	}
 
 	public field2Editable(row, id) {
@@ -155,7 +155,7 @@ export class TimesheetListDetailsComponent implements OnInit {
 			'clock_verified_out': clock_verified_out,
 			'contractid': row.contracts_id,
 			'timesheetid': row.id
-		}
+		};
 	}
 
 	public rowEditableOff() {
@@ -187,7 +187,7 @@ export class TimesheetListDetailsComponent implements OnInit {
 		let jobStartTime: any = this.datePipe.transform(editableRow.timesheetdate + ' ' + this.contractDetails.job_start_time, 'yyyy/MM/dd HH:mm');
 
 		let inTime: any = this.datePipe.transform(editableRow.timesheetdate + ' ' + editableRow.clock_verified_in, 'yyyy/MM/dd HH:mm');
-		let outTime: any = this.datePipe.transform(editableRow.timesheetdate + ' ' + editableRow.clock_verified_out, 'yyyy/MM/dd HH:mm')
+		let outTime: any = this.datePipe.transform(editableRow.timesheetdate + ' ' + editableRow.clock_verified_out, 'yyyy/MM/dd HH:mm');
 
 		if (inTime > outTime) {
 			outTime = this.convertNextDay(outTime);
@@ -361,7 +361,7 @@ export class TimesheetListDetailsComponent implements OnInit {
 		let bottomSheetConfig = new MatDialogConfig();
 		bottomSheetConfig.data = {
 			'contractid': this.contractId,
-			'timesheetid': TimeSheetData._id,
+			'timesheetid': TimeSheetData.id,
 			'notes': TimeSheetData.notes,
 			'date': TimeSheetData.date,
 		};
@@ -426,9 +426,10 @@ export class TimesheetListDetailsComponent implements OnInit {
 	}
 
 	getSumOfNormalWorkHrs() {
+		if (this.timesheets.length === 0) { return ''; }
 		let totalMin = this.timesheets.map(t => t.normalworkhour).reduce((previous, current) => {
 			let min = moment.duration(current).asMinutes();
-			return previous + min
+			return previous + min;
 		}, 0);
 
 		let hrs = moment.duration(totalMin, 'minutes').format('hh:mm', {
@@ -439,9 +440,10 @@ export class TimesheetListDetailsComponent implements OnInit {
 	}
 
 	getSumOfOT1point5WorkHrs() {
+		if (this.timesheets.length === 0) { return ''; }
 		let totalMin = this.timesheets.filter(t => t.salarymultiplier == 1 || t.salarymultiplier == 1.5).map(t => t.otworkhour).reduce((previous, current) => {
 			let min = moment.duration(current).asMinutes();
-			return previous + min
+			return previous + min;
 		}, 0);
 
 		let hrs = moment.duration(totalMin, 'minutes').format('hh:mm', {
@@ -452,9 +454,10 @@ export class TimesheetListDetailsComponent implements OnInit {
 	}
 
 	getSumOfOT2WorkHrs() {
+		if (this.timesheets.length === 0) { return ''; }
 		let totalMin = this.timesheets.filter(t => t.salarymultiplier == 2).map(t => t.otworkhour).reduce((previous, current) => {
 			let min = moment.duration(current).asMinutes();
-			return previous + min
+			return previous + min;
 		}, 0);
 
 		let hrs = moment.duration(totalMin, 'minutes').format('hh:mm', {
@@ -465,9 +468,10 @@ export class TimesheetListDetailsComponent implements OnInit {
 	}
 
 	getSumOfTotalWorkHrs() {
+		if (this.timesheets.length === 0) { return ''; }
 		let totalMin = this.timesheets.map(t => t.totalworkhour).reduce((previous, current) => {
 			let min = moment.duration(current).asMinutes();
-			return previous + min
+			return previous + min;
 		}, 0);
 
 		let hrs = moment.duration(totalMin, 'minutes').format('hh:mm', {
@@ -478,35 +482,40 @@ export class TimesheetListDetailsComponent implements OnInit {
 	}
 
 	getSumOfNormalWorkHrSalary() {
+		if (this.timesheets.length === 0) { return ''; }
 		return this.timesheets.map(t => t.normalsalary).reduce((previous, current) => {
-			return previous + current
+			return previous + current;
 		}, 0);
 	}
 
 	getSumOfOT1point5WorkHrSalary() {
+		if (this.timesheets.length === 0) { return ''; }
 		return this.timesheets.filter(t => t.salarymultiplier == 1 || t.salarymultiplier == 1.5).map(t => t.otsalary).reduce((previous, current) => {
-			return previous + current
+			return previous + current;
 		}, 0);
 	}
 
 	getSumOfOT2WorkHrSalary() {
+		if (this.timesheets.length === 0) { return ''; }
 		return this.timesheets.filter(t => t.salarymultiplier == 2).map(t => t.otsalary).reduce((previous, current) => {
-			return previous + current
+			return previous + current;
 		}, 0);
 	}
 
 	getSumOfTotalWorkHrSalary() {
+		if (this.timesheets.length === 0) { return ''; }
 		return this.timesheets.map(t => t.totalsalary).reduce((previous, current) => {
-			return previous + current
+			return previous + current;
 		}, 0);
 	}
 
 	getSumOfTotalOogetCommision() {
+		if (this.timesheets.length === 0) { return ''; }
 		return this.timesheets.map(t => t.oogetscommission).reduce((previous, current) => {
-			if (current == undefined) {
+			if (current === undefined) {
 				current = 0;
 			}
-			return previous + current
+			return previous + current;
 		}, 0);
 	}
 
@@ -549,7 +558,7 @@ export class TimesheetListDetailsComponent implements OnInit {
 			if (result.callback == true) {
 				this.AdjustTime(result);
 			}
-		})
+		});
 	}
 
 	AdjustTime(verifiedTime) {

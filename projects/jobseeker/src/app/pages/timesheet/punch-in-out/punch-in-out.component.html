@@ -118,15 +118,15 @@
 							<mat-radio-button value="Normal">Normal</mat-radio-button>
 							<!-- Disable Late option if Already PunchIn Or PunchOut Done or already late initimated -->
 							<mat-radio-button value="Late"
-								[disabled]="ispunchedIn || ispunchedOut || currentTimeSheetLayout.lateintimation">
+								[disabled]="ispunchedIn || ispunchedOut || currentTimeSheetLayout.late_info">
 								Late</mat-radio-button>
 							<!-- Disable sick option if Already PunchIn Or PunchOut Done or already late initimated -->
 							<mat-radio-button value="Sick"
-								[disabled]="ispunchedIn || ispunchedOut || currentTimeSheetLayout.lateintimation">
+								[disabled]="ispunchedIn || ispunchedOut || currentTimeSheetLayout.late_info">
 								Sick</mat-radio-button>
 						</mat-radio-group>
 						<!-- If Already Initimated Late -->
-						<div *ngIf="currentTimeSheetLayout.lateintimation"
+						<div *ngIf="currentTimeSheetLayout.late_info"
 							style="color: coral; font-size: smaller; padding-top: 10px;">You
 							have Initimated Late.</div>
 					</div>
@@ -156,8 +156,8 @@
 								(click)="punchIn(currentTimeSheetLayout.contracts_id, currentTimeSheetLayout.id)">Time
 								- In</button>
 							<!-- Show PunchIn Time If Already punchedIn -->
-							<div *ngIf="ispunchedIn">
-								<span *ngIf="inTime">In-Time {{inTime}} </span>
+							<div *ngIf="ispunchedIn" class="p-10">
+								<span *ngIf="inTime">In-Time {{inTime | date:'dd/MM/yyyy HH:mm'}} </span>
 							</div>
 						</div>
 						<div fxLayout="column" fxLayoutAlign="space-around center">
@@ -166,7 +166,7 @@
 								(click)="punchOut(currentTimeSheetLayout.contracts_id, currentTimeSheetLayout.id)">Time
 								- Out</button>
 							<!-- Show PunchIn Time If Already punchedOut -->
-							<div *ngIf="ispunchedOut">
+							<div *ngIf="ispunchedOut" class="p-10">
 								<span *ngIf="outTime">Out-Time {{outTime | date:'dd/MM/yyyy HH:mm'}} </span>
 							</div>
 						</div>
@@ -174,10 +174,10 @@
 				</div>
 
 				<!-- If Contract Status Not Started, show message -->
-				<div *ngIf="contractStatus == 'notstarted'" class="flex-p" fxLayout="row" fxLayoutAlign="center center">
-					<!-- Your Contract Will Start on &nbsp; -->
-					<span style="font-weight: 600;"> {{currentTimeSheetLayout}}
-					</span>
+				<div *ngIf="contractStatus == 'notstarted'" class="flex-p" fxLayout="row"
+					fxLayoutAlign="space-around center">
+					<span
+						style="color: orangered; font-size: 14px; font-weight: bold;">{{currentTimeSheetLayout}}</span>
 				</div>
 
 				<!-- If Contract Status Closed, show message -->

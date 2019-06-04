@@ -31,7 +31,7 @@ export class OogetsidenavComponent implements OnInit {
 			this.userEmail = localStorage.getItem('ogUserEmail');
 			let userLogo = localStorage.getItem('ogUserLogo');
 
-			if (userLogo == null || userLogo == 'undefined') {
+			if (userLogo == 'null' || userLogo == 'undefined') {
 				this.profileImage = 'assets/img/avatars/profile-placeholder.png';
 			} else {
 				this.profileImage = 'assets/img/avatars/profile-placeholder.png';
@@ -54,14 +54,11 @@ export class OogetsidenavComponent implements OnInit {
 	}
 
 	refreshLS() {
-		// this.UserName = localStorage.getItem('ogUserName');
-		// this.UserRole = localStorage.getItem('ogUserRole');
 		this.UserName = localStorage.getItem('ogUserName');
 		this.userEmail = localStorage.getItem('ogUserEmail');
 		// this.UserRole = "JobSeeker";
 		let userLogo = localStorage.getItem('ogUserLogo');
-
-		if (userLogo == null || userLogo == 'undefined') {
+		if (userLogo == 'null' || userLogo == 'undefined') {
 			this.profileImage = 'assets/img/avatars/profile-placeholder.png';
 		} else {
 			this.profileImage = this.baseUrl + userLogo;

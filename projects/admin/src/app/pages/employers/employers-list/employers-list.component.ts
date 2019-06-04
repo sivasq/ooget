@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { MenuPositionX, MatSnackBar } from '@angular/material';
 import { PaginationInstance } from 'ngx-pagination';
 import { ConfigService } from '../../../services/config.service';
+import { isArray } from 'util';
 
 @Component({
 	selector: 'app-employers-list',
@@ -15,8 +16,8 @@ export class EmployersListComponent implements OnInit {
 	public baseUrl;
 
 	// Mat Menu Configuration
-	@Input() xPosition: MenuPositionX
-	@Input() overlapTrigger: boolean
+	@Input() xPosition: MenuPositionX;
+	@Input() overlapTrigger: boolean;
 
 	public pageSizeOptions = [3, 6, 12, 24, 48, 96];
 
@@ -47,9 +48,7 @@ export class EmployersListComponent implements OnInit {
 
 	// Toggle Employer Status Active/Inactive
 	changeEmployerStatus(event, companyId) {
-		// console.log(event.checked);
-		// console.log(companyId);
-		this.busy = this._httpService.changeEmployerStatus({ companyid: companyId, activestatus: event.checked })
+		this.busy = this._httpService.changeEmployerStatus({ 'employerid': companyId, status: event.checked ? '2' : '3' })
 			.subscribe(
 				response => {
 					if (response.success) {
@@ -63,7 +62,7 @@ export class EmployersListComponent implements OnInit {
 								console.log('The snack-bar action was triggered!');
 							});
 						} else if (event.checked == false) {
-							let snackBarRef = this.snackBar.open('Employer Deactivated Successfully.', 'Close', {
+							let snackBarRef = this.snackBar.open('Employer Blocked Successfully.', 'Close', {
 								duration: 5000,
 							});
 							snackBarRef.onAction().subscribe(() => {
@@ -88,8 +87,7 @@ export class EmployersListComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log(response.result);
-						if ((response.result).length > 0) {
+						if (isArray(response.result) && (response.result).length > 0) {
 							this.isEmployerAvailable = true;
 							this.employerCount = (response.result).length;
 							this.employers_list = response.result;

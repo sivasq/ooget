@@ -1,4 +1,4 @@
-import { Directive, forwardRef, Attribute, Input } from '@angular/core';
+import { Directive, forwardRef, Attribute, Input, OnInit, ElementRef } from '@angular/core';
 import { Validator, AbstractControl, NG_VALIDATORS, ValidatorFn, FormControl, ValidationErrors } from '@angular/forms';
 
 @Directive({
@@ -80,5 +80,25 @@ export class CompareDirective implements Validator {
 		}
 
 		return this.parent === 'true' ? true : false;
+	}
+}
+
+/**
+ * Alterates autocomplete="off" atribute on chrome because it's ignoring it in case of credentials, address or credit card data type.
+ */
+@Directive({
+	selector: '[autocomplete]'
+})
+export class AutocompleteDirective implements OnInit {
+	private _chrome = navigator.userAgent.indexOf('Chrome') > -1;
+	constructor(private _el: ElementRef) { }
+	ngOnInit() {
+		if (this._chrome) {
+			if (this._el.nativeElement.getAttribute('autocomplete') === 'off') {
+				// setTimeout(() => {
+				this._el.nativeElement.setAttribute('autocomplete', 'new-password');
+				// });
+			}
+		}
 	}
 }

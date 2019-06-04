@@ -1,12 +1,10 @@
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
-
-import { ApiCallService } from '../../../services/api-call.service';
 import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { ApiCallService } from '../../../services/api-call.service';
 import { AsyncSubscriber } from '../../../services/async.service';
 import { Industry } from '../../../classes/Industry';
-import { Industries } from '../../../mock-datas/industries';
 import { MockDataService } from '../../../services/mock-data.service';
 
 @Component({
@@ -16,13 +14,13 @@ import { MockDataService } from '../../../services/mock-data.service';
 })
 export class AddEmployerComponent implements OnInit {
 
-	appearance$: Observable<any>;
+	appearance$: Observable<any>; // Form Layout
 
-	public hide = true;
-	public rehide = true;
-	public passwordPatternError;
+	hide = true;
+	rehide = true;
+	passwordPatternError;
 
-	public Industries: Industry[];
+	Industries: Industry[];
 
 	employerAddForm: FormGroup;
 	@ViewChild(FormGroupDirective) resetEmployerAddForm;
@@ -35,7 +33,6 @@ export class AddEmployerComponent implements OnInit {
 	}
 
 	getIndustries(): void {
-		// this.Industries = this.mockDataService.getIndustries();
 		this.mockDataService.getIndustries()
 			.subscribe(IndustriesList => this.Industries = IndustriesList);
 	}

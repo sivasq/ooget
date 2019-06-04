@@ -840,7 +840,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 						this.myProfile.experience_year = userdata.experience_year;
 
 						let newExp: any[] = [];
-						let pastExp = userdata.experience_details !== '' ? JSON.parse(userdata.experience_details) : [];
+						let pastExp = userdata.experience_details !== '' && userdata.experience_details !== null ? JSON.parse(userdata.experience_details) : [];
 						// console.log(pastExp);
 						if (pastExp.length > 0) {
 							for (let i = 0; i < pastExp.length; i++) {

@@ -19,18 +19,19 @@ export class JobseekerListComponent implements OnInit {
 	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar) { }
 
 	toggleJobseekerStatus(event) {
-		this.busy = this._httpService.changeJobseekerStatus({ jobseekerid: event.jobSeekerId, activestatus: event.activeStatus })
+		this.busy = this._httpService.changeJobseekerStatus({ jobseekerid: event.jobSeekerId, status: event.activeStatus ? 1 : 0 })
 			.subscribe(
 				response => {
 					if (response.success) {
-						if (event.activeStatus == true) {
+						this.getAllJobseekers();
+						if (event.activeStatus) {
 							let snackBarRef = this.snackBar.open('Jobseeker Activated Successfully.', 'Close', {
 								duration: 5000,
 							});
 							snackBarRef.onAction().subscribe(() => {
 								snackBarRef.dismiss();
 							});
-						} else if (event.activeStatus == false) {
+						} else if (!event.activeStatus) {
 							let snackBarRef = this.snackBar.open('Jobseeker Deactivated Successfully.', 'Close', {
 								duration: 5000,
 							});

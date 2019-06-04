@@ -8,7 +8,7 @@
 <div class="user-block transition-2" [ngClass]="userprofile ? 'show' : ''" [ngStyle.lt-md]="{'height':'156px'}"
 	fxLayout="column" fxLayoutAlign="center center">
 	<div class="user-info-wrapper" fxLayout="row" fxLayoutAlign="space-around center">
-		<img alt="user-image" src="{{profileImage}}">
+		<img alt="user-image" src="{{profileImage}}" onError="this.src='assets/img/avatars/profile-placeholder.png'">
 		<div class="user-info">
 			<p class="name">{{UserName | titlecase}}</p>
 			<p class="position">Jobseeker

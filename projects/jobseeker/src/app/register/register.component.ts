@@ -191,9 +191,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 	}
 
 	onSubmitReg() {
-		// console.log(this.jobSeekerRegForm.value);
-		// console.log(this.jobSeekerRegForm.valid);
-
 		if (!this.jobSeekerRegForm.valid) { return false; }
 
 		this.busy = this._httpService.createJobseeker(this.jobSeekerRegForm.value)

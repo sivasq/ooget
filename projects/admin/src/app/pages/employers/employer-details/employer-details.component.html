@@ -18,7 +18,7 @@
 				</a>
 
 				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
-					<span class="breadcrumb-title active">{{employerDetails.companyname}}</span>
+					<span class="breadcrumb-title active">{{employerDetails.name}}</span>
 				</div>
 			</mat-card>
 		</div>
@@ -114,18 +114,18 @@
 									<mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="40">
 										<mat-label>Employer Company Code</mat-label>
 										<input matInput placeholder="Employer Company Code" autocomplete="off"
-											formControlName="companycode" minlength="7" maxlength="7" required>
-										<mat-hint *ngIf="companyCodeForm.get('companycode').hasError('required')">
+											formControlName="employercode" minlength="7" maxlength="7" required>
+										<mat-hint *ngIf="companyCodeForm.get('employercode').hasError('required')">
 											Employer Code Required
 										</mat-hint>
-										<mat-hint *ngIf="companyCodeForm.get('companycode').hasError('minlength')">
+										<mat-hint *ngIf="companyCodeForm.get('employercode').hasError('minlength')">
 											Minimum &amp; Maximum 7 characters Must
 										</mat-hint>
-										<mat-hint *ngIf="companyCodeForm.get('companycode').hasError('maxlength')">
+										<mat-hint *ngIf="companyCodeForm.get('employercode').hasError('maxlength')">
 											Maximum 7 characters only Allowed
 										</mat-hint>
 										<mat-error
-											*ngIf="companyCodeForm.get('companycode').hasError('isCompanycodeUnique')"
+											*ngIf="companyCodeForm.get('employercode').hasError('isCompanycodeUnique')"
 											align="start">
 											This Company Code Already Registered
 										</mat-error>

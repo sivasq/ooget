@@ -258,12 +258,12 @@ export class AddJobComponent implements OnInit {
 			// console.log(this.jobDetails.markup_rate);
 			// console.log(this.jobDetails.markup_in);
 
-			if (this.jobDetails.markup_in == 'percentage') {
+			if (this.jobDetails.markup_in == '%') {
 				this.jobDetails.jobseeker_salary = (((1 - (Number(this.jobDetails.markup_rate) / 100)) * Number(this.jobDetails.charge_rate)).toFixed(1));
 				this.jobDetails.markup_amount = ((Number(this.jobDetails.charge_rate) - (1 - (Number(this.jobDetails.markup_rate) / 100)) * Number(this.jobDetails.charge_rate)).toFixed(1));
 			}
 
-			if (this.jobDetails.markup_in == 'sgdollar') {
+			if (this.jobDetails.markup_in == '$') {
 				this.jobDetails.jobseeker_salary = (Number(this.jobDetails.charge_rate) - Number(this.jobDetails.markup_rate)).toFixed(1);
 				this.jobDetails.markup_amount = Number(this.jobDetails.markup_rate).toFixed(1);
 			}

@@ -309,8 +309,8 @@
 							<p *ngFor="let contractor of jobContractors; let i=index;">
 								<span>{{i+1}}.&nbsp;
 									<a style="color:blue; font-weight: bold;"
-										routerLink="/employer/jobs/{{contractor._id}}/contract_details">
-										{{contractor.jobseekerid.username}}
+										routerLink="/employer/jobs/{{contractor.id}}/contract_details">
+										{{contractor.jobseeker_name}}
 									</a>
 								</span>
 							</p>

@@ -159,6 +159,38 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, jobId, { headers: headers, params: params });
 	}
 
+	// Get Contractors List For Job
+	getJobContractors(jobId): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'GetAppliedList');
+		return this.http.post(this._baseUrl, jobId, { headers: headers, params: params });
+	}
+
+	// Get Jobseeker Contract Details
+	getContractDetails(contractId): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'GetContractList');
+		return this.http.post(this._baseUrl, contractId, { headers: headers, params: params });
+	}
+
+	// Get Timesheet List for Single Contractor
+	getTimesheetDetails(contractId): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Timesheet', 'GetTimeSheet');
+		return this.http.post(this._baseUrl, contractId, { headers: headers, params: params });
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -202,18 +234,6 @@ export class ApiCallService {
 				'token': userToken
 			})
 		return this.http.post(this._baseUrl + '/updatetermsstatus', termData, { headers: headers })
-	}
-
-	getJobContractors(jobId): Observable<any> {
-		let jobIds = jobId;
-		let userToken = localStorage.getItem('ogToken');
-		let headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			})
-		return this.http.post(this._baseUrl + '/contract/contractslist', jobIds, { headers: headers })
 	}
 
 	getAppliedCandidates(jobId): Observable<any> {
@@ -300,28 +320,6 @@ export class ApiCallService {
 			})
 		return this.http.post(this._baseUrl + '/contract/generatepayroll', contractid, { headers: headers })
 			.map(res => res)
-	}
-
-	getContractDetails(contractId): Observable<any> {
-		let userToken = localStorage.getItem('ogToken');
-		let headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			})
-		return this.http.post(this._baseUrl + '/contract/fetchparticularcontract', contractId, { headers: headers })
-	}
-
-	getTimesheetDetails(contractId): Observable<any> {
-		let userToken = localStorage.getItem('ogToken');
-		let headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			})
-		return this.http.post(this._baseUrl + '/contract/fetchtimesheetdetails', contractId, { headers: headers })
 	}
 
 	timesheetAdjust(verifiedTime): Observable<any> {

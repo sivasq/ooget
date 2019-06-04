@@ -252,26 +252,29 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, faqId, { headers: headers, params: params });
 	}
 
+	// Get Terms And Conditions
+	getJobseekersTC(): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Terms', 'GetTerms');
+		return this.http.post(this._baseUrl, {}, { headers: headers, params: params });
+	}
 
-
-
-
-
-
-
+	// Update Late Info
 	sendPunchLateReason(reason): Observable<any> {
 		const headers = this.createAuthorizationHeaderFormData();
-		const params = this.createUrlParams('Job', 'UpdateLateReason');
+		const params = this.createUrlParams('Timesheet', 'JobseekerLateInfo');
 		return this.http.post(this._baseUrl, reason, { headers: headers, params: params });
 	}
 
 
 
-	getJobseekersTC(): Observable<any> {
-		const headers = this.createAuthorizationHeaderFormData();
-		const params = this.createUrlParams('Job', 'GetJobSeekerTerms');
-		return this.http.post(this._baseUrl, {}, { headers: headers, params: params });
-	}
+
+
+
+
+
+
+
 
 	// ======================================================
 

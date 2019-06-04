@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ApiCallService } from '../../../services/api-call.service';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
+import { isArray } from 'util';
 
 @Component({
 	selector: 'app-pending-jobseekers',
@@ -19,18 +20,19 @@ export class PendingJobseekersComponent implements OnInit {
 	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar) { }
 
 	toggleJobseekerStatus(event) {
-		this.busy = this._httpService.changeJobseekerStatus({ jobseekerid: event.jobSeekerId, status: event.activeStatus })
+		this.busy = this._httpService.changeJobseekerStatus({ jobseekerid: event.jobSeekerId, status: event.activeStatus ? 1 : 0 })
 			.subscribe(
 				response => {
 					if (response.success) {
-						if (event.activeStatus == true) {
+						this.getPendingJobseekers();
+						if (event.activeStatus) {
 							let snackBarRef = this.snackBar.open('Jobseeker Activated Successfully.', 'Close', {
 								duration: 5000,
 							});
 							snackBarRef.onAction().subscribe(() => {
 								snackBarRef.dismiss();
 							});
-						} else if (event.activeStatus == false) {
+						} else if (!event.activeStatus) {
 							let snackBarRef = this.snackBar.open('Jobseeker Deactivated Successfully.', 'Close', {
 								duration: 5000,
 							});
@@ -54,7 +56,11 @@ export class PendingJobseekersComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.jobseekers_list = response.result;
+						if (isArray(response.result) && response.result.length) {
+							this.jobseekers_list = response.result;
+						} else {
+							this.jobseekers_list = [];
+						}
 					} else if (!response.success) {
 						console.log(response);
 					}
@@ -68,5 +74,4 @@ export class PendingJobseekersComponent implements OnInit {
 	ngOnInit() {
 		this.getPendingJobseekers();
 	}
-
 }

@@ -365,7 +365,7 @@ export class JobDetailsComponent implements OnInit {
 				response => {
 					if (response.success) {
 						// console.log(response);
-						this.jobContractors = response.result.filter(job => job.applied_on !== null);
+						this.jobContractors = response.result.filter(job => job.offer_accepted !== null);
 						console.log(this.jobContractors);
 					} else if (!response.success) {
 						// console.log(response);

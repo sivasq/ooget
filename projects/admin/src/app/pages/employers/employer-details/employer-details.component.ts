@@ -28,10 +28,10 @@ export class EmployerDetailsComponent implements OnInit {
 	public companyCodeGenerator: boolean = false;
 
 	public docName;
-	public companyid;
+	public employerid;
 	public companyCodes = {
-		companyid: '',
-		companycode: ''
+		employerid: '',
+		employercode: ''
 	};
 	showUpload = true;
 	uploaded = false;
@@ -75,30 +75,30 @@ export class EmployerDetailsComponent implements OnInit {
 	};
 
 	constructor(private fb: FormBuilder, private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar, private configService: ConfigService, private datePipe: DatePipe) {
-
+		this.buildCompanyCodeForm();
 		this.baseUrl = configService.base_url;
 		this.imgBaseUrl = configService.img_base_url;
-		this.companyid = this.route.snapshot.params['emp_id'];
+		this.employerid = this.route.snapshot.params['emp_id'];
 		let employerId = {
-			companyid: this.route.snapshot.params['emp_id'],
+			employerid: this.route.snapshot.params['emp_id'],
 		};
 		this.getEmployerDetails({ 'employerid': this.route.snapshot.params['emp_id'] });
 	}
 
 	toggleCompanyCodeGenerator(el) {
 		this.companyCodeForm.patchValue({
-			'companyid': ''
+			'employercode': ''
 		});
 		this.companyCodeGenerator = !this.companyCodeGenerator;
 	}
 
 	buildCompanyCodeForm(): void {
 		this.companyCodeForm = this.fb.group({
-			// Profile Details
-			companyid: ['', Validators.compose([Validators.required])],
-			companycode: ['', Validators.compose([Validators.required]), this.isCompanycodeUnique.bind(this)],
+			employerid: ['', Validators.compose([Validators.required])],
+			employercode: ['', Validators.compose([Validators.required]), this.isCompanycodeUnique.bind(this)],
 		});
 	}
+	//
 
 	processPayrollGenerate() {
 		let today = new Date();
@@ -207,18 +207,9 @@ export class EmployerDetailsComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						// if((response.message).length > 0)
-						// {
-						// 	this.isEmployerAvailable = true;
-						// }else{
-						// 	this.isEmployerAvailable = false;
-						// }
-
 						this.employerDetails = response.result[0];
-
-						this.buildCompanyCodeForm();
 						this.companyCodeForm.patchValue({
-							'companyid': response.result.id
+							'employerid': response.result[0].id
 						});
 						console.log(this.employerDetails);
 
@@ -248,12 +239,11 @@ export class EmployerDetailsComponent implements OnInit {
 	}
 
 	updateCompanyCode() {
-		// console.log(this.companyCodes);
-		this.busy = this._httpService.updateCompanyCode(this.companyCodes)
+		this.busy = this._httpService.updateCompanyCode(this.companyCodeForm.value)
 			.subscribe(
 				response => {
 					if (response.success) {
-						this.employerDetails.companycode = this.companyCodes.companycode;
+						this.employerDetails.companycode = this.companyCodeForm.get('employercode').value;
 						this.companyCodeGenerator = !this.companyCodeGenerator;
 						console.log(response);
 
@@ -301,10 +291,10 @@ export class EmployerDetailsComponent implements OnInit {
 		const formData: FormData = new FormData();
 		if (fileBrowser.files && fileBrowser.files[0]) {
 			formData.append('termsandconditions', fileBrowser.files[0]);
-			formData.append('companyid', this.companyid);
+			formData.append('employerid', this.employerid);
 		}
 
-		this.busy = this._httpService.uploadTermsDoc(formData, this.companyid)
+		this.busy = this._httpService.uploadTermsDoc(formData, this.employerid)
 			.subscribe(
 				response => {
 					if (response.success) {
@@ -328,6 +318,12 @@ export class EmployerDetailsComponent implements OnInit {
 			);
 	}
 
-	ngOnInit() { }
-
+	ngOnInit() {
+		// this.companyCodeForm.valueChanges
+		// 	.subscribe(x => {
+		// 		if (x != null) {
+		// 			console.log(x);
+		// 		}
+		// 	});
+	}
 }
