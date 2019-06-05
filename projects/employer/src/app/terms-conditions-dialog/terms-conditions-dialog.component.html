@@ -1,9 +1,10 @@
 <h2 mat-dialog-title align="center">Terms and Conditions</h2>
-<mat-dialog-content>
+<!-- <mat-dialog-content>
     <div fxFlex>
         <a href="{{imgBaseUrl}}/company/{{data.termsandconditions}}" target="_blank">Click here</a> to Download Terms and Conditions
     </div>
-</mat-dialog-content>
+</mat-dialog-content> -->
+<mat-dialog-content *ngIf="data.termsandconditions" [innerHTML]="data.termsandconditions"></mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button (click)="openDialog('yes')" color="primary">Accept</button>
     <button mat-button (click)="dialogClose('no')" color="primary">Not Accept</button>

@@ -104,8 +104,7 @@
 
 							<span *ngIf="row.id !== editRowId || (row.id == editRowId && editField!='field1')"
 								(click)="!row.verified && field1Editable(row, row.id)"
-								style="cursor: pointer; text-decoration-line: underline; text-decoration-style: dashed; text-underline-position: under;">{{row.clock_verified_in
-									| date:'HH:mm'}}</span>
+								style="cursor: pointer; text-decoration-line: underline; text-decoration-style: dashed; text-underline-position: under;">{{row.clock_verified_in != null ? (row.clock_verified_in | date:'HH:mm') : row.clock_in != null ? (row.clock_in | date:'HH:mm') : '00:00'}}</span>
 						</td>
 						<td mat-footer-cell *matFooterCellDef></td>
 					</ng-container>
@@ -125,8 +124,7 @@
 							</mat-form-field>
 							<span *ngIf="row.id !== editRowId || (row.id == editRowId && editField!='field2')"
 								(click)="!row.verified && field2Editable(row, row.id)"
-								style="cursor: pointer; text-decoration-line: underline; text-decoration-style: dashed; text-underline-position: under;">{{row.clock_verified_out
-									| date:'HH:mm'}}</span>
+								style="cursor: pointer; text-decoration-line: underline; text-decoration-style: dashed; text-underline-position: under;">{{row.clock_verified_out != null ? (row.clock_verified_out | date:'HH:mm') : row.clock_out != null ? (row.clock_out | date:'HH:mm') : '00:00'}}</span>
 						</td>
 						<td mat-footer-cell *matFooterCellDef></td>
 					</ng-container>

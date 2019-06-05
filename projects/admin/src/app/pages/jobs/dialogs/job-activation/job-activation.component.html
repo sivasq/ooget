@@ -12,43 +12,43 @@
 						<span style="font-size: 17px;">S</span>
 						<span style="font-size: 19px;">$ &nbsp;</span>
 					</span>
-					<input matInput placeholder="Charge Rate (S$)" name="chargerate" autocomplete="off" [(ngModel)]="jobDetails.chargerate"
+					<input matInput placeholder="Charge Rate (S$)" name="charge_rate" autocomplete="off" [(ngModel)]="jobDetails.charge_rate"
 					 pattern="([0-9]*[.])?[0-9]+" (ngModelChange)="vlidateChargingRate()" required>
 				</mat-form-field>
 
 				<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
-					<mat-label>Markup Rate {{jobDetails.markupratetype == 'sgdollar' ? '(S$)' : jobDetails.markupratetype ==
-						'percentage' ? '(%)' : ''
+					<mat-label>Markup Rate {{jobDetails.markup_in == '$' ? '(S$)' : jobDetails.markup_in ==
+						'%' ? '(%)' : ''
 						}}</mat-label>
-					<span matPrefix *ngIf="jobDetails.markupratetype == 'sgdollar'">
+					<span matPrefix *ngIf="jobDetails.markup_in == '$'">
 						<span style="font-size: 17px;">S</span>
 						<span style="font-size: 19px;">$ &nbsp;</span>
 					</span>
-					<span matPrefix *ngIf="jobDetails.markupratetype == 'percentage'" style="font-size: 17px;">% &nbsp;</span>
-					<input matInput placeholder="Markup Rate {{jobDetails.markupratetype == 'sgdollar' ? '(S$)' : jobDetails.markupratetype == 'percentage' ? '(%)' : '' }}"
-					 name="markuprate" autocomplete="off" [(ngModel)]="jobDetails.markuprate" pattern="([0-9]*[.])?[0-9]+"
+					<span matPrefix *ngIf="jobDetails.markup_in == '%'" style="font-size: 17px;">% &nbsp;</span>
+					<input matInput placeholder="Markup Rate {{jobDetails.markup_in == '$' ? '(S$)' : jobDetails.markup_in == '%' ? '(%)' : '' }}"
+					 name="markup_rate" autocomplete="off" [(ngModel)]="jobDetails.markup_rate" pattern="([0-9]*[.])?[0-9]+"
 					 (ngModelChange)="vlidateChargingRate()" required>
 				</mat-form-field>
 
 				<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 					<mat-label>Markup Rate In</mat-label>
-					<mat-select placeholder="Markup Rate In" name="markupratetype" [(ngModel)]="jobDetails.markupratetype"
+					<mat-select placeholder="Markup Rate In" name="markup_in" [(ngModel)]="jobDetails.markup_in"
 					 (selectionChange)="vlidateChargingRate()" required>
-						<mat-option value="sgdollar">SG Dollar(S$)</mat-option>
-						<mat-option value="percentage">Percentage(%)</mat-option>
+						<mat-option value="$">SG Dollar(S$)</mat-option>
+						<mat-option value="%">Percentage(%)</mat-option>
 					</mat-select>
 				</mat-form-field>
 
 				<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 					<mat-label>JobSeeker Salary/hr</mat-label>
-					<input matInput placeholder="JobSeeker Salary/hr" name="salary" autocomplete="off" [(ngModel)]="jobDetails.salary"
+					<input matInput placeholder="JobSeeker Salary/hr" name="jobseeker_salary" autocomplete="off" [(ngModel)]="jobDetails.jobseeker_salary"
 					 pattern="([0-9]*[.])?[0-9]+" readonly required>
 				</mat-form-field>
 
 				<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 					<mat-label>Markup Rate In Currency(S$)</mat-label>
-					<input matInput placeholder="Markup Rate In Currency(S$)" name="markuprateincurrency" autocomplete="off"
-					 [(ngModel)]="jobDetails.markuprateincurrency" pattern="([0-9]*[.])?[0-9]+" readonly required>
+					<input matInput placeholder="Markup Rate In Currency(S$)" name="markup_amount" autocomplete="off"
+					 [(ngModel)]="jobDetails.markup_amount" pattern="([0-9]*[.])?[0-9]+" readonly required>
 				</mat-form-field>
 			</div>
 

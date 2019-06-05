@@ -115,8 +115,8 @@
 
 									<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
 										<mat-label>Nationality</mat-label>
-										<mat-select placeholder="Nationality" name="residency_type"
-											formControlName="residency_type" required>
+										<mat-select placeholder="Nationality" name="nationality"
+											formControlName="nationality" required>
 											<mat-option *ngFor="let nationality of Nationalitys"
 												[value]="nationality.id">
 												{{ nationality.name }}

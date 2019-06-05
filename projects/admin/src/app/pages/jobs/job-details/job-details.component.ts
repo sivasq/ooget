@@ -390,9 +390,10 @@ export class JobDetailsComponent implements OnInit {
 		let dialogRef = this.dialog.open(JobActivationComponent, dialogConfig);
 
 		dialogRef.afterClosed().subscribe(response => {
-			// if (response.callback) {
-			this.getJobDetails();
-			// },
+			console.log(response);
+			if (response.callback) {
+				this.getJobDetails();
+			}
 			// error => {
 			// 	console.log(error);
 		}

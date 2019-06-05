@@ -172,37 +172,34 @@ export class TimesheetListDetailsComponent implements OnInit {
 	}
 
 	public rowEditableSubmit(editableRow, field) {
-
 		if (field == 'field1' && !this.fieldName1.nativeElement.validity.valid) { return false; }
-
 		if (field == 'field2' && !this.fieldName2.nativeElement.validity.valid) { return false; }
 
 		console.log('editoff called Enter');
-		// console.log(editableRow);
+		console.log(editableRow);
 		// console.log(field);
 		// console.log(this.contractDetails);
 		// this.editRowId = '';
 		// this.editField = '';
 
 		let jobStartTime: any = this.datePipe.transform(editableRow.timesheetdate + ' ' + this.contractDetails.job_start_time, 'yyyy/MM/dd HH:mm');
+		// let inTime: any = this.datePipe.transform(editableRow.timesheetdate + ' ' + editableRow.clock_verified_in, 'yyyy/MM/dd HH:mm');
+		// let outTime: any = this.datePipe.transform(editableRow.timesheetdate + ' ' + editableRow.clock_verified_out, 'yyyy/MM/dd HH:mm');
 
-		let inTime: any = this.datePipe.transform(editableRow.timesheetdate + ' ' + editableRow.clock_verified_in, 'yyyy/MM/dd HH:mm');
-		let outTime: any = this.datePipe.transform(editableRow.timesheetdate + ' ' + editableRow.clock_verified_out, 'yyyy/MM/dd HH:mm');
-
-		if (inTime > outTime) {
-			outTime = this.convertNextDay(outTime);
-		}
+		// if (inTime > outTime) {
+		// 	outTime = this.convertNextDay(outTime);
+		// }
 
 		let verifiedTime = {};
 		if (field == 'field1') {
-			let clock_verified_in = { 'clock_verified_in': this.datePipe.transform(inTime, 'yyyy/MM/dd HH:mm') };
+			let inTime: any = this.datePipe.transform(editableRow.timesheetdate + ' ' + editableRow.clock_verified_in, 'yyyy-MM-dd HH:mm');
+			let clock_verified_in = { 'in_time': this.datePipe.transform(inTime, 'yyyy-MM-dd HH:mm') };
 			verifiedTime = Object.assign(verifiedTime, clock_verified_in);
 
-			let clock_verified_out = { 'clock_verified_out': this.datePipe.transform(outTime, 'yyyy/MM/dd HH:mm') };
-			verifiedTime = Object.assign(verifiedTime, clock_verified_out);
+			// let clock_verified_out = { 'clock_verified_out': this.datePipe.transform(outTime, 'yyyy/MM/dd HH:mm') };
+			// verifiedTime = Object.assign(verifiedTime, clock_verified_out);
 
 			if (inTime < jobStartTime) {
-
 				let snackBarRef = this.snackBar.open('Intime Should not Lessthan Actual Job StartTime.', 'Close', {
 					duration: 10000,
 					horizontalPosition: 'center',
@@ -215,14 +212,15 @@ export class TimesheetListDetailsComponent implements OnInit {
 		}
 
 		if (field == 'field2') {
-			let clock_verified_out = { 'clock_verified_out': this.datePipe.transform(outTime, 'yyyy/MM/dd HH:mm') };
+			let outTime: any = this.datePipe.transform(editableRow.timesheetdate + ' ' + editableRow.clock_verified_out, 'yyyy-MM-dd HH:mm');
+			let clock_verified_out = { 'out_time': this.datePipe.transform(outTime, 'yyyy-MM-dd HH:mm') };
 			verifiedTime = Object.assign(verifiedTime, clock_verified_out);
 		}
 
-		let contractid = { 'contractid': editableRow.contractid };
-		verifiedTime = Object.assign(verifiedTime, contractid);
+		// let contractid = { 'contractid': editableRow.contractid };
+		// verifiedTime = Object.assign(verifiedTime, contractid);
 
-		let timesheetid = { 'timesheetid': editableRow.timesheetid };
+		let timesheetid = { 'timesheet_id': editableRow.timesheetid };
 		verifiedTime = Object.assign(verifiedTime, timesheetid);
 
 		// console.log(verifiedTime);

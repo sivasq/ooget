@@ -341,10 +341,53 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, companyCode, { headers: headers, params: params });
 	}
 
+	// Timesheet Notes Update
 	timesheetNotesUpdate(notesData): Observable<any> {
 		const headers = this.createAuthorizationHeaderFormData();
 		const params = this.createUrlParams('Timesheet', 'TimesheetSetNotes');
 		return this.http.post(this._baseUrl, notesData, { headers: headers, params: params });
+	}
+
+	// Get JobSeeker T&C
+	getJobseekersTC(id): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Terms', 'GetTerms');
+		return this.http.post(this._baseUrl, id, { headers: headers, params: params });
+	}
+
+	// Update JobSeeker T&C
+	updateJobseekersTC(terms): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Terms', 'UpdateTerms');
+		return this.http.post(this._baseUrl, terms, { headers: headers, params: params });
+	}
+
+	// Update Verified Punch In Time
+	updatePunchin(verifiedTime): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Timesheet', 'VerifiedPunchIn');
+		return this.http.post(this._baseUrl, verifiedTime, { headers: headers, params: params });
+	}
+
+	// Update Verified Punch Out Time
+	updatePunchout(verifiedTime): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Timesheet', 'VerifiedPunchOut');
+		return this.http.post(this._baseUrl, verifiedTime, { headers: headers, params: params });
+	}
+
+	// Update Job & Payment Details
+	jobUpdateToEmployer(JobDetails): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'UpdateJob');
+		return this.http.post(this._baseUrl, JobDetails, { headers: headers, params: params });
+	}
+
+	// Activate Job
+	activateJob(jobStatus): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'ChangeStatus');
+		return this.http.post(this._baseUrl, jobStatus, { headers: headers, params: params });
 	}
 
 
@@ -353,11 +396,39 @@ export class ApiCallService {
 
 
 
+	toggleIdProofEditable(data): Observable<any> {
+		const userToken = localStorage.getItem('ogToken');
+		const headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			});
+		return this.http.post(this._baseUrl + '/jobseeker/updateidproofeditable', data, { headers: headers });
+	}
 
+	toggleNricFinEditable(data): Observable<any> {
+		const userToken = localStorage.getItem('ogToken');
+		const headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			});
+		return this.http.post(this._baseUrl + '/jobseeker/updatenriceditable', data, { headers: headers });
+	}
 
-
-
-
+	verifyTimeSheets(timesheetIds): Observable<any> {
+		const userToken = localStorage.getItem('ogToken');
+		const headers = new HttpHeaders(
+			{
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'token': userToken
+			});
+		return this.http.post(this._baseUrl + '/contract/verifytimesheet', timesheetIds, { headers: headers })
+			.map(res => res);
+	}
 	// ====================================================
 
 	adminProfileUpdate(adminProfileData): Observable<any> {
@@ -423,45 +494,6 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl + '/updateoogethome', homePageContent, { headers: headers });
 	}
 
-	getAllJobseekersList(): Observable<any> {
-		const dummyData = '';
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/jobseeker/fetchalljobseekersnew', dummyData, { headers: headers })
-			.map(res => res);
-	}
-
-	getJobseekersTC(): Observable<any> {
-		const dummyData = '';
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/fetchjobseekerterms', dummyData, { headers: headers })
-			.map(res => res);
-	}
-
-	updateJobseekersTC(terms): Observable<any> {
-		const dummyData = '';
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/updatejobseekerterms', terms, { headers: headers })
-			.map(res => res);
-	}
-
 	uploadTermsDoc(formData, comapnyId): Observable<any> {
 		const userToken = localStorage.getItem('ogToken');
 		const headers = new HttpHeaders(
@@ -471,65 +503,6 @@ export class ApiCallService {
 				'companyid': comapnyId
 			});
 		return this.http.post(this._baseUrl + '/employer/updatetermsandconditions', formData, { headers: headers })
-			.map(res => res);
-	}
-
-	activateJob(jobStatus): Observable<any> {
-		// let jobStatus = jobStatus;
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/job/changejobstatus', jobStatus, { headers: headers });
-	}
-
-	addPayInfoToJob(jobStatus): Observable<any> {
-		// let jobStatus = jobStatus;
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/job/updatejobstatuswithpayinfo', jobStatus, { headers: headers });
-	}
-
-	toggleIdProofEditable(data): Observable<any> {
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/jobseeker/updateidproofeditable', data, { headers: headers });
-	}
-
-	toggleNricFinEditable(data): Observable<any> {
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/jobseeker/updatenriceditable', data, { headers: headers });
-	}
-
-	jobUpdateToEmployer(employerJobData): Observable<any> {
-		// var authDatas = JSON.stringify(authData);
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/job/updatejob', employerJobData, { headers: headers })
 			.map(res => res);
 	}
 
@@ -565,44 +538,6 @@ export class ApiCallService {
 				'token': userToken
 			});
 		return this.http.post(this._baseUrl + '/contract/verifypunch', verifiedTime, { headers: headers })
-			.map(res => res);
-	}
-
-	updatePunchin(verifiedTime): Observable<any> {
-		// var authDatas = JSON.stringify(authData);
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/contract/verifypunchin', verifiedTime, { headers: headers })
-			.map(res => res);
-	}
-
-	updatePunchout(verifiedTime): Observable<any> {
-		// var authDatas = JSON.stringify(authData);
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/contract/verifypunchout', verifiedTime, { headers: headers })
-			.map(res => res);
-	}
-
-	verifyTimeSheets(timesheetIds): Observable<any> {
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/contract/verifytimesheet', timesheetIds, { headers: headers })
 			.map(res => res);
 	}
 

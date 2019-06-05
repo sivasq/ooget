@@ -83,7 +83,7 @@
 						</button>
 						&nbsp;
 					</div>
-					<div *ngIf="jobDetails != ''">
+					<div *ngIf="jobDetails != '' && jobDetails.status == 1">
 						<button mat-raised-button color="primary"
 							routerLink="/admin/employers/{{jobDetails.employer_id}}/jobs/{{jobDetails.id}}/edit">Edit
 						</button>

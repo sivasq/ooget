@@ -754,7 +754,7 @@ export class JobseekerTimesheetReportComponent implements OnInit {
 		console.log('SelectedDateRange', this.SelectedDateRange);
 	}
 	getAllJobseekersList() {
-		this.busy = this._httpService.getAllJobseekersList()
+		this.busy = this._httpService.getAllJobseekers()
 			.subscribe(
 				response => {
 					if (response.success) {

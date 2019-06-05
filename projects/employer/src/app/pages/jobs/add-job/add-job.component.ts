@@ -167,16 +167,16 @@ export class AddJobComponent implements OnInit {
 	}
 
 	// ==========================
-	getTermsAcceptanceStatus(employerData) {
-		this.busy = this._httpService.getTermsAcceptanceStatus(employerData)
+	getTermsAcceptanceStatus() {
+		this.busy = this._httpService.getEmployer()
 			.subscribe(
 				response => {
 					console.log(response);
 					if (response.success) {
-						if (response.message.termsaccepted == 'true') {
+						if (response.response.result[0].TermsConditions == 1) {
 							// this.openTermsConditionsDialog(response.message.termsaccepted);
-						} else if (response.message.termsaccepted == 'false') {
-							this.openTermsConditionsDialog(response.message);
+						} else if (response.response.result[0].TermsConditions == 0) {
+							this.openTermsConditionsDialog(response.response.result[0]);
 						}
 					} else if (!response.success) {
 						this.router.navigate(['employer/jobs/list']);
@@ -189,7 +189,7 @@ export class AddJobComponent implements OnInit {
 			);
 	}
 
-	openTermsConditionsDialog(message) {
+	openTermsConditionsDialog(CompanyDetails) {
 		const dialogConfig = new MatDialogConfig();
 
 		dialogConfig.id = 'confirm-dialog';
@@ -198,8 +198,8 @@ export class AddJobComponent implements OnInit {
 		dialogConfig.autoFocus = false;
 		// dialogConfig.width = '80vw';
 		dialogConfig.data = {
-			termsaccepted: message.termsaccepted,
-			termsandconditions: message.termsandconditions
+			termsaccepted: CompanyDetails.TermsConditions,
+			termsandconditions: CompanyDetails.TermsConditions_file
 		};
 
 		let dialog = this.dialog.open(TermsConditionsDialogComponent, dialogConfig);

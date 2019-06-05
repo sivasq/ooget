@@ -63,10 +63,10 @@
 						<div class="user-img" *ngIf="!job.companylogo">
 							<img class="transition-2 ng-star-inserted" src="assets/img/avatars/logo-placeholder.png">
 						</div>
-						<div class="user-social">
+						<!-- <div class="user-social">
 							<mat-slide-toggle color="primary" (change)="ActivateJob($event, job.companyid.id, job.id)"
-								[checked]="job.status"></mat-slide-toggle>
-						</div>
+								[checked]="job.status == 2"></mat-slide-toggle>
+						</div> -->
 					</div>
 					<div class="user-details transition-2" fxFlex="100" fxLayout="column">
 						<p fxLayout="row" fxLayoutAlign="start center">
