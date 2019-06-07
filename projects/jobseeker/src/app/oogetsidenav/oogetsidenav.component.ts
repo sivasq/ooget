@@ -36,8 +36,8 @@ export class OogetsidenavComponent implements OnInit {
 			} else {
 				this.profileImage = 'assets/img/avatars/profile-placeholder.png';
 				setTimeout(() => {
-					this.profileImage = this.baseUrl + userLogo;
-				}, 1000);
+					this.profileImage = this.baseUrl + userLogo + '?imgv=' + new Date().getTime();
+				}, 0);
 			}
 		});
 	}
@@ -61,7 +61,8 @@ export class OogetsidenavComponent implements OnInit {
 		if (userLogo == 'null' || userLogo == 'undefined') {
 			this.profileImage = 'assets/img/avatars/profile-placeholder.png';
 		} else {
-			this.profileImage = this.baseUrl + userLogo;
+			// this.profileImage = this.baseUrl + userLogo;
+			this.profileImage = this.baseUrl + userLogo + '?imgv =' + new Date().getTime();
 		}
 	}
 

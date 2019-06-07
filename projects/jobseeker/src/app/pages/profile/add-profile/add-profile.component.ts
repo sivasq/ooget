@@ -119,7 +119,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	public baseUrl;
 	public isJobSeekerProfileFormValid: boolean = true;
 	public isNricFinNoReadonly: boolean;
-	public isIdProofEditable: boolean;
+	public id_verified: boolean;
 	public isActive: boolean;
 	public passwordErrorMsg;
 
@@ -171,6 +171,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		this.getNationalitys();
 	}
 
+	// Get Mock Data From service
 	getEmploymentTypes(): void {
 		this.mockDataService.getEmploymentTypes()
 			.subscribe(EmploymentTypes => this.EmploymentTypes = EmploymentTypes);
@@ -212,6 +213,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			.subscribe(Nationalitys => this.Nationalitys = Nationalitys);
 	}
 
+	// Password Form
 	buildPasswordUpdateForm(): void {
 		this.passwordUpdateForm = this.fb.group({
 			oldpassword: ['', Validators.compose([Validators.required])],
@@ -220,20 +222,20 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		});
 	}
 
+	// Profile Form
 	buildJobSeekerProfileForm(): void {
 		this.jobSeekerProfileForm = this.fb.group({
 			// Profile Details
 			firstname: ['', Validators.compose([Validators.required])],
-			// nameinidcard: ['', Validators.compose([Validators.required])],
 			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],
 			country: ['Singapore', Validators.compose([Validators.required])],
 			race: ['', Validators.compose([Validators.required])],
 			nationality: ['', Validators.compose([Validators.required])],
-			mobile: ['', Validators.compose([Validators.required, Validators.pattern(this.mobileNoPattern)])],
-			// mobile: ['', Validators.compose([Validators.required, Validators.pattern(this.mobileNoPattern)]), this.isMobileUnique.bind(this)],
+			// mobile: ['', Validators.compose([Validators.required, Validators.pattern(this.mobileNoPattern)])],
+			mobile: ['', Validators.compose([Validators.required, Validators.pattern(this.mobileNoPattern)]), this.isMobileUnique.bind(this)],
 			address: ['', Validators.compose([Validators.required])],
-			nric: ['', Validators.compose([Validators.pattern(this.nricFinNoPattern)])],
-			// nric: ['', Validators.compose([Validators.pattern(this.nricFinNoPattern)]), this.isNricFinUnique.bind(this)],
+			// nric: ['', Validators.compose([Validators.pattern(this.nricFinNoPattern)])],
+			nric: ['', Validators.compose([Validators.pattern(this.nricFinNoPattern)]), this.isNricFinUnique.bind(this)],
 			age: ['', Validators.compose([Validators.pattern(this.agePattern)])],
 			dob_data: this.fb.group({
 				dob_day: ['', Validators.compose([Validators.required])],
@@ -241,7 +243,6 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 				dob_year: ['', Validators.compose([Validators.required])],
 			}),
 			dob: ['', Validators.compose([Validators.required])],
-			// dob: ['', Validators.compose([Validators.required])],
 			gender: [1, Validators.compose([Validators.required])],
 			// Bank Details
 			ispaynowreg: ['No'],
@@ -264,12 +265,13 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			experience_in: [''],
 			experience_year: [''],
 			experience_details: this.fb.array([this.createExp()]),
-			profileImage: [''],
-			idProofFront: [''],
-			idProofBack: ['']
+			// profileImage: [''],
+			// idProofFront: [''],
+			// idProofBack: ['']
 		});
 	}
 
+	// Experience Details Form Array
 	createExp(): FormGroup {
 		return this.fb.group({
 			previouscompanyname: '',
@@ -280,6 +282,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		});
 	}
 
+	// Push Exp to experience_details
 	addExp(): void {
 		// == Method 1
 		// const control = this.jobSeekerProfileForm.get('experience_details') as FormArray;
@@ -296,6 +299,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		// this.jobSeekerProfileForm.get(`experience_details.${0}.settings`)
 	}
 
+	// Remove Exp from experience_details
 	removeExp(index: number) {
 		// control refers to your formarray
 		const control = this.jobSeekerProfileForm.get('experience_details') as FormArray;
@@ -446,8 +450,6 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		// console.log(array.includes(word));
 		// console.log(array.indexOf(word) > -1);
 		// console.log(array.indexOf(word.toLowerCase()) > -1);
-		// console.log(array);
-		// console.log(word);
 		return array.includes(word);
 	}
 
@@ -509,7 +511,6 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 	// If Employment Type Change
 	employmenttypeChange(event) {
-		console.log(event);
 		if (this.isInArray(event, 2)) {
 			this.isPartTimeJob = false;
 		} else {
@@ -567,12 +568,12 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	}
 
 	// Main location Change
-	mainlocationChange() {
-		this.selectAllSubLocation();
+	regionChange() {
+		this.selectAllLocation();
 	}
 
 	// Select All SubLocation
-	selectAllSubLocation() {
+	selectAllLocation() {
 		let selectedPreferredRegion = this.jobSeekerProfileForm.get('region').value;
 		let availableSubLocation = this.multiplesublocationfilter.transform(this.Locations, selectedPreferredRegion);
 		let preferredlocation = availableSubLocation.map(x => x.id);
@@ -583,7 +584,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	}
 
 	// UnSelect All SubLocation
-	unSelectAllSubLocation() {
+	unSelectAllLocation() {
 		let preferredlocation = [];
 		this.jobSeekerProfileForm.patchValue({
 			'location': preferredlocation
@@ -637,47 +638,6 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			'notification_off_from': notification_off_from,
 			'notification_off_to': notification_off_to,
 		});
-	}
-
-	// Profile Image Change Event
-	logochange(event) {
-		console.log(event.target.files[0]);
-		if (event.target.files && event.target.files[0]) {
-			var reader = new FileReader();
-			reader.readAsDataURL(event.target.files[0]); // read file as data url
-			reader.onload = (event: any) => { // called once readAsDataURL is completed
-				this.profileImage = event.target.result;
-			};
-			this.jobSeekerProfileForm.get('profileImage').setValue(<File>event.target.files[0]);
-		}
-	}
-
-	// Id Front Image Change Event
-	idfrontchange(event) {
-		// console.log(event.target.files[0]);
-		if (event.target.files && event.target.files[0]) {
-			var reader = new FileReader();
-			reader.readAsDataURL(event.target.files[0]); // read file as data url
-			reader.onload = (event: any) => { // called once readAsDataURL is completed
-				this.idProofFront = event.target.result;
-				// console.log(event.target.result);
-			};
-			this.jobSeekerProfileForm.get('idProofFront').setValue(<File>event.target.files[0]);
-		}
-	}
-
-	// Id Back Image Change Event
-	idbackchange(event) {
-		// console.log(event.target.files[0]);
-		if (event.target.files && event.target.files[0]) {
-			var reader = new FileReader();
-			reader.readAsDataURL(event.target.files[0]); // read file as data url
-			reader.onload = (event: any) => { // called once readAsDataURL is completed
-				this.idProofBack = event.target.result;
-				// console.log(event.target.result);
-			};
-			this.jobSeekerProfileForm.get('idProofBack').setValue(<File>event.target.files[0]);
-		}
 	}
 
 	// Set Validation for past Exp
@@ -799,7 +759,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 						this.myProfile.nric = userdata.nric ? userdata.nric : '';
 
 						// Set NRIC FIN Not Editable If Once Added/Updated
-						this.isNricFinNoReadonly = userdata.nriceditable ? userdata.nriceditable === 'true' ? false : true : false;
+						this.isNricFinNoReadonly = (userdata.nric == null || userdata.nric == '') ? false : true;
 
 						// this.myProfile.dob = userdata.dob ? new Date(userdata.dob) : null;
 						this.myProfile.dob = userdata.dob ? userdata.dob : null;
@@ -839,19 +799,14 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 						this.myProfile.experience_year = userdata.experience_year;
 
 						let newExp: any[] = [];
-						let pastExp = (userdata.experience_details !== '' && userdata.experience_details !== null) ? JSON.parse(userdata.experience_details) : [];
-						// console.log(pastExp);
-						console.log(pastExp);
+						let pastExp = (userdata.experience_details !== '' && userdata.experience_details !== null && userdata.experience_details !== '[]') ? JSON.parse(userdata.experience_details) : [];
 						if (pastExp.length > 0) {
-							console.log('1');
 							for (let i = 0; i < pastExp.length; i++) {
-								console.log('1');
 								newExp.push({
 									previouscompanyname: pastExp[i].previouscompanyname, previouscompanyposition: pastExp[i].previouscompanyposition, previousjobresponsibility: pastExp[i].previousjobresponsibility, previousjobfrom: new Date(pastExp[i].previousjobfrom), previousjobto: new Date(pastExp[i].previousjobto)
 								});
 							}
 							this.myProfile.experience_details = newExp;
-							// console.log(this.myProfile.experience_details);
 						}
 						// this.myProfile.experience_details = userdata.experience_details;
 						// Documents
@@ -859,7 +814,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 						this.idProofFront = userdata.id_imgpath1 ? this.baseUrl + '/' + userdata.id_imgpath1 : 'assets/img/avatars/id-front-placeholder.png';
 						this.idProofBack = userdata.id_imgpath2 ? this.baseUrl + '/' + userdata.id_imgpath2 : 'assets/img/avatars/id-back-placeholder.png';
 
-						this.isIdProofEditable = userdata.jobseekeridproofeditable ? userdata.jobseekeridproofeditable == 'true' ? false : true : false;
+						this.id_verified = userdata.id_verified ? true : false;
 
 						// console.log(userdata);
 						// Patch Form Value
@@ -936,35 +891,24 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	jobSeekerProfileUpdate() {
 		let experience_details;
 		let parsedPastExp: any[] = [];
-		console.log(1);
-		console.log(this.isPartTimeJob);
 		// Check Employment Type And process Past Exp
 		if (this.isPartTimeJob) {
 			this.jobSeekerProfileForm.patchValue({
 				'experience_year': '',
 				'experience_in': '',
 			});
-			console.log(1);
 			// this.jobSeekerProfileForm.setControl('experience_details', this.fb.array([]));
-			console.log(1);
 			const control = <FormArray>this.jobSeekerProfileForm.controls['experience_details'];
-			console.log(control);
-			console.log(control.length);
 			for (let i = control.length - 1; i >= 0; i--) {
 				// Clear Validator
-				console.log(1);
 				this.jobSeekerProfileForm.get(`experience_details.${i}`).clearValidators();
 				this.jobSeekerProfileForm.get(`experience_details.${i}`).updateValueAndValidity({ emitEvent: false, onlySelf: false });
 				// Remove Item
 				control.removeAt(i);
 			}
-			experience_details = { 'experience_details': '' };
-			console.log(experience_details);
+			experience_details = '[]';
 		} else {
-			console.log(1);
 			const control = <FormArray>this.jobSeekerProfileForm.controls['experience_details'];
-			console.log(control);
-			console.log(control.length);
 			for (let i = control.length - 1; i >= 0; i--) {
 				if (this.jobSeekerProfileForm.get(`experience_details.${i}.previouscompanyname`).value === '') {
 					// Clear Validator
@@ -972,7 +916,6 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 					this.jobSeekerProfileForm.get(`experience_details.${i}`).updateValueAndValidity({ emitEvent: false, onlySelf: false });
 					// Remove Item
 					control.removeAt(i);
-					console.log(1);
 				} else {
 					parsedPastExp.push({
 						previouscompanyname: this.jobSeekerProfileForm.get(`experience_details.${i}.previouscompanyname`).value,
@@ -981,14 +924,10 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 						previousjobfrom: this.datePipe.transform(this.jobSeekerProfileForm.get(`experience_details.${i}.previousjobfrom`).value, 'yyyy/MM/dd'),
 						previousjobto: this.datePipe.transform(this.jobSeekerProfileForm.get(`experience_details.${i}.previousjobto`).value, 'yyyy/MM/dd')
 					});
-					console.log(parsedPastExp);
 				}
 			}
-			experience_details = parsedPastExp.length > 0 ? JSON.stringify(parsedPastExp.reverse) : '';
-			// jobSeekerData = Object.assign(jobSeekerData, working_environment);
-			console.log(experience_details);
+			experience_details = parsedPastExp.length > 0 ? JSON.stringify(parsedPastExp.reverse()) : JSON.stringify(parsedPastExp);
 		}
-		console.log(experience_details);
 		if (this.jobSeekerProfileForm.get(`notification`).value !== 0) {
 			this.jobSeekerProfileForm.patchValue({
 				'alertswitchedoffdays': '',
@@ -1013,7 +952,8 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		// let dob = { "dob": this.datePipe.transform(this.jobSeekerProfileForm.get('dob').value, 'yyyy/MM/dd') };
 		let jobSeekerData = this.jobSeekerProfileForm.value;
 		// jobSeekerData = Object.assign(jobSeekerData, dob);
-		jobSeekerData = Object.assign(jobSeekerData, experience_details);
+		let experience_detail = { 'experience_details': experience_details };
+		jobSeekerData = Object.assign(jobSeekerData, experience_detail);
 		// console.log(jobSeekerData);
 
 		let specializations = { 'specializations': this.ArrayToString(this.jobSeekerProfileForm.get(`specializations`).value) };
@@ -1034,34 +974,29 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		let employment_type = { 'employment_type': this.ArrayToString(this.jobSeekerProfileForm.get(`employment_type`).value) };
 		jobSeekerData = Object.assign(jobSeekerData, employment_type);
 
+		let nric = { 'nric': this.toUppercase.transform(this.jobSeekerProfileForm.get(`nric`).value) };
+		jobSeekerData = Object.assign(jobSeekerData, nric);
+
 		// console.log(this.myProfileImageInputVariable);
-		console.log(jobSeekerData);
+		// console.log(jobSeekerData);
+		// return false;
 		this.busy = this._httpService.updateProfileDetails(jobSeekerData)
 			.subscribe(
 				response => {
 					if (response.success) {
-						let profileImage = this.jobSeekerProfileForm.get('profileImage').value;
-						let idProofFront = this.jobSeekerProfileForm.get('idProofFront').value;
-						let idProofBack = this.jobSeekerProfileForm.get('idProofBack').value;
+						localStorage.setItem('ogUserName', this.jobSeekerProfileForm.get('firstname').value);
+						localStorage.setItem('ogUserEmail', this.jobSeekerProfileForm.get('email').value);
+						// location.reload();
+						this.asyncSubscriber.setProfileDetails({ 'Image': this.profileImage });
+						this.getProfileDetails();
+						// this.router.navigate(['main/jobs/list']);
+						let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
+							duration: 5000,
+						});
 
-						if (profileImage !== '' || idProofFront !== '' || idProofBack !== '') {
-							this.uploadProfileDocs();
-						} else {
-							localStorage.setItem('ogUserName', this.jobSeekerProfileForm.get('firstname').value);
-							localStorage.setItem('ogUserEmail', this.jobSeekerProfileForm.get('email').value);
-							// location.reload();
-							this.asyncSubscriber.setProfileDetails({ 'Image': this.profileImage });
-							// this.getProfileDetails();
-							// this.router.navigate(['main/jobs/list']);
-							let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
-								duration: 5000,
-							});
-
-							// snackBarRef.onAction().subscribe(() => {
-							// 	snackBarRef.dismiss();
-							// });
-							// }
-						}
+						snackBarRef.onAction().subscribe(() => {
+							snackBarRef.dismiss();
+						});
 					}
 				},
 				error => {
@@ -1070,68 +1005,114 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			);
 	}
 
+	// Profile Image Change Event
+	logochange(event) {
+		console.log(event.target.files[0]);
+		if (event.target.files && event.target.files[0]) {
+			var reader = new FileReader();
+			reader.readAsDataURL(event.target.files[0]); // read file as data url
+			reader.onload = (event: any) => { // called once readAsDataURL is completed
+				this.profileImage = event.target.result;
+			};
+			// this.jobSeekerProfileForm.get('profileImage').setValue(<File>event.target.files[0]);
+			this.uploadProfileDocs();
+		}
+	}
+
+	// Id Front Image Change Event
+	idfrontchange(event) {
+		// console.log(event.target.files[0]);
+		if (event.target.files && event.target.files[0]) {
+			var reader = new FileReader();
+			reader.readAsDataURL(event.target.files[0]); // read file as data url
+			reader.onload = (event: any) => { // called once readAsDataURL is completed
+				this.idProofFront = event.target.result;
+				// console.log(event.target.result);
+			};
+			// this.jobSeekerProfileForm.get('idProofFront').setValue(<File>event.target.files[0]);
+			this.uploadProfileDocs();
+		}
+	}
+
+	// Id Back Image Change Event
+	idbackchange(event) {
+		// console.log(event.target.files[0]);
+		if (event.target.files && event.target.files[0]) {
+			var reader = new FileReader();
+			reader.readAsDataURL(event.target.files[0]); // read file as data url
+			reader.onload = (event: any) => { // called once readAsDataURL is completed
+				this.idProofBack = event.target.result;
+				// console.log(event.target.result);
+			};
+			// this.jobSeekerProfileForm.get('idProofBack').setValue(<File>event.target.files[0]);
+			this.uploadProfileDocs();
+		}
+	}
+
 	// Update Profile Docs
 	uploadProfileDocs() {
-		// let profileImage = this.myProfileImageInputVariable.nativeElement;
-		// const idProofFront = this.myIdProofFrontInputVariable.nativeElement;
-		// const idProofBack = this.myIdProofBackInputVariable.nativeElement;
+		const profileImage = this.myProfileImageInputVariable.nativeElement;
+		const idProofFront = this.myIdProofFrontInputVariable.nativeElement;
+		const idProofBack = this.myIdProofBackInputVariable.nativeElement;
 
-
-		// if (profileImage.files && profileImage.files[0]) {
-		// 	formData.append('fileToUpload', <File>profileImage.files[0]);
-		// }
-
-		// if (idProofFront.files && idProofFront.files[0]) {
-		// 	formData.append('jobseekeridprooffront', idProofFront.files[0]);
-		// }
-
-		// if (idProofBack.files && idProofBack.files[0]) {
-		// 	formData.append('jobseekeridproofback', idProofBack.files[0]);
-		// }
-		let profileImage = this.jobSeekerProfileForm.get('profileImage').value;
-		let idProofFront = this.jobSeekerProfileForm.get('idProofFront').value;
-		let idProofBack = this.jobSeekerProfileForm.get('idProofBack').value;
-
-		if (profileImage !== '') {
+		if (profileImage.files && profileImage.files[0]) {
 			const formData1: FormData = new FormData();
-			formData1.append('fileToUpload', profileImage);
-			this.imageUpload(formData1);
+			formData1.append('fileToUpload', <File>profileImage.files[0]);
+			this.imageUpload(formData1, true);
 		}
 
-		if (idProofFront !== '') {
+		if (idProofFront.files && idProofFront.files[0]) {
 			const formData2: FormData = new FormData();
-			formData2.append('fileToUpload', idProofFront);
+			formData2.append('fileToUpload', idProofFront.files[0]);
 			formData2.append('id1', '1');
 			this.imageUpload(formData2);
 		}
 
-		if (idProofBack !== '') {
+		if (idProofBack.files && idProofBack.files[0]) {
 			const formData3: FormData = new FormData();
-			formData3.append('fileToUpload', idProofBack);
+			formData3.append('fileToUpload', idProofBack.files[0]);
 			formData3.append('id2', '1');
 			this.imageUpload(formData3);
 		}
 
-		// if (profileImage.files[0] || idProofFront.files[0] || idProofBack.files[0]) {
-		// if (profileImage !== '' || idProofFront !== '' || idProofBack !== '') {
+		// let profileImage = this.jobSeekerProfileForm.get('profileImage').value;
+		// let idProofFront = this.jobSeekerProfileForm.get('idProofFront').value;
+		// let idProofBack = this.jobSeekerProfileForm.get('idProofBack').value;
 
+		// if (profileImage !== '') {
+		// 	const formData1: FormData = new FormData();
+		// 	formData1.append('fileToUpload', profileImage);
+		// 	this.imageUpload(formData1);
 		// }
 
+		// if (idProofFront !== '') {
+		// 	const formData2: FormData = new FormData();
+		// 	formData2.append('fileToUpload', idProofFront);
+		// 	formData2.append('id1', '1');
+		// 	this.imageUpload(formData2);
+		// }
+
+		// if (idProofBack !== '') {
+		// 	const formData3: FormData = new FormData();
+		// 	formData3.append('fileToUpload', idProofBack);
+		// 	formData3.append('id2', '1');
+		// 	this.imageUpload(formData3);
+		// }
 	}
 
-	imageUpload(formData) {
+	imageUpload(formData, isProfileImage = false) {
 		this.busy = this._httpService.uploadProfileDocs(formData)
 			.subscribe(
 				response => {
 					if (response.success) {
-						localStorage.setItem('ogUserLogo', response.imgpath);
-						this.asyncSubscriber.setProfileDetails({ 'Image': this.profileImage });
+						if (isProfileImage) {
+							localStorage.setItem('ogUserLogo', response.imgpath + '?imgv=' + new Date().getTime());
+							this.asyncSubscriber.setProfileDetails({ 'Image': this.profileImage });
+						}
 						// location.reload();
 						// this.getProfileDetails();
-
 						// this.router.navigate(['main/jobs/list']);
-
-						let snackBarRef = this.snackBar.open('Profile and Documents Updated Successfully.', 'Close', {
+						let snackBarRef = this.snackBar.open('Documents Updated Successfully.', 'Close', {
 							duration: 5000,
 						});
 						snackBarRef.onAction().subscribe(() => {
@@ -1148,7 +1129,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 	// Update Password
 	passwordUpdate() {
-		if (!this.passwordUpdateForm.valid) return false;
+		if (!this.passwordUpdateForm.valid) { return false; }
 		// console.log(this.passwordUpdateForm.value);
 
 		this.busy = this._httpService.jobseekerPasswordUpdate(this.passwordUpdateForm.value)
@@ -1245,21 +1226,27 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			if (isNaN(day) || isNaN(month) || isNaN(year)) {
 				return false;
 			}
-			if (day < 1 || year < 1)
+			if (day < 1 || year < 1) {
 				return false;
-			if (month > 12 || month < 1)
+			}
+			if (month > 12 || month < 1) {
 				return false;
-			if ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) && day > 31)
+			}
+			if ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) && day > 31) {
 				return false;
-			if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30)
+			}
+			if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30) {
 				return false;
+			}
 			if (month == 2) {
 				if (((year % 4) == 0 && (year % 100) != 0) || ((year % 400) == 0 && (year % 100) == 0)) {
-					if (day > 29)
+					if (day > 29) {
 						return false;
+					}
 				} else {
-					if (day > 28)
+					if (day > 28) {
 						return false;
+					}
 				}
 			}
 			return true;
@@ -1271,8 +1258,9 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 		return (control: AbstractControl) => {
 			let currentYear = new Date().getFullYear();
 			let parts = dob.split('/');
-			if (parts.length < 3)
+			if (parts.length < 3) {
 				return { validDob: true };
+			}
 			else {
 				let day = parseInt(parts[2]);
 				let month = parseInt(parts[1]);

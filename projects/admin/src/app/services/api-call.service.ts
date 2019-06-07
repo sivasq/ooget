@@ -390,22 +390,23 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, jobStatus, { headers: headers, params: params });
 	}
 
-
-
-
-
-
-
+	// Verify JS Id proof
 	toggleIdProofEditable(data): Observable<any> {
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/jobseeker/updateidproofeditable', data, { headers: headers });
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Jobseeker', 'IdVerifiedUpdate');
+		return this.http.post(this._baseUrl, data, { headers: headers, params: params });
 	}
+
+	// Verify Timesheets
+	verifyTimeSheets(timesheetIds): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Timesheet', 'VerifiedTimesheet');
+		return this.http.post(this._baseUrl, timesheetIds, { headers: headers, params: params });
+	}
+
+
+
+
 
 	toggleNricFinEditable(data): Observable<any> {
 		const userToken = localStorage.getItem('ogToken');
@@ -416,18 +417,6 @@ export class ApiCallService {
 				'token': userToken
 			});
 		return this.http.post(this._baseUrl + '/jobseeker/updatenriceditable', data, { headers: headers });
-	}
-
-	verifyTimeSheets(timesheetIds): Observable<any> {
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/contract/verifytimesheet', timesheetIds, { headers: headers })
-			.map(res => res);
 	}
 	// ====================================================
 

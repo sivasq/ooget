@@ -357,7 +357,7 @@
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Region</mat-label>
 										<mat-select multiple placeholder="Region" name="region" formControlName="region"
-											(ngModelChange)="mainlocationChange()">
+											(ngModelChange)="regionChange()">
 											<mat-option *ngFor="let Region of Regions" [value]="Region.id"> {{
 												Region.name
 												}}
@@ -371,9 +371,9 @@
 											multiple>
 											<div style="padding:10px 20px;font-weight: 500;">
 												<span style="cursor:pointer; color:#021def;"
-													(click)="selectAllSubLocation()"> Select All </span>,
+													(click)="selectAllLocation()"> Select All </span>,
 												<span style="cursor:pointer; color:#f71900; padding-left: 15px;"
-													(click)="unSelectAllSubLocation()">
+													(click)="unSelectAllLocation()">
 													Unselect
 													All </span>
 											</div>
@@ -599,8 +599,7 @@
 										<mat-radio-button [ngStyle.lt-sm]="{'margin':'5px 0'}" [value]="one"> Always
 										</mat-radio-button>
 										<mat-radio-button [ngStyle.lt-sm]="{'margin':'5px 0'}" [value]="zero"> Switched
-											Off
-											Notification
+											Off Notification
 										</mat-radio-button>
 									</mat-radio-group>
 
@@ -628,16 +627,12 @@
 											<mat-icon>chevron_left</mat-icon>
 										</a>
 										<span class="fill-remaining-space"></span>
-										<a mat-mini-fab color="primary"
-											(click)="tabGroup.selectedIndex = currentlyActiveIndexTab+1">
-											<mat-icon>chevron_right</mat-icon>
-										</a>
 									</mat-toolbar>
 								</div>
 							</mat-tab>
 
 							<mat-tab label="Documents">
-								<div fxLayout="row wrap">
+								<div fxLayout="row wrap" class="p-b-25">
 									<h4>Profile image &amp; Identification Card (IC)</h4>
 
 									<div fxFlex="100" fxLayout.gt-xs="row wrap" fxLayout.lt-sm="column"
@@ -667,29 +662,21 @@
 										<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="15px">
 											<div class="drop-zone content" (change)="idfrontchange($event)"
 												(click)="idFrontFileInput.click()" style="cursor: pointer;">
-												<input hidden type="file" #idFrontFileInput
-													[disabled]="isIdProofEditable" accept="image/*">
+												<input hidden type="file" #idFrontFileInput [disabled]="id_verified"
+													accept="image/*">
 												<img style="height:100%; width:100%; border-radius: 50px;" alt=""
 													[src]="idProofFront">
 											</div>
 
 											<div class="drop-zone content" (change)="idbackchange($event)"
 												(click)="idBackFileInput.click()" style="cursor: pointer;">
-												<input hidden type="file" #idBackFileInput
-													[disabled]="isIdProofEditable" accept="image/*">
+												<input hidden type="file" #idBackFileInput [disabled]="id_verified"
+													accept="image/*">
 												<img style="height:100%; width:100%; border-radius: 50px;" alt=""
 													[src]="idProofBack">
 											</div>
 										</div>
 									</div>
-
-									<mat-toolbar style="margin-top:15px;" class="next_action">
-										<a mat-mini-fab color="primary"
-											(click)="tabGroup.selectedIndex = currentlyActiveIndexTab-1">
-											<mat-icon>chevron_left</mat-icon>
-										</a>
-										<span class="fill-remaining-space"></span>
-									</mat-toolbar>
 								</div>
 							</mat-tab>
 
@@ -775,8 +762,8 @@
 							</mat-tab>
 						</mat-tab-group>
 
-						<mat-card *ngIf="currentlyActiveIndexTab != 6" fxLayout="row wrap"
-							fxLayoutAlign="center stretch" class="action" [ngStyle.lt-md]="{'padding':'10px'}">
+						<mat-card *ngIf="currentlyActiveIndexTab < 5" fxLayout="row wrap" fxLayoutAlign="center stretch"
+							class="action" [ngStyle.lt-md]="{'padding':'10px'}">
 							<mat-error fxFlex="100" fxLayoutAlign="center center" style="margin-bottom: 10px;"
 								*ngIf="!isJobSeekerProfileFormValid">You
 								have Entered Invalid Inputs, Kindly check Once Again.. </mat-error>

@@ -59,90 +59,90 @@ export const colors: any = {
 })
 export class CalendarReportComponent implements OnInit {
 	responseData = {
-		"page": 1,
-		"total_results": 447,
-		"total_pages": 23,
-		"results": [
+		'page': 1,
+		'total_results': 447,
+		'total_pages': 23,
+		'results': [
 			{
-				"name": "jobseeker 1",
-				"daytype": "working",
-				"date": "2019-02-05"
+				'name': 'jobseeker 1',
+				'daytype': 'working',
+				'date': '2019-02-05'
 			}, {
-				"name": "jobseeker 2",
-				"daytype": "working",
-				"date": "2019-02-01"
+				'name': 'jobseeker 2',
+				'daytype': 'working',
+				'date': '2019-02-01'
 			}, {
-				"name": "jobseeker 3",
-				"daytype": "working",
-				"date": "2019-02-08"
+				'name': 'jobseeker 3',
+				'daytype': 'working',
+				'date': '2019-02-08'
 			}, {
-				"name": "jobseeker 4",
-				"daytype": "working",
-				"date": "2019-02-13"
+				'name': 'jobseeker 4',
+				'daytype': 'working',
+				'date': '2019-02-13'
 			}, {
-				"name": "jobseeker 5",
-				"daytype": "working",
-				"date": "2019-02-08"
+				'name': 'jobseeker 5',
+				'daytype': 'working',
+				'date': '2019-02-08'
 			}, {
-				"name": "jobseeker 6",
-				"daytype": "working",
-				"date": "2019-02-15"
+				'name': 'jobseeker 6',
+				'daytype': 'working',
+				'date': '2019-02-15'
 			}, {
-				"name": "jobseeker 7",
-				"daytype": "working",
-				"date": "2019-02-08"
+				'name': 'jobseeker 7',
+				'daytype': 'working',
+				'date': '2019-02-08'
 			}, {
-				"name": "jobseeker 8",
-				"daytype": "off",
-				"date": "2019-02-19"
+				'name': 'jobseeker 8',
+				'daytype': 'off',
+				'date': '2019-02-19'
 			}, {
-				"name": "jobseeker 9",
-				"daytype": "off",
-				"date": "2019-02-08"
+				'name': 'jobseeker 9',
+				'daytype': 'off',
+				'date': '2019-02-08'
 			}, {
-				"name": "jobseeker 10",
-				"daytype": "working",
-				"date": "2019-02-08"
+				'name': 'jobseeker 10',
+				'daytype': 'working',
+				'date': '2019-02-08'
 			}, {
-				"name": "jobseeker 11",
-				"daytype": "off",
-				"date": "2019-02-08"
+				'name': 'jobseeker 11',
+				'daytype': 'off',
+				'date': '2019-02-08'
 			}, {
-				"name": "jobseeker 12",
-				"daytype": "working",
-				"date": "2019-02-21"
+				'name': 'jobseeker 12',
+				'daytype': 'working',
+				'date': '2019-02-21'
 			}, {
-				"name": "jobseeker 13",
-				"daytype": "off",
-				"date": "2019-02-07"
+				'name': 'jobseeker 13',
+				'daytype': 'off',
+				'date': '2019-02-07'
 			}, {
-				"name": "jobseeker 14",
-				"daytype": "working",
-				"date": "2019-02-23"
+				'name': 'jobseeker 14',
+				'daytype': 'working',
+				'date': '2019-02-23'
 			}, {
-				"name": "jobseeker 15",
-				"daytype": "off",
-				"date": "2019-02-25"
+				'name': 'jobseeker 15',
+				'daytype': 'off',
+				'date': '2019-02-25'
 			}, {
-				"name": "jobseeker 16",
-				"daytype": "working",
-				"date": "2019-02-06"
+				'name': 'jobseeker 16',
+				'daytype': 'working',
+				'date': '2019-02-06'
 			}, {
-				"name": "jobseeker 17",
-				"daytype": "working",
-				"date": "2019-02-25"
+				'name': 'jobseeker 17',
+				'daytype': 'working',
+				'date': '2019-02-25'
 			}, {
-				"name": "jobseeker 18",
-				"daytype": "working",
-				"date": "2019-02-22"
+				'name': 'jobseeker 18',
+				'daytype': 'working',
+				'date': '2019-02-22'
 			}, {
-				"name": "jobseeker 19",
-				"daytype": "working",
-				"date": "2019-02-07"
+				'name': 'jobseeker 19',
+				'daytype': 'working',
+				'date': '2019-02-07'
 			}, {
-				"name": "jobseeker 20",
-				"daytype": "working",
-				"date": "2019-02-04"
+				'name': 'jobseeker 20',
+				'daytype': 'working',
+				'date': '2019-02-04'
 			}
 		]
 	};

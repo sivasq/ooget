@@ -190,11 +190,11 @@ export class JobseekerFullDetailsComponent implements OnInit {
 
 	toggleIdProofEditable(mode) {
 		let confirmMsg;
-		if (mode == 'true') {
+		if (mode == '0') {
 			confirmMsg = 'Do you want Enable to Jobseeker Can change Docments ?';
 		}
 
-		if (mode == 'false') {
+		if (mode == '1') {
 			confirmMsg = 'Do you want Disable to Jobseeker Can change Docments ?';
 		}
 
@@ -214,11 +214,11 @@ export class JobseekerFullDetailsComponent implements OnInit {
 			data => {
 				// this.confirmResponse(data)
 				if (data == 'yes') {
-					this.busy = this._httpService.toggleIdProofEditable({ 'jobseekerid': this.jobseekerId, 'jobseekeridproofeditable': mode })
+					this.busy = this._httpService.toggleIdProofEditable({ 'jobseekerid': this.jobseekerId, 'status': mode })
 						.subscribe(
 							response => {
 								if (response.success) {
-									this.jobSeekerDetails.jobseekeridproofeditable = mode;
+									this.jobSeekerDetails.id_verified = mode;
 								} else if (!response.success) {
 									console.log(response);
 								}

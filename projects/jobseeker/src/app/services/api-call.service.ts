@@ -98,13 +98,26 @@ export class ApiCallService {
 
 	// ==================================== Services ==================================== //
 
-	// Check Email Exists
+	// Check unique Email
 	checkUniqueEmail(email): Observable<any> {
 		const headers = this.createNonAuthorizationHeaderJson();
-		const params = this.createUrlParams('Jobseeker', 'CheckEmail');
+		const params = this.createUrlParams('Jobseeker', 'CheckUnique');
 		return this.http.post(this._baseUrl, email, { headers: headers, params: params });
 	}
 
+	// Check unique NRIC
+	checkUniqueNric(nric): Observable<any> {
+		const headers = this.createAuthorizationHeaderJson();
+		const params = this.createUrlParams('Jobseeker', 'CheckUnique');
+		return this.http.post(this._baseUrl, nric, { headers: headers, params: params });
+	}
+
+	// Check Unique Mobile
+	checkMobile(mobile): Observable<any> {
+		const headers = this.createAuthorizationHeaderJson();
+		const params = this.createUrlParams('Jobseeker', 'CheckUnique');
+		return this.http.post(this._baseUrl, mobile, { headers: headers, params: params });
+	}
 	// Register Jobseeker
 	createJobseeker(jobseekerData): Observable<any> {
 		const headers = this.createNonAuthorizationHeaderJson();
@@ -124,13 +137,6 @@ export class ApiCallService {
 		const headers = this.createAuthorizationHeaderJson();
 		const params = this.createUrlParams('Jobseeker', 'GetJobseeker');
 		return this.http.post(this._baseUrl, {}, { headers: headers, params: params });
-	}
-
-	// Check unique NRIC
-	checkUniqueNric(nric): Observable<any> {
-		const headers = this.createAuthorizationHeaderJson();
-		const params = this.createUrlParams('Jobseeker', 'CheckNric');
-		return this.http.post(this._baseUrl, nric, { headers: headers, params: params });
 	}
 
 	// Update Current User Profile
@@ -318,35 +324,12 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl + '/changepasswordnoauth', data, { headers: headers });
 	}
 
-	checkMobile(mobile) {
-		const dummyData = '';
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-			});
-		return this.http.post<any>(this._baseUrl + '/uniquemobileno', mobile, { headers: headers })
-			.map(res => res);
-	}
-
 	postFogotPasswordData(userData): Observable<any> {
 		// var authDatas = JSON.stringify(authData);
 		const headers = new HttpHeaders()
 			.append('Content-Type', 'application/json')
 			.append('Access-Control-Allow-Origin', '*');
 		return this.http.post(this._baseUrl + '/forgetpassword', userData, { headers: headers });
-	}
-
-	jobSeekerIdProofUpdate(jobSeekerProfileData, userID): Observable<any> {
-		// var authDatas = JSON.stringify(authData);
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Access-Control-Allow-Origin': '*',
-				'id': userID
-			});
-		return this.http.post(this._baseUrl + '/updateidproofnoauth', jobSeekerProfileData, { headers: headers });
 	}
 
 	jobseekerPasswordUpdate(jobSeekerPasswordData): Observable<any> {

@@ -72,10 +72,11 @@ export class TimesheetListDetailsComponent implements OnInit {
 	verifyTimeSheets() {
 		if (this.selection.selected.length == 0) { return false; }
 
-		let timesheetids = this.selection.selected.map(data => data._id);
+		let timesheetids = this.selection.selected.map(data => data.id);
 
-		let verifyTimesheets = { 'contractid': this.contractId, 'timesheetids': timesheetids };
-		// console.log(verifyTimesheets);
+		let verifyTimesheets = { 'timesheetid': this.ArrayToString(timesheetids) };
+		console.log(verifyTimesheets);
+		// return false;
 		this._httpService.verifyTimeSheets(verifyTimesheets)
 			.subscribe(
 				response => {
@@ -116,6 +117,16 @@ export class TimesheetListDetailsComponent implements OnInit {
 		// }
 		// console.log(this.fieldName1);
 		// console.log(this.fieldName1.nativeElement.validity.valid);
+	}
+
+	ArrayToString(dataArray) {
+		if (isArray(dataArray)) {
+			dataArray.map(function (e) {
+				// return JSON.stringify(e);
+				return e;
+			});
+			return dataArray.join(',');
+		}
 	}
 
 	public field1Editable(row, id) {
@@ -425,95 +436,139 @@ export class TimesheetListDetailsComponent implements OnInit {
 
 	getSumOfNormalWorkHrs() {
 		if (this.timesheets.length === 0) { return ''; }
-		let totalMin = this.timesheets.map(t => t.normalworkhour).reduce((previous, current) => {
-			let min = moment.duration(current).asMinutes();
-			return previous + min;
+		// Hr to Min and total
+		// let totalMin = this.timesheets.map(t => t.normalworkhour).reduce((previous, current) => {
+		// 	let min = moment.duration(current).asMinutes();
+		// 	return previous + min;
+		// }, 0);
+
+		// // Total Min to Hrs
+		// let hrs = moment.duration(totalMin, 'minutes').format('hh:mm', {
+		// 	trim: false
+		// });
+
+		// // if (hrs == '0' || hrs == '00') return 'Nil';
+		// return hrs;
+
+
+		// get total min
+		let totalMin = this.timesheets.map(t => t.jobseeker_normal_working_min).reduce((previous, current) => {
+			return previous + current;
 		}, 0);
 
-		let hrs = moment.duration(totalMin, 'minutes').format('hh:mm', {
-			trim: false
-		});
-		// if (hrs == '0' || hrs == '00') return 'Nil';
-		return hrs;
+		// Min to Number
+		let totalMins = (totalMin / 60);
+		return totalMins.toFixed(2);
 	}
 
 	getSumOfOT1point5WorkHrs() {
 		if (this.timesheets.length === 0) { return ''; }
-		let totalMin = this.timesheets.filter(t => t.salarymultiplier == 1 || t.salarymultiplier == 1.5).map(t => t.otworkhour).reduce((previous, current) => {
-			let min = moment.duration(current).asMinutes();
-			return previous + min;
+		// let totalMin = this.timesheets.filter(t => t.salarymultiplier == 1 || t.salarymultiplier == 1.5).map(t => t.otworkhour).reduce((previous, current) => {
+		// 	let min = moment.duration(current).asMinutes();
+		// 	return previous + min;
+		// }, 0);
+
+		// let hrs = moment.duration(totalMin, 'minutes').format('hh:mm', {
+		// 	trim: false
+		// });
+		// // if (hrs == '0' || hrs == '00') return 'Nil';
+		// return hrs;
+
+		// get total min
+		let totalMin = this.timesheets.filter(t => t.ot_salary_type == 1 || t.ot_salary_type == 1.5).map(t => t.jobseeker_ot_working_min).reduce((previous, current) => {
+			return previous + current;
 		}, 0);
 
-		let hrs = moment.duration(totalMin, 'minutes').format('hh:mm', {
-			trim: false
-		});
-		// if (hrs == '0' || hrs == '00') return 'Nil';
-		return hrs;
+		// Min to Number
+		let totalMins = (totalMin / 60);
+		return totalMins.toFixed(2);
 	}
 
 	getSumOfOT2WorkHrs() {
 		if (this.timesheets.length === 0) { return ''; }
-		let totalMin = this.timesheets.filter(t => t.salarymultiplier == 2).map(t => t.otworkhour).reduce((previous, current) => {
-			let min = moment.duration(current).asMinutes();
-			return previous + min;
+		// let totalMin = this.timesheets.filter(t => t.salarymultiplier == 2).map(t => t.otworkhour).reduce((previous, current) => {
+		// 	let min = moment.duration(current).asMinutes();
+		// 	return previous + min;
+		// }, 0);
+
+		// let hrs = moment.duration(totalMin, 'minutes').format('hh:mm', {
+		// 	trim: false
+		// });
+		// // if (hrs == '0' || hrs == '00') return 'Nil';
+		// return hrs;
+
+		let totalMin = this.timesheets.filter(t => t.ot_salary_type == 2).map(t => t.jobseeker_ot_working_min).reduce((previous, current) => {
+			return previous + current;
 		}, 0);
 
-		let hrs = moment.duration(totalMin, 'minutes').format('hh:mm', {
-			trim: false
-		});
-		// if (hrs == '0' || hrs == '00') return 'Nil';
-		return hrs;
+		// Min to Number
+		let totalMins = (totalMin / 60);
+		return totalMins.toFixed(2);
 	}
 
 	getSumOfTotalWorkHrs() {
 		if (this.timesheets.length === 0) { return ''; }
-		let totalMin = this.timesheets.map(t => t.totalworkhour).reduce((previous, current) => {
-			let min = moment.duration(current).asMinutes();
-			return previous + min;
+		// let totalMin = this.timesheets.map(t => t.totalworkhour).reduce((previous, current) => {
+		// 	let min = moment.duration(current).asMinutes();
+		// 	return previous + min;
+		// }, 0);
+
+		// let hrs = moment.duration(totalMin, 'minutes').format('hh:mm', {
+		// 	trim: false
+		// });
+		// // if (hrs == '0' || hrs == '00') return 'Nil';
+		// return hrs;
+
+		let totalNormalMin = this.timesheets.map(t => t.jobseeker_normal_working_min).reduce((previous, current) => {
+			return previous + current;
 		}, 0);
 
-		let hrs = moment.duration(totalMin, 'minutes').format('hh:mm', {
-			trim: false
-		});
-		// if (hrs == '0' || hrs == '00') return 'Nil';
-		return hrs;
+		let totalOTMin = this.timesheets.map(t => t.jobseeker_ot_working_min).reduce((previous, current) => {
+			return previous + current;
+		}, 0);
+
+		let totalMins = ((totalNormalMin + totalOTMin) / 60);
+		return totalMins.toFixed(2);
 	}
 
 	getSumOfNormalWorkHrSalary() {
 		if (this.timesheets.length === 0) { return ''; }
-		return this.timesheets.map(t => t.normalsalary).reduce((previous, current) => {
-			return previous + current;
+		// return this.timesheets.map(t => Number(t.salary)).reduce((previous, current) => {
+		// 	return previous + current;
+		// }, 0);
+		return this.timesheets.map(t => t.salary).reduce((previous, current) => {
+			return Number(previous) + Number(current);
 		}, 0);
 	}
 
 	getSumOfOT1point5WorkHrSalary() {
 		if (this.timesheets.length === 0) { return ''; }
-		return this.timesheets.filter(t => t.salarymultiplier == 1 || t.salarymultiplier == 1.5).map(t => t.otsalary).reduce((previous, current) => {
-			return previous + current;
+		return this.timesheets.filter(t => t.ot_salary_type == 1.5).map(t => t.ot_salary).reduce((previous, current) => {
+			return Number(previous) + Number(current);
 		}, 0);
 	}
 
 	getSumOfOT2WorkHrSalary() {
 		if (this.timesheets.length === 0) { return ''; }
-		return this.timesheets.filter(t => t.salarymultiplier == 2).map(t => t.otsalary).reduce((previous, current) => {
-			return previous + current;
+		return this.timesheets.filter(t => t.ot_salary_type == 2).map(t => t.ot_salary).reduce((previous, current) => {
+			return Number(previous) + Number(current);
 		}, 0);
 	}
 
 	getSumOfTotalWorkHrSalary() {
 		if (this.timesheets.length === 0) { return ''; }
-		return this.timesheets.map(t => t.totalsalary).reduce((previous, current) => {
-			return previous + current;
+		return this.timesheets.map(t => t.salary_total).reduce((previous, current) => {
+			return Number(previous) + Number(current);
 		}, 0);
 	}
 
 	getSumOfTotalOogetCommision() {
 		if (this.timesheets.length === 0) { return ''; }
-		return this.timesheets.map(t => t.oogetscommission).reduce((previous, current) => {
+		return this.timesheets.map(t => t.ooget_commision).reduce((previous, current) => {
 			if (current === undefined) {
 				current = 0;
 			}
-			return previous + current;
+			return Number(previous) + Number(current);
 		}, 0);
 	}
 

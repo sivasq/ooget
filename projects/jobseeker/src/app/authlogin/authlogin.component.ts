@@ -63,7 +63,7 @@ export class AuthloginComponent implements OnInit, OnDestroy {
 						localStorage.setItem('ogUserEmail', JobseekerData.email);
 						localStorage.setItem('ogUserObjID', JobseekerData.id);
 						localStorage.setItem('ogUserName', `${JobseekerData.firstname}`);
-						localStorage.setItem('ogUserLogo', JobseekerData.imgpath);
+						localStorage.setItem('ogUserLogo', JobseekerData.imgpath + '?imgv=' + new Date().getTime());
 						localStorage.setItem('ogActiveStatus', JobseekerData.status);
 
 						// If Successfull Validation redirect to Dashboard or Profile

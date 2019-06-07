@@ -11,25 +11,28 @@ import { ConfigService } from '../services/config.service';
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomepageComponent implements OnInit, OnDestroy {
-	busy: Subscription; //busy Config
+	busy: Subscription; // busy Config
 	public baseUrl;
 	public carouselTile: NguCarouselConfig;
 
 	public homePageContent: any = {
-		title: '',
-		subtitle: '',
-		list1: '',
+		title: 'Ooget Pte. Ltd.',
+		subtitle: 'Ooget is a technology driven Recruitment Company.',
+		list1: 'Provides job matching function to boost income for Jobseeker.<br/>Simplifying recruitment flows to aid all Employers.<br/>More importantly the right fit for all roles!',
 		list2: '',
 		list3: '',
 		list4: ''
-	}
+	};
 
-	public featuredEmployersAvailable: boolean = false;
-	public featuredEmployers: any[] = [];
+	public featuredEmployersAvailable = false;
+	public featuredEmployers: any[] = [
+		{ 'featuredimage': 'assets/img/emp/1.jpg' },
+		{ 'featuredimage': 'assets/img/emp/2.jpg' }
+	];
 
 	constructor(private _httpService: ApiCallService, private urlconfig: ConfigService, ) {
 		this.baseUrl = urlconfig.base_url;
-		this.getHomePageContents();
+		// this.getHomePageContents();
 		this.getFeaturedEmployers();
 	}
 

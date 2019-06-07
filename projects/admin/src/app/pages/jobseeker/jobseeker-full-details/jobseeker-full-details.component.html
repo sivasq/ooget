@@ -65,12 +65,12 @@
 							<span class="key">NRIC / FIN : </span>
 							<span class="value" *ngIf="jobSeekerDetails?.nric"> {{jobSeekerDetails.nric}} </span>
 							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.nric"> Not Specified </span>
-							<span *ngIf="jobSeekerDetails?.nriceditable=='false'"
+							<span *ngIf="(jobSeekerDetails.nric == null || jobSeekerDetails.nric == '')"
 								style="color: blue; font-size: 12px; text-decoration: underline; cursor: pointer;"
-								(click)="toggleNricFinEditable('true')">Set to Jobseeker Can change</span>
-							<span *ngIf="jobSeekerDetails?.nriceditable=='true'"
+								(click)="toggleNricFinEditable('true')">Ask To Update</span>
+							<span *ngIf="(jobSeekerDetails.nric != null && jobSeekerDetails.nric != '')"
 								style="color: blue; font-size: 12px; text-decoration: underline; cursor: pointer;"
-								(click)="toggleNricFinEditable('false')">Remove to Jobseeker Can change</span>
+								(click)="toggleNricFinEditable('false')">Lock</span>
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
@@ -379,13 +379,12 @@
 						</p>
 
 						<div>
-							<span *ngIf="jobSeekerDetails?.jobseekeridproofeditable=='false'"
+							<span *ngIf="jobSeekerDetails?.id_verified=='true'"
 								style="color: blue; font-size: 12px; text-decoration: underline; cursor: pointer;"
-								(click)="toggleIdProofEditable('true')">Enable to Jobseeker Can change Docments</span>
-							<span *ngIf="jobSeekerDetails?.jobseekeridproofeditable=='true'"
+								(click)="toggleIdProofEditable('0')">Ask To ReUpload Docs</span>
+							<span *ngIf="jobSeekerDetails?.id_verified=='false'"
 								style="color: blue; font-size: 12px; text-decoration: underline; cursor: pointer;"
-								(click)="toggleIdProofEditable('false')">Disable to Jobseeker Can change
-								Documents</span>
+								(click)="toggleIdProofEditable('1')">Lock Docs</span>
 						</div>
 					</div>
 				</div>
