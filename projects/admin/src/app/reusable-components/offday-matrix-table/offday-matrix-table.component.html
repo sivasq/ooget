@@ -16,19 +16,15 @@
 		</ng-container>
 
 		<ng-container [matColumnDef]="column" *ngFor="let column of displayedDates">
-			<th mat-header-cell *matHeaderCellDef [ngStyle]="{'background':isPublicHoliday(column) ? 'red' : '' }">
+			<th mat-header-cell *matHeaderCellDef>
 				{{column | date:'dd'}}
 				<br /> {{column | date:'EEE'}}</th>
-			<td mat-cell *matCellDef="let element"
-				[ngStyle]="{'cursor':checkVerified(element.timesheets, column)?.verified ? 'not-allowed' : 'pointer' }">
-				<!-- [ngClass]="{'unselectable':checkVerified(element.timesheets, column)?.verified}" -->
-				<!-- <span>{{element[column]?.offday}}</span> -->
-				<!-- <span>{{checkIsHoliday(element.timesheets, column, element.offdays)?.date}}</span> -->
-				<span [ngSwitch]="checkIsHoliday(element.timesheets, column, element.offdays)?.response">
-					<span *ngSwitchCase="'flexibleoffday'">
-						<mat-icon style="color:red;">album</mat-icon>
-					</span>
-					<span *ngSwitchCase="'normaloffday'">
+			<td mat-cell *matCellDef="let element">
+				<!-- <span>{{column}}</!-->
+				<!-- <span>{{checkIsHoliday(element.timesheet, column)}}</!-->
+				<!-- <span [ngSwitch]="checkIsHoliday(element.timesheets, column, element.offdays)?.response"> -->
+				<span [ngSwitch]="checkIsHoliday(element.timesheet, column)?.response">
+					<span *ngSwitchCase="'offday'">
 						<mat-icon style="color:red;">album</mat-icon>
 					</span>
 				</span>
@@ -43,3 +39,23 @@
 		[pageSizeOptions]="[10, 25, 50, 100, 250]">
 	</mat-paginator>
 </div>
+
+<!-- <ng-container [matColumnDef]="column" *ngFor="let column of displayedDates">
+<th mat-header-cell *matHeaderCellDef [ngStyle]="{'background':isPublicHoliday(column) ? 'red' : '' }">
+	{{column | date:'dd'}}
+	<br /> {{column | date:'EEE'}}</th>
+<td mat-cell *matCellDef="let element"
+	[ngStyle]="{'cursor':checkVerified(element.timesheets, column)?.verified ? 'not-allowed' : 'pointer' }">
+	 [ngClass]="{'unselectable':checkVerified(element.timesheets, column)?.verified}" -->
+<!-- <span>{{element[column]?.offday}}</span> -->
+<!-- <span>{{checkIsHoliday(element.timesheets, column, element.offdays)?.date}}</span> -->
+<!-- <span [ngSwitch]="checkIsHoliday(element.timesheets, column, element.offdays)?.response">
+	<span *ngSwitchCase="'flexibleoffday'">
+		<mat-icon style="color:red;">album</mat-icon>
+	</span>
+	<span *ngSwitchCase="'normaloffday'">
+		<mat-icon style="color:red;">album</mat-icon>
+	</span>
+</span>
+</td>
+</ng-container> -->

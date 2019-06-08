@@ -55,50 +55,52 @@ export class OffdayMatrixTableComponent implements OnInit {
 		return this._dataSource.getValue();
 	}
 
-	constructor(private datePipe: DatePipe) {
-
-	}
+	constructor(private datePipe: DatePipe) { }
 
 	ngOnInit() {
 		this._displayedColumns.subscribe(x => { this.displayedColumns = this.getDisplayedColumns; });
 		this._displayedDates.subscribe(x => { this.displayedDates = this.getDisplayedDates; });
 		this._dataSource.subscribe(x => {
-			this.dataSource = new OffdayMatrixTableDataSource(this.paginator, this.sort, this.getDataSource.job[0].contracts);
-
-			this.publicHolidays = this.getDataSource.holiday;
-
-			this.jobWorkdays = this.getDataSource.job[0].workdays;
-
-			this.jobWorkdaysType = this.getDataSource.job[0].workdaystype;
+			this.dataSource = new OffdayMatrixTableDataSource(this.paginator, this.sort, this.getDataSource);
+			console.log(this.getDataSource);
+			// this.publicHolidays = this.getDataSource.holiday;
+			// this.jobWorkdays = this.getDataSource.job[0].workdays;
+			// this.jobWorkdaysType = this.getDataSource.job[0].workdaystype;
 		});
 	}
 
-	checkIsHoliday(rowData, date, offdays): any {
+	checkIsHoliday(rowData, date): any {
 		// let elements = rowData.filter(row => row.date == date);
 		// return elements[0];
-		if (this.jobWorkdaysType == "flexible") {
-			let flexibleOffDays = offdays.filter(offday => offday.date == date);
-			if (flexibleOffDays.length > 0) {
-				return { 'response': 'flexibleoffday' };
-			}
-		}
-
-		if (this.jobWorkdaysType == "normal") {
-			let day = this.datePipe.transform(date, 'EEEE').toLowerCase();
-			// let normalOffDays = offdays.filter(offday => offday.date == date);
-			if (!this.jobWorkdays[day]) {
-				return { 'response': 'normaloffday' };
+		// if (this.jobWorkdaysType == 'flexible') {
+		console.log(rowData);
+		console.log(date);
+		let flexibleOffDays = rowData.filter(rowData => rowData.date == date);
+		if (flexibleOffDays.length > 0) {
+			if (flexibleOffDays[0].worked == 'OFF') {
+				return { 'response': 'offday' };
 			}
 		}
 	}
+	// return flexibleOffDays;
+	// }
 
-	isPublicHoliday(date) {
-		return this.publicHolidays.includes(date);
-	}
+	// 	if (this.jobWorkdaysType == 'normal') {
+	// 		let day = this.datePipe.transform(date, 'EEEE').toLowerCase();
+	// 		// let normalOffDays = offdays.filter(offday => offday.date == date);
+	// 		if (!this.jobWorkdays[day]) {
+	// 			return { 'response': 'normaloffday' };
+	// 		}
+	// 	}
 
-	checkVerified(rowData, date):any {
-		let row = rowData.filter(row => row.date == date);
-		return row[0];
-		// console.log(row[0]?.verified);
-	}
+
+// isPublicHoliday(date) {
+// 	return this.publicHolidays.includes(date);
+// }
+
+checkVerified(rowData, date): any {
+	let row = rowData.filter(row => row.date == date);
+	return row[0];
+	// console.log(row[0]?.verified);
+}
 }

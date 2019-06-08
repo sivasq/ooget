@@ -405,7 +405,19 @@ export class ApiCallService {
 	}
 
 
+	// ========================== Reports ========================//
+	// Get Timesheet List for Single Contractor
+	GetJobTimeSheetList(contractId): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Timesheet', 'GetJobTimeSheetList');
+		return this.http.post(this._baseUrl, contractId, { headers: headers, params: params });
+	}
 
+	getMatrixOffDays(args): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Timesheet', 'GetJobContractTimesheetList');
+		return this.http.post(this._baseUrl, args, { headers: headers, params: params });
+	}
 
 
 	toggleNricFinEditable(data): Observable<any> {
@@ -566,18 +578,6 @@ export class ApiCallService {
 			});
 		return this.http.post(this._baseUrl + '/contract/generatetimesheetreportforparticularjobseeker', data, { headers: headers })
 			.map(res => res);
-	}
-
-	getMatrixOffDays(args): Observable<any> {
-		// let employerIds = args;
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/contract/fetchoffdayssheetforparticularjob', args, { headers: headers });
 	}
 
 	getExtraUserProfileDetails(userid): Observable<any> {

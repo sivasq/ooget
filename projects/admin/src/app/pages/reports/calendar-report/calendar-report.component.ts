@@ -2,26 +2,10 @@ import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { CalendarEvent, CalendarView, CalendarMonthViewDay, CalendarEventAction } from 'angular-calendar';
-import {
-	isSameMonth,
-	isSameDay,
-	startOfMonth,
-	endOfMonth,
-	startOfWeek,
-	endOfWeek,
-	startOfDay,
-	endOfDay,
-	format
-} from 'date-fns';
-import { Observable, of } from 'rxjs';
+import { isSameMonth, isSameDay, startOfMonth, endOfMonth, startOfWeek, endOfWeek, startOfDay, endOfDay, format } from 'date-fns';
+import { Observable, of, Subscription } from 'rxjs';
 import { ApiCallService } from '../../../services/api-call.service';
-// import { colors } from '../demo-utils/colors';
-
-interface Film {
-	id: number;
-	title: string;
-	release_date: string;
-}
+import { AsyncSubscriber } from '../../../services/async.service';
 
 function getTimezoneOffsetString(date: Date): string {
 	const timezoneOffset = date.getTimezoneOffset();
@@ -59,6 +43,7 @@ export const colors: any = {
 })
 export class CalendarReportComponent implements OnInit {
 	responseData = {
+		'success': true,
 		'page': 1,
 		'total_results': 447,
 		'total_pages': 23,
@@ -151,11 +136,9 @@ export class CalendarReportComponent implements OnInit {
 	CalendarView = CalendarView;
 	viewMode = 'all';
 
-	// view: string = 'month';
-
 	viewDate: Date = new Date();
 	events$: Observable<Array<CalendarEvent<{ res: any }>>>;
-	activeDayIsOpen: boolean = false;
+	activeDayIsOpen = false;
 
 	actions: CalendarEventAction[] = [
 		{
@@ -173,7 +156,56 @@ export class CalendarReportComponent implements OnInit {
 		}
 	];
 
-	constructor(private http: HttpClient, private _httpService: ApiCallService) { }
+	appearance$: Observable<any>;
+
+	busy: Subscription;
+	isEmployerAvailable: boolean;
+	isJobsAvailable: boolean;
+	employers_list = [];
+	jobs_list = [];
+	selectedEmployer;
+	selectedJob;
+
+	constructor(private http: HttpClient, private _httpService: ApiCallService, private asyncSubscriber: AsyncSubscriber) {
+		this.appearance$ = asyncSubscriber.getAppearance.pipe();
+		this.getAllEmployers();
+	}
+
+	// Get All Employers List
+	getAllEmployers() {
+		this.busy = this._httpService.getAllEmployers()
+			.subscribe(
+				response => {
+					if (response.success) {
+						this.employers_list = response.result;
+					} else if (!response.success) {
+						console.log(response);
+					}
+				},
+				error => {
+					this.employers_list = [];
+					console.log(error);
+				}
+			);
+	}
+
+	// Get Jobs For Employer
+	getEmployerJobs(event) {
+		this.busy = this._httpService.getSingleEmployersJobsList({ 'employerid': event })
+			.subscribe(
+				response => {
+					if (response.success) {
+						this.jobs_list = response.result;
+					} else if (!response.success) {
+						console.log(response);
+					}
+				},
+				error => {
+					this.jobs_list = [];
+					console.log(error);
+				}
+			);
+	}
 
 	handleEvent(action: string, event: CalendarEvent): void {
 		console.log('event', event);
@@ -199,48 +231,60 @@ export class CalendarReportComponent implements OnInit {
 			day: endOfDay
 		}[this.view];
 
-		const params = new HttpParams()
-			.set(
-				'primary_release_date.gte',
-				format(getStart(this.viewDate), 'YYYY-MM-DD')
-			)
-			.set(
-				'primary_release_date.lte',
-				format(getEnd(this.viewDate), 'YYYY-MM-DD')
-			)
-			.set('api_key', '0ec33936a68018857d727958dca1424f');
+		// const params = new HttpParams()
+		// 	.set(
+		// 		'primary_release_date.gte',
+		// 		format(getStart(this.viewDate), 'YYYY-MM-DD')
+		// 	)
+		// 	.set(
+		// 		'primary_release_date.lte',
+		// 		format(getEnd(this.viewDate), 'YYYY-MM-DD')
+		// 	)
+		// 	.set('api_key', '0ec33936a68018857d727958dca1424f');
 
 		this.events$ =
-			// this.http
-			// .get('https://api.themoviedb.org/3/discover/movie', { params })
-			// .pipe(
-			// .map(({ results }: { results: any[] }) => {
-			of(this.responseData)
-				.map((response: any) => {
-					return this.responseData.results.map((res: any) => {
-						return {
-							title: res.name,
-							start: new Date(
-								res.date + getTimezoneOffsetString(this.viewDate)
-							),
-							color: this.checkDayType(res.daytype),
-							allDay: true,
-							meta: {
-								res
-							},
-							actions: this.actions
-						};
-					});
-				})
-		// );
+			this._httpService.GetJobTimeSheetList({ 'from': format(getStart(this.viewDate), 'YYYY-MM-DD'), 'to': format(getEnd(this.viewDate), 'YYYY-MM-DD'), 'jobid': 1 })
+				// of(this.responseData)
+				.map(
+					response => {
+						if (response.success) {
+							return response.result.filter(item => {
+								if (viewmode === 'all') {
+									return item.worked === 'ON' || item.worked === 'OFF';
+								} else {
+									return item.worked === viewmode;
+								}
+							}).map((res: any) => {
+								return {
+									title: res.firstname,
+									start: new Date(
+										res.date + getTimezoneOffsetString(this.viewDate)
+									),
+									color: this.checkDayType(res.worked),
+									allDay: true,
+									meta: {
+										res
+									},
+									// actions: this.actions
+								};
+							});
+						} else if (!response.success) {
+							return [];
+						}
+					},
+					error => {
+						console.log(error);
+						return [];
+					}
+				);
 	}
 
 	checkDayType(daytype) {
-		if (daytype == 'working') {
-			return colors.green
+		if (daytype == 'ON') {
+			return colors.green;
 		}
-		if (daytype == 'off') {
-			return colors.red
+		if (daytype == 'OFF') {
+			return colors.red;
 		}
 	}
 
@@ -268,10 +312,10 @@ export class CalendarReportComponent implements OnInit {
 	}
 
 	eventClicked(event: CalendarEvent<{ res: any }>): void {
-		window.open(
-			`https://www.themoviedb.org/movie/${event.meta.res.id}`,
-			'_blank'
-		);
+		// window.open(
+		// 	`https://www.themoviedb.org/movie/${event.meta.res.id}`,
+		// 	'_blank'
+		// );
 	}
 
 	print(): void {

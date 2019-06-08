@@ -7,10 +7,10 @@ export class ConfigService {
 	public homePageUrl = 'http://www.passafaila.com/ooget/';
 
 	// Testing Server Config
-	public base_url = 'http://192.168.1.14/ooget/';
+	// public base_url = 'http://192.168.1.14/ooget/';
 
 	// Cloud Testing Server Config
-	// public base_url = 'http://104.197.80.225/ooget/';
+	public base_url = 'http://104.197.80.225/ooget/';
 	public img_base_url = 'http://104.197.80.225:3010/ooget/media';
 
 	// Main Server Config

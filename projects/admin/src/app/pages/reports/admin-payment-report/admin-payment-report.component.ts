@@ -17,7 +17,7 @@ export class AdminPaymentReportComponent implements OnInit {
 	onEvent(event) {
 		event.stopPropagation();
 	}
-	//busy Config
+	// busy Config
 	busy: Subscription;
 	public employeeFilter: string = '';
 	public jobFilter: string = '';
@@ -354,6 +354,7 @@ export class AdminPaymentReportComponent implements OnInit {
 	employerCount;
 	employers_list;
 	SelectedEmployer;
+
 	constructor(private _location: Location, private _httpService: ApiCallService) {
 		this.getAllEmployers();
 	}
@@ -363,11 +364,11 @@ export class AdminPaymentReportComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log(response.employers);
-						if ((response.employers).length > 0) {
+						console.log(response.result);
+						if ((response.result).length > 0) {
 							this.isEmployerAvailable = true;
-							this.employerCount = (response.employers).length;
-							this.employers_list = response.employers;
+							this.employerCount = (response.result).length;
+							this.employers_list = response.result;
 						} else {
 							this.isEmployerAvailable = false;
 						}
@@ -383,7 +384,7 @@ export class AdminPaymentReportComponent implements OnInit {
 
 	getEmployerJobs(event) {
 		console.log(event);
-		this.busy = this._httpService.getEmployerJobs({ 'companyid': event })
+		this.busy = this._httpService.getEmployerJobs({ 'employerid': event })
 			.subscribe(
 				response => {
 					if (response.success) {
@@ -414,7 +415,6 @@ export class AdminPaymentReportComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		// this.employerDatas = this.DemoemployerDatas;
+		this.employerDatas = this.DemoemployerDatas;
 	}
-
 }
