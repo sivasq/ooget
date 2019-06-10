@@ -11,10 +11,10 @@ import { ConfigService } from '../services/config.service';
 })
 export class TermsConditionsDialogComponent implements OnInit {
 
-	public imgBaseUrl;
+	public baseUrl;
 
 	constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialog, private configService: ConfigService, public dialogRef: MatDialogRef<RegisterComponent>) {
-		this.imgBaseUrl = configService.img_base_url;
+		this.baseUrl = configService.base_url;
 	}
 
 	dialogClose(response: any) {

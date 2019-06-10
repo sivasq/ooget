@@ -1,7 +1,7 @@
 <h2 mat-dialog-title align="center">Terms and Conditions</h2>
 <!-- <mat-dialog-content>
     <div fxFlex>
-        <a href="{{imgBaseUrl}}/company/{{data.termsandconditions}}" target="_blank">Click here</a> to Download Terms and Conditions
+        <a href="{{baseUrl}}/company/{{data.termsandconditions}}" target="_blank">Click here</a> to Download Terms and Conditions
     </div>
 </mat-dialog-content> -->
 <mat-dialog-content *ngIf="data.termsandconditions" [innerHTML]="data.termsandconditions"></mat-dialog-content>

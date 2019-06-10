@@ -17,7 +17,6 @@ export class ViewCompanyDetailsComponent implements OnInit {
 	navMode: string = '';
 	navOpen: boolean;
 	public baseUrl;
-	public imgBaseUrl;
 	// @ViewChild('docFileInput') docFileInput: ElementRef;
 
 	@ViewChild('docFileInput') myInputVariable: ElementRef;
@@ -37,7 +36,6 @@ export class ViewCompanyDetailsComponent implements OnInit {
 	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar, private configService: ConfigService, private datePipe: DatePipe) {
 
 		this.baseUrl = configService.base_url;
-		this.imgBaseUrl = configService.img_base_url;
 		this.companyid = this.route.snapshot.params['emp_id'];
 		this.getCompanyDetails();
 	}

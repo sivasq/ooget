@@ -18,7 +18,6 @@ export class EmployerDetailsComponent implements OnInit {
 	navMode: string = '';
 	navOpen: boolean;
 	public baseUrl;
-	public imgBaseUrl;
 	// @ViewChild('docFileInput') docFileInput: ElementRef;
 
 	@ViewChild('docFileInput') myInputVariable: ElementRef;
@@ -77,7 +76,6 @@ export class EmployerDetailsComponent implements OnInit {
 	constructor(private fb: FormBuilder, private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar, private configService: ConfigService, private datePipe: DatePipe) {
 		this.buildCompanyCodeForm();
 		this.baseUrl = configService.base_url;
-		this.imgBaseUrl = configService.img_base_url;
 		this.employerid = this.route.snapshot.params['emp_id'];
 		let employerId = {
 			employerid: this.route.snapshot.params['emp_id'],
