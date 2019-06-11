@@ -2,7 +2,9 @@ import { Component, OnInit, HostListener, ViewChild, OnDestroy } from '@angular/
 import { ApiCallService } from '../../../services/api-call.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscriber, Subscription } from 'rxjs';
-import { MatSnackBar, MatDialogConfig, MatDialog, MatButtonToggleGroup } from '@angular/material';
+import { MatButtonToggleGroup } from '@angular/material';
+import { MatDialogConfig, MatDialog } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { ConfirmDialogComponent } from '../../../confirm-dialog/confirm-dialog.component';
 import * as moment from 'moment';
@@ -422,7 +424,7 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 						this.ispunchedIn = true;
 						this.ispunchedOut = true;
 						// this.currentTimeSheetLayout.timesheet.punchedout = true;
-						this.outTime = response.result.data;
+						this.outTime = response.result.data.PunchOut;
 						let snackBarRef = this.snackBar.open('TimeOut Success.', 'Close', {
 							duration: 5000,
 						});

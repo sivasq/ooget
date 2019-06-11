@@ -53,11 +53,13 @@ const routes: Routes = [
 	},
 	{
 		path: ':job_id/candidates',
+		// loadChildren: () => import('../../pages/jobseeker/jobseeker.module').then(m => m.JobseekerModule),
 		loadChildren: '../../pages/jobseeker/jobseeker.module#JobseekerModule',
 		canActivate: [AuthGuardService]
 	},
 	{
 		path: ':job_id/invoice',
+		// loadChildren: () => import('../../pages/invoice/invoice.module').then(m => m.InvoiceModule),
 		loadChildren: '../../pages/invoice/invoice.module#InvoiceModule',
 		canActivate: [AuthGuardService]
 	},

@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { ApiCallService } from '../../../services/api-call.service';
 import { ActivatedRoute } from '@angular/router';
-import { MenuPositionX, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MenuPositionX } from '@angular/material';
 import { PaginationInstance } from 'ngx-pagination';
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { JsonToTextService } from '../../../services/json-to-text.service';

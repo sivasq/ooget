@@ -79,6 +79,10 @@ const routes: Routes = [
 				loadChildren: './pages/faq/faq.module#FaqModule'
 			},
 			{
+				path: 'reports',				
+				loadChildren: './pages/reports/reports.module#ReportsModule'
+			},
+			{
 				path: '**',
 				redirectTo: 'profile',
 				pathMatch: 'full'

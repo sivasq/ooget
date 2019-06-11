@@ -41,15 +41,23 @@ const routes: Routes = [
 		children: [
 			{
 				path: 'dashboard',
-				loadChildren: './pages/dashboard/dashboard.module#DashboardModule',
+				// loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule),
+				loadChildren: './pages/dashboard/dashboard.module#DashboardModule'
 			},
 			{
 				path: 'jobs',
-				loadChildren: './pages/jobs/jobs.module#JobsModule',
+				// loadChildren: () => import('./pages/jobs/jobs.module').then(m => m.JobsModule),
+				loadChildren: './pages/jobs/jobs.module#JobsModule'
 			},
 			{
 				path: 'settings',
-				loadChildren: './pages/settings/settings.module#SettingsModule',
+				// loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsModule),
+				loadChildren: './pages/settings/settings.module#SettingsModule'
+			},
+			{
+				path: 'reports',
+				// loadChildren: () => import('./pages/reports/reports.module').then(m => m.ReportsModule)
+				loadChildren: './pages/reports/reports.module#ReportsModule'
 			},
 			{
 				path: '401',

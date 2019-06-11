@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material';
+import { MatSort } from '@angular/material';
 import { JobseekerTimesheetDataSource } from './jobseeker-timesheet-datasource';
 import * as moment from 'moment';
 import 'moment-duration-format';

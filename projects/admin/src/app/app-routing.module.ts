@@ -39,30 +39,37 @@ const routes: Routes = [
 		children: [
 			{
 				path: 'dashboard',
-				loadChildren: './pages/dashboard/dashboard.module#DashboardModule',
+				// loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule),
+				loadChildren : './pages/dashboard/dashboard.module#DashboardModule'
 			},
 			{
 				path: 'employers',
-				loadChildren: './pages/employers/employers.module#EmployersModule',
+				// loadChildren: () => import('./pages/employers/employers.module').then(m => m.EmployersModule),
+				loadChildren: './pages/employers/employers.module#EmployersModule'
 			},
 			{
 				path: 'jobseekers',
-				loadChildren: './pages/jobseeker/jobseeker.module#JobseekerModule',
+				// loadChildren: () => import('./pages/jobseeker/jobseeker.module').then(m => m.JobseekerModule),
+				loadChildren: './pages/jobseeker/jobseeker.module#JobseekerModule'
 			},
 			{
 				path: 'settings',
-				loadChildren: './pages/settings/settings.module#SettingsModule',
+				// loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsModule),
+				loadChildren: './pages/settings/settings.module#SettingsModule'
 			},
 			{
 				path: 'holidays',
-				loadChildren: './pages/holidays/holidays.module#HolidaysModule',
+				// loadChildren: () => import('./pages/holidays/holidays.module').then(m => m.HolidaysModule),
+				loadChildren: './pages/holidays/holidays.module#HolidaysModule'
 			},
 			{
 				path: 'faq',
+				// loadChildren: () => import('./pages/faq/faq.module').then(m => m.FaqModule)
 				loadChildren: './pages/faq/faq.module#FaqModule'
 			},
 			{
 				path: 'reports',
+				// loadChildren: () => import('./pages/reports/reports.module').then(m => m.ReportsModule)
 				loadChildren: './pages/reports/reports.module#ReportsModule'
 			}
 		]

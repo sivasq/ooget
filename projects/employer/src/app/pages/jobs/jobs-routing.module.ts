@@ -78,11 +78,13 @@ const routes: Routes = [
 	},
 	{
 		path: ':job_id/candidates',
+		// loadChildren: () => import('../../pages/jobseeker/jobseeker.module').then(m => m.JobseekerModule),
 		loadChildren: '../../pages/jobseeker/jobseeker.module#JobseekerModule',
 		canActivate: [AuthGuardService]
 	},
 	{
 		path: 'candidates',
+		// loadChildren: () => import('../../pages/jobseeker/jobseeker.module').then(m => m.JobseekerModule),
 		loadChildren: '../../pages/jobseeker/jobseeker.module#JobseekerModule',
 		canActivate: [AuthGuardService]
 	},

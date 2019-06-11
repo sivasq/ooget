@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material';
+import { MatSort } from '@angular/material';
 import { OffdayMatrixTableDataSource } from './offday-matrix-table-datasource';
 import * as moment from 'moment';
 import 'moment-duration-format';

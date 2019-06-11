@@ -273,6 +273,13 @@ export class ApiCallService {
 	}
 
 
+	// Reports
+	// Get Jobseeker Contracts
+	getJobseekerContracts(data): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Timesheet', 'GetJobseekerContractTimesheetList');
+		return this.http.post(this._baseUrl, data, { headers: headers, params: params });
+	}
 
 
 

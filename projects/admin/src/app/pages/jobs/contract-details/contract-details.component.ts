@@ -3,7 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ApiCallService } from '../../../services/api-call.service';
 import { Subscription } from 'rxjs';
 // import { Angular5Csv } from 'angular5-csv/Angular5-csv';
-import { MatDialog, MatSnackBar, MatDialogConfig, MatTableDataSource, MatBottomSheet, MatBottomSheetConfig } from '@angular/material';
+import { MatBottomSheet, MatBottomSheetConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
+import { MatTableDataSource } from '@angular/material';
 import { EditClockInOutComponent } from '../dialogs/edit-clock-in-out/edit-clock-in-out.component';
 import { DatePipe } from '@angular/common';
 import { PaginationInstance } from 'ngx-pagination';
@@ -128,7 +131,7 @@ export class ContractDetailsComponent implements OnInit {
 		this.getContractDetails({ 'contractid': this.contract_id });
 		// this.getTimesheetDetails({ 'contractid': this.contract_id, 'from': this.activeTimesheetPeriod.startDate, 'to': this.activeTimesheetPeriod.endDate });
 		// this.getAllOffDays({ 'contractid': this.contract_id });
-		this.getAllPayrollsInContract({ 'contractid': this.contract_id });
+		// this.getAllPayrollsInContract({ 'contractid': this.contract_id });
 	}
 
 	// ================================================================================

@@ -180,8 +180,41 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, contractId, { headers: headers, params: params });
 	}
 
+	// Get All Jobseekers
+	getAllJobseekers(): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Jobseeker', 'GetJobseeker');
+		return this.http.post(this._baseUrl, {}, { headers: headers, params: params });
+	}
 
+	// Reports
+	// Get Jobseeker OffDays Report
+	getMatrixOffDays(args): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Timesheet', 'GetJobContractTimesheetList');
+		return this.http.post(this._baseUrl, args, { headers: headers, params: params });
+	}
 
+	// Get Jobseeker Contracts
+	getJobseekerContracts(data): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Timesheet', 'GetJobseekerContractTimesheetList');
+		return this.http.post(this._baseUrl, data, { headers: headers, params: params });
+	}
+
+	// Get Timesheet List for Single Contractor
+	GetJobTimeSheetList(contractId): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Timesheet', 'GetJobTimeSheetList');
+		return this.http.post(this._baseUrl, contractId, { headers: headers, params: params });
+	}
+
+	// Get single Employer contract & timesheet Details
+	getEmployerJobs(): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Timesheet', 'GetEmployerContractTimesheetList');
+		return this.http.post(this._baseUrl, {}, { headers: headers, params: params });
+	}
 
 
 
@@ -282,7 +315,6 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl + '/job/offerjob', ids, { headers: headers })
 	}
 
-
 	jobUpdateToEmployer(employerJobData): Observable<any> {
 		//var authDatas = JSON.stringify(authData);
 		let userToken = localStorage.getItem('ogToken');
@@ -295,8 +327,6 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl + '/job/updatejob', employerJobData, { headers: headers })
 			.map(res => res)
 	}
-
-
 
 	verifyTimeSheets(timesheetIds): Observable<any> {
 		let userToken = localStorage.getItem('ogToken');

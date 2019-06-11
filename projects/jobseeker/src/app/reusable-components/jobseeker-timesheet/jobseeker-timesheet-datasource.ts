@@ -1,14 +1,15 @@
 import { DataSource } from '@angular/cdk/collections';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material';
+import { MatSort } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 
 /**
- * Data source for the AdminPayment view. This class should
+ * Data source for the JobseekerTimesheet view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-export class AdminPaymentDataSource extends DataSource<any> {
+export class JobseekerTimesheetDataSource extends DataSource<any> {
 	data: any[];
 
 	constructor(private paginator: MatPaginator, private sort: MatSort, public displayedDatasource) {

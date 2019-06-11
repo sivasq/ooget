@@ -47,13 +47,15 @@ const routes: Routes = [
 	},
 	{
 		path: 'jobs',
-		loadChildren: '../../pages/jobs/jobs.module#JobsModule',
-		canActivate: [AuthGuardService]
+		// loadChildren: () => import('../../pages/jobs/jobs.module').then(m => m.JobsModule),
+		// canActivate: [AuthGuardService]
+		loadChildren: '../../pages/jobs/jobs.module#JobsModule'
 	},
 	{
 		path: ':emp_id/jobs',
-		loadChildren: '../../pages/jobs/jobs.module#JobsModule',
-		canActivate: [AuthGuardService]
+		// loadChildren: () => import('../../pages/jobs/jobs.module').then(m => m.JobsModule),
+		// canActivate: [AuthGuardService]
+		loadChildren: '../../pages/jobs/jobs.module#JobsModule'
 	},
 	{
 		path: '',

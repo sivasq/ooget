@@ -413,11 +413,32 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, contractId, { headers: headers, params: params });
 	}
 
+	// Get Jobseeker OffDays Report
 	getMatrixOffDays(args): Observable<any> {
 		const headers = this.createAuthorizationHeaderFormData();
 		const params = this.createUrlParams('Timesheet', 'GetJobContractTimesheetList');
 		return this.http.post(this._baseUrl, args, { headers: headers, params: params });
 	}
+
+	// Get Jobseeker Contracts
+	getJobseekerContracts(data): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Timesheet', 'GetJobseekerContractTimesheetList');
+		return this.http.post(this._baseUrl, data, { headers: headers, params: params });
+	}
+
+	// Get single Employer contract & timesheet Details
+	getEmployerJobs(data): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Timesheet', 'GetEmployerContractTimesheetList');
+		return this.http.post(this._baseUrl, data, { headers: headers, params: params });
+	}
+
+
+
+
+
+
 
 
 	toggleNricFinEditable(data): Observable<any> {
@@ -551,45 +572,6 @@ export class ApiCallService {
 				'token': userToken
 			});
 		return this.http.post(this._baseUrl + '/contract/generatepayroll', contractid, { headers: headers })
-			.map(res => res);
-	}
-
-	getEmployerJobs(data): Observable<any> {
-		const dummyData = '';
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/contract/generatereportforparticularemployer', data, { headers: headers })
-			.map(res => res);
-	}
-
-	getJobseekerContracts(data): Observable<any> {
-		const dummyData = '';
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/contract/generatetimesheetreportforparticularjobseeker', data, { headers: headers })
-			.map(res => res);
-	}
-
-	getExtraUserProfileDetails(userid): Observable<any> {
-		const dummyData = '';
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/employer/fetchsupervisor', userid, { headers: headers })
 			.map(res => res);
 	}
 

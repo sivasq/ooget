@@ -221,9 +221,9 @@ const MENUITEMS = [
 		name: 'JOBS',
 		type: 'sub',
 		icon: 'work',
-		badge: [
-			{ type: 'red', value: '5' }
-		],
+		// badge: [
+		// 	{ type: 'red', value: '5' }
+		// ],
 		children: [
 			{ state: '/pending', name: 'PENDING JOBS' },
 			{ state: '/live', name: 'LIVE JOBS' }
@@ -234,9 +234,9 @@ const MENUITEMS = [
 		name: 'JOBSEEKERS',
 		type: 'sub',
 		icon: 'person',
-		badge: [
-			{ type: 'red', value: '5' }
-		],
+		// badge: [
+		// 	{ type: 'red', value: '5' }
+		// ],
 		children: [
 			{ state: '/list', name: 'JOBSEEKERS' },
 			{ state: '/pending', name: 'PENDING JOBSEEKERS' }

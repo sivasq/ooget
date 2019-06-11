@@ -20,7 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, AgePipe } from '../pipes/custompipes.pipe';
 
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { NgBusyModule } from 'ng-busy';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -28,7 +28,7 @@ import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { AuthGuardService } from '../services/auth-guard.service';
 import { EqualValidator, CompareDirective } from '../directives/custom-directive.directive';
-import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher, MAT_DATE_LOCALE } from '@angular/material/core';
 
 import { NgPipesModule, CamelizePipe, UcFirstPipe } from 'ngx-pipes';
 
@@ -49,10 +49,30 @@ import { NgxPermissionsModule } from 'ngx-permissions';
 import { AccordionAnchorDirective, AccordionLinkDirective, AccordionDirective } from '../directives/menu-accordion';
 import { RosterOffDaysManageComponent } from '../reusable-components/roster-off-days-manage/roster-off-days-manage.component';
 import { TimesheetListDetailsComponent } from '../reusable-components/timesheet-list-details/timesheet-list-details.component';
+import { JobseekersGridViewComponent } from '../reusable-components/jobseekers-grid-view/jobseekers-grid-view.component';
+import { PayslipComponent } from '../reusable-components/payslip/payslip.component';
+import { ChargesToEmpTimesheetComponent } from '../reusable-components/charges-to-emp-timesheet/charges-to-emp-timesheet.component';
+import { InvoiceTemp1Component } from '../reusable-components/invoice-temp1/invoice-temp1.component';
+import { InvoiceTemp2Component } from '../reusable-components/invoice-temp2/invoice-temp2.component';
+import { JobseekerTimesheetComponent } from '../reusable-components/jobseeker-timesheet/jobseeker-timesheet.component';
+import { OffdayMatrixTableComponent } from '../reusable-components/offday-matrix-table/offday-matrix-table.component';
+import { JobsGridViewComponent } from '../reusable-components/jobs-grid-view/jobs-grid-view.component';
+import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
+
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true,
 	wheelPropagation: true,
+};
+
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat
+export const MY_NATIVE_FORMATS = {
+	fullPickerInput: { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },
+	datePickerInput: { year: 'numeric', month: 'numeric', day: 'numeric' },
+	timePickerInput: { hour: 'numeric', minute: 'numeric' },
+	monthYearLabel: { year: 'numeric', month: 'short' },
+	dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
+	monthYearA11yLabel: { year: 'numeric', month: 'long' },
 };
 
 @NgModule({
@@ -104,7 +124,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		CompareDirective,
 		AccordionAnchorDirective,
 		AccordionLinkDirective,
-		AccordionDirective
+		AccordionDirective,
+		ChargesToEmpTimesheetComponent, PayslipComponent, InvoiceTemp1Component, InvoiceTemp2Component, JobseekerTimesheetComponent, OffdayMatrixTableComponent, JobsGridViewComponent, JobseekersGridViewComponent
 	],
 	entryComponents: [
 		TopProfiledialogComponent,
@@ -134,15 +155,18 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		OwlNativeDateTimeModule,
 		NgBusyModule,
 		NgProgressModule,
+		CalendarModule,
 		NgProgressHttpModule,
 		NgProgressRouterModule,
 		NgPipesModule,
 		NgxMaskModule,
+		SatDatepickerModule, SatNativeDateModule,
 		EqualValidator, CompareDirective,
 		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, AgePipe, NgxPermissionsModule,
 		AccordionAnchorDirective,
 		AccordionLinkDirective,
-		AccordionDirective
+		AccordionDirective,
+		ChargesToEmpTimesheetComponent, PayslipComponent, InvoiceTemp1Component, InvoiceTemp2Component, JobseekerTimesheetComponent, OffdayMatrixTableComponent, JobsGridViewComponent, JobseekersGridViewComponent
 	],
 	providers: [
 		ConfigService,
@@ -151,6 +175,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		DatePipe, UpperCasePipe, AgePipe, CamelizePipe, UcFirstPipe,
 		{ provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
 		{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
+		{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+		{ provide: OWL_DATE_TIME_LOCALE, useValue: 'en-GB' },
+		{ provide: OWL_DATE_TIME_FORMATS, useValue: MY_NATIVE_FORMATS },
 		AuthGuardService
 	],
 })

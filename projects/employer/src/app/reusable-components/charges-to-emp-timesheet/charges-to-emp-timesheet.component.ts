@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material';
+import { MatSort } from '@angular/material';
 import { ChargesToEmpTimesheetDataSource } from './charges-to-emp-timesheet-datasource';
 import * as moment from 'moment';
 import 'moment-duration-format';
@@ -93,25 +94,25 @@ export class ChargesToEmpTimesheetComponent implements OnInit {
 	}
 
 	getSumOfNormalWorkHrSalary() {
-		return this.displayDatasource.map(t => t.normalemployercharges).reduce((previous, current) => {
+		return this.displayDatasource.map(t => t.employer_charge).reduce((previous, current) => {
 			return previous + current
 		}, 0);
 	}
 
 	getSumOfOT1point5WorkHrSalary() {
-		return this.displayDatasource.filter(t => t.salarymultiplier == 1 || t.salarymultiplier == 1.5).map(t => t.otemployercharges).reduce((previous, current) => {
+		return this.displayDatasource.filter(t => t.salarymultiplier == 1 || t.salarymultiplier == 1.5).map(t => t.employer_ot_charge).reduce((previous, current) => {
 			return previous + current
 		}, 0);
 	}
 
 	getSumOfOT2WorkHrSalary() {
-		return this.displayDatasource.filter(t => t.salarymultiplier == 2).map(t => t.otemployercharges).reduce((previous, current) => {
+		return this.displayDatasource.filter(t => t.salarymultiplier == 2).map(t => t.employer_ot_charge).reduce((previous, current) => {
 			return previous + current
 		}, 0);
 	}
 
 	getSumOfTotalWorkHrSalary() {
-		return this.displayDatasource.map(t => t.totalemployercharges).reduce((previous, current) => {
+		return this.displayDatasource.map(t => t.employer_total_charge).reduce((previous, current) => {
 			return previous + current
 		}, 0);
 	}

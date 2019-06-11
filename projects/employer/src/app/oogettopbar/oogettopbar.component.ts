@@ -24,7 +24,7 @@ export class OogettopbarComponent implements OnInit {
   togglemainNav() {
     this.navToggle.emit(true);
   }
-  
+
   toggleuserprofile() {
     // console.log('first');
     this.toggleProfile.emit(true);
@@ -37,10 +37,10 @@ export class OogettopbarComponent implements OnInit {
     this.router.navigate(['logout']);
     console.log("Logout Success");
   }
-  
+
   openTopProfileDialog() {
     this.dialog.open(TopProfiledialogComponent, {
-      panelClass: 'top-profile-dialog',      
+      panelClass: 'top-profile-dialog',
     });
   }
 

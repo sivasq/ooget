@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { MatTableDataSource, MatDialogConfig, MatDialog, MatBottomSheet, MatSnackBar } from '@angular/material';
+import { MatBottomSheet } from '@angular/material';
+import { MatDialogConfig, MatDialog } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
+import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { isArray } from 'util';
 import * as moment from 'moment';

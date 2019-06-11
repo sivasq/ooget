@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material';
+import { MatSort } from '@angular/material';
 import { OffdayMatrixTableDataSource } from './offday-matrix-table-datasource';
 import * as moment from 'moment';
 import 'moment-duration-format';
@@ -62,7 +63,7 @@ export class OffdayMatrixTableComponent implements OnInit {
 		this._displayedDates.subscribe(x => { this.displayedDates = this.getDisplayedDates; });
 		this._dataSource.subscribe(x => {
 			this.dataSource = new OffdayMatrixTableDataSource(this.paginator, this.sort, this.getDataSource);
-			console.log(this.getDataSource);
+			// console.log(this.getDataSource);
 			// this.publicHolidays = this.getDataSource.holiday;
 			// this.jobWorkdays = this.getDataSource.job[0].workdays;
 			// this.jobWorkdaysType = this.getDataSource.job[0].workdaystype;
@@ -73,8 +74,8 @@ export class OffdayMatrixTableComponent implements OnInit {
 		// let elements = rowData.filter(row => row.date == date);
 		// return elements[0];
 		// if (this.jobWorkdaysType == 'flexible') {
-		console.log(rowData);
-		console.log(date);
+		// console.log(rowData);
+		// console.log(date);
 		let flexibleOffDays = rowData.filter(rowData => rowData.date == date);
 		if (flexibleOffDays.length > 0) {
 			if (flexibleOffDays[0].worked == 'OFF') {

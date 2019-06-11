@@ -2,7 +2,8 @@ import { Component, OnInit, ViewEncapsulation, Input, HostListener } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { ApiCallService } from '../../../services/api-call.service';
 import { PaginationInstance } from 'ngx-pagination';
-import { MenuPositionX, MatSnackBar } from '@angular/material';
+import { MenuPositionX } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { Subscription } from 'rxjs';
 
 @Component({

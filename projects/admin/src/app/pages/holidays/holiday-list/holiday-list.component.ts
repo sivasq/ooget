@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { MatDialog, MatPaginator, MatSort, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material';
+import { MatPaginator } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
+import { MatSort } from '@angular/material';
 import { Holiday } from '../models/holiday';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { DataSource } from '@angular/cdk/collections';

@@ -20,7 +20,7 @@ export class TopProfiledialogComponent implements OnInit{
   close() {
     this.dialogRef.close();
   }
-  
+
   ngOnInit() {
   }
 

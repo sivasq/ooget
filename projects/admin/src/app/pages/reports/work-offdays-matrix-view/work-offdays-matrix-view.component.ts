@@ -330,6 +330,8 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 						// console.log(arrayOfResult);
 					} else if (!response.success) {
 						console.log(response);
+						this.generateHeaderColumns();
+						this.matrixDatas = [];
 					}
 				},
 				error => {

@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiCallService } from '../../../services/api-call.service';
 import { Subscription } from 'rxjs';
-import { MenuPositionX, MatSnackBar } from '@angular/material';
+import { MenuPositionX } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { PaginationInstance } from 'ngx-pagination';
 import { ConfigService } from '../../../services/config.service';
 import { isArray } from 'util';

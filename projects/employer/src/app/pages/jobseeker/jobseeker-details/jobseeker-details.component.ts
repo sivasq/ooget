@@ -1,7 +1,9 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { ApiCallService } from '../../../services/api-call.service';
 import { ActivatedRoute } from '@angular/router';
-import { MenuPositionX, MatSnackBar, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MenuPositionX } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { ConfirmDialogComponent } from '../../../confirm-dialog/confirm-dialog.component';
 import { Subscription } from 'rxjs';
 import { JobRegion, JobLocation } from '../../../classes/jobLocation';

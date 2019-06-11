@@ -1,0 +1,107 @@
+<div fxFlex="100" class="inner-sidenav-content transition-2">
+	<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" id="print-section">
+		<!-- <p style="color:red; text-align: center; text-transform: capitalize">This is the sample report</p> -->
+		<div class="doNotPrint" fxFlex="100" fxLayout="row" fxLayoutAlign="end">
+			<button class="pointer" (click)="print()">
+				<mat-icon>print</mat-icon>
+			</button>
+		</div>
+
+		<!-- Search Panel -->
+		<!-- <div fxFlex="100" class="flex-p" fxLayoutAlign="space-between start"> -->
+			<!-- Choose Employer -->
+			<!-- <mat-form-field fxFlex="100" fxFlex.gt-sm="{{employers_list.length > 0 ? '40' : '100'}}" appearance="outline">
+				<mat-label>Choose Employer</mat-label>
+				<mat-select placeholder="Choose Employer" name="selectedEmployer" [(ngModel)]="selectedEmployer"
+					(ngModelChange)="getEmployerJobs($event)">
+					<mat-option *ngFor="let employer of employers_list" [value]="employer.id">
+						{{employer.name}} - {{employer.companycode}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field> -->
+
+			<!-- Choose Jobs -->
+			<!-- <mat-form-field *ngIf="jobs_list.length > 0" fxFlex="100" fxFlex.gt-sm="40" appearance="outline">
+				<mat-label>Choose Job</mat-label>
+				<mat-select placeholder="Choose Job" name="selectedJob" [(ngModel)]="selectedJob"
+					(ngModelChange)="changeSearch()">
+					<mat-option *ngFor="let job of jobs_list" [value]="job.id">
+						{{job.job_name}} - {{job.job_no}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div> -->
+
+		<div fxFlex="100" fxLayout="row" fxLayoutAlign="space-around center">
+			<mat-button-toggle-group #group="matButtonToggleGroup" class="doNotPrint" value="today">
+				<mat-button-toggle value="previous" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+					(viewDateChange)="fetchEvents(viewMode)"> Previous </mat-button-toggle>
+				<mat-button-toggle value="today" mwlCalendarToday [(viewDate)]="viewDate"
+					(viewDateChange)="fetchEvents(viewMode)"> Today </mat-button-toggle>
+				<mat-button-toggle value="next" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+					(viewDateChange)="fetchEvents(viewMode)"> Next </mat-button-toggle>
+			</mat-button-toggle-group>
+
+			<div>
+				<h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+			</div>
+
+			<mat-button-toggle-group #group="matButtonToggleGroup" class="doNotPrint" value="all">
+				<mat-button-toggle value="ON" (click)="fetchEvents('ON')"
+					[class.active]="viewMode === 'ON'"> Working </mat-button-toggle>
+				<mat-button-toggle value="off" (click)="fetchEvents('OFF')" [class.active]="viewMode === 'OFF'"> Off
+				</mat-button-toggle>
+				<mat-button-toggle value="all" (click)="fetchEvents('all')" [class.active]="viewMode === 'all'"> All
+				</mat-button-toggle>
+			</mat-button-toggle-group>
+
+			<!-- <mat-button-toggle-group #group="matButtonToggleGroup" [value]="view"> -->
+			<!-- <mat-button-toggle value="month" (click)="view = CalendarView.Month" [class.active]="view === CalendarView.Month">
+					<mat-icon>format_align_left</mat-icon>Month
+				</mat-button-toggle> -->
+			<!-- <mat-button-toggle value="week" (click)="view = CalendarView.Week" [class.active]="view === CalendarView.Week">
+					<mat-icon>format_align_center</mat-icon>Week
+				</mat-button-toggle> -->
+			<!-- <mat-button-toggle value="day" (click)="view = CalendarView.Day" [class.active]="view === CalendarView.Day">
+					<mat-icon>format_align_right</mat-icon>Day
+				</mat-button-toggle> -->
+			<!-- </mat-button-toggle-group> -->
+		</div>
+
+		<ng-template #loading>
+			<div style="height: 200px;" fxFlex="100" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+				<mat-spinner diameter="40"></mat-spinner>
+				<div>Loading...</div>
+			</div>
+		</ng-template>
+
+		<ng-template #customCellTemplate let-day="day" let-locale="locale">
+			<div class="cal-cell-top">
+				<span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
+				<span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+			</div>
+			<small style="margin: 3px; padding:2px; border-radius:3px; text-align:center; border: 1px solid;"
+				*ngFor="let event of day.events.slice(0,3)" [style.backgroundColor]="event.color?.primary"
+				[style.border-color]="event.color?.secondary"
+				[style.color]="event.color ? '#ffffff' : '#000000'">{{event.title}} </small>
+		</ng-template>
+
+		<div fxFlex="100" style="margin-top: 25px;" *ngIf="events$ | async; else loading; let events">
+			<div [ngSwitch]="view">
+				<mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events"
+					[activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+					(eventClicked)="eventClicked($event.event)" [cellTemplate]="customCellTemplate">
+				</mwl-calendar-month-view>
+
+				<!-- (beforeViewRender)="beforeMonthViewRender($event)" -->
+				<!-- [cellTemplate]="customCellTemplate" -->
+
+				<!-- <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" (eventClicked)="eventClicked($event.event)">
+				</mwl-calendar-week-view> -->
+
+				<!-- <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" (eventClicked)="eventClicked($event.event)">
+				</mwl-calendar-day-view> -->
+			</div>
+		</div>
+	</div>
+</div>

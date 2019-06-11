@@ -242,19 +242,19 @@ const MENUITEMS = [
 		type: 'link',
 		icon: 'settings',
 	},
-	// {
-	// 	state: '/admin/reports',
-	// 	name: 'Reports',
-	// 	type: 'sub',
-	// 	icon: 'chrome_reader_mode',
-	// 	children: [
-	// 		{ state: '/jstr', name: 'JobSeeker Timesheet' },
-	// 		{ state: '/cter', name: 'Employer Charges' },
-	// 		{ state: '/apr', name: 'Admin Payment' },
-	// 		{ state: '/wocvr', name: 'Off Days Calendar View' },
-	// 		{ state: '/womvr', name: 'Off Days Matrix View' }
-	// 	]
-	// },
+	{
+		state: '/employer/reports',
+		name: 'Reports',
+		type: 'sub',
+		icon: 'chrome_reader_mode',
+		children: [
+			// { state: '/jstr', name: 'JobSeeker Timesheet' },
+			{ state: '/cter', name: 'Employer Charges' },
+			// { state: '/apr', name: 'Admin Payment' },
+			// { state: '/wocvr', name: 'Off Days Calendar View' },
+			// { state: '/womvr', name: 'Off Days Matrix View' }
+		]
+	},
 	// {
 	// 	state: '/admin/faq',
 	// 	name: 'FAQ',

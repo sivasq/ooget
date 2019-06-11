@@ -1,0 +1,98 @@
+<!-- <div class="inner-sidenav-content transition-2">
+	<div fxLayout="row wrap" fxFill>
+		<div fxFlex fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+			<h1 style="color: #bbbbbb; text-transform: uppercase; text-align: center;">
+				Working Here
+			</h1>
+			<button mat-stroked-button (click)="backClicked()">
+				<mat-icon>arrow_back</mat-icon>
+				Go Back
+			</button>
+		</div>
+	</div>
+</div> -->
+
+<div class="inner-sidenav-content transition-2">
+	<!-- Breadcrumb Start -->
+	<div fxLayout="row wrap">
+		<div class="flex-p" fxFlex="1 1 100%">
+			<mat-card class="mat-breadcrumb" fxLayout="row" fxFlexAlign="center">
+				<a class="breadcrumb-item" routerLink="/admin/dashboard" fxLayout="row" fxLayoutAlign="start center">
+					<mat-icon>home</mat-icon>
+					<span class="breadcrumb-title">Home</span>
+				</a>
+
+				<div class="breadcrumb-item" fxLayout="row" fxLayoutAlign="center center">
+					<span class="breadcrumb-title active">Work Off Days Report</span>
+				</div>
+			</mat-card>
+		</div>
+	</div>
+	<!-- Breadcrumb End -->
+
+	<div [ngBusy]="{busy:busy}"></div>
+
+	<div fxLayout="row wrap">
+		<!-- Search Panel -->
+		<div fxFlex="100" class="flex-p" fxLayoutAlign="space-between start">
+			<!-- Choose Employer -->
+			<mat-form-field fxFlex="100" fxFlex.gt-sm="{{employers_list.length > 0 ? '40' : '100'}}"
+				appearance="outline">
+				<mat-label>Choose Employer</mat-label>
+				<mat-select placeholder="Choose Employer" name="selectedEmployer" [(ngModel)]="selectedEmployer"
+					(ngModelChange)="getEmployerJobs($event)">
+					<mat-option *ngFor="let employer of employers_list" [value]="employer.id">
+						{{employer.name}} - {{employer.companycode}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+
+			<!-- Choose Jobs -->
+			<mat-form-field *ngIf="jobs_list.length > 0" fxFlex="100" fxFlex.gt-sm="40" appearance="outline">
+				<mat-label>Choose Job</mat-label>
+				<mat-select placeholder="Choose Job" name="selectedJob" [(ngModel)]="selectedJob"
+					(ngModelChange)="changeSearch()">
+					<mat-option *ngFor="let job of jobs_list" [value]="job.id">
+						{{job.job_name}} - {{job.job_no}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+
+		<!-- Choose month & year -->
+		<div class="flex-p" fxFlex="100" fxLayoutAlign="space-between center">
+			<!-- Choose Month -->
+			<mat-form-field fxFlex="50" fxFlex.gt-sm="30" [appearance]="appearance$ | async">
+				<mat-label>Month</mat-label>
+				<mat-select placeholder="Month" panelClass="dob-month-panel" name="selectedMonth"
+					[(ngModel)]="selectedMonth" (ngModelChange)="changeSearch()" required>
+					<mat-option *ngFor="let month of listOfMonths" [value]="month.monthValue">
+						{{ month.monthName }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+
+			<!-- Choose Year -->
+			<mat-form-field fxFlex="25" fxFlex.gt-sm="30" [appearance]="appearance$ | async">
+				<mat-label>Year</mat-label>
+				<mat-select placeholder="Year" panelClass="dob-year-panel" name="selectedYear"
+					[(ngModel)]="selectedYear" (ngModelChange)="changeSearch()" required>
+					<mat-option *ngFor="let year of listOfYears" [value]="year">
+						{{ year }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+
+		<!-- Matrix Panel -->
+		<div class="flex-p" fxFlex="100" *ngIf="matrixDatas">
+			<mat-card class="p-0" *ngIf="matrixDatas.length > 0">
+				<!-- <app-offday-matrix-table [displayDatasource]="offDays" [columns]="displayedColumns" [days]="displayedDates"
+				 [pageSize]="5"></app-offday-matrix-table> -->
+
+				<app-offday-matrix-table [setDisplayedColumns]="displayedColumns" [setDisplayedDates]="displayedDates"
+					[setDataSource]="matrixDatas" [pageSize]="5"></app-offday-matrix-table>
+			</mat-card>
+		</div>
+	</div>
+</div>

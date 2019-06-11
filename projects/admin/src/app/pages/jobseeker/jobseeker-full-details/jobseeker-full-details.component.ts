@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MenuPositionX, MatSnackBar, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MenuPositionX } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { ApiCallService } from '../../../services/api-call.service';
 import { ActivatedRoute } from '@angular/router';
 import { ConfigService } from '../../../services/config.service';

@@ -24,9 +24,10 @@
 				<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start">
 					<mat-form-field fxFlex="100" fxFlex.gt-sm="{{employerDatas ? '40' : '100'}}" appearance="outline">
 						<mat-label>Choose Employer</mat-label>
-						<mat-select placeholder="Choose Employer" name="SelectedEmployer" [(ngModel)]="SelectedEmployer" (ngModelChange)="getEmployerJobs($event)">
-							<mat-option *ngFor="let employer of employers_list" [value]="employer._id">
-								{{employer.companyname}} - {{employer.companycode}}
+						<mat-select placeholder="Choose Employer" name="SelectedEmployer" [(ngModel)]="SelectedEmployer"
+							(ngModelChange)="getEmployerJobs($event)">
+							<mat-option *ngFor="let employer of employers_list" [value]="employer.id">
+								{{employer.name}} - {{employer.companycode}}
 							</mat-option>
 						</mat-select>
 					</mat-form-field>
@@ -38,32 +39,37 @@
 				</div>
 
 				<mat-accordion *ngIf="employerDatas" class="accordion-reports" fxFlex="100">
-					<mat-expansion-panel *ngFor="let job of employerDatas.jobs | filter:jobFilter; let i = index" #expPanel>
-						<mat-expansion-panel-header fxAlignLayout="space-between center" style="height: 100px!important;">
+					<mat-expansion-panel *ngFor="let job of employerDatas | filter:jobFilter; let i = index"
+						#expPanel>
+						<mat-expansion-panel-header fxAlignLayout="space-between center"
+							style="height: 100px!important;">
 							<mat-panel-title fxFlex>
-								Job No: {{job.jobnumber}}
+								Job No: {{job.job_no}}
 							</mat-panel-title>
 							<mat-panel-description fxFlex *ngIf="expPanel.expanded">
-								<mat-form-field class="no-padding" (click)="$event.stopPropagation()" appearance="outline" fxFlex="100">
+								<mat-form-field class="no-padding" (click)="$event.stopPropagation()"
+									appearance="outline" fxFlex="100">
 									<mat-label>Search Employees</mat-label>
-									<input matInput name="employeeFilter" [(ngModel)]="employeeFilter" placeholder="Search Employees...">
+									<input matInput name="employeeFilter" [(ngModel)]="employeeFilter"
+										placeholder="Search Employees...">
 								</mat-form-field>
 							</mat-panel-description>
 						</mat-expansion-panel-header>
 
 						<mat-accordion fxFlex="100">
-							<mat-expansion-panel class="contractor" *ngFor="let contractor of job.contracts | filter:employeeFilter;">
+							<mat-expansion-panel class="contractor"
+								*ngFor="let contractor of job.contract | filter:employeeFilter;">
 								<mat-expansion-panel-header fxAlignLayout="space-between center">
 									<mat-panel-title fxFlex>
-										Employee Name: {{contractor.jobseekername}}
+										Employee Name: {{contractor.jobseeker_name}}
 									</mat-panel-title>
 									<mat-panel-description fxFlex>
-										Employee Code: {{contractor.employeeCode}}
+										<!-- Employee Code: {{contractor.employeeCode}} -->
 									</mat-panel-description>
 								</mat-expansion-panel-header>
 
-								<app-charges-to-emp-timesheet [displayDatasource]="contractor.timesheets" [columns]="displayedColumns"
-								 [pageSize]="5"></app-charges-to-emp-timesheet>
+								<app-charges-to-emp-timesheet [displayDatasource]="contractor.timesheet"
+									[columns]="displayedColumns" [pageSize]="5"></app-charges-to-emp-timesheet>
 
 							</mat-expansion-panel>
 						</mat-accordion>

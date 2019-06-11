@@ -23,10 +23,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { EqualValidatorDirective, Collapse, CompareDirective } from '../directives/equal-validator.directive';
 import { UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, MultipleSubLocationFilter, SafeHtml } from '../pipes/custompipes.pipe';
 
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { NgBusyModule } from 'ng-busy';
 
-import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher, MAT_DATE_LOCALE } from '@angular/material';
 import { AuthGuardService } from '../services/auth-guard.service';
 import { NguCarouselModule } from '@ngu/carousel';
 
@@ -38,11 +38,16 @@ import { NgProgressRouterModule } from '@ngx-progressbar/router';
 import { Ng5SliderModule } from 'ng5-slider';
 import { SidemenuComponent } from '../sidemenu/sidemenu.component';
 import { AccordionAnchorDirective, AccordionLinkDirective, AccordionDirective } from '../directives/menu-accordion';
+import { JobseekerTimesheetComponent } from '../reusable-components/jobseeker-timesheet/jobseeker-timesheet.component';
+import { CalendarModule } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true,
 	wheelPropagation: true,
 };
+
 
 @NgModule({
 	imports: [
@@ -68,7 +73,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		}),
 		NgProgressHttpModule,
 		NgProgressRouterModule,
-		Ng5SliderModule
+		Ng5SliderModule,		
+		SatDatepickerModule, SatNativeDateModule
 	],
 	declarations: [
 		OogetsidenavComponent,
@@ -82,7 +88,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		SidemenuComponent,
 		AccordionAnchorDirective,
 		AccordionLinkDirective,
-		AccordionDirective
+		AccordionDirective,
+		JobseekerTimesheetComponent
 	],
 	entryComponents: [
 		TopProfiledialogComponent,
@@ -119,7 +126,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		SidemenuComponent,
 		AccordionAnchorDirective,
 		AccordionLinkDirective,
-		AccordionDirective
+		AccordionDirective,
+		JobseekerTimesheetComponent,
+		SatDatepickerModule, SatNativeDateModule
 	],
 	providers: [
 		ConfigService,

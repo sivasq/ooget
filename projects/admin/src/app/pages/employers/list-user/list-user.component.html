@@ -64,7 +64,7 @@
 						<th>Name</th>
 						<th>Email</th>
 						<th>Role</th>
-						<th>Action</th>
+						<!-- <th>Action</th> -->
 					</tr>
 				</thead>
 				<tbody>
@@ -73,7 +73,7 @@
 						<td>{{user.firstname | ucfirst}}</td>
 						<td>{{user.email}}</td>
 						<td>{{user.type | ucfirst}}</td>
-						<td>
+						<!-- <td>
 							<span *ngIf="user.type == 'employer'">
 								<a mat-icon-button color="primary"
 									routerLink="/admin/employers/{{employerId}}/user/{{user.id}}">
@@ -83,7 +83,7 @@
 									<mat-icon aria-label="Delete">delete</mat-icon>
 								</button>
 							</span>
-						</td>
+						</td> -->
 					</tr>
 				</tbody>
 			</table>
