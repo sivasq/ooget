@@ -136,6 +136,13 @@
 											align="start">
 											Numbers Only Allowed
 										</mat-error>
+										<mat-error *ngIf="jobSeekerProfileForm.get('mobile').hasError('minlength')"
+											align="start">
+											8 Digits Required
+										</mat-error>
+										<mat-error *ngIf="jobSeekerProfileForm.get('mobile').hasError('maxlength')" align="start">
+											8 Digits Only Allowed
+										</mat-error>
 										<mat-error *ngIf="jobSeekerProfileForm.get('mobile').hasError('isMobileUnique')"
 											align="start">
 											This Mobile No Already Registered
@@ -460,8 +467,9 @@
 
 									<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 										<mat-label>Years of Experience (in total)</mat-label>
-										<input matInput type="number" placeholder="Years of Experience (in total)"
-											name="experience_year" autocomplete="off" formControlName="experience_year">
+										<input matInput type="number" min="0"
+											placeholder="Years of Experience (in total)" name="experience_year"
+											autocomplete="off" formControlName="experience_year">
 									</mat-form-field>
 								</div>
 
@@ -661,19 +669,29 @@
 										</div>
 										<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="15px">
 											<div class="drop-zone content" (change)="idfrontchange($event)"
-												(click)="idFrontFileInput.click()" style="cursor: pointer;">
+												(click)="idFrontFileInput.click()"
+												[style.cursor]="!id_verified ? 'pointer' : ''"
+												style="position: relative;">
 												<input hidden type="file" #idFrontFileInput [disabled]="id_verified"
 													accept="image/*">
 												<img style="height:100%; width:100%; border-radius: 50px;" alt=""
 													[src]="idProofFront">
+												<mat-icon *ngIf="id_verified"
+													style="color: green; cursor:inherit; position: absolute; width: 36px; height: 36px; font-size: 36px; left: 33px; top: 33px; background:inherit; border-radius: 100px;">
+													check_circle</mat-icon>
 											</div>
 
 											<div class="drop-zone content" (change)="idbackchange($event)"
-												(click)="idBackFileInput.click()" style="cursor: pointer;">
+												(click)="idBackFileInput.click()"
+												[style.cursor]="!id_verified ? 'pointer' : ''"
+												style="position: relative;">
 												<input hidden type="file" #idBackFileInput [disabled]="id_verified"
 													accept="image/*">
 												<img style="height:100%; width:100%; border-radius: 50px;" alt=""
 													[src]="idProofBack">
+												<mat-icon *ngIf="id_verified"
+													style="color: green; cursor:inherit; position: absolute; width: 36px; height: 36px; font-size: 36px; left: 33px; top: 33px; background:inherit; border-radius: 100px;">
+													check_circle</mat-icon>
 											</div>
 										</div>
 									</div>

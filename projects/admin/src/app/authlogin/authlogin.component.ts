@@ -34,9 +34,7 @@ export class AuthloginComponent implements OnInit {
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 	constructor(public router: Router, private _httpService: ApiCallService, private config: ConfigService, private fb: FormBuilder, private permissionsService: NgxPermissionsService, private rolesService: NgxRolesService, private asyncSubscriber: AsyncSubscriber, private toFormData: ToFormDataService) {
-
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
-
 		this.homePageUrl = config.homePageUrl;
 		this.buildAdminAuthForm();
 	}

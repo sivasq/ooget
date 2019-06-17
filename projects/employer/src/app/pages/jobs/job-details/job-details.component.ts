@@ -142,7 +142,7 @@ export class JobDetailsComponent implements OnInit {
 	}
 
 	getJobContractors(jobId) {
-		this.busy = this._httpService.getJobContractors(jobId)
+		this.busy = this._httpService.getJobContractsList(jobId)
 			.subscribe(
 				response => {
 					if (response.success) {

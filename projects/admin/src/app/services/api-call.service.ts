@@ -265,6 +265,13 @@ export class ApiCallService {
 	}
 
 	// Get Jobseeker Contract Details
+	getJobContractsList(jobId): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'GetContractList');
+		return this.http.post(this._baseUrl, jobId, { headers: headers, params: params });
+	}
+
+	// Get Jobseeker Contract Details
 	getContractDetails(contractId): Observable<any> {
 		const headers = this.createAuthorizationHeaderFormData();
 		const params = this.createUrlParams('Job', 'GetContractList');

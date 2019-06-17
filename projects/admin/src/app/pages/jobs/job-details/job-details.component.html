@@ -305,7 +305,7 @@
 								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 									check_circle</mat-icon>
 								<span class="key">Charge Rate : </span>
-								<span class="value">&#x24;&nbsp;{{jobDetails.markup_rate}}</span>
+								<span class="value">&#x24;&nbsp;{{jobDetails.charge_rate}}</span>
 							</p>
 
 							<p fxLayout="row" fxLayoutAlign="start center">
@@ -313,7 +313,7 @@
 									check_circle</mat-icon>
 								<span class="key">Markup Rate : </span>
 								<span class="value">{{jobDetails.markup_in == "$" ?
-									'&#x24;&nbsp;':''}}{{jobDetails.markuprate}}{{jobDetails.markup_in
+									'&#x24;&nbsp;':''}}{{jobDetails.markup_rate}}{{jobDetails.markup_in
 									== "%" ? '%':''}}</span>
 							</p>
 

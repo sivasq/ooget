@@ -232,7 +232,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			race: ['', Validators.compose([Validators.required])],
 			nationality: ['', Validators.compose([Validators.required])],
 			// mobile: ['', Validators.compose([Validators.required, Validators.pattern(this.mobileNoPattern)])],
-			mobile: ['', Validators.compose([Validators.required, Validators.pattern(this.mobileNoPattern)]), this.isMobileUnique.bind(this)],
+			mobile: ['', Validators.compose([Validators.required, Validators.pattern(this.mobileNoPattern), Validators.minLength(8), Validators.maxLength(8)]), this.isMobileUnique.bind(this)],
 			address: ['', Validators.compose([Validators.required])],
 			// nric: ['', Validators.compose([Validators.pattern(this.nricFinNoPattern)])],
 			nric: ['', Validators.compose([Validators.pattern(this.nricFinNoPattern)]), this.isNricFinUnique.bind(this)],
@@ -745,7 +745,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 					if (response.success) {
 						let userdata = response.result[0];
 						// console.log(userdata);
-						this.isActive = userdata.activestatus ? userdata.activestatus : 0;
+						this.isActive = userdata.status ? userdata.status : 0;
 						// Profile Tab
 						this.myProfile.firstname = userdata.firstname ? userdata.firstname : '';
 						this.myProfile.lastname = userdata.lastname ? userdata.lastname : '';
@@ -1309,7 +1309,12 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 					this.invalidDobErrorMsg = 'Are you sure you entered the right birthday?';
 					return { validDob: true };
 				}
-				// if (this.CalculateAge(dob))
+				let Age = this.CalculateAge(dob);
+
+				if (Age > 90) {
+					this.invalidDobErrorMsg = 'Age Should be below 90';
+					return { validDob: true };
+				}
 
 				return null;
 			}
@@ -1365,6 +1370,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 				});
 
 				let Age = this.CalculateAge(dob);
+
 				// console.log(this.jobSeekerProfileForm.get('dob').status);
 				if (!isNaN(Age) && this.jobSeekerProfileForm.get('dob').status == 'VALID') {
 					this.jobSeekerProfileForm.patchValue({
