@@ -200,12 +200,12 @@ const MENUITEMS_SAMPLE = [
 ];
 
 const MENUITEMS = [
-	{
-		state: '/dashboard',
-		name: 'DASHBOARD',
-		type: 'link',
-		icon: 'dashboard'
-	},
+	// {
+	// 	state: '/dashboard',
+	// 	name: 'DASHBOARD',
+	// 	type: 'link',
+	// 	icon: 'dashboard'
+	// },
 	{
 		state: '/main/profile',
 		name: 'Profile',

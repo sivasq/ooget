@@ -309,7 +309,9 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 					}
 				},
 				error => {
-					console.log(error);
+					let snackBarRef = this.snackBar.open('Server Error, Please Try Again', 'Close', {
+						duration: 3000,
+					});
 				}
 			);
 	}

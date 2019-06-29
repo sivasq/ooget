@@ -593,7 +593,8 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 	// Select All WorkEnvironment
 	selectAllWorkEnvironment() {
-		let workingenvironment = this.WorkingEnvironments.map(x => x.name);
+		let workingenvironment = this.WorkingEnvironments.map(x => x.id);
+		console.log(workingenvironment);
 		this.jobSeekerProfileForm.patchValue({
 			'working_environment': workingenvironment,
 		});
