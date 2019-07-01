@@ -33,7 +33,7 @@ export class JobsListComponent implements OnInit {
 	// Tab2 Pagination config
 	public tab2PaginateConfig: PaginationInstance = {
 		id: 'tab2',
-		itemsPerPage: 3,
+		itemsPerPage: 6,
 		currentPage: 1
 	};
 	public tab2search;
@@ -44,7 +44,7 @@ export class JobsListComponent implements OnInit {
 	// Tab3 Pagination config
 	public tab3PaginateConfig: PaginationInstance = {
 		id: 'tab3',
-		itemsPerPage: 3,
+		itemsPerPage: 6,
 		currentPage: 1
 	};
 	public tab3search;
@@ -55,7 +55,7 @@ export class JobsListComponent implements OnInit {
 	// Tab4 Pagination config
 	public tab4PaginateConfig: PaginationInstance = {
 		id: 'tab4',
-		itemsPerPage: 3,
+		itemsPerPage: 6,
 		currentPage: 1
 	};
 	public tab4search;

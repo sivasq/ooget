@@ -239,7 +239,7 @@
 											<mat-icon class="trigger" [owlDateTimeTrigger]="triggerstarttime">
 												access_time</mat-icon>
 										</a>
-										<owl-date-time [hour12Timer]="false" [pickerType]="'timer'"
+										<owl-date-time [startAt]="(jobDetails.starttime != '' && jobDetails.starttime != undefined &&  jobDetails.starttime != null) ? null : dialogInitialTimeAt" [hour12Timer]="false" [pickerType]="'timer'"
 											[pickerMode]="'dialog'" #triggerstarttime></owl-date-time>
 									</mat-form-field>
 
@@ -253,7 +253,7 @@
 											<mat-icon class="trigger" [owlDateTimeTrigger]="triggerendtime">access_time
 											</mat-icon>
 										</a>
-										<owl-date-time [pickerType]="'timer'" [hour12Timer]="false"
+										<owl-date-time [startAt]="(jobDetails.endtime != '' && jobDetails.endtime != undefined &&  jobDetails.endtime != null) ? null : dialogInitialTimeAt" [pickerType]="'timer'" [hour12Timer]="false"
 											[pickerMode]="'dialog'" #triggerendtime></owl-date-time>
 									</mat-form-field>
 
@@ -368,7 +368,7 @@
 											<mat-icon class="trigger" [owlDateTimeTrigger]="breakfrompicker">access_time
 											</mat-icon>
 										</a>
-										<owl-date-time [pickerType]="'timer'" [hour12Timer]="false"
+										<owl-date-time [startAt]="(break.starttime != '' && break.starttime != undefined &&  break.starttime != null) ? null : dialogInitialTimeAt" [pickerType]="'timer'" [hour12Timer]="false"
 											[pickerMode]="'dialog'" #breakfrompicker></owl-date-time>
 									</mat-form-field>
 
@@ -382,7 +382,7 @@
 											<mat-icon class="trigger" [owlDateTimeTrigger]="breaktopicker">access_time
 											</mat-icon>
 										</a>
-										<owl-date-time [pickerType]="'timer'" [hour12Timer]="false"
+										<owl-date-time [startAt]="(break.endtime != '' && break.endtime != undefined &&  break.endtime != null) ? null : dialogInitialTimeAt" [pickerType]="'timer'" [hour12Timer]="false"
 											[pickerMode]="'dialog'" #breaktopicker></owl-date-time>
 									</mat-form-field>
 

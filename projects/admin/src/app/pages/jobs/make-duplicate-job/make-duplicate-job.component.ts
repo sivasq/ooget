@@ -40,7 +40,7 @@ export const MY_FORMATS = {
 	],
 })
 export class MakeDuplicateJobComponent implements OnInit {
-
+	public dialogInitialTimeAt = new Date();
 	appearance$: Observable<any>;
 
 	public jobDetails: any = {
@@ -62,13 +62,13 @@ export class MakeDuplicateJobComponent implements OnInit {
 		starttime: '',
 		endtime: '',
 		work_days_type: '',
-		sunday: '',
-		monday: '',
-		tuesday: '',
-		wednesday: '',
-		thursday: '',
-		friday: '',
-		saturday: '',
+		sunday: false,
+		monday: true,
+		tuesday: true,
+		wednesday: true,
+		thursday: true,
+		friday: true,
+		saturday: false,
 
 		postal_code: '',
 		// addressblock: '',
@@ -124,7 +124,7 @@ export class MakeDuplicateJobComponent implements OnInit {
 	public EmploymentTypes: EmploymentType[];
 
 	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
-
+		this.dialogInitialTimeAt.setHours(0, 0, 0);
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
 		this.companyid = this.route.snapshot.params['emp_id'];
@@ -353,8 +353,11 @@ export class MakeDuplicateJobComponent implements OnInit {
 
 						this.employmenttypeChange(result.employment_type);
 
-						this.jobDetails.specializations = Number(result.specializations);
-						this.jobDetails.otherjobspecialization = result.otherjobspecialization;
+						this.jobDetails.specializations = this.isNumeric(result.specializations) ? Number(result.specializations) : 'Others';
+
+						this.jobDetails.otherjobspecialization = this.isNumeric(result.specializations) ? '' : result.specializations;
+						// this.jobDetails.specializations = Number(result.specializations);
+						// this.jobDetails.otherjobspecialization = result.otherjobspecialization;
 						this.jobDetails.working_environment = this.stringToArray(result.working_environment);
 
 						this.jobDetails.pax_total = result.pax_total;
@@ -399,7 +402,7 @@ export class MakeDuplicateJobComponent implements OnInit {
 						this.jobDetails.auto_accepted = result.auto_accepted;
 
 						let oldBreaks = result.breaklist;
-						if (oldBreaks.length > 0) {
+						if ((oldBreaks != null) && oldBreaks.length > 0) {
 							for (let i = 0; i < oldBreaks.length; i++) {
 								if (new Date(currentDate + ' ' + oldBreaks[i].from) > new Date(currentDate + ' ' + oldBreaks[i].to)) {
 									this.jobDetails.breaks.push({
@@ -428,6 +431,14 @@ export class MakeDuplicateJobComponent implements OnInit {
 					console.log(error);
 				}
 			);
+	}
+
+	isNumeric(string) {
+		if (isNaN(string)) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	addNewJob(employerJobData: any, employerJobForm) {
@@ -465,8 +476,10 @@ export class MakeDuplicateJobComponent implements OnInit {
 		let autoofferaccept = { 'auto_accepted': employerJobData.auto_accepted == true ? 'true' : 'false' };
 		employerJobData = Object.assign(employerJobData, autoofferaccept);
 
-		// let jobaddedby = { "jobaddedby": "ooget-team" };
-		// employerJobData = Object.assign(employerJobData, jobaddedby);
+		if (employerJobData.specializations == 'Others') {
+			const specialization = { 'specializations': employerJobData.otherjobspecialization };
+			employerJobData = Object.assign(employerJobData, specialization);
+		}
 
 		// let jobstatus = { "jobstatus": "live" };
 		// employerJobData = Object.assign(employerJobData, jobstatus);

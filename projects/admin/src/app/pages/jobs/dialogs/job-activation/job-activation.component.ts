@@ -29,7 +29,11 @@ export class JobActivationComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		// console.log(this.data);
+		this.jobDetails.charge_rate = this.data.charge_rate;
+		this.jobDetails.markup_rate = this.data.markup_rate;
+		this.jobDetails.markup_in = this.data.markup_in;
+		this.jobDetails.jobseeker_salary = this.data.jobseeker_salary;
+		this.jobDetails.markup_amount = this.data.markup_amount;
 	}
 
 	onNoClick(): void {

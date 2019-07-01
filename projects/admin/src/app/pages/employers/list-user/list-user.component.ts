@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Location } from '@angular/common';
+import { Subscription, from } from 'rxjs';
 import { ApiCallService } from '../../../services/api-call.service';
 import { ActivatedRoute } from '@angular/router';
 import { MenuPositionX } from '@angular/material';
@@ -37,7 +38,7 @@ export class ListUserComponent implements OnInit {
 	public employerDetails: any;
 	public jobDetails: any;
 
-	constructor(private _httpService: ApiCallService, private route: ActivatedRoute) {
+	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, private _location: Location) {
 		this.employerId = this.route.snapshot.params['emp_id'];
 		// this.empJobId = this.route.snapshot.params['job_id'];
 
@@ -109,6 +110,10 @@ export class ListUserComponent implements OnInit {
 					console.log(error);
 				}
 			);
+	}
+
+	backClicked() {
+		this._location.back();
 	}
 
 	ngOnInit() {

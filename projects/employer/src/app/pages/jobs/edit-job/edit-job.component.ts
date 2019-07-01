@@ -20,7 +20,7 @@ import { isArray } from 'util';
 	styleUrls: ['./edit-job.component.scss']
 })
 export class EditJobComponent implements OnInit {
-
+	public dialogInitialTimeAt = new Date();
 	appearance$: Observable<any>;
 
 	public jobDetails: any = {
@@ -104,6 +104,7 @@ export class EditJobComponent implements OnInit {
 	busy: Subscription;
 
 	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
+		this.dialogInitialTimeAt.setHours(0, 0, 0);
 
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
@@ -298,8 +299,13 @@ export class EditJobComponent implements OnInit {
 
 						this.employmenttypeChange(result.employment_type);
 
-						this.jobDetails.specializations = Number(result.specializations);
-						this.jobDetails.otherjobspecialization = result.otherjobspecialization;
+						this.jobDetails.specializations = this.isNumeric(result.specializations) ? Number(result.specializations) : 'Others';
+
+						this.jobDetails.otherjobspecialization = this.isNumeric(result.specializations) ? '' : result.specializations;
+
+						// this.jobDetails.specializations = Number(result.specializations);
+						// this.jobDetails.otherjobspecialization = result.otherjobspecialization;
+
 						this.jobDetails.working_environment = this.stringToArray(result.working_environment);
 
 						this.jobDetails.pax_total = result.pax_total;
@@ -344,7 +350,7 @@ export class EditJobComponent implements OnInit {
 						this.jobDetails.auto_accepted = result.auto_accepted;
 
 						const oldBreaks = result.breaklist;
-						if (oldBreaks.length > 0) {
+						if ((oldBreaks != null) && oldBreaks.length > 0) {
 							for (let i = 0; i < oldBreaks.length; i++) {
 								if (new Date(currentDate + ' ' + oldBreaks[i].breakstart) > new Date(currentDate + ' ' + oldBreaks[i].breakend)) {
 									this.jobDetails.breaks.push({
@@ -373,6 +379,14 @@ export class EditJobComponent implements OnInit {
 					console.log(error);
 				}
 			);
+	}
+
+	isNumeric(string) {
+		if (isNaN(string)) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	jobUpdateToEmployer(employerJobData: any, employerJobForm) {
@@ -413,9 +427,10 @@ export class EditJobComponent implements OnInit {
 		const autoofferaccept = { "auto_accepted": employerJobData.auto_accepted == true ? "true" : "false" };
 		employerJobData = Object.assign(employerJobData, autoofferaccept);
 
-		// let jobaddedby = { "jobaddedby": "ooget-team" };
-		// employerJobData = Object.assign(employerJobData, jobaddedby);
-
+		if (employerJobData.specializations == 'Others') {
+			const specialization = { "specializations": employerJobData.otherjobspecialization };
+			employerJobData = Object.assign(employerJobData, specialization);
+		}
 		// let jobstatus = { "jobstatus": "live" };
 		// employerJobData = Object.assign(employerJobData, jobstatus);
 

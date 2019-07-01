@@ -381,14 +381,19 @@ export class JobDetailsComponent implements OnInit {
 	}
 
 	// Job Activation with Pay Info
-	activateJobConfirm(employerId, jobId) {
+	activateJobConfirm(jobDetails) {
 		let dialogConfig = new MatDialogConfig();
 
 		dialogConfig.disableClose = true;
 		dialogConfig.autoFocus = true;
 		dialogConfig.data = {
-			'jobid': jobId,
-			'companyid': employerId,
+			'jobid': jobDetails.id,
+			'companyid': jobDetails.employer_id,
+			'charge_rate': jobDetails.charge_rate,
+			'markup_rate': jobDetails.markup_rate,
+			'markup_in': jobDetails.markup_in,
+			'jobseeker_salary': jobDetails.jobseeker_salary,
+			'markup_amount': jobDetails.markup_amount,
 		};
 		let dialogRef = this.dialog.open(JobActivationComponent, dialogConfig);
 
@@ -530,6 +535,14 @@ export class JobDetailsComponent implements OnInit {
 			}
 		} else {
 			return [];
+		}
+	}
+
+	isNumeric(string) {
+		if (isNaN(string)) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 

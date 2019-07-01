@@ -180,6 +180,13 @@ export class JobDetailsComponent implements OnInit {
 		}
 	}
 
+	isNumeric(string) {
+		if (isNaN(string)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 	ngOnInit() { }
 
 }

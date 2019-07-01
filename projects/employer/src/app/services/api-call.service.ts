@@ -223,7 +223,12 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, {}, { headers: headers, params: params });
 	}
 
-
+	// Update Job
+	jobUpdateToEmployer(employerJobData): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'UpdateJob');
+		return this.http.post(this._baseUrl, employerJobData, { headers: headers, params: params });		
+	}
 
 
 
@@ -320,19 +325,6 @@ export class ApiCallService {
 				'token': userToken
 			})
 		return this.http.post(this._baseUrl + '/job/offerjob', ids, { headers: headers })
-	}
-
-	jobUpdateToEmployer(employerJobData): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
-		let userToken = localStorage.getItem('ogToken');
-		let headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			})
-		return this.http.post(this._baseUrl + '/job/updatejob', employerJobData, { headers: headers })
-			.map(res => res)
 	}
 
 	verifyTimeSheets(timesheetIds): Observable<any> {

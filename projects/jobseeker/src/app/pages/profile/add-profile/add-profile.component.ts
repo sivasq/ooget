@@ -1102,7 +1102,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	}
 
 	imageUpload(formData, isProfileImage = false) {
-		this.busy = this._httpService.uploadProfileDocs(formData)
+		this._httpService.uploadProfileDocs(formData)
 			.subscribe(
 				response => {
 					if (response.success) {
@@ -1131,15 +1131,15 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	// Update Password
 	passwordUpdate() {
 		if (!this.passwordUpdateForm.valid) { return false; }
-		// console.log(this.passwordUpdateForm.value);
+		console.log(this.passwordUpdateForm.value);
 
-		this.busy = this._httpService.jobseekerPasswordUpdate(this.passwordUpdateForm.value)
+		this._httpService.jobseekerPasswordUpdate(this.passwordUpdateForm.value)
 			.subscribe(
 				response => {
 					if (response.success) {
 						this.passwordErrorMsg = '';
 						let snackBarRef = this.snackBar.open('Password Updated Successfully.', 'Close', {
-							duration: 5000,
+							duration: 3000,
 						});
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
@@ -1151,7 +1151,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 						}, 3000);
 
 						let snackBarRef = this.snackBar.open('Please Enter Correct Old Password.', 'Close', {
-							duration: 5000,
+							duration: 3000,
 						});
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
@@ -1159,7 +1159,26 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 					}
 				},
 				error => {
-					// console.log(error);
+					if (error.error.result === 'Invalid current password') {
+						this.passwordErrorMsg = 'Old Password is Wrong.';
+						setTimeout(() => {
+							this.passwordErrorMsg = '';
+						}, 3000);
+
+						let snackBarRef = this.snackBar.open('Please Enter Correct Old Password.', 'Close', {
+							duration: 3000,
+						});
+						snackBarRef.onAction().subscribe(() => {
+							snackBarRef.dismiss();
+						});
+					} else {
+						let snackBarRef = this.snackBar.open('Server Error Occured. Please Try Again.', 'Close', {
+							duration: 3000,
+						});
+						snackBarRef.onAction().subscribe(() => {
+							snackBarRef.dismiss();
+						});
+					}
 				}
 			);
 	}

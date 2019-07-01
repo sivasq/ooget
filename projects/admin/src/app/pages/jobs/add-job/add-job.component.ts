@@ -40,7 +40,7 @@ export const MY_FORMATS = {
 	],
 })
 export class AddJobComponent implements OnInit {
-
+	public dialogInitialTimeAt = new Date();
 	appearance$: Observable<any>;
 
 	public jobDetails: any = {
@@ -125,7 +125,7 @@ export class AddJobComponent implements OnInit {
 	public EmploymentTypes: EmploymentType[];
 
 	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
-
+		this.dialogInitialTimeAt.setHours(0, 0, 0);
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
 		this.companyid = this.route.snapshot.params['emp_id'];
@@ -323,8 +323,10 @@ export class AddJobComponent implements OnInit {
 		// let autoofferaccept = { "auto_accepted": employerJobData.auto_accepted == true ? "true" : "false" };
 		// employerJobData = Object.assign(employerJobData, autoofferaccept);
 
-		// let jobaddedby = { "jobaddedby": "ooget-team" };
-		// employerJobData = Object.assign(employerJobData, jobaddedby);
+		if (employerJobData.specializations == 'Others') {
+			const specialization = { 'specializations': employerJobData.otherjobspecialization };
+			employerJobData = Object.assign(employerJobData, specialization);
+		}
 
 		// let jobstatus = { "jobstatus": "live" };
 		// employerJobData = Object.assign(employerJobData, jobstatus);

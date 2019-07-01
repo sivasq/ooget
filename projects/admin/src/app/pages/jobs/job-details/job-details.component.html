@@ -91,7 +91,7 @@
 					<div *ngIf="jobDetails.status == 1">
 						&nbsp;
 						<button mat-raised-button color="primary"
-							(click)="activateJobConfirm(jobDetails.employer_id, jobDetails.id)">Activate
+							(click)="activateJobConfirm(jobDetails)">Activate
 							This Job</button>
 					</div>
 					<!-- <div>
@@ -160,7 +160,7 @@
 					<div>
 						<div class="user-details transition-2" fxFlex="100" fxLayout="column">
 							<p fxLayout="row" fxLayoutAlign="start center"
-								*ngIf="jobDetails.jobspecialization !== 'others'">
+								*ngIf="isNumeric(jobDetails.specializations)">
 								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 									check_circle</mat-icon>
 								<span class="key">Job Specialization : </span>
@@ -168,11 +168,11 @@
 									class="value">{{getJobSpecializationName(jobDetails.specializations) | titlecase}}</span>
 							</p>
 							<p fxLayout="row" fxLayoutAlign="start center"
-								*ngIf="jobDetails.jobspecialization == 'others'">
+								*ngIf="!isNumeric(jobDetails.specializations)">
 								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 									check_circle</mat-icon>
 								<span class="key">Job Specialization : </span>
-								<span class="value">{{jobDetails?.otherjobspecialization}}</span>
+								<span class="value">{{jobDetails?.specializations}}</span>
 							</p>
 							<p fxLayout="row" fxLayoutAlign="start center" *ngIf="jobDetails.working_environment">
 								<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">

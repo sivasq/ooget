@@ -138,7 +138,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 					if (response.success) {
 						this.jobDetails = response.result;
 						// this.companyDetails = response.result.companydetails[0];
-						this.appliedCandidates = response.result;
+						// this.appliedCandidates = response.result;
 
 						// this.offeredCandidates = response.job.candidatesseleceted;
 						// this.CandidatesUnderContract = response.job.candidatessigned;
@@ -245,7 +245,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 
 						this.isNotApplied = false;
 
-						if (response.message == 'contractsigned') {
+						if (response.result == 'contractsigned') {
 							this.isUnderContract = true;
 							this.isOfferRejected = false;
 							this.isOffered = false;
@@ -254,7 +254,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 							this.helpTxt1 = 'You have Successfully Applied & Contract Signed In for this Job.';
 						}
 
-						if (response.message == 'joboffered') {
+						if (response.result == 'joboffered') {
 							this.isUnderContract = false;
 							this.isOfferRejected = false;
 							this.isOffered = true;
@@ -263,7 +263,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 							this.helpTxt1 = 'You have been offered to this job'
 						}
 
-						if (response.message == 'applicationsuccess') {
+						if (response.result == 'job applied') {
 							this.isUnderContract = false;
 							this.isOfferRejected = false;
 							this.isOffered = false;
@@ -272,7 +272,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 							this.helpTxt1 = 'Application Sent';
 						}
 
-						if (response.message == 'contractsigned') {
+						if (response.result == 'contractsigned') {
 							let snackBarRef = this.snackBar.open(this.helpTxt1, 'Goto TimeSheet', {
 								duration: 10000,
 							});

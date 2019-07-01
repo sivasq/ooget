@@ -24,6 +24,7 @@ import { isArray } from 'util';
 	styleUrls: ['./add-job.component.scss']
 })
 export class AddJobComponent implements OnInit {
+	public dialogInitialTimeAt = new Date();
 
 	appearance$: Observable<any>;
 
@@ -109,6 +110,7 @@ export class AddJobComponent implements OnInit {
 	busy: Subscription;
 
 	constructor(private _httpService: ApiCallService, public dialog: MatDialog, public snackBar: MatSnackBar, private route: ActivatedRoute, public router: Router, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
+		this.dialogInitialTimeAt.setHours(0, 0, 0);
 
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
@@ -357,8 +359,10 @@ export class AddJobComponent implements OnInit {
 		const autoofferaccept = { "auto_accepted": employerJobData.auto_accepted == true ? "true" : "false" };
 		employerJobData = Object.assign(employerJobData, autoofferaccept);
 
-		// let jobaddedby = { "jobaddedby": "ooget-team" };
-		// employerJobData = Object.assign(employerJobData, jobaddedby);
+		if (employerJobData.specializations == 'Others') {
+			const specialization = { "specializations": employerJobData.otherjobspecialization };
+			employerJobData = Object.assign(employerJobData, specialization);
+		}
 
 		// let jobstatus = { "jobstatus": "pending" };
 		// employerJobData = Object.assign(employerJobData, jobstatus);

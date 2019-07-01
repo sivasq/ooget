@@ -281,6 +281,14 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, data, { headers: headers, params: params });
 	}
 
+	// Change Password
+	jobseekerPasswordUpdate(jobSeekerPasswordData): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Jobseeker', 'UpdatePassword');
+		return this.http.post(this._baseUrl, jobSeekerPasswordData, { headers: headers, params: params });
+	}
+
+
 
 
 
@@ -337,17 +345,5 @@ export class ApiCallService {
 			.append('Content-Type', 'application/json')
 			.append('Access-Control-Allow-Origin', '*');
 		return this.http.post(this._baseUrl + '/forgetpassword', userData, { headers: headers });
-	}
-
-	jobseekerPasswordUpdate(jobSeekerPasswordData): Observable<any> {
-		// var authDatas = JSON.stringify(authData);
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/changepassword', jobSeekerPasswordData, { headers: headers });
 	}
 }
