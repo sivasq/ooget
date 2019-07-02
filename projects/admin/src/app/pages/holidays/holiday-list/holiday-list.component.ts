@@ -61,10 +61,7 @@ export class HolidayListComponent implements OnInit {
 				.subscribe(
 					responses => {
 						if (responses.success) {
-							// this.holidayDataService.dialogData = responses.holiday;
-							// this.holidayDatabase.dataChange.value.push(this.holidayDataService.getDialogData());
-
-							this.holidayDatabase.dataChange.value.push(result);
+							this.holidayDatabase.dataChange.value.push(responses.result);
 							this.refreshTable();
 
 							this.snackBar.open('Successfully added', 'close', {
@@ -77,10 +74,7 @@ export class HolidayListComponent implements OnInit {
 						}
 					},
 					(err: HttpErrorResponse) => {
-						// this.snackBar.open('Error occurred. Details: ' + err.name + ' ' + err.message, 'close', {
-						// 	duration: 5000,
-						// });
-						this.snackBar.open('This Is Duplicate Entry', 'close', {
+						this.snackBar.open('Server Error. Please Try Again', 'close', {
 							duration: 2000,
 						});
 					});

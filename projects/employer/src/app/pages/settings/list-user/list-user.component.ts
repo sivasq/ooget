@@ -15,10 +15,11 @@ export class ListUserComponent implements OnInit {
 	busy: Subscription;
 	employerId;
 	empJobId;
+	authId;
 
 	// Mat Menu Configuration
-	@Input() xPosition: MenuPositionX
-	@Input() overlapTrigger: boolean
+	@Input() xPosition: MenuPositionX;
+	@Input() overlapTrigger: boolean;
 
 	public pageSizeOptions = [5, 10, 15, 20, 30, 50, 100, 250];
 
@@ -40,7 +41,7 @@ export class ListUserComponent implements OnInit {
 	constructor(private _httpService: ApiCallService, private route: ActivatedRoute) {
 		this.employerId = this.route.snapshot.params['emp_id'];
 		this.empJobId = this.route.snapshot.params['job_id'];
-
+		this.authId = localStorage.getItem('ogUserObjID');
 		this.getListOfUsers();
 	}
 
@@ -76,15 +77,13 @@ export class ListUserComponent implements OnInit {
 
 	deleteUser(userid) {
 		console.log(userid);
-		return false;
-		this.busy = this._httpService.deleteUserProfile({ "supervisorid": userid })
+		// return false;
+		this.busy = this._httpService.deleteUserProfile({ 'userid': userid })
 			.subscribe(
 				response => {
 					// console.log(response);
 					if (response.success) {
-
 						this.getListOfUsers();
-
 					} else if (!response.success) {
 						// console.log(response);
 					}

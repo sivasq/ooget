@@ -62,7 +62,9 @@ export class ApiCallService {
 
 	constructor(private http: HttpClient, private config: ConfigService) {
 		this._baseUrl = config.base_url;
+		this._token = '';
 		this._token = localStorage.getItem('ogToken');
+		console.log(this._token);
 	}
 
 	createNonAuthorizationHeaderJson() {
@@ -78,14 +80,16 @@ export class ApiCallService {
 		headers['Content-Type'] = 'application/json';
 		headers['Access-Control-Allow-Origin'] = '*';
 		// headers['Accept'] = 'application/json';
-		headers['Token'] = this._token;
+		headers['Token'] = localStorage.getItem('ogToken');
+		// headers['Token'] = this._token;
 		return headers;
 	}
 
 	createAuthorizationHeaderFormData() {
 		const headers = {};
 		// headers['Access-Control-Allow-Origin'] = '*';
-		headers['token'] = this._token;
+		headers['token'] = localStorage.getItem('ogToken');
+		// headers['token'] = this._token;
 		return headers;
 	}
 

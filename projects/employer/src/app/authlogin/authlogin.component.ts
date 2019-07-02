@@ -65,9 +65,9 @@ export class AuthloginComponent implements OnInit {
 						localStorage.setItem('ogCompanyObjID', apiHttpResponse.companyid);
 						localStorage.setItem('ogCompanyName', apiHttpResponse.companyname);
 						localStorage.setItem('ogCompanyCode', apiHttpResponse.companycode);
-
+						localStorage.setItem('ogProfileimage', apiHttpResponse.imgpath);
 						// Set Roles
-						localStorage.setItem('ogRole', 'superemployer');
+						localStorage.setItem('ogRole', apiHttpResponse.access);
 						localStorage.setItem('ogPermissions', JSON.stringify(['add']));
 
 						// Load Roles and Permissions

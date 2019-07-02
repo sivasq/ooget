@@ -10,7 +10,7 @@ export class ApiCallService {
 	private _token;
 	constructor(private http: HttpClient, private config: ConfigService) {
 		this._baseUrl = config.base_url;
-		this._token = localStorage.getItem('ogToken');
+		// this._token = localStorage.getItem('ogToken');
 	}
 
 	createNonAuthorizationHeaderJson() {
@@ -26,7 +26,7 @@ export class ApiCallService {
 		headers['Content-Type'] = 'application/json';
 		headers['Access-Control-Allow-Origin'] = '*';
 		// headers['Accept'] = 'application/json';
-		headers['Token'] = this._token;
+		headers['Token'] = localStorage.getItem('ogToken');
 		return headers;
 	}
 
@@ -34,7 +34,7 @@ export class ApiCallService {
 		const headers = {};
 		headers['Access-Control-Allow-Origin'] = '*';
 		// headers['Accept'] = 'application/json';
-		headers['token'] = this._token;
+		headers['token'] = localStorage.getItem('ogToken');
 		return headers;
 	}
 
@@ -441,23 +441,18 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, data, { headers: headers, params: params });
 	}
 
-
-
-
-
-
-
-
+	// Reset NRIC
 	toggleNricFinEditable(data): Observable<any> {
-		const userToken = localStorage.getItem('ogToken');
-		const headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
-		return this.http.post(this._baseUrl + '/jobseeker/updatenriceditable', data, { headers: headers });
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('jobseeker', 'ResetNRIC');
+		return this.http.post(this._baseUrl, data, { headers: headers, params: params });
 	}
+
+
+
+
+
+
 	// ====================================================
 
 	adminProfileUpdate(adminProfileData): Observable<any> {

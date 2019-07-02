@@ -22,7 +22,7 @@ import { BankDetail } from '../../../classes/bankDetail';
 })
 export class JobseekerFullDetailsComponent implements OnInit {
 
-	@Input() xPosition: MenuPositionX
+	@Input() xPosition: MenuPositionX;
 
 	busy: Subscription;
 
@@ -147,11 +147,11 @@ export class JobseekerFullDetailsComponent implements OnInit {
 	toggleNricFinEditable(mode) {
 		let confirmMsg;
 		if (mode == 'true') {
-			confirmMsg = 'Do you want Set Editable for Jobseeker ?'
+			confirmMsg = 'Do you want Set Editable for Jobseeker ?';
 		}
 
 		if (mode == 'false') {
-			confirmMsg = 'Do you want Remove Editable for Jobseeker ?'
+			confirmMsg = 'Do you want Remove Editable for Jobseeker ?';
 		}
 
 		let dialogConfig = new MatDialogConfig();
@@ -170,11 +170,11 @@ export class JobseekerFullDetailsComponent implements OnInit {
 			data => {
 				// this.confirmResponse(data)
 				if (data == 'yes') {
-					this.busy = this._httpService.toggleNricFinEditable({ 'jobseekerid': this.jobseekerId, 'nriceditable': mode })
+					this.busy = this._httpService.toggleNricFinEditable({ 'jobseekerid': this.jobseekerId })
 						.subscribe(
 							response => {
 								if (response.success) {
-									this.jobSeekerDetails.nriceditable = mode;
+									this.jobSeekerDetails.nric = null;
 								} else if (!response.success) {
 									console.log(response);
 								}

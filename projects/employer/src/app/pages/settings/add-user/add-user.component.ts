@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { AsyncSubscriber } from '../../../services/async.service';
 import { MockDataService } from '../../../services/mock-data.service';
 import { UserRole } from '../../../classes/userRole';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-add-user',
@@ -25,7 +26,7 @@ export class AddUserComponent implements OnInit {
 	@ViewChild(FormGroupDirective) resetUserAddForm;
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
+	constructor(public router: Router, private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
 		this.buildUserAddForm();
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
@@ -55,37 +56,37 @@ export class AddUserComponent implements OnInit {
 
 				let regAll = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\^&*)(+=._-])/;
 				if (!regAll.test(control.value)) {
-					this.passwordPatternError = "at least one number, one lowercase and one uppercase letter, one special charcter";
+					this.passwordPatternError = 'at least one number, one lowercase and one uppercase letter, one special charcter';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regNumber = /[0-9]/;
 				if (!regNumber.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one number (0-9)";
+					this.passwordPatternError = 'password must contain at least one number (0-9)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regSmallAlp = /[a-z]/;
 				if (!regSmallAlp.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one lowercase letter(a - z)";
+					this.passwordPatternError = 'password must contain at least one lowercase letter(a - z)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regCapsAlp = /[A-Z]/;
 				if (!regCapsAlp.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one uppercase letter (A-Z)";
+					this.passwordPatternError = 'password must contain at least one uppercase letter (A-Z)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				let regSpecChar = /[!@#$%\^&*)(+=._-]/;
 				if (!regSpecChar.test(control.value)) {
-					this.passwordPatternError = "password must contain at least one Special character (!@#$%\^&*)(+=._-)";
+					this.passwordPatternError = 'password must contain at least one Special character (!@#$%\^&*)(+=._-)';
 					resolve({ 'isPatternMatch': true });
 				}
 
 				var regSpace = /\s/;
 				if (regSpace.test(control.value)) {
-					this.passwordPatternError = "space not allowed";
+					this.passwordPatternError = 'space not allowed';
 					resolve({ 'isPatternMatch': true });
 				}
 				resolve(null);
@@ -128,6 +129,7 @@ export class AddUserComponent implements OnInit {
 							snackBarRef.dismiss();
 							console.log('The snack-bar action was triggered!');
 						});
+						this.router.navigate(['employer/settings/listusers']);
 						// Response is failed
 					} else if (!response.success) {
 						console.log(response);

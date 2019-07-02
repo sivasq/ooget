@@ -9,7 +9,7 @@ import { ApiCallService } from './api-call.service';
 @Injectable()
 export class HolidayDataService {
 	// public API_URL = 'http://192.168.1.14/ooget/';
-	public API_URL = 'http://104.197.80.225/ooget';
+	public API_URL = 'http://104.197.80.225/ooget/';
 	// public API_URL = "https://api.ooget.com.sg/ooget/admin";
 	headers;
 
@@ -18,18 +18,33 @@ export class HolidayDataService {
 	// Temporarily stores data from dialogs
 	// dialogData: any;
 
-	constructor(private httpClient: HttpClient, public snackBar?: MatSnackBar, private _httpService?: ApiCallService) {
-		let userToken = localStorage.getItem('ogToken');
-		this.headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			});
+	constructor(private http: HttpClient, public snackBar?: MatSnackBar, private _httpService?: ApiCallService) {
+		// let userToken = localStorage.getItem('ogToken');
+		// this.headers = new HttpHeaders(
+		// 	{
+		// 		'Content-Type': 'application/json',
+		// 		'Access-Control-Allow-Origin': '*',
+		// 		'token': userToken
+		// 	});
 	}
 
 	get data(): Holiday[] {
 		return this.dataChange.value;
+	}
+
+	createAuthorizationHeaderJson() {
+		const headers = {};
+		headers['Content-Type'] = 'application/json';
+		headers['Access-Control-Allow-Origin'] = '*';
+		headers['Token'] = localStorage.getItem('ogToken');
+		return headers;
+	}
+
+	createUrlParams(moduleName, modeName) {
+		const params = {};
+		params['module'] = moduleName;
+		params['mode'] = modeName;
+		return params;
 	}
 
 	// getDialogData() {
@@ -38,113 +53,34 @@ export class HolidayDataService {
 
 	/** CRUD METHODS */
 	getAllHolidays(): void {
-		let date = { 'from': '2019-05-06', 'to': '2019-06-25' };
-		this.httpClient.post<any>(this.API_URL + '?module=Holiday&mode=GetHolidayList', date, { headers: this.headers }).subscribe(response => {
-			this.dataChange.next(response.result);
-			// console.log(data.message);
-		},
-			(error: HttpErrorResponse) => {
-				console.log(error.name + ' ' + error.message);
-			});
+		let date = { 'from': '2000-01-01', 'to': '2030-12-31' };
+		const headers = this.createAuthorizationHeaderJson();
+		const params = this.createUrlParams('Holiday', 'GetHolidayList');
+		this.http.post<any>(this.API_URL, date, { headers: headers, params: params })
+			.subscribe(
+				response => {
+					this.dataChange.next(response.result);
+				},
+				(error: HttpErrorResponse) => {
+					console.log(error.name + ' ' + error.message);
+				});
 	}
 
-	// DEMO ONLY, you can find working methods below
 	addHoliday(holiday: Holiday) {
-		// this.dialogData = holiday;
-		return this.httpClient.post<any>(this.API_URL + '?module=Holiday&mode=CreateHoliday', holiday, { headers: this.headers })
-		// .subscribe(responses => {
-		// 	this.dialogData = responses.holiday;
-		// 	this.snackBar.open('Successfully added', 'close', {
-		// 		duration: 2000,
-		// 	});
-		// },
-		// 	(err: HttpErrorResponse) => {
-		// 		this.snackBar.open('Error occurred. Details: ' + err.name + ' ' + err.message, 'close', {
-		// 			duration: 5000,
-		// 		});
-		// 	});
+		const headers = this.createAuthorizationHeaderJson();
+		const params = this.createUrlParams('Holiday', 'CreateHoliday');
+		return this.http.post<any>(this.API_URL, holiday, { headers: headers, params: params });
 	}
 
 	updateHoliday(holiday: Holiday) {
-		// this.dialogData = holiday;
-		return this.httpClient.post<any>(this.API_URL + '?module=Holiday&mode=UpdateHoliday', holiday, { headers: this.headers })
-		// .subscribe(data => {
-		// 	this.dialogData = holiday;
-		// 	this.snackBar.open('Successfully Updated', 'close', {
-		// 		duration: 2000,
-		// 	});
-		// },
-		// 	(err: HttpErrorResponse) => {
-		// 		this.snackBar.open('Error occurred. Details: ' + err.name + ' ' + err.message, 'close', {
-		// 			duration: 5000,
-		// 		});
-		// 	});
+		const headers = this.createAuthorizationHeaderJson();
+		const params = this.createUrlParams('Holiday', 'UpdateHoliday');
+		return this.http.post<any>(this.API_URL, holiday, { headers: headers, params: params });
 	}
 
 	deleteHoliday(holidayid: any) {
-		// console.log(id);
-		// let id = { 'holidayid': holidayid }
-		return this.httpClient.post<any>(this.API_URL + '?module=Holiday&mode=DeleteHoliday', holidayid, { headers: this.headers })
-		// .subscribe(data => {
-		// 	console.log(data);
-		// 	this.snackBar.open('Successfully Deleted', 'close', {
-		// 		duration: 2000,
-		// 	});
-		// },
-		// 	(err: HttpErrorResponse) => {
-		// 		this.snackBar.open('Error occurred. Details: ' + err.name + ' ' + err.message, 'close', {
-		// 			duration: 5000,
-		// 		});
-		// 	}
-		// );
+		const headers = this.createAuthorizationHeaderJson();
+		const params = this.createUrlParams('Holiday', 'DeleteHoliday');
+		return this.http.post<any>(this.API_URL, holidayid, { headers: headers, params: params });
 	}
-
-	// REAL LIFE CRUD Methods I've used in my projects. ToasterService uses Material Toasts for displaying messages:
-	// ADD, POST METHOD
-	// addItem(holiday: Holiday): void {
-	// 	this.httpClient.post(this.API_URL, holiday).subscribe(data => {
-	// 		this.dialogData = holiday;
-	// 		this.snackBar.open('Successfully added', 'close', {
-	// 			duration: 2000,
-	// 		});
-	// 	},
-	// 		(err: HttpErrorResponse) => {
-	// 			this.snackBar.open('Error occurred. Details: ' + err.name + ' ' + err.message, 'close', {
-	// 				duration: 5000,
-	// 			});
-	// 		});
-	// }
-
-	// UPDATE, PUT METHOD
-	// updateItem(holiday: Holiday): void {
-	// 	this.httpClient.put(this.API_URL + holiday.id, holiday).subscribe(data => {
-	// 		this.dialogData = holiday;
-	// 		this.snackBar.open('Successfully added', 'close', {
-	// 			duration: 2000,
-	// 		});
-	// 	},
-	// 		(err: HttpErrorResponse) => {
-	// 			this.snackBar.open('Error occurred. Details: ' + err.name + ' ' + err.message, 'close', {
-	// 				duration: 5000,
-	// 			});
-	// 		}
-	// 	);
-	// }
-
-	// DELETE METHOD
-	// deleteItem(id: number): void {
-	// 	this.httpClient.delete(this.API_URL + id).subscribe(data => {
-	// 		console.log(data['']);
-	// 		this.snackBar.open('Successfully Deleted', 'close', {
-	// 			duration: 2000,
-	// 		});
-	// 	},
-	// 		(err: HttpErrorResponse) => {
-	// 			this.snackBar.open('Error occurred. Details: ' + err.name + ' ' + err.message, 'close', {
-	// 				duration: 5000,
-	// 			});
-	// 		}
-	// 	);
-	// }
-
 }

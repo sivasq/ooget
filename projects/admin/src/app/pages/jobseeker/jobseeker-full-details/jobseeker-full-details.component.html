@@ -65,12 +65,12 @@
 							<span class="key">NRIC / FIN : </span>
 							<span class="value" *ngIf="jobSeekerDetails?.nric"> {{jobSeekerDetails.nric}} </span>
 							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.nric"> Not Specified </span>
-							<span *ngIf="(jobSeekerDetails.nric == null || jobSeekerDetails.nric == '')"
+							<span *ngIf="jobSeekerDetails.nric"
 								style="color: blue; font-size: 12px; text-decoration: underline; cursor: pointer;"
-								(click)="toggleNricFinEditable('true')">Ask To Update</span>
-							<span *ngIf="(jobSeekerDetails.nric != null && jobSeekerDetails.nric != '')"
+								(click)="toggleNricFinEditable('true')">Ask To Make Correction</span>
+							<!-- <span *ngIf="(jobSeekerDetails.nric != null && jobSeekerDetails.nric != '')"
 								style="color: blue; font-size: 12px; text-decoration: underline; cursor: pointer;"
-								(click)="toggleNricFinEditable('false')">Lock</span>
+								(click)="toggleNricFinEditable('false')">Lock</span> -->
 						</p>
 						<p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">

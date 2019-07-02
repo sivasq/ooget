@@ -11,7 +11,7 @@ export class ApiCallService {
 
 	constructor(private http: HttpClient, private config: ConfigService) {
 		this._baseUrl = config.base_url;
-		this._token = localStorage.getItem('ogToken');
+		// this._token = localStorage.getItem('ogToken');
 	}
 
 	createNonAuthorizationHeaderJson() {
@@ -27,14 +27,16 @@ export class ApiCallService {
 		headers['Content-Type'] = 'application/json';
 		headers['Access-Control-Allow-Origin'] = '*';
 		// headers['Accept'] = 'application/json';
-		headers['Token'] = this._token;
+		headers['token'] = localStorage.getItem('ogToken');
+		// headers['Token'] = this._token;
 		return headers;
 	}
 
 	createAuthorizationHeaderFormData() {
 		const headers = {};
 		// headers['Accept'] = 'application/json';
-		headers['token'] = this._token;
+		headers['token'] = localStorage.getItem('ogToken');
+		// headers['token'] = this._token;
 		return headers;
 	}
 
@@ -227,9 +229,14 @@ export class ApiCallService {
 	jobUpdateToEmployer(employerJobData): Observable<any> {
 		const headers = this.createAuthorizationHeaderFormData();
 		const params = this.createUrlParams('Job', 'UpdateJob');
-		return this.http.post(this._baseUrl, employerJobData, { headers: headers, params: params });		
+		return this.http.post(this._baseUrl, employerJobData, { headers: headers, params: params });
 	}
 
+	deleteUserProfile(userid): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Users', 'DeleteUser');
+		return this.http.post(this._baseUrl, userid, { headers: headers, params: params });
+	}
 
 
 
@@ -460,17 +467,6 @@ export class ApiCallService {
 			.map(res => res)
 	}
 
-	deleteUserProfile(employerData): Observable<any> {
-		let userToken = localStorage.getItem('ogToken');
-		let headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			})
-		return this.http.post(this._baseUrl + '/deletesupervisor', employerData, { headers: headers })
-			.map(res => res)
-	}
 
 	// Dummy
 	userAdd(employerData): Observable<any> {

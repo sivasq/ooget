@@ -21,14 +21,14 @@ export class AppComponent {
 	constructor(private ngProgress: NgProgress, private permissionsService: NgxPermissionsService, private rolesService: NgxRolesService, private asyncSubscriber: AsyncSubscriber, private _httpService: ApiCallService, router: Router) {
 
 		// Load Roles and permissions
-		if (localStorage.getItem('isLoggedIn')) {
+		if (localStorage.getItem('isLoggedIn') != 'null' && localStorage.getItem('isLoggedIn') == 'true') {
 			let role = localStorage.getItem('ogRole');
 			let permissions = JSON.parse(localStorage.getItem('ogPermissions'));
-
+			console.log('true');
 			this.permissionsService.loadPermissions(permissions);
 			this.rolesService.addRole(role, permissions);
 		}
-
+		console.log(localStorage.getItem('isLoggedIn'));
 		// Set Lazy loading Router indicator
 		this.isShowingRouteLoadIndicator = false;
 

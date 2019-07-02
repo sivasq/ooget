@@ -200,12 +200,12 @@ const MENUITEMS_SAMPLE = [
 ];
 
 const MENUITEMS = [
-	{
-		state: '/employer/dashboard',
-		name: 'DASHBOARD',
-		type: 'link',
-		icon: 'dashboard'
-	},
+	// {
+	// 	state: '/employer/dashboard',
+	// 	name: 'DASHBOARD',
+	// 	type: 'link',
+	// 	icon: 'dashboard'
+	// },
 	{
 		state: '/employer/settings/viewcompany',
 		name: ' Company Details',
