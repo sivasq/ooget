@@ -36,12 +36,11 @@ export class OogetsidenavComponent implements OnInit {
 			this.UserRole = localStorage.getItem('ogRole');
 			let userLogo = localStorage.getItem('ogProfileimage');
 
-			if (userLogo == null) {
+			if (userLogo == 'null' || userLogo == 'undefined') {
 				this.profileImage = 'assets/img/avatars/profile-placeholder.png';
 			} else {
 				this.profileImage = 'assets/img/avatars/profile-placeholder.png';
 				setTimeout(() => {
-					console.log('Test');
 					this.profileImage = this.baseUrl + userLogo;
 				}, 1000 / 60);
 			}
@@ -73,7 +72,7 @@ export class OogetsidenavComponent implements OnInit {
 		this.UserRole = localStorage.getItem('ogRole');
 		let userLogo = localStorage.getItem('ogProfileimage');
 
-		if (userLogo == null || userLogo == undefined) {
+		if (userLogo == 'null' || userLogo == 'undefined') {
 			this.profileImage = 'assets/img/avatars/profile-placeholder.png';
 		} else {
 			this.profileImage = this.baseUrl + userLogo;

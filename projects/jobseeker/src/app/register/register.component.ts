@@ -8,6 +8,7 @@ import { Subscription, Observable } from 'rxjs';
 import { FormGroupDirective, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ConfigService } from '../services/config.service';
 import { AsyncSubscriber } from '../services/async.service';
+import { MockDataService } from '../services/mock-data.service';
 
 @Component({
 	selector: 'app-register',
@@ -17,7 +18,7 @@ import { AsyncSubscriber } from '../services/async.service';
 export class RegisterComponent implements OnInit, OnDestroy {
 
 	appearance$: Observable<any>;
-
+	Countries = [];
 	public hide = true;
 	public rehide = true;
 	public passwordPatternError;
@@ -39,9 +40,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
 	isSuccessMsg: string;
 	isErrorMsg: string;
 
-	constructor(public router: Router, public dialog: MatDialog, public snackBar: MatSnackBar, private _httpService: ApiCallService, private config: ConfigService, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber) {
+	constructor(public router: Router, public dialog: MatDialog, public snackBar: MatSnackBar, private _httpService: ApiCallService, private config: ConfigService, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 		this.buildJobSeekerRegForm();
+		this.getCountries();
+	}
+
+	getCountries(): void {
+		this.mockDataService.getCountries()
+			.subscribe(Countries => this.Countries = Countries);
 	}
 
 	//  Build JobSeeker Reg Form

@@ -37,7 +37,7 @@
 					</mat-card-subtitle>
 
 					<div fxFlex></div>
-					<div *ngxPermissionsOnly="['superemployer']">
+					<div *ngxPermissionsOnly="['employer']">
 						<div *ngIf="jobDetails != ''">
 							<button mat-raised-button color="primary"
 								routerLink="/employer/jobs/{{ jobDetails.id}}/copyjob">Copy </button>
@@ -45,7 +45,7 @@
 						</div>
 					</div>
 
-					<div *ngxPermissionsOnly="['superemployer']">
+					<div *ngxPermissionsOnly="['employer']">
 						<div *ngIf="jobDetails != '' && jobDetails.status == 1">
 							<button mat-raised-button color="primary"
 								routerLink="/employer/jobs/{{jobDetails.id}}/edit">Edit </button>

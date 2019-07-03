@@ -72,7 +72,7 @@ export class AuthloginComponent implements OnInit {
 
 						// Load Roles and Permissions
 						this.permissionsService.loadPermissions(['add']);
-						this.rolesService.addRole('superemployer', ['add']);
+						this.rolesService.addRole(localStorage.getItem('ogRole'), ['add']);
 
 						// If Auth Success, redirect to Main Page
 						await this.router.navigate(['employer/jobs/list']);

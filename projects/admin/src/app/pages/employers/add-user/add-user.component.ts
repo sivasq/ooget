@@ -118,7 +118,7 @@ export class AddUserComponent implements OnInit {
 	createExtraUser() {
 		if (!this.UserForm.valid) { return false; }
 		console.log(this.UserForm.value);
-		return false;
+		// return false;
 		this.busy = this._httpService.createExtraUser(this.UserForm.value)
 			.subscribe(
 				response => {

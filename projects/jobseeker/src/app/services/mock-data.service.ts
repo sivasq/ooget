@@ -22,6 +22,7 @@ import { Races } from '../mock-datas/race';
 import { Nationalitys } from '../mock-datas/nationlitys';
 import { Industry } from '../classes/industry';
 import { Industries } from '../mock-datas/industries';
+import { Countries } from '../mock-datas/countries';
 
 @Injectable({
 	providedIn: 'root'
@@ -72,5 +73,9 @@ export class MockDataService {
 
 	getIndustries(): Observable<Industry[]> {
 		return of(Industries);
+	}
+
+	getCountries(): Observable<any[]> {
+		return of(Countries);
 	}
 }

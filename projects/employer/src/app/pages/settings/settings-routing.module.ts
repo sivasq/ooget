@@ -16,7 +16,7 @@ const routes: Routes = [
 		canActivate: [AuthGuardService, NgxPermissionsGuard],
 		data: {
 			permissions: {
-				only: 'superemployer',
+				only: ['employer', 'verifier'],
 				redirectTo: '/employer/401'
 			}
 		}
@@ -27,7 +27,7 @@ const routes: Routes = [
 		canActivate: [AuthGuardService, NgxPermissionsGuard],
 		data: {
 			permissions: {
-				only: 'superemployer',
+				only: 'employer',
 				redirectTo: '/employer/401'
 			}
 		}
@@ -38,7 +38,7 @@ const routes: Routes = [
 		canActivate: [AuthGuardService, NgxPermissionsGuard],
 		data: {
 			permissions: {
-				only: 'superemployer',
+				only: 'employer',
 				redirectTo: '/employer/401'
 			}
 		}
@@ -49,7 +49,7 @@ const routes: Routes = [
 		canActivate: [AuthGuardService, NgxPermissionsGuard],
 		data: {
 			permissions: {
-				only: 'superemployer',
+				only: 'employer',
 				redirectTo: '/employer/401'
 			}
 		}
@@ -60,7 +60,7 @@ const routes: Routes = [
 		canActivate: [AuthGuardService, NgxPermissionsGuard],
 		data: {
 			permissions: {
-				only: 'superemployer',
+				only: 'employer',
 				redirectTo: '/employer/401'
 			}
 		}
@@ -71,7 +71,7 @@ const routes: Routes = [
 		canActivate: [AuthGuardService, NgxPermissionsGuard],
 		data: {
 			permissions: {
-				only: ['superemployer', 'verifier'],
+				only: ['employer', 'verifier'],
 				redirectTo: '/employer/401'
 			}
 		}

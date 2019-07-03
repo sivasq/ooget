@@ -16,8 +16,8 @@
 							<!-- JobSeeker Name -->
 							<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 								<mat-label>Name</mat-label>
-								<input matInput placeholder="Name" name="name" autocomplete="off"
-									formControlName="name" required>
+								<input matInput placeholder="Name" name="name" autocomplete="off" formControlName="name"
+									required>
 								<mat-error *ngIf="jobSeekerRegForm.get('name').hasError('required')" align="start">
 									JobSeeker Name Required
 								</mat-error>
@@ -43,8 +43,12 @@
 							<!-- Country -->
 							<mat-form-field class="w-100" [appearance]="appearance$ | async">
 								<mat-label>Country</mat-label>
-								<input matInput placeholder="JobSeeker Country" name="country" autocomplete="off"
-									formControlName="country" readonly required>
+								<!-- <input matInput placeholder="JobSeeker Country" name="country" autocomplete="off"
+									formControlName="country" readonly required> -->
+								<mat-select placeholder="JobSeeker Country" name="country" formControlName="country">
+									<mat-option *ngFor="let Country of Countries" [value]="Country">{{ Country }}
+									</mat-option>
+								</mat-select>
 								<mat-error *ngIf="jobSeekerRegForm.get('country').hasError('required')" align="start">
 									Country Required
 								</mat-error>
