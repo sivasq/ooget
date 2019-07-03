@@ -56,6 +56,15 @@ export class AuthloginComponent implements OnInit {
 					if (response.success) {
 						// Set local storages
 						const apiHttpResponse = response.result;
+						if (apiHttpResponse.access != 'admin') {
+							this.onLogout();
+							this.isAuthMsg = 'Sorry! Invalid Login Credentials';
+							setTimeout(() => {
+								this.isAuthMsg = '';
+								// this.resetAdminAuthForm.resetForm();
+							}, 3000);
+							return false;
+						}
 						localStorage.setItem('isLoggedIn', 'true');
 						localStorage.setItem('ogToken', apiHttpResponse.token);
 						localStorage.setItem('ogUserName', `${apiHttpResponse.firstname}`);
@@ -88,6 +97,12 @@ export class AuthloginComponent implements OnInit {
 					}, 3000);
 				}
 			);
+	}
+
+	onLogout() {
+		localStorage.clear();
+		// this.router.navigate(['logout']);
+		// console.log('Logout Success');
 	}
 
 	ngOnInit() { }

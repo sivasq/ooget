@@ -129,7 +129,7 @@ export class OogetsidenavComponent implements OnInit {
 		this.UserName = localStorage.getItem('ogUserName');
 		this.UserRole = localStorage.getItem('ogUserRole');
 		let userimage = localStorage.getItem('ogProfileimage');
-		if (userimage == null || userimage == 'undefined') {
+		if (userimage == 'null' || userimage == 'undefined') {
 			this.profileImage = 'assets/img/avatars/profile-placeholder.png';
 		} else {
 			this.profileImage = this.baseUrl + userimage;
