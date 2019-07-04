@@ -53,14 +53,14 @@
 
 		<!-- Normal Work hr -->
 		<ng-container matColumnDef="normalworkhour">
-			<th mat-header-cell *matHeaderCellDef> Normal Hr (Hr:Min) </th>
+			<th mat-header-cell *matHeaderCellDef> Normal Hr (Mins) </th>
 			<td mat-cell *matCellDef="let row"> {{row.jobseeker_normal_working_min}} </td>
 			<td mat-footer-cell *matFooterCellDef>{{getSumOfNormalWorkHrs()}}</td>
 		</ng-container>
 
 		<!-- OT Work hr1 -->
 		<ng-container matColumnDef="otworkhour1">
-			<th mat-header-cell *matHeaderCellDef> OT1.5 Hr (Hr:Min) </th>
+			<th mat-header-cell *matHeaderCellDef> OT1.5 Hr (Mins) </th>
 			<td mat-cell *matCellDef="let row"> {{(row.ot_salary_type == 1.5) ? row.jobseeker_ot_working_min :
 				'0'}} </td>
 			<td mat-footer-cell *matFooterCellDef>{{getSumOfOT1point5WorkHrs()}}</td>
@@ -68,7 +68,7 @@
 
 		<!-- OT Work hr2 -->
 		<ng-container matColumnDef="otworkhour2">
-			<th mat-header-cell *matHeaderCellDef> OT2 Hr (Hr:Min) </th>
+			<th mat-header-cell *matHeaderCellDef> OT2 Hr (Mins) </th>
 			<td mat-cell *matCellDef="let row"> {{row.ot_salary_type == 2 ? row.jobseeker_ot_working_min : '0'}} </td>
 			<td mat-footer-cell *matFooterCellDef>{{getSumOfOT2WorkHrs()}}</td>
 		</ng-container>
@@ -82,7 +82,7 @@
 
 		<!-- Total Work hr -->
 		<ng-container matColumnDef="totalworkhour">
-			<th mat-header-cell *matHeaderCellDef> Total Hr (Hr:Min) </th>
+			<th mat-header-cell *matHeaderCellDef> Total Hr (Mins) </th>
 			<td mat-cell *matCellDef="let row"> {{row.total_job_min}} </td>
 			<td mat-footer-cell *matFooterCellDef>{{getSumOfTotalWorkHrs()}}</td>
 		</ng-container>
