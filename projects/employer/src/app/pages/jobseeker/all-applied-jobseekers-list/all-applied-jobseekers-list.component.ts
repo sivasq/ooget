@@ -67,11 +67,11 @@ export class AllAppliedJobseekersListComponent implements OnInit {
 						this.companyDetails = response.result[0];
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

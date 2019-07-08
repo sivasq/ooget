@@ -60,11 +60,11 @@ export class ImportHolidayComponent implements OnInit {
 							this.allPhHolidays = response.holidays;
 						}
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -83,8 +83,8 @@ export class ImportHolidayComponent implements OnInit {
 		})
 		this.importedHolidaysDataSource.data = this.importedHolidays;
 		this.dublicateHolidaysDataSource.data = this.dublicateHolidays;
-		console.log(this.importedHolidays);
-		console.log(this.dublicateHolidays);
+		// console.log(this.importedHolidays);
+		// console.log(this.dublicateHolidays);
 	}
 
 	public extractData(data) { // Input csv data to the function
@@ -92,10 +92,10 @@ export class ImportHolidayComponent implements OnInit {
 		let csvData = data;
 		let allTextLines = csvData.split(/\r\n|\n/);
 		let csvHeaders = allTextLines[0].split(',');
-		console.log('csvHeaders', csvHeaders);
+		// console.log('csvHeaders', csvHeaders);
 		// let customHeader = ['holidaydate', 'holidayname', 'holiday_group_code', 'holiday_group_name', 'leave_type_code', 'leave_type'];
 		let customHeader = ['holidaydate', 'holidayname'];
-		console.log('customHeader', customHeader);
+		// console.log('customHeader', customHeader);
 		let isHeadersMatch = (csvHeaders.length == customHeader.length) && csvHeaders.every(function (element, index) {
 			return element === customHeader[index];
 		});
@@ -113,18 +113,18 @@ export class ImportHolidayComponent implements OnInit {
 					this.importedHolidays.push(holidayObject);
 				}
 			}
-			console.log(this.importedHolidays);
+			// console.log(this.importedHolidays);
 			// this.importedHolidaysDataSource.filter = "";
 			// this.importedHolidaysDataSource.data = this.importedHolidays;
 			this.handleDuplicateDays();
 			// console.log(this.importedHolidays); //The data in the form of 2 dimensional array.
 		} else {
-			console.log("error");
+			// console.log("error");
 		}
 	}
 
 	public handleFileSelect(evt) {
-		console.log('csv');
+		// console.log('csv');
 		if (evt.target.files && evt.target.files[0]) {
 			var files = evt.target.files; // FileList object
 			var file = files[0];
@@ -134,13 +134,13 @@ export class ImportHolidayComponent implements OnInit {
 				var csv = event.target.result; // Content of CSV file
 				this.myCsvFileInputVariable.nativeElement.value = "";
 				this.extractData(csv); //Here you can call the above function.
-				console.log(csv);
+				// console.log(csv);
 			}
 		}
 	}
 
 	public handleFileSelectXl(evt: any) {
-		console.log('xls');
+		// console.log('xls');
 		/* wire up file reader */
 		const target: DataTransfer = <DataTransfer>(evt.target);
 		if (target.files.length !== 1) throw new Error('Cannot use multiple files');
@@ -197,7 +197,7 @@ export class ImportHolidayComponent implements OnInit {
 	}
 
 	public onRowClicked(row) {
-		console.log(row);
+		// console.log(row);
 	}
 
 	ngOnInit() { }

@@ -28,8 +28,8 @@ export class PayrollProcessService {
 
 		let orgAccHash;
 		let AccountNumberHashTotal = 0;
-		console.log(payrollHeaderData);
-		console.log(payrollBodyData);
+		// console.log(payrollHeaderData);
+		// console.log(payrollBodyData);
 		// Process Header
 		// if (payrollHeaderData.length > 0) {
 		// 	for (let i = 0; i < payrollHeaderData.length; i++) {
@@ -99,9 +99,9 @@ export class PayrollProcessService {
 		// Subtract two parts
 		orgAccHash = Number(orgAcc1) - Number(orgAcc2);
 
-		console.log(orgAcc1);
-		console.log(orgAcc2);
-		console.log(orgAccHash);
+		// console.log(orgAcc1);
+		// console.log(orgAcc2);
+		// console.log(orgAccHash);
 
 		// Process Org acc Data Row '0'
 		let hearerRow = '';
@@ -143,7 +143,7 @@ export class PayrollProcessService {
 			hearerRow = hearerRow.substr(0, 114) + payrollHeaderData.recordtype + hearerRow.substr(114);
 		}
 		payrollJsonData.push({ dataRow: hearerRow });
-		console.log(hearerRow);
+		// console.log(hearerRow);
 
 		// Process Body
 		if (payrollBodyData.length > 0) {
@@ -161,11 +161,11 @@ export class PayrollProcessService {
 					// Add All RecAccHash
 					AccountNumberHashTotal = Number(AccountNumberHashTotal) + Number(OrgRecAccHash);
 
-					console.log(recAcc1);
-					console.log(recAcc2);
-					console.log(recAccHash);
-					console.log(OrgRecAccHash);
-					console.log(AccountNumberHashTotal);
+					// console.log(recAcc1);
+					// console.log(recAcc2);
+					// console.log(recAccHash);
+					// console.log(OrgRecAccHash);
+					// console.log(AccountNumberHashTotal);
 				}
 
 				// Process Rec acc Data Row '1'
@@ -222,7 +222,7 @@ export class PayrollProcessService {
 					// bodyRow = bodyRow + payrollBodyData[i].recordtype;
 				}
 				payrollJsonData.push({ dataRow: bodyRow });
-				console.log(bodyRow);
+				// console.log(bodyRow);
 			}
 		}
 
@@ -233,12 +233,12 @@ export class PayrollProcessService {
 			return data.transactioncode != '30'
 		});
 		let TotalNumberOfCreditTransactions = creditTransactions.length;
-		console.log(TotalNumberOfCreditTransactions);
+		// console.log(TotalNumberOfCreditTransactions);
 
 		let TotalCreditamount = creditTransactions.map(data => data.amount*100).reduce((previous, current) => {
 			return Number(previous) + Number(current)
 		}, 0);
-		console.log(TotalCreditamount);
+		// console.log(TotalCreditamount);
 
 		// Process Debit Transactions
 		let debitTransactions = payrollBodyData.filter(data => {
@@ -249,7 +249,7 @@ export class PayrollProcessService {
 		let TotalDebitamount = debitTransactions.map(data => data.amount*100).reduce((previous, current) => {
 			return Number(previous) + Number(current)
 		}, 0);
-		console.log(TotalDebitamount);
+		// console.log(TotalDebitamount);
 
 		payrollFooterData.push({
 			'TotalNumberOfCreditTransactions': TotalNumberOfCreditTransactions.toString(),
@@ -295,7 +295,7 @@ export class PayrollProcessService {
 					footerRow = footerRow.substr(0, 114) + payrollFooterData[i].recordtype + footerRow.substr(114);
 				}
 				payrollJsonData.push({ dataRow: footerRow });
-				console.log(footerRow);
+				// console.log(footerRow);
 			}
 		}
 

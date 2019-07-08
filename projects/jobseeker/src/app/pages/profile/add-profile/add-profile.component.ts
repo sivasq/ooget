@@ -594,7 +594,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	// Select All WorkEnvironment
 	selectAllWorkEnvironment() {
 		let workingenvironment = this.WorkingEnvironments.map(x => x.id);
-		console.log(workingenvironment);
+		// console.log(workingenvironment);
 		this.jobSeekerProfileForm.patchValue({
 			'working_environment': workingenvironment,
 		});
@@ -1008,7 +1008,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
 	// Profile Image Change Event
 	logochange(event) {
-		console.log(event.target.files[0]);
+		// console.log(event.target.files[0]);
 		if (event.target.files && event.target.files[0]) {
 			var reader = new FileReader();
 			reader.readAsDataURL(event.target.files[0]); // read file as data url
@@ -1131,7 +1131,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 	// Update Password
 	passwordUpdate() {
 		if (!this.passwordUpdateForm.valid) { return false; }
-		console.log(this.passwordUpdateForm.value);
+		// console.log(this.passwordUpdateForm.value);
 
 		this._httpService.jobseekerPasswordUpdate(this.passwordUpdateForm.value)
 			.subscribe(

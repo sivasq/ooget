@@ -138,9 +138,9 @@ export class JobseekerFullDetailsComponent implements OnInit {
 	}
 
 	parseStringToArray(stringArray) {
-		console.log(stringArray);
+		// console.log(stringArray);
 		if (stringArray === undefined) { return JSON.parse('[]'); }
-		console.log(JSON.parse(stringArray));
+		// console.log(JSON.parse(stringArray));
 		return JSON.parse(stringArray);
 	}
 
@@ -176,11 +176,11 @@ export class JobseekerFullDetailsComponent implements OnInit {
 								if (response.success) {
 									this.jobSeekerDetails.nric = null;
 								} else if (!response.success) {
-									console.log(response);
+									// console.log(response);
 								}
 							},
 							error => {
-								console.log(error);
+								// console.log(error);
 							}
 						);
 				} else if (data == 'no') {
@@ -222,11 +222,11 @@ export class JobseekerFullDetailsComponent implements OnInit {
 								if (response.success) {
 									this.jobSeekerDetails.id_verified = mode;
 								} else if (!response.success) {
-									console.log(response);
+									// console.log(response);
 								}
 							},
 							error => {
-								console.log(error);
+								// console.log(error);
 							}
 						);
 				} else if (data == 'no') {
@@ -254,18 +254,18 @@ export class JobseekerFullDetailsComponent implements OnInit {
 						if (this.IsJsonString(response.result[0].experience_details)) {
 							let expDetails = JSON.parse(response.result[0].experience_details);
 							response.result[0].experience_details = expDetails;
-							console.log(expDetails);
+							// console.log(expDetails);
 						} else {
 							response.result[0].experience_details = [];
 						}
-						console.log(response.result[0]);
+						// console.log(response.result[0]);
 						this.jobSeekerDetails = response.result[0];
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

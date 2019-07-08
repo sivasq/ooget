@@ -320,11 +320,11 @@ export class JobOffersComponent implements OnInit, OnDestroy {
 								this.isExpiredJobOffersAvailable = false;
 							}
 
-							console.log('jobOffers', this.jobOffers);
-							console.log('pendingJobOffers', this.pendingJobOffers);
-							console.log('acceptedJobOffers', this.acceptedJobOffers);
-							console.log('rejectedJobOffers', this.rejectedJobOffers);
-							console.log('expiredJobOffers', this.expiredJobOffers);
+							// console.log('jobOffers', this.jobOffers);
+							// console.log('pendingJobOffers', this.pendingJobOffers);
+							// console.log('acceptedJobOffers', this.acceptedJobOffers);
+							// console.log('rejectedJobOffers', this.rejectedJobOffers);
+							// console.log('expiredJobOffers', this.expiredJobOffers);
 
 						} else {
 							this.isJobOffersAvailable = false;
@@ -334,11 +334,11 @@ export class JobOffersComponent implements OnInit, OnDestroy {
 							this.isExpiredJobOffersAvailable = false;
 						}
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

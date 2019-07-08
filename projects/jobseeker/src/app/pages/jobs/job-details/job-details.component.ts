@@ -137,6 +137,9 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 				response => {
 					if (response.success) {
 						this.jobDetails = response.result;
+						this.jobDetails.specializations = this.isNumeric(response.result.specializations) ? Number(response.result.specializations) : 'Others';
+
+						this.jobDetails.otherjobspecialization = this.isNumeric(response.result.specializations) ? '' : response.result.specializations;
 						// this.companyDetails = response.result.companydetails[0];
 						// this.appliedCandidates = response.result;
 
@@ -203,11 +206,11 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 						// console.log(this.isNotApplied);
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -229,23 +232,25 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 			};
 			let dialogref = this.dialog.open(ConfirmDialogComponent, dialogConfig);
 
-			dialogref.afterClosed().subscribe(data => console.log('Dialog Closed'));
+			dialogref.afterClosed().subscribe(data =>
+				console.log('Dialog Closed')
+			);
 		} else if (response.result[0].status) {
 			this.continueSendApplication(jobId);
 		}
 	}
 
 	continueSendApplication(jobId) {
-		console.log(jobId);
+		// console.log(jobId);
 		this._httpService.sendJobApplication({ jobid: jobId })
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log(response);
+						// console.log(response);
 
 						this.isNotApplied = false;
 
-						if (response.result == 'contractsigned') {
+						if (response.result == '3') {
 							this.isUnderContract = true;
 							this.isOfferRejected = false;
 							this.isOffered = false;
@@ -254,7 +259,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 							this.helpTxt1 = 'You have Successfully Applied & Contract Signed In for this Job.';
 						}
 
-						if (response.result == 'joboffered') {
+						if (response.result == '2') {
 							this.isUnderContract = false;
 							this.isOfferRejected = false;
 							this.isOffered = true;
@@ -263,7 +268,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 							this.helpTxt1 = 'You have been offered to this job'
 						}
 
-						if (response.result == 'job applied') {
+						if (response.result == '1') {
 							this.isUnderContract = false;
 							this.isOfferRejected = false;
 							this.isOffered = false;
@@ -272,7 +277,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 							this.helpTxt1 = 'Application Sent';
 						}
 
-						if (response.result == 'contractsigned') {
+						if (response.result == '3') {
 							let snackBarRef = this.snackBar.open(this.helpTxt1, 'Goto TimeSheet', {
 								duration: 10000,
 							});
@@ -280,7 +285,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 							snackBarRef.onAction().subscribe(() => {
 								snackBarRef.dismiss();
 								this.router.navigate(['main/timesheet']);
-								console.log('The snack-bar action was triggered!');
+								// console.log('The snack-bar action was triggered!');
 							});
 
 						} else {
@@ -290,12 +295,12 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 
 							snackBarRef.onAction().subscribe(() => {
 								snackBarRef.dismiss();
-								console.log('The snack-bar action was triggered!');
+								// console.log('The snack-bar action was triggered!');
 							});
 						}
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 						if (response.message == 'conflictjob') {
 							let snackBarRef = this.snackBar.open('The job you are applying clashes with a job applied', 'Close', {
 								duration: 10000,
@@ -303,7 +308,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 
 							snackBarRef.onAction().subscribe(() => {
 								snackBarRef.dismiss();
-								console.log('The snack-bar action was triggered!');
+								// console.log('The snack-bar action was triggered!');
 							});
 						}
 					}
@@ -335,19 +340,19 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 				if (data == 'yes') {
 					this.ConfirmAcceptOffer(jobId);
 				} else if (data == 'no') {
-					console.log('no');
+					// console.log('no');
 				}
 			}
 		);
 	}
 
 	ConfirmAcceptOffer(jobId) {
-		console.log(jobId);
+		// console.log(jobId);
 		this._httpService.acceptOffer({ 'contract_id': jobId })
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log(response);
+						// console.log(response);
 						this.isUnderContract = true;
 						this.isOfferRejected = false;
 						this.isOffered = false;
@@ -360,11 +365,11 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 						if (response.message == 'conflictjob') {
 							let snackBarRef = this.snackBar.open('The Job you are applying is clashing with other job(Already you are under Contract) Timing', 'Close', {
 								duration: 10000,
@@ -372,13 +377,13 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 
 							snackBarRef.onAction().subscribe(() => {
 								snackBarRef.dismiss();
-								console.log('The snack-bar action was triggered!');
+								// console.log('The snack-bar action was triggered!');
 							});
 						}
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -402,19 +407,19 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 				if (data == 'yes') {
 					this.ConfirmRejectOffer(jobId);
 				} else if (data == 'no') {
-					console.log('no');
+					// console.log('no');
 				}
 			}
 		);
 	}
 
 	ConfirmRejectOffer(jobId) {
-		console.log(jobId);
+		// console.log(jobId);
 		this._httpService.rejectOffer({ jobid: jobId, contractstatus: 'open' })
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log(response);
+						// console.log(response);
 						this.isUnderContract = false;
 						this.isOfferRejected = true;
 						this.isOffered = false;
@@ -427,16 +432,16 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 
 					} else if (!response.success) {
 
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -487,8 +492,16 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 		// console.log('Accepted', isUnderContract);
 	}
 
+	isNumeric(string) {
+		if (isNaN(string)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	saveJob(jobId) {
-		console.log({ 'jobid': jobId });
+		// console.log({ 'jobid': jobId });
 		this.busy = this._httpService.saveJob({ 'jobid': jobId })
 			.subscribe(
 				response => {
@@ -500,7 +513,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					} else if (!response.success) {
 						let snackBarRef = this.snackBar.open('Job Already Saved.', 'Close', {
@@ -509,12 +522,12 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -531,7 +544,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					} else if (!response.success) {
 						let snackBarRef = this.snackBar.open('Job Already UnSaved.', 'Close', {
@@ -540,12 +553,12 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

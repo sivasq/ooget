@@ -172,7 +172,7 @@ export class MultipleDatePickerComponent implements OnInit, ControlValueAccessor
             prevented = true;
         }
         if (typeof this.dayClick == 'function') {
-            console.log(day);
+            // console.log(day);
             if (!day.mdp.selected) {
                 this.projectScope = [day.date];
                 this.generate();
@@ -214,7 +214,7 @@ export class MultipleDatePickerComponent implements OnInit, ControlValueAccessor
     clearDays() {
         this.projectScope = [];
         this.generate();
-        console.log('clearDays was fired off'); // for testing
+        // console.log('clearDays was fired off'); // for testing
     }
 
     runGenerate() {
@@ -281,14 +281,14 @@ export class MultipleDatePickerComponent implements OnInit, ControlValueAccessor
         let monthTo = moment(this.month).add(add, 'month');
         if (typeof this.monthClick == 'function') {
             this.monthClick(event, monthTo);
-            console.log(this.monthClick);
+            // console.log(this.monthClick);
         }
         if (!prevented) {
             let oldMonth = moment(this.month);
             this.month = monthTo;
             if (typeof this.monthChanged == 'function') {
                 this.monthChanged(this.month, oldMonth);
-                console.log(this.monthChanged);
+                // console.log(this.monthChanged);
             }
             this.generate();
         }
@@ -385,6 +385,6 @@ export class MultipleDatePickerComponent implements OnInit, ControlValueAccessor
     }
 
     findArrayofDays() {
-        console.log('this.projectScope = ' + this.projectScope);
+        // console.log('this.projectScope = ' + this.projectScope);
     }
 }

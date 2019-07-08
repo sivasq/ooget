@@ -66,7 +66,7 @@ export class TimesheetNotesComponent implements OnInit {
     // 		}
     // 	);
 
-    console.log(verifiedTime);
+    // console.log(verifiedTime);
   }
 
   ngOnInit() {
@@ -75,7 +75,7 @@ export class TimesheetNotesComponent implements OnInit {
     if (this.data.notes) {
       this.haveNotes = true;
       this.showNotesEditor = false;
-      console.log(this.haveNotes);
+    //   console.log(this.haveNotes);
     }
   }
 

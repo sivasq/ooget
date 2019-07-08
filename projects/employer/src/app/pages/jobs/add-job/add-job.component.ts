@@ -176,7 +176,7 @@ export class AddJobComponent implements OnInit {
 		this.busy = this._httpService.getEmployer()
 			.subscribe(
 				response => {
-					console.log(response);
+					// console.log(response);
 					if (response.success) {
 						if (response.response.result[0].TermsConditions == 1) {
 							// this.openTermsConditionsDialog(response.message.termsaccepted);
@@ -188,7 +188,7 @@ export class AddJobComponent implements OnInit {
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 					this.router.navigate(['employer/jobs/list']);
 				}
 			);
@@ -213,7 +213,7 @@ export class AddJobComponent implements OnInit {
 			data => {
 				if (data == 'yes') {
 					this.termsAcceptanceUpdate();
-					console.log('accepted');
+					// console.log('accepted');
 				} else if (data == 'no') {
 					this.router.navigate(['employer/jobs/list']);
 				}
@@ -232,14 +232,14 @@ export class AddJobComponent implements OnInit {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -284,7 +284,7 @@ export class AddJobComponent implements OnInit {
 
 	// If Employment Type Change
 	employmenttypeChange(event) {
-		console.log(event);
+		// console.log(event);
 		if (event == null) { return false; }
 
 		if (event == 2) {
@@ -382,29 +382,29 @@ export class AddJobComponent implements OnInit {
 		let Breaks = { "break": newBreaks };
 		employerJobData = Object.assign(employerJobData, Breaks);
 
-		console.log(employerJobData);
+		// console.log(employerJobData);
 		this._httpService.addNewJob(employerJobData)
 			.subscribe(
 				response => {
 					if (response.success) {
 						employerJobForm.resetForm();
-						console.log("Job Added Successfully");
+						// console.log("Job Added Successfully");
 						let snackBarRef = this.snackBar.open('Job Added Successfully.', 'Close', {
 							duration: 5000,
 						});
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 
 						this.router.navigate(['employer/jobs/list']);
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

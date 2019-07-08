@@ -341,7 +341,9 @@ export class JobDetailsComponent implements OnInit {
 				response => {
 					if (response.success) {
 						this.jobDetails = response.result;
+						this.jobDetails.specializations = this.isNumeric(response.result.specializations) ? Number(response.result.specializations) : 'Others';
 
+						this.jobDetails.otherjobspecialization = this.isNumeric(response.result.specializations) ? '' : response.result.specializations;
 						// this.companyDetails = response.job.companyid;
 						// this.candidatesApplied = response.job.candidatesapplied;
 						// this.candidatesOffered = response.job.candidatesseleceted;
@@ -353,11 +355,11 @@ export class JobDetailsComponent implements OnInit {
 						// this.getDateArray(startDate, endDate);
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -369,13 +371,13 @@ export class JobDetailsComponent implements OnInit {
 					if (response.success) {
 						// console.log(response);
 						this.jobContractors = response.result.filter(job => job.offer_accepted !== null);
-						console.log(this.jobContractors);
+						// console.log(this.jobContractors);
 					} else if (!response.success) {
 						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -398,7 +400,7 @@ export class JobDetailsComponent implements OnInit {
 		let dialogRef = this.dialog.open(JobActivationComponent, dialogConfig);
 
 		dialogRef.afterClosed().subscribe(response => {
-			console.log(response);
+			// console.log(response);
 			if (response.callback) {
 				this.getJobDetails();
 			}
@@ -421,7 +423,7 @@ export class JobDetailsComponent implements OnInit {
 		let dialogRef = this.dialog.open(DublicateJobConfirmComponent, dialogConfig);
 
 		dialogRef.afterClosed().subscribe(employerid => {
-			console.log(employerid);
+			// console.log(employerid);
 			// this.router.navigate(['employers/' + companyid + '/view']);
 			// this.router.navigate(['/admin/employers/' + employerid + '/jobs/' + jobid + '/copyjob'])
 		});
@@ -462,7 +464,7 @@ export class JobDetailsComponent implements OnInit {
 					this.getReasonForRemoveContractorFromJob(contractId, index)
 				} else if (data == 'no') {
 					// this.accept_terms = "true";
-					console.log('no');
+					// console.log('no');
 				}
 			}
 		);
@@ -487,7 +489,7 @@ export class JobDetailsComponent implements OnInit {
 			if (response.callback) {
 				this.removeContractorFromJob(contractId, index)
 			}
-			console.log(response);
+			// console.log(response);
 		})
 	}
 

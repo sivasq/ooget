@@ -33,8 +33,8 @@ export class JobseekerTimesheetReportComponent implements OnInit {
 
 	constructor(private _location: Location, private _httpService: ApiCallService, private datePipe: DatePipe) { }
 	getDateChange(event) {
-		console.log('event', event);
-		console.log('SelectedDateRange', this.SelectedDateRange);
+		// console.log('event', event);
+		// console.log('SelectedDateRange', this.SelectedDateRange);
 	}
 
 	getJobseekerContracts() {
@@ -47,14 +47,14 @@ export class JobseekerTimesheetReportComponent implements OnInit {
 				response => {
 					if (response.success) {
 						this.employerDatas = response.result;
-						console.log(this.employerDatas);
+						// console.log(this.employerDatas);
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

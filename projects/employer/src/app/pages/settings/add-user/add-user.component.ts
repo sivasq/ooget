@@ -127,16 +127,16 @@ export class AddUserComponent implements OnInit {
 						// Snackbar action
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 						this.router.navigate(['employer/settings/listusers']);
 						// Response is failed
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

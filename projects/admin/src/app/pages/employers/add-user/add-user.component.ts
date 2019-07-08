@@ -117,7 +117,7 @@ export class AddUserComponent implements OnInit {
 	// Submit handler for Employer Add
 	createExtraUser() {
 		if (!this.UserForm.valid) { return false; }
-		console.log(this.UserForm.value);
+		// console.log(this.UserForm.value);
 		// return false;
 		this.busy = this._httpService.createExtraUser(this.UserForm.value)
 			.subscribe(
@@ -133,15 +133,15 @@ export class AddUserComponent implements OnInit {
 						// Snackbar action
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 						// Response is failed
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -153,11 +153,11 @@ export class AddUserComponent implements OnInit {
 					if (response.success) {
 						this.employerDetails = response.result[0];
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

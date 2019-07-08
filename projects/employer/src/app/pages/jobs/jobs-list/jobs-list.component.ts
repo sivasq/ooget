@@ -132,11 +132,11 @@ export class JobsListComponent implements OnInit {
 							this.isJobsListClosedAvailable = false;
 						}
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -146,22 +146,22 @@ export class JobsListComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log(response);
+						// console.log(response);
 						this.getSingleEmployersJobsList({ 'employerid': localStorage.getItem('ogCompanyObjID') });
 						let snackBarRef = this.snackBar.open('Job Closed Successfully.', 'Close', {
 							duration: 5000,
 						});
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

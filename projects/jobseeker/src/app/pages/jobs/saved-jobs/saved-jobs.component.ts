@@ -119,14 +119,14 @@ export class SavedJobsComponent implements OnInit, OnDestroy {
 						} else {
 							this.isJobsListAllAvailable = false;
 						}
-						console.log(response);
+						// console.log(response);
 						// this.jobs_list = response.jobs;
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -146,7 +146,7 @@ export class SavedJobsComponent implements OnInit, OnDestroy {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					} else if (!response.success) {
 						let snackBarRef = this.snackBar.open('Job Already UnSaved.', 'Close', {
@@ -155,12 +155,12 @@ export class SavedJobsComponent implements OnInit, OnDestroy {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -228,7 +228,7 @@ export class SavedJobsComponent implements OnInit, OnDestroy {
 			// this.search.jobspecialization = '';
 			this.jobSearch();
 		}
-		console.log(this.search.jobspecialization);
+		// console.log(this.search.jobspecialization);
 	}
 
 	setNewCeil(newfloor: number, newCeil: number): void {

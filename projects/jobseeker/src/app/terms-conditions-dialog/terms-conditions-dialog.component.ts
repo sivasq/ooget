@@ -33,11 +33,11 @@ export class TermsConditionsDialogComponent implements OnInit {
 						this.data.message = atob(response.result.body); // Decode
 						// btoa() // Encode
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

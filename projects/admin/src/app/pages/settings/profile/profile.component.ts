@@ -241,7 +241,7 @@ export class ProfileComponent implements OnInit {
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -266,7 +266,7 @@ export class ProfileComponent implements OnInit {
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -346,7 +346,7 @@ export class ProfileComponent implements OnInit {
 		// Check Employment Type And process Past Exp
 		if (!this.homePageContentForm.valid) { return false; }
 
-		console.log(this.adminProfileForm.value);
+		// console.log(this.adminProfileForm.value);
 
 		this.busy = this._httpService.homePageContentUpdate(this.homePageContentForm.value)
 			.subscribe(
@@ -363,7 +363,7 @@ export class ProfileComponent implements OnInit {
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

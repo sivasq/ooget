@@ -127,9 +127,9 @@ export class JobseekerDetailsComponent implements OnInit {
 	}
 
 	parseStringToArray(stringArray) {
-		console.log(stringArray);
+		// console.log(stringArray);
 		if (stringArray === undefined) { return JSON.parse('[]'); }
-		console.log(JSON.parse(stringArray));
+		// console.log(JSON.parse(stringArray));
 		return JSON.parse(stringArray);
 	}
 
@@ -149,7 +149,7 @@ export class JobseekerDetailsComponent implements OnInit {
 						if (this.IsJsonString(response.result[0].experience_details)) {
 							let expDetails = JSON.parse(response.result[0].experience_details);
 							response.result[0].experience_details = expDetails;
-							console.log(expDetails);
+							// console.log(expDetails);
 						} else {
 							response.result[0].experience_details = [];
 						}
@@ -187,11 +187,11 @@ export class JobseekerDetailsComponent implements OnInit {
 
 					} else if (!response.success) {
 
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -215,14 +215,14 @@ export class JobseekerDetailsComponent implements OnInit {
 				if (data == 'yes') {
 					this.confirmSelectApplication(applicationId);
 				} else if (data == 'no') {
-					console.log('no');
+					// console.log('no');
 				}
 			}
 		);
 	}
 
 	confirmSelectApplication(applicationId) {
-		console.log({ jobid: this.empJobId, jobseekerid: this.jobseekerId });
+		// console.log({ jobid: this.empJobId, jobseekerid: this.jobseekerId });
 		this.busy = this._httpService.selectApplication({ contracts_id: applicationId })
 			.subscribe(
 				response => {
@@ -238,7 +238,7 @@ export class JobseekerDetailsComponent implements OnInit {
 						});
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					} else if (!response.success) {
 						let snackBarRef = this.snackBar.open('The Candidate Already Selected For This Job.', 'Close', {
@@ -247,13 +247,13 @@ export class JobseekerDetailsComponent implements OnInit {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

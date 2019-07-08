@@ -121,6 +121,9 @@ export class JobDetailsComponent implements OnInit {
 				response => {
 					if (response.success) {
 						this.jobDetails = response.result;
+						this.jobDetails.specializations = this.isNumeric(response.result.specializations) ? Number(response.result.specializations) : 'Others';
+
+						this.jobDetails.otherjobspecialization = this.isNumeric(response.result.specializations) ? '' : response.result.specializations;
 						// this.companyDetails = response.job.companyid;
 						// this.candidatesApplied = response.job.candidatesapplied;
 						// this.candidatesOffered = response.job.candidatesseleceted;
@@ -130,13 +133,13 @@ export class JobDetailsComponent implements OnInit {
 						this.jobDetails.jobperiodfrom = this.jobDetails.from.split('-').reverse().join('-');
 						this.jobDetails.jobperiodto = this.jobDetails.to.split('-').reverse().join('-');
 						// this.getDateArray(startDate, endDate);
-						console.log(this.jobDetails);
+						// console.log(this.jobDetails);
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -153,7 +156,7 @@ export class JobDetailsComponent implements OnInit {
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

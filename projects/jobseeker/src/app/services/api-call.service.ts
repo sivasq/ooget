@@ -64,7 +64,7 @@ export class ApiCallService {
 		this._baseUrl = config.base_url;
 		this._token = '';
 		this._token = localStorage.getItem('ogToken');
-		console.log(this._token);
+		// console.log(this._token);
 	}
 
 	createNonAuthorizationHeaderJson() {

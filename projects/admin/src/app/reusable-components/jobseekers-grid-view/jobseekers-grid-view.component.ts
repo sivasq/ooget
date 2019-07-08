@@ -41,7 +41,7 @@ export class JobseekersGridViewComponent implements OnInit {
 	}
 
 	toggleJobseekerStatus(event, jobSeekerId) {
-		console.log('event');
+		// console.log('event');
 		this.emitToggleJobseekerStatus.emit({ 'jobSeekerId': jobSeekerId, 'activeStatus': event.checked });
 	}
 

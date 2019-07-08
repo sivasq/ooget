@@ -150,8 +150,8 @@ export class EditEmployerComponent implements OnInit {
 
 	// Check UEN Unique
 	isUENUnique(control: FormControl) {
-		console.log(this.employerOldUen);
-		console.log(control.value);
+		// console.log(this.employerOldUen);
+		// console.log(control.value);
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
 				if (this.employerOldUen != control.value) {
@@ -218,18 +218,18 @@ export class EditEmployerComponent implements OnInit {
 						// Snackbar action
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 
 						this.router.navigate(['admin/employers/' + this.companyid + '/view']);
 
 						// Response is failed
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -243,7 +243,7 @@ export class EditEmployerComponent implements OnInit {
 						this.employerName = response.result[0].name;
 						this.employerOldEmail = response.result[0].email;
 						this.employerOldUen = response.result[0].uen;
-						console.log(this.employerOldEmail);
+						// console.log(this.employerOldEmail);
 
 						this.employerUpdateForm.patchValue({
 							name: response.result[0].name,
@@ -256,11 +256,11 @@ export class EditEmployerComponent implements OnInit {
 							// password: response.employer.companyname,
 						});
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

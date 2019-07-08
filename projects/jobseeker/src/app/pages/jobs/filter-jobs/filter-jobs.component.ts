@@ -52,7 +52,7 @@ export class FilterJobsComponent implements OnInit {
 			// 	this.search.fulltime = true;
 			// }
 
-			console.log(this.search);
+			// console.log(this.search);
 
 			this.jobs_list_all = [];
 			this.jobs_list_all = this.jobs.filter((jobs: any) => {
@@ -106,7 +106,7 @@ export class FilterJobsComponent implements OnInit {
 			// this.search.jobspecialization = '';
 			this.jobSearch();
 		}
-		console.log(this.search.jobspecialization);
+		// console.log(this.search.jobspecialization);
 	}
 
 	setNewCeil(newfloor: number, newCeil: number): void {

@@ -35,7 +35,7 @@ export class OogettopbarComponent implements OnInit {
   onLogout() {
     localStorage.clear();
     this.router.navigate(['logout']);
-    console.log("Logout Success");
+    // console.log("Logout Success");
   }
 
   openTopProfileDialog() {

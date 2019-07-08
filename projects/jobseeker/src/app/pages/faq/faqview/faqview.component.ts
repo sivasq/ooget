@@ -24,7 +24,7 @@ export class FaqviewComponent implements OnInit, OnDestroy {
 	}
 
 	getAllFaqItems() {
-		console.log();
+		// console.log();
 		this.busy = this._httpService.getAllFaqItems()
 			.subscribe(
 				response => {
@@ -34,17 +34,17 @@ export class FaqviewComponent implements OnInit, OnDestroy {
 						this.faqList = response.faqs;
 						// Response is failed
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
 
 	getFaqItemDetails(faqId) {
-		console.log(faqId);
+		// console.log(faqId);
 		this._httpService.getFaqItemDetails({ 'id': faqId })
 			.subscribe(
 				response => {
@@ -54,11 +54,11 @@ export class FaqviewComponent implements OnInit, OnDestroy {
 						this.faqDetail = response.result[0];
 						// Response is failed
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

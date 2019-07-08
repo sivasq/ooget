@@ -25,11 +25,11 @@ export class ContractDetailsComponent implements OnInit {
 					if (response.success) {
 						this.contractorJobDetails = response.result[0];
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

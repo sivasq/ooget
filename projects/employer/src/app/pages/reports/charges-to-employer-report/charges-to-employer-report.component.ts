@@ -329,7 +329,7 @@ export class ChargesToEmployerReportComponent implements OnInit {
 	}
 
 	getEmployerJobs() {
-		console.log(event);
+		// console.log(event);
 		// this.employerDatas = this.DemoemployerDatas;
 		// return false;
 		this.busy = this._httpService.getEmployerJobs()
@@ -351,11 +351,11 @@ export class ChargesToEmployerReportComponent implements OnInit {
 							this.isEmployerAvailable = false;
 						}
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

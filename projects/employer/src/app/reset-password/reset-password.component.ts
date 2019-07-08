@@ -106,11 +106,11 @@ export class ResetPasswordComponent implements OnInit {
 						})
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -131,7 +131,7 @@ export class ResetPasswordComponent implements OnInit {
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
 							this.router.navigate(['auth/login']);
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 
 					} else if (!response.success) {
@@ -142,7 +142,7 @@ export class ResetPasswordComponent implements OnInit {
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 					setTimeout(() => {
 						this.resetemployerPassResetForm.resetForm();
 					}, 3000);

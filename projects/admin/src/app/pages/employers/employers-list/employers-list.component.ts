@@ -60,7 +60,7 @@ export class EmployersListComponent implements OnInit {
 							});
 							snackBarRef.onAction().subscribe(() => {
 								snackBarRef.dismiss();
-								console.log('The snack-bar action was triggered!');
+								// console.log('The snack-bar action was triggered!');
 							});
 						} else if (event.checked == false) {
 							let snackBarRef = this.snackBar.open('Employer Blocked Successfully.', 'Close', {
@@ -68,16 +68,16 @@ export class EmployersListComponent implements OnInit {
 							});
 							snackBarRef.onAction().subscribe(() => {
 								snackBarRef.dismiss();
-								console.log('The snack-bar action was triggered!');
+								// console.log('The snack-bar action was triggered!');
 							});
 						}
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -96,11 +96,11 @@ export class EmployersListComponent implements OnInit {
 							this.isEmployerAvailable = false;
 						}
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

@@ -83,7 +83,7 @@ export class JsonToTextService {
 		this.getBody();
 
 		if (this.txt == '') {
-			console.log("Invalid data");
+			// console.log("Invalid data");
 			return;
 		}
 

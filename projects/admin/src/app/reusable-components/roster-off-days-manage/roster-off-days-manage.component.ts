@@ -197,8 +197,8 @@ export class RosterOffDaysManageComponent implements OnInit {
 	constructor(private http: HttpClient, private _httpService: ApiCallService, private config: ConfigService, public snackBar: MatSnackBar) { }
 
 	handleEvent(action: string, event: CalendarEvent): void {
-		console.log('event', event);
-		console.log('action', action);
+		// console.log('event', event);
+		// console.log('action', action);
 		// this.modalData = { event, action };
 		// this.modal.open(this.modalContent, { size: 'lg' });
 	}
@@ -250,7 +250,7 @@ export class RosterOffDaysManageComponent implements OnInit {
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 
@@ -346,14 +346,14 @@ export class RosterOffDaysManageComponent implements OnInit {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

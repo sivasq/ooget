@@ -238,7 +238,7 @@ export class EditJobComponent implements OnInit {
 
 	// If Employment Type Change
 	employmenttypeChange(event) {
-		console.log(event);
+		// console.log(event);
 		if (event == null) { return false; }
 
 		if (event == 2) {
@@ -372,11 +372,11 @@ export class EditJobComponent implements OnInit {
 						this.endTimeChange();
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -449,27 +449,27 @@ export class EditJobComponent implements OnInit {
 		let Breaks = { "break": newBreaks };
 		employerJobData = Object.assign(employerJobData, Breaks);
 
-		console.log(employerJobData);
+		// console.log(employerJobData);
 		this._httpService.jobUpdateToEmployer(employerJobData)
 			.subscribe(
 				response => {
 					if (response.success) {
 						// employerJobForm.resetForm();
-						console.log("Job Updated Successfully");
+						// console.log("Job Updated Successfully");
 						let snackBarRef = this.snackBar.open('Job Updated Successfully.', 'Close', {
 							duration: 5000,
 						});
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

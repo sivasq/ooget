@@ -335,7 +335,7 @@ export class ChargesToEmployerReportComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log(response.result);
+						// console.log(response.result);
 						if ((response.result).length > 0) {
 							this.isEmployerAvailable = true;
 							this.employerCount = (response.result).length;
@@ -344,17 +344,17 @@ export class ChargesToEmployerReportComponent implements OnInit {
 							this.isEmployerAvailable = false;
 						}
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
 
 	getEmployerJobs(event) {
-		console.log(event);
+		// console.log(event);
 		// this.employerDatas = this.DemoemployerDatas;
 		// return false;
 		this.busy = this._httpService.getEmployerJobs({ 'employerid': event })
@@ -376,11 +376,11 @@ export class ChargesToEmployerReportComponent implements OnInit {
 							this.isEmployerAvailable = false;
 						}
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

@@ -97,7 +97,7 @@ export class AuthloginComponent implements OnInit {
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 					this.isAuthMsg = 'Sorry! Invalid Login Credentials';
 					setTimeout(() => {
 						this.isAuthMsg = '';

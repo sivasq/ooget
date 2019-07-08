@@ -30,7 +30,7 @@ export class FaqEditComponent implements OnInit {
 			body: this.faqDetails.body,
 			type: 3
 		}
-		console.log(faqItem);
+		// console.log(faqItem);
 		this.onFAQItemUpdated.emit(faqItem);
 	}
 
@@ -39,7 +39,7 @@ export class FaqEditComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		console.log(this.faqDetails);
+		// console.log(this.faqDetails);
 	}
 
 }

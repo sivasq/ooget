@@ -104,11 +104,11 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 						})
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -129,7 +129,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
 							this.router.navigate(['auth/login']);
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 
 					} else if (!response.success) {
@@ -140,7 +140,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 					setTimeout(() => {
 						this.resetJobseekerPassResetForm.resetForm();
 					}, 3000);

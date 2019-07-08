@@ -66,17 +66,17 @@ export class ListUserComponent implements OnInit {
 						this.users_list = response.result;
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
 
 	deleteUser(userid) {
-		console.log(userid);
+		// console.log(userid);
 		// return false;
 		this.busy = this._httpService.deleteUserProfile({ 'userid': userid })
 			.subscribe(

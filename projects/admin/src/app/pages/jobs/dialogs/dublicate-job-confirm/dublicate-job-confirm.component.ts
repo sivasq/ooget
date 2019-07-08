@@ -32,12 +32,12 @@ export class DublicateJobConfirmComponent implements OnInit {
 							this.employers_list = response.result;
 						}
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
 					this.isEmployerLoading = false;
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

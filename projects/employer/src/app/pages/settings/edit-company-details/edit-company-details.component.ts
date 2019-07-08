@@ -204,14 +204,14 @@ export class EditCompanyDetailsComponent implements OnInit {
 						// Snackbar action
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 
 						this.router.navigate(['/employer/settings/editcompany']);
 
 						// Response is failed
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
@@ -242,11 +242,11 @@ export class EditCompanyDetailsComponent implements OnInit {
 							companycode: companyDetails.companycode,
 						});
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -255,7 +255,7 @@ export class EditCompanyDetailsComponent implements OnInit {
 		this.employerUpdateForm.get('uen').valueChanges
 			.subscribe(x => {
 				if (x != null) {
-					console.log(x);
+					// console.log(x);
 					this.employerUpdateForm.patchValue({ uen: x.toUpperCase() }, { emitEvent: false });
 				}
 			});

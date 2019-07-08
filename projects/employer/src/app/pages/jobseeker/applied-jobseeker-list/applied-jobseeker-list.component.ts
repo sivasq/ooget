@@ -66,14 +66,14 @@ export class AppliedJobseekerListComponent implements OnInit {
 
 						this.candidates_list = response.result;
 						this.companyDetails = response.result[0];
-						console.log(this.companyDetails);
+						// console.log(this.companyDetails);
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -96,11 +96,11 @@ export class AppliedJobseekerListComponent implements OnInit {
 						// console.log(this.companyDetails);
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

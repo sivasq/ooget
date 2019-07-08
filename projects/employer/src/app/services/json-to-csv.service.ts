@@ -85,7 +85,7 @@ export class JsonToCsvService {
     this.getBody();
 
     if (this.csv == '') {
-      console.log("Invalid data");
+    //   console.log("Invalid data");
       return;
     }
 

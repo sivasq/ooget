@@ -57,7 +57,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
 							this.router.navigate(['auth/login']);
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 
 					} else if (!response.success) {
@@ -70,7 +70,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 					this.isAuthMsg = "Server Errors Occured! Please Try Again";
 					setTimeout(() => {
 						this.isAuthMsg = '';

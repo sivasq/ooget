@@ -99,11 +99,11 @@ export class AppliedJobseekerListComponent implements OnInit {
 						// console.log(this.companyDetails);
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

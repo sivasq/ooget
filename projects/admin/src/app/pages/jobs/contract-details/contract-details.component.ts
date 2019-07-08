@@ -156,11 +156,11 @@ export class ContractDetailsComponent implements OnInit {
 						// }
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -189,7 +189,7 @@ export class ContractDetailsComponent implements OnInit {
 		let hrs = moment.duration(0, 'minutes').format('hh:mm', {
 			trim: false
 		});
-		console.log(hrs);
+		// console.log(hrs);
 	}
 
 	// ==================================
@@ -198,20 +198,20 @@ export class ContractDetailsComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log(response.payrolls);
+						// console.log(response.payrolls);
 						this.payrollsList = response.payrolls;
 						this.payrollsList.sort(
 							function (a, b) {
 								return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
 							});
-						console.log(this.payrollsList);
+						// console.log(this.payrollsList);
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -230,7 +230,7 @@ export class ContractDetailsComponent implements OnInit {
 	};
 
 	processPayrollGenerateold(payrollData) {
-		console.log('payroll generated');
+		// console.log('payroll generated');
 		let today = new Date();
 		let newData: any[] = [];
 		let oldData: any[] = [];
@@ -334,7 +334,7 @@ export class ContractDetailsComponent implements OnInit {
 	}
 
 	processPayrollGenerate(payrollData) {
-		console.log(payrollData);
+		// console.log(payrollData);
 		this.payroll.processPayroll(payrollData.payrollheader, payrollData.payrollbody);
 	}
 }

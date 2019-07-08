@@ -62,7 +62,7 @@ export class HolidayDataService {
 					this.dataChange.next(response.result);
 				},
 				(error: HttpErrorResponse) => {
-					console.log(error.name + ' ' + error.message);
+					// console.log(error.name + ' ' + error.message);
 				});
 	}
 

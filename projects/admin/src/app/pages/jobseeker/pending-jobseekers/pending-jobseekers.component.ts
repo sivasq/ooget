@@ -41,12 +41,12 @@ export class PendingJobseekersComponent implements OnInit {
 							});
 						}
 					} else if (!response.success) {
-						console.log(event);
-						console.log(response);
+						// console.log(event);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -62,11 +62,11 @@ export class PendingJobseekersComponent implements OnInit {
 							this.jobseekers_list = [];
 						}
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

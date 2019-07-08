@@ -256,12 +256,12 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 					if (response.success) {
 						this.jobs_list = response.result;
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
 					this.jobs_list = [];
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -310,13 +310,13 @@ export class WorkOffdaysMatrixViewComponent implements OnInit {
 						this.matrixDatas = response.result;
 						// console.log(arrayOfResult);
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 						this.generateHeaderColumns();
 						this.matrixDatas = [];
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

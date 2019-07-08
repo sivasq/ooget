@@ -35,7 +35,7 @@ export class SubLocationFilter implements PipeTransform {
 		if (!items || !filter) {
 			return items;
 		}
-		console.log(items.filter(item => item.mainlocation.toLowerCase() == filter.toLowerCase()));
+		// console.log(items.filter(item => item.mainlocation.toLowerCase() == filter.toLowerCase()));
 		return items.filter(item => item.mainlocation.toLowerCase() == filter.toLowerCase());
 	}
 }
@@ -78,8 +78,8 @@ export class DatexPipe implements PipeTransform {
 })
 export class SearchPipe implements PipeTransform {
 	transform(items: any[], searchText: string): any {
-		console.log(items);
-		console.log(searchText);
+		// console.log(items);
+		// console.log(searchText);
 		if (items.length == 0) return false;
 
 		if (!searchText) return false;

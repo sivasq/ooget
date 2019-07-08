@@ -174,7 +174,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 						this.jobSeekerRegForm.patchValue({
 							'accept_terms': 'true'
 						});
-						console.log('no');
+						// console.log('no');
 					}
 				}
 			);
@@ -211,9 +211,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
 						});
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
-						console.log('Registered Successfully');
+						// console.log('Registered Successfully');
 						this.router.navigate(['auth/login']);
 
 					} else if (!response.success) {
@@ -222,12 +222,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
 						});
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

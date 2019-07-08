@@ -75,7 +75,7 @@ export class EditClockInOutComponent implements OnInit {
 		// 		}
 		// 	);
 
-		console.log(verifiedTime);
+		// console.log(verifiedTime);
 	}
 
 }

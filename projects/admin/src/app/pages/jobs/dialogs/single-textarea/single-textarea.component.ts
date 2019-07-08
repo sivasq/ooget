@@ -59,7 +59,7 @@ export class SingleTextareaComponent implements OnInit {
 		// 		}
 		// 	);
 
-		console.log(submitData);
+		// console.log(submitData);
 	}
 
 	ngOnInit() {

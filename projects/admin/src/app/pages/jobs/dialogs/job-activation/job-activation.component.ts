@@ -48,7 +48,7 @@ export class JobActivationComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log('Pay Info Added Successfully');
+						// console.log('Pay Info Added Successfully');
 
 						this.activateJob();
 
@@ -58,18 +58,18 @@ export class JobActivationComponent implements OnInit {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 
-		console.log(payData);
+		// console.log(payData);
 	}
 
 	activateJob(): void {
@@ -84,7 +84,7 @@ export class JobActivationComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log('Job Activated Successfully');
+						// console.log('Job Activated Successfully');
 
 						this.dialogRef.close({ 'callback': true });
 
@@ -94,14 +94,14 @@ export class JobActivationComponent implements OnInit {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

@@ -87,17 +87,17 @@ export class TimesheetListDetailsComponent implements OnInit {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 
 						this.getTimesheetDetails({ 'contractid': this.contractId });
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -116,7 +116,7 @@ export class TimesheetListDetailsComponent implements OnInit {
 	}
 
 	public field1Editable(row, id) {
-		console.log('edit1 called');
+		// console.log('edit1 called');
 		this.editRowId = id;
 		this.editField = 'field1';
 		setTimeout(() => { // this will make the execution after the above boolean has changed
@@ -136,7 +136,7 @@ export class TimesheetListDetailsComponent implements OnInit {
 	}
 
 	public field2Editable(row, id) {
-		console.log('edit2 called');
+		// console.log('edit2 called');
 		this.editRowId = id;
 		this.editField = 'field2';
 		setTimeout(() => { // this will make the execution after the above boolean has changed
@@ -156,7 +156,7 @@ export class TimesheetListDetailsComponent implements OnInit {
 	}
 
 	public rowEditableOff() {
-		console.log('editoff called Esc');
+		// console.log('editoff called Esc');
 		// console.log(event);
 		this.editRowId = '';
 		this.editField = '';
@@ -171,7 +171,7 @@ export class TimesheetListDetailsComponent implements OnInit {
 	public rowEditableSubmit(editableRow, field) {
 		if (field === 'field1' && !this.fieldName1.nativeElement.validity.valid) { return false; }
 		if (field === 'field2' && !this.fieldName2.nativeElement.validity.valid) { return false; }
-		console.log('editoff called Enter');
+		// console.log('editoff called Enter');
 		// this.editRowId = '';
 		// this.editField = '';
 
@@ -247,7 +247,7 @@ export class TimesheetListDetailsComponent implements OnInit {
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -270,11 +270,11 @@ export class TimesheetListDetailsComponent implements OnInit {
 						// });
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -284,7 +284,7 @@ export class TimesheetListDetailsComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log('TimeSheet Adjusted');
+						// console.log('TimeSheet Adjusted');
 
 						this.getTimesheetDetails({ 'contractid': this.contractId, 'from': this.activeTimesheetPeriod.startDate, 'to': this.activeTimesheetPeriod.endDate });
 
@@ -297,11 +297,11 @@ export class TimesheetListDetailsComponent implements OnInit {
 						// });
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -389,11 +389,11 @@ export class TimesheetListDetailsComponent implements OnInit {
 							// console.log('The snack-bar action was triggered!');
 						});
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -413,7 +413,7 @@ export class TimesheetListDetailsComponent implements OnInit {
 		let bottomSheetRef = this.bottomSheet.open(LatereasonComponent, bottomSheetConfig);
 
 		bottomSheetRef.afterDismissed().subscribe((result) => {
-			console.log('Bottom sheet has been dismissed.');
+			// console.log('Bottom sheet has been dismissed.');
 		});
 	}
 
@@ -564,11 +564,11 @@ export class TimesheetListDetailsComponent implements OnInit {
 						// });
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -599,11 +599,11 @@ export class TimesheetListDetailsComponent implements OnInit {
 						// });
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

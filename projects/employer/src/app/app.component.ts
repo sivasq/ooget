@@ -24,11 +24,11 @@ export class AppComponent {
 		if (localStorage.getItem('isLoggedIn') != 'null' && localStorage.getItem('isLoggedIn') == 'true') {
 			let role = localStorage.getItem('ogRole');
 			let permissions = JSON.parse(localStorage.getItem('ogPermissions'));
-			console.log('true');
+			// console.log('true');
 			this.permissionsService.loadPermissions(permissions);
 			this.rolesService.addRole(role, permissions);
 		}
-		console.log(localStorage.getItem('isLoggedIn'));
+		// console.log(localStorage.getItem('isLoggedIn'));
 		// Set Lazy loading Router indicator
 		this.isShowingRouteLoadIndicator = false;
 

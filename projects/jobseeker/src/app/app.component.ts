@@ -92,13 +92,13 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.subscriptions.push(this.onlineEvent.subscribe(e => {
 			this.connectionStatusMessage = 'Back to online';
 			this.connectionStatus = 'online';
-			console.log('Online...');
+			// console.log('Online...');
 		}));
 
 		this.subscriptions.push(this.offlineEvent.subscribe(e => {
 			this.connectionStatusMessage = 'Connection lost! You are not connected to internet';
 			this.connectionStatus = 'offline';
-			console.log('Offline...');
+			// console.log('Offline...');
 		}));
 	}
 

@@ -28,7 +28,7 @@ export class FaqManageComponent implements OnInit {
 	}
 
 	onChangeEditMode(event) {
-		console.log(event);
+		// console.log(event);
 		this.faqDetails = event;
 		this.process = 'edit';
 	}
@@ -38,7 +38,7 @@ export class FaqManageComponent implements OnInit {
 	}
 
 	onNewFaqItem(faqItem) {
-		console.log(faqItem);
+		// console.log(faqItem);
 		this._httpService.faqAdd(faqItem)
 			.subscribe(
 				response => {
@@ -52,22 +52,22 @@ export class FaqManageComponent implements OnInit {
 						// Snackbar action
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 						this.getAllFaqItems();
 						// Response is failed
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
 
 	getAllFaqItems() {
-		console.log();
+		// console.log();
 		this._httpService.getAllFaqItems()
 			.subscribe(
 				response => {
@@ -77,17 +77,17 @@ export class FaqManageComponent implements OnInit {
 						this.faqList = response.result;
 						// Response is failed
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
 
 	onUpdateFaqItem(faqItem) {
-		console.log(faqItem);
+		// console.log(faqItem);
 		this.process = 'add';
 		this._httpService.faqUpdate(faqItem)
 			.subscribe(
@@ -101,22 +101,22 @@ export class FaqManageComponent implements OnInit {
 						// Snackbar action
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 						this.getAllFaqItems();
 						// Response is failed
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
 
 	onDeleteFaqItem(faqId) {
-		console.log(faqId);
+		// console.log(faqId);
 		this._httpService.faqDelete({ 'faqid': faqId })
 			.subscribe(
 				response => {
@@ -129,21 +129,21 @@ export class FaqManageComponent implements OnInit {
 						// Snackbar action
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 						this.getAllFaqItems();
 						// Response is failed
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
 
 	ngOnInit() {
-		console.log("demo")
+		// console.log("demo")
 	}
 }

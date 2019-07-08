@@ -313,11 +313,11 @@ export class EditJobComponent implements OnInit {
 						this.companyDetails = response.result[0];
 						// console.log(this.companyDetails);
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -408,11 +408,11 @@ export class EditJobComponent implements OnInit {
 						this.endTimeChange();
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -487,7 +487,7 @@ export class EditJobComponent implements OnInit {
 		const Breaks = { 'break': newBreaks };
 		employerJobData = Object.assign(employerJobData, Breaks);
 
-		console.log(employerJobData);
+		// console.log(employerJobData);
 
 		// let snackBarRef = this.snackBar.open('Backend Process Not Done, Pleae Wait...', 'Close', {
 		// 	duration: 5000,
@@ -503,24 +503,24 @@ export class EditJobComponent implements OnInit {
 				response => {
 					if (response.success) {
 						// employerJobForm.resetForm();
-						console.log('Job Updated Successfully');
+						// console.log('Job Updated Successfully');
 						const snackBarRef = this.snackBar.open('Job Updated Successfully.', 'Close', {
 							duration: 5000,
 						});
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 
 						this.router.navigate(['admin/employers/' + this.companyid + '/jobs/' + this.jobid + '/view']);
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

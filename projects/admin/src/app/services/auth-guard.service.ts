@@ -13,7 +13,7 @@ export class AuthGuardService implements CanActivate {
 			// logged in so return true
 			return true;
 		}
-		console.log('auth false');
+		// console.log('auth false');
 		this.router.navigate(['']);
 		return false;
 

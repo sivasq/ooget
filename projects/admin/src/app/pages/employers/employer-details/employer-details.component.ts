@@ -209,14 +209,14 @@ export class EmployerDetailsComponent implements OnInit {
 						this.companyCodeForm.patchValue({
 							'employerid': response.result[0].id
 						});
-						console.log(this.employerDetails);
+						// console.log(this.employerDetails);
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -243,25 +243,25 @@ export class EmployerDetailsComponent implements OnInit {
 					if (response.success) {
 						this.employerDetails.companycode = this.companyCodeForm.get('employercode').value;
 						this.companyCodeGenerator = !this.companyCodeGenerator;
-						console.log(response);
+						// console.log(response);
 
 						let snackBarRef = this.snackBar.open('CompanyCode Added Successfully.', 'Close', {
 							duration: 5000,
 						});
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
 
 	getDoc(event) {
-		console.log(event.target.files[0]);
+		// console.log(event.target.files[0]);
 		this.showUpload = false;
 		this.uploaded = true;
 		this.docName = event.target.files[0].name;
@@ -283,7 +283,7 @@ export class EmployerDetailsComponent implements OnInit {
 	}
 
 	uploadDoc() {
-		console.log(this.myInputVariable.nativeElement.files);
+		// console.log(this.myInputVariable.nativeElement.files);
 
 		const fileBrowser = this.myInputVariable.nativeElement;
 		const formData: FormData = new FormData();
@@ -306,12 +306,12 @@ export class EmployerDetailsComponent implements OnInit {
 						});
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

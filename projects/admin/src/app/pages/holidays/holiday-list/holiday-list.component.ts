@@ -54,7 +54,7 @@ export class HolidayListComponent implements OnInit {
 		});
 
 		dialogRef.afterClosed().subscribe(result => {
-			console.log(result);
+			// console.log(result);
 			if (result === undefined) { return false; }
 
 			this.holidayDataService.addHoliday(result)
@@ -144,7 +144,7 @@ export class HolidayListComponent implements OnInit {
 
 		dialogRef.afterClosed().subscribe(result => {
 			if (result === undefined) { return false; }
-			console.log(result);
+			// console.log(result);
 			this.holidayDataService.deleteHoliday(result)
 				.subscribe(
 					responses => {

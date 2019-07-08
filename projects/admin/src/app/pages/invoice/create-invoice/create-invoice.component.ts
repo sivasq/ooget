@@ -62,11 +62,11 @@ export class CreateInvoiceComponent implements OnInit {
 					if (response.success) {
 						this.employers_list = response.employers;
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -79,11 +79,11 @@ export class CreateInvoiceComponent implements OnInit {
 					if (response.success) {
 						this.jobs_list = response.jobs;
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -112,7 +112,7 @@ export class CreateInvoiceComponent implements OnInit {
 
 	ngOnInit() {
 		this.activatedRoute.params.subscribe(params => {
-			console.log(params);
+			// console.log(params);
 			this.selectedJob = this.activatedRoute.snapshot.params['job_id'];
 			this.selectedEmployer = this.activatedRoute.snapshot.params['emp_id'];
 		});

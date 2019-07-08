@@ -47,14 +47,14 @@ export class ViewCompanyDetailsComponent implements OnInit {
 					if (response.success) {
 						this.companyDetails = isArray(response.result) ? response.result[0] : '';
 						// this.companyCodes.companyid = response.company._id;
-						console.log(this.companyDetails);
+						// console.log(this.companyDetails);
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

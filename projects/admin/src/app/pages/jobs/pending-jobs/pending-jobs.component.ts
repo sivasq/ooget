@@ -35,11 +35,11 @@ export class PendingJobsComponent implements OnInit {
 						this.pendingJobs = response.result;
 					} else if (!response.success) {
 
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -397,7 +397,7 @@ export class PendingJobsComponent implements OnInit {
 	};
 
 	processPayrollGenerate(payrollData) {
-		console.log("payroll generated");
+		// console.log("payroll generated");
 		let today = new Date();
 
 		// let csvData = new Angular5Csv(newData, 'payroll ' + this.datePipe.transform(today, 'MMMd,y,HH:mm'), this.payrollCsvOptions);

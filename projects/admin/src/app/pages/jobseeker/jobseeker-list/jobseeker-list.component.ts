@@ -40,11 +40,11 @@ export class JobseekerListComponent implements OnInit {
 							});
 						}
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -56,11 +56,11 @@ export class JobseekerListComponent implements OnInit {
 					if (response.success) {
 						this.jobseekers_list = response.result;
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

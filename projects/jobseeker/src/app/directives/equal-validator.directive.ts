@@ -8,7 +8,7 @@ import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
     ]
 })
 export class EqualValidatorDirective implements Validator {
-   
+
   constructor( @Attribute('validateEqual') public validateEqual: string,
         @Attribute('reverse') public reverse: string) { }
 
@@ -26,7 +26,7 @@ export class EqualValidatorDirective implements Validator {
 
         // value not equal
         if (e && v !== e.value && !this.isReverse) {
-			console.log(0);
+			// console.log(0);
           return {
             validateEqual: false
           }
@@ -36,7 +36,7 @@ export class EqualValidatorDirective implements Validator {
         if (e && v === e.value && this.isReverse) {
             delete e.errors['validateEqual'];
 			if (!Object.keys(e.errors).length) e.setErrors(null);
-			console.log(1);
+			// console.log(1);
         }
 
         // value not equal and reverse
@@ -115,12 +115,12 @@ export class Collapse {
     private set collapse(value: boolean) {
         this.isExpanded = value;
         this.toggle();
-        console.log('c1'+value);
+        // console.log('c1'+value);
     }
 
     private get collapse(): boolean {
         //return this.isExpanded;
-        console.log('c2');
+        // console.log('c2');
         return true;
     }
 

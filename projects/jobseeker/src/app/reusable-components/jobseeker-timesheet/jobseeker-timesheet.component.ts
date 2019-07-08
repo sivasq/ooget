@@ -39,7 +39,7 @@ export class JobseekerTimesheetComponent implements OnInit {
 		this._dataSource.subscribe(x => {
 			this.dataSource = new JobseekerTimesheetDataSource(this.paginator, this.sort, this.getDataSource);
 			this.displayDatasource = this.getDataSource;
-			console.log(this.displayDatasource);
+			// console.log(this.displayDatasource);
 		});
 	}
 

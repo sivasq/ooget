@@ -57,8 +57,8 @@ export class DatexPipe implements PipeTransform {
 })
 export class SearchPipe implements PipeTransform {
 	transform(items: any[], searchText: string): any {
-		console.log(items);
-		console.log(searchText);
+		// console.log(items);
+		// console.log(searchText);
 		if (items.length == 0) return false;
 
 		if (!searchText) return false;

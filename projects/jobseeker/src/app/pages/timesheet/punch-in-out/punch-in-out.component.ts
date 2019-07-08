@@ -236,11 +236,11 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 							this.isContractJobsAvailable = false;
 						}
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -288,11 +288,11 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 							this.contractStatus = 'contractclosed';
 						}
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -339,11 +339,11 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 						// 	this.isTimeOutHide = true;
 						// }
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -379,7 +379,7 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					} else if (!response.success) {
 						if (response.result == 'verifiedalready') {
@@ -389,13 +389,13 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 
 							snackBarRef.onAction().subscribe(() => {
 								snackBarRef.dismiss();
-								console.log('The snack-bar action was triggered!');
+								// console.log('The snack-bar action was triggered!');
 							});
 						}
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -431,7 +431,7 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					} else if (!response.success) {
 						if (response.result.code == 'clock_out_verified') {
@@ -441,7 +441,7 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 
 							snackBarRef.onAction().subscribe(() => {
 								snackBarRef.dismiss();
-								console.log('The snack-bar action was triggered!');
+								// console.log('The snack-bar action was triggered!');
 							});
 						} else if (response.result.code == 'already_punch_out') {
 							let snackBarRef = this.snackBar.open('You Cannot Punch Out, Please check with your Employer', 'Close', {
@@ -450,7 +450,7 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 
 							snackBarRef.onAction().subscribe(() => {
 								snackBarRef.dismiss();
-								console.log('The snack-bar action was triggered!');
+								// console.log('The snack-bar action was triggered!');
 							});
 						} else if (response.result.code == 'punch_in_error') {
 							let snackBarRef = this.snackBar.open('You are not yet Punched In', 'Close', {
@@ -459,7 +459,7 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 
 							snackBarRef.onAction().subscribe(() => {
 								snackBarRef.dismiss();
-								console.log('The snack-bar action was triggered!');
+								// console.log('The snack-bar action was triggered!');
 							});
 						} else if (response.result.code == 'working_hours_low') {
 							// let inTime = new Date(response.verifiedpunchintime);
@@ -473,13 +473,13 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 
 							snackBarRef.onAction().subscribe(() => {
 								snackBarRef.dismiss();
-								console.log('The snack-bar action was triggered!');
+								// console.log('The snack-bar action was triggered!');
 							});
 						}
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -501,7 +501,7 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 
 			dialogref.afterClosed().subscribe(
 				data => {
-					console.log(data);
+					// console.log(data);
 				}
 			);
 		}
@@ -512,7 +512,7 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log(response);
+						// console.log(response);
 						// this.currentTimeSheetLayout.timesheet.late_info = true;
 						this.currentTimeSheetLayout.late_info = true;
 						lateReasonForm.resetForm();
@@ -522,20 +522,20 @@ export class PunchInOutComponent implements OnInit, OnDestroy {
 
 						snackBarRef.afterDismissed().subscribe(() => {
 							this.punchBehaviour = 'Normal';
-							console.log('The snack-bar was dismissed');
+							// console.log('The snack-bar was dismissed');
 						});
 
 						snackBarRef.onAction().subscribe(() => {
 							this.punchBehaviour = 'Normal';
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 						snackBarRef.dismiss();
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

@@ -178,19 +178,19 @@ export class CalendarReportComponent implements OnInit {
 					if (response.success) {
 						this.jobs_list = response.result;
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
 					this.jobs_list = [];
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
 
 	handleEvent(action: string, event: CalendarEvent): void {
-		console.log('event', event);
-		console.log('action', action);
+		// console.log('event', event);
+		// console.log('action', action);
 		// this.modalData = { event, action };
 		// this.modal.open(this.modalContent, { size: 'lg' });
 	}
@@ -254,7 +254,7 @@ export class CalendarReportComponent implements OnInit {
 						}
 					},
 					error => {
-						console.log(error);
+						// console.log(error);
 						return [];
 					}
 				);

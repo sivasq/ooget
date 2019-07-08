@@ -59,16 +59,16 @@ export class JobsListComponent implements OnInit {
 
 							// filter closed jobs
 							this.closedJobs = jobsList.filter((job: any) => job.status == 3);
-							console.log(jobsList);
+							// console.log(jobsList);
 						} else {
 							this.isJobsAvailable = false;
 						}
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -92,7 +92,7 @@ export class JobsListComponent implements OnInit {
 				if (data == 'yes') {
 					this.ConfirmCloseJob(event.employerId, event.jobId)
 				} else if (data == 'no') {
-					console.log('Dont Close');
+					// console.log('Dont Close');
 				}
 			}
 		);
@@ -103,23 +103,23 @@ export class JobsListComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log(response);
+						// console.log(response);
 						this.getSingleEmployersJobsList({ 'employerid': employerId });
 						let snackBarRef = this.snackBar.open('Hiring Closed Successfully.', 'Close', {
 							duration: 5000,
 						});
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 
 					} else if (!response.success) {
 
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -132,11 +132,11 @@ export class JobsListComponent implements OnInit {
 						this.companyDetails = response.result[0];
 						// console.log(this.companyDetails);
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

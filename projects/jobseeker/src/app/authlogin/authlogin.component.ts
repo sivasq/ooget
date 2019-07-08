@@ -88,7 +88,7 @@ export class AuthloginComponent implements OnInit, OnDestroy {
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 					this.isAuthMsg = 'Server Errors Occured! Please Try Again';
 					setTimeout(() => {
 						this.isAuthMsg = '';

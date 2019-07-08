@@ -329,11 +329,11 @@ export class MakeDuplicateJobComponent implements OnInit {
 						this.companyDetails = response.result[0];
 						// console.log(this.companyDetails);
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -424,11 +424,11 @@ export class MakeDuplicateJobComponent implements OnInit {
 						this.endTimeChange();
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -499,27 +499,27 @@ export class MakeDuplicateJobComponent implements OnInit {
 		let Breaks = { 'break': newBreaks };
 		employerJobData = Object.assign(employerJobData, Breaks);
 
-		console.log(employerJobData);
+		// console.log(employerJobData);
 		this._httpService.addNewJob(employerJobData)
 			.subscribe(
 				response => {
 					if (response.success) {
 						employerJobForm.resetForm();
-						console.log('Job Added Successfully');
+						// console.log('Job Added Successfully');
 						let snackBarRef = this.snackBar.open('Job Added Successfully.', 'Close', {
 							duration: 5000,
 						});
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

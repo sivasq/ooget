@@ -337,7 +337,7 @@ export class AdminPaymentReportComponent implements OnInit {
 			.subscribe(
 				response => {
 					if (response.success) {
-						console.log(response.result);
+						// console.log(response.result);
 						if ((response.result).length > 0) {
 							this.isEmployerAvailable = true;
 							this.employerCount = (response.result).length;
@@ -346,11 +346,11 @@ export class AdminPaymentReportComponent implements OnInit {
 							this.isEmployerAvailable = false;
 						}
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -376,11 +376,11 @@ export class AdminPaymentReportComponent implements OnInit {
 							this.isEmployerAvailable = false;
 						}
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

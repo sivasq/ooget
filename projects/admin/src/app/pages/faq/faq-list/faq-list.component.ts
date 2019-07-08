@@ -33,7 +33,7 @@ export class FaqListComponent implements OnInit {
 	}
 
 	getFaqItemDetails(faqId) {
-		console.log(faqId);
+		// console.log(faqId);
 		this._httpService.getFaqItemDetails({ 'id': faqId })
 			.subscribe(
 				response => {
@@ -43,11 +43,11 @@ export class FaqListComponent implements OnInit {
 						this.faqDetail = response.result[0];
 						// Response is failed
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

@@ -205,11 +205,11 @@ export class EditUserComponent implements OnInit {
 
 						// Response is failed
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -253,11 +253,11 @@ export class EditUserComponent implements OnInit {
 					if (response.success) {
 						this.employerDetails = response.result[0];
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

@@ -40,11 +40,11 @@ export class JsTermsAndConditionsComponent implements OnInit {
 						this.orginalTerms = terms;
 						this.terms = terms;
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -64,7 +64,7 @@ export class JsTermsAndConditionsComponent implements OnInit {
 			// Snackbar action
 			snackBarRef.onAction().subscribe(() => {
 				snackBarRef.dismiss();
-				console.log('The snack-bar action was triggered!');
+				// console.log('The snack-bar action was triggered!');
 			});
 			return false;
 		}
@@ -81,15 +81,15 @@ export class JsTermsAndConditionsComponent implements OnInit {
 						// Snackbar action
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

@@ -122,11 +122,11 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 							this.isJobsListAllAvailable = false;
 						}
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -166,11 +166,11 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 			});
 
 			if (this.search.jobspecialization.length > 0) {
-				console.log(this.search.jobspecialization);
+				// console.log(this.search.jobspecialization);
 				this.applied_jobs_list = this.applied_jobs_list.filter((job: any) => {
 					var newData = this.search.jobspecialization.filter(search => {
-						console.log(job);
-						console.log(search);
+						// console.log(job);
+						// console.log(search);
 						return job.specializations == search;
 					});
 					return job.specializations == newData[0];
@@ -199,7 +199,7 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 			// this.search.jobspecialization = '';
 			this.jobSearch();
 		}
-		console.log(this.search.jobspecialization);
+		// console.log(this.search.jobspecialization);
 	}
 
 	setNewCeil(newfloor: number, newCeil: number): void {
@@ -215,7 +215,7 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 	}
 
 	saveJob(jobId) {
-		console.log({ 'jobid': jobId });
+		// console.log({ 'jobid': jobId });
 		this.busy = this._httpService.saveJob({ 'jobid': jobId })
 			.subscribe(
 				response => {
@@ -229,7 +229,7 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					} else if (!response.success) {
 						let snackBarRef = this.snackBar.open('Job Already Saved.', 'Close', {
@@ -238,18 +238,18 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
 
 	unSaveJob(jobId) {
-		console.log({ 'jobid': jobId });
+		// console.log({ 'jobid': jobId });
 		this.busy = this._httpService.unSaveJob({ 'jobid': jobId })
 			.subscribe(
 				response => {
@@ -263,7 +263,7 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					} else if (!response.success) {
 						let snackBarRef = this.snackBar.open('Job Already UnSaved.', 'Close', {
@@ -272,12 +272,12 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
 
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
-							console.log('The snack-bar action was triggered!');
+							// console.log('The snack-bar action was triggered!');
 						});
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

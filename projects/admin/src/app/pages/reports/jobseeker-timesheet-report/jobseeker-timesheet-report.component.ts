@@ -573,8 +573,8 @@ export class JobseekerTimesheetReportComponent implements OnInit {
 		this.getAllJobseekersList();
 	}
 	getDateChange(event) {
-		console.log('event', event);
-		console.log('SelectedDateRange', this.SelectedDateRange);
+		// console.log('event', event);
+		// console.log('SelectedDateRange', this.SelectedDateRange);
 	}
 	getAllJobseekersList() {
 		this.busy = this._httpService.getAllJobseekers()
@@ -583,11 +583,11 @@ export class JobseekerTimesheetReportComponent implements OnInit {
 					if (response.success) {
 						this.jobseekers = response.result;
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}
@@ -603,14 +603,14 @@ export class JobseekerTimesheetReportComponent implements OnInit {
 				response => {
 					if (response.success) {
 						this.employerDatas = response.result;
-						console.log(this.employerDatas);
+						// console.log(this.employerDatas);
 
 					} else if (!response.success) {
-						console.log(response);
+						// console.log(response);
 					}
 				},
 				error => {
-					console.log(error);
+					// console.log(error);
 				}
 			);
 	}

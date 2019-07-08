@@ -14,7 +14,7 @@ export class TopProfiledialogComponent implements OnInit{
   onLogout() {
     this.dialogRef.close();
     this.router.navigate(['auth/logout']);
-    console.log("Logout Success");
+    // console.log("Logout Success");
   }
 
   close() {
