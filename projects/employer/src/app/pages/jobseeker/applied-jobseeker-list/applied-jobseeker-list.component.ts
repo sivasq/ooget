@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ApiCallService } from '../../../services/api-call.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MenuPositionX } from '@angular/material';
 import { PaginationInstance } from 'ngx-pagination';
 
@@ -38,7 +38,7 @@ export class AppliedJobseekerListComponent implements OnInit {
 	public jobDetails: any;
 	jobStatus = ['', 'Pending', 'Live', 'Closed'];
 
-	constructor(private _httpService: ApiCallService, private route: ActivatedRoute) {
+	constructor(private router: Router, private _httpService: ApiCallService, private route: ActivatedRoute) {
 		this.employerId = this.route.snapshot.params['emp_id'];
 		this.empJobId = this.route.snapshot.params['job_id'];
 
@@ -52,31 +52,6 @@ export class AppliedJobseekerListComponent implements OnInit {
 	public isCandidatesAvailable: boolean;
 
 	public candidates_list: any[];
-
-	getAppliedCandidates1(jobId) {
-		this.busy = this._httpService.getAppliedCandidates(jobId)
-			.subscribe(
-				response => {
-					if (response.success) {
-						if ((response.result).length > 0) {
-							this.isCandidatesAvailable = true;
-						} else {
-							this.isCandidatesAvailable = false;
-						}
-
-						this.candidates_list = response.result;
-						this.companyDetails = response.result[0];
-						// console.log(this.companyDetails);
-
-					} else if (!response.success) {
-						// console.log(response);
-					}
-				},
-				error => {
-					// console.log(error);
-				}
-			);
-	}
 
 	getAppliedCandidates(jobId) {
 		this.busy = this._httpService.getAppliedCandidates(jobId)
@@ -105,6 +80,10 @@ export class AppliedJobseekerListComponent implements OnInit {
 			);
 	}
 
+	toApplicantDetails(candidates) {
+		localStorage.setItem('ogApplicant', JSON.stringify(candidates));
+		this.router.navigate(['employer/jobs/' + candidates.job_id + '/candidates/' + candidates.jobseeker_id + '/view/' + candidates.id]);
+	}
 	ngOnInit() { }
 
 }

@@ -123,7 +123,7 @@
 							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.region"> Not Specified
 							</span>
 						</p>
-						<p fxLayout="row" fxLayoutAlign="start center">
+						<!-- <p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 								check_circle</mat-icon>
 							<span class="key">Location : </span>
@@ -131,24 +131,25 @@
 								{{getJobLocationName(jobSeekerDetails.location)}}</span>
 							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.location"> Not
 								Specified </span>
-						</p>
-						<p fxLayout="row" fxLayoutAlign="start">
+						</p> -->
+						<!-- <p fxLayout="row" fxLayoutAlign="start">
 							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 								check_circle</mat-icon>
 							<span class="key">Specialization : </span>
-							<span class="value" *ngIf="jobSeekerDetails?.specializations">
+							<span class="value" *ngIf="jobSeekerDetails?.specializations"> -->
 								<!-- <ul>
 									<li style="list-style-type: none;"
 										*ngFor="let specialization of  jobSeekerDetails.preferredspecialization">
 										{{specialization}}
 									</li>
 								</ul> -->
-								{{getJobSpecializationName(jobSeekerDetails.specializations)}}
+								<!-- {{getJobSpecializationName(jobSeekerDetails.specializations)}}
 							</span>
 							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.specializations"> Not
 								Specified </span>
-						</p>
-						<p fxLayout="row" fxLayoutAlign="start center">
+							</p>-->
+
+						<!-- <p fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">
 								check_circle</mat-icon>
 							<span class="key">Working Environment : </span>
@@ -156,7 +157,7 @@
 								{{getWorkingEnvironmentName(jobSeekerDetails.working_environment)}}</span>
 							<span class="value_not_specified" *ngIf="!jobSeekerDetails?.working_environment"> Not
 								Specified </span>
-						</p>
+						</p> -->
 
 						<p fxLayout="row" fxLayoutAlign="start start">
 							<mat-icon class="muted-text mat-icon material-icons" role="img" aria-hidden="true">

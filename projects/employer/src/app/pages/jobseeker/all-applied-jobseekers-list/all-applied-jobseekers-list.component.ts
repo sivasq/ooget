@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ApiCallService } from '../../../services/api-call.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MenuPositionX } from '@angular/material';
 import { PaginationInstance } from 'ngx-pagination';
 
@@ -38,7 +38,7 @@ export class AllAppliedJobseekersListComponent implements OnInit {
 	public jobDetails: any;
 	jobStatus = ['', 'Pending', 'Live', 'Closed'];
 
-	constructor(private _httpService: ApiCallService, private route: ActivatedRoute) {
+	constructor(private router: Router, private _httpService: ApiCallService, private route: ActivatedRoute) {
 		// this.employerId = this.route.snapshot.params['emp_id'];
 		// this.empJobId = this.route.snapshot.params['job_id'];
 
@@ -54,7 +54,7 @@ export class AllAppliedJobseekersListComponent implements OnInit {
 	public candidates_list: any[];
 
 	getAppliedCandidates() {
-		this.busy = this._httpService.getAppliedCandidates('')
+		this.busy = this._httpService.getPendingJobApplications()
 			.subscribe(
 				response => {
 					if (response.success) {
@@ -63,7 +63,9 @@ export class AllAppliedJobseekersListComponent implements OnInit {
 						} else {
 							this.isCandidatesAvailable = false;
 						}
-						this.candidates_list = response.result;
+						this.candidates_list = response.result.filter(candidate => {
+							return candidate.applied_on != null && candidate.offered_on == null;
+						});
 						this.companyDetails = response.result[0];
 
 					} else if (!response.success) {
@@ -74,6 +76,11 @@ export class AllAppliedJobseekersListComponent implements OnInit {
 					// console.log(error);
 				}
 			);
+	}
+
+	toApplicantDetails(candidates) {
+		localStorage.setItem('ogApplicant', JSON.stringify(candidates));
+		this.router.navigate(['employer/jobs/' + candidates.job_id + '/candidates/' + candidates.jobseeker_id + '/view/' + candidates.id]);
 	}
 
 	ngOnInit() { }

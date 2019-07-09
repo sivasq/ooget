@@ -202,8 +202,8 @@
 				</thead>
 				<tbody>
 					<tr class="pointer"
-						*ngFor="let candidates of candidates_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;"
-						routerLink="/employer/jobs/{{candidates.job_id}}/candidates/{{candidates.jobseeker_id}}/view">
+						*ngFor="let candidates of candidates_list | filter:tab1Filter | paginate: tab1PaginateConfig; let i=index;" (click)="toApplicantDetails(candidates)">
+						<!-- routerLink="/employer/jobs/{{candidates.job_id}}/candidates/{{candidates.jobseeker_id}}/view/{{candidates.id}}" -->
 						<td>{{candidates.jobseeker_name}}</td>
 						<td>{{candidates.jobseeker_email}}</td>
 						<td>

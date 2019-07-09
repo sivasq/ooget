@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Input, HostListener, OnDestroy } from '@angular/core';
 import { ApiCallService } from '../../../services/api-call.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material';
@@ -17,14 +17,14 @@ import { isArray } from 'util';
 	templateUrl: './jobseeker-details.component.html',
 	styleUrls: ['./jobseeker-details.component.scss']
 })
-export class JobseekerDetailsComponent implements OnInit {
+export class JobseekerDetailsComponent implements OnInit, OnDestroy {
 
 	busy: Subscription;
 
 	@Input() xPosition: MenuPositionX;
 
 	public jobSeekerDetails: any = [];
-	employerId;
+	contractId;
 	empJobId;
 	jobseekerId;
 	candidateSelectedForJob: any = [];
@@ -45,14 +45,14 @@ export class JobseekerDetailsComponent implements OnInit {
 	Specializations: Specialization[];
 	WorkingEnvironments: WorkingEnvironment[];
 
+	applicantDetails;
 	constructor(private _httpService: ApiCallService, private route: ActivatedRoute, public snackBar: MatSnackBar, public dialog: MatDialog, private mockDataService: MockDataService) {
-		this.employerId = this.route.snapshot.params['emp_id'];
+		this.contractId = this.route.snapshot.params['contract_id'];
 		this.empJobId = this.route.snapshot.params['job_id'];
 		this.jobseekerId = this.route.snapshot.params['js_id'];
-
+		this.applicantDetails = JSON.parse(localStorage.getItem('ogApplicant'));
 		let jobseekerId = {
-			jobseekerid: this.route.snapshot.params['js_id'],
-			jobid: this.empJobId
+			jobseekerid: this.route.snapshot.params['js_id']
 		}
 		this.getWorkingEnvironments();
 		this.getJobRegions();
@@ -154,7 +154,7 @@ export class JobseekerDetailsComponent implements OnInit {
 							response.result[0].experience_details = [];
 						}
 
-						this.jobSeekerDetails = response.jobseeker;
+						this.jobSeekerDetails = response.result[0];
 
 						// this.candidateSelectedForJob = response.jobseeker.jobsselected;
 						// console.log(this.jobSeekerDetails);
@@ -164,9 +164,9 @@ export class JobseekerDetailsComponent implements OnInit {
 						// } else {
 						//   this.isAlreadySelected = false;
 						// }
-						let isUnderContract = this.jobSeekerDetails.offer_accepted;
-						let isOfferRejected = this.jobSeekerDetails.offer_rejected;
-						let isUnderOffered = this.jobSeekerDetails.offered_on;
+						let isUnderContract = this.applicantDetails.offer_accepted;
+						let isOfferRejected = this.applicantDetails.offer_rejected;
+						let isUnderOffered = this.applicantDetails.offered_on;
 
 						if (isUnderContract) {
 							this.isUnderContract = true;
@@ -201,11 +201,11 @@ export class JobseekerDetailsComponent implements OnInit {
 		dialogConfig.disableClose = true;
 		dialogConfig.autoFocus = true;
 		dialogConfig.data = {
-			boxTitle: "Confirmation",
-			confirmMsg: "<p>Are You Sure to Select This Candidate ?</p>",
-			okButtonText: "Yes",
-			noButtonText: "No",
-			actionalign: "center"
+			boxTitle: 'Confirmation',
+			confirmMsg: '<p>Are You Sure to Select This Candidate ?</p>',
+			okButtonText: 'Yes',
+			noButtonText: 'No',
+			actionalign: 'center'
 		};
 		let dialogref = this.dialog.open(ConfirmDialogComponent, dialogConfig);
 
@@ -213,7 +213,7 @@ export class JobseekerDetailsComponent implements OnInit {
 			data => {
 				// this.confirmResponse(data)
 				if (data == 'yes') {
-					this.confirmSelectApplication(applicationId);
+					this.confirmSelectApplication();
 				} else if (data == 'no') {
 					// console.log('no');
 				}
@@ -221,9 +221,9 @@ export class JobseekerDetailsComponent implements OnInit {
 		);
 	}
 
-	confirmSelectApplication(applicationId) {
+	confirmSelectApplication() {
 		// console.log({ jobid: this.empJobId, jobseekerid: this.jobseekerId });
-		this.busy = this._httpService.selectApplication({ contracts_id: applicationId })
+		this.busy = this._httpService.selectApplication({ contracts_id: this.contractId })
 			.subscribe(
 				response => {
 					if (response.success) {
@@ -291,4 +291,7 @@ export class JobseekerDetailsComponent implements OnInit {
 
 	ngOnInit() { }
 
+	ngOnDestroy() {
+		localStorage.removeItem('ogApplicant');
+	}
 }

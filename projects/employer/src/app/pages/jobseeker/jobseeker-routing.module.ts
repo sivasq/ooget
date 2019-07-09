@@ -19,7 +19,7 @@ const routes: Routes = [
 		}
 	},
 	{
-		path: ':js_id/view',
+		path: ':js_id/view/:contract_id',
 		component: JobseekerDetailsComponent,
 		canActivate: [AuthGuardService, NgxPermissionsGuard],
 		data: {
