@@ -207,10 +207,10 @@ export class ApiCallService {
 	}
 
 	// Reject Job Offer
-	rejectOffer(jobId): Observable<any> {
+	rejectOffer(contractId): Observable<any> {
 		const headers = this.createAuthorizationHeaderFormData();
-		const params = this.createUrlParams('Job', 'JobseekerJobAccept');
-		return this.http.post(this._baseUrl, jobId, { headers: headers, params: params });
+		const params = this.createUrlParams('Job', 'ApplideReject');
+		return this.http.post(this._baseUrl, contractId, { headers: headers, params: params });
 	}
 
 	// Get Matched Jobs List

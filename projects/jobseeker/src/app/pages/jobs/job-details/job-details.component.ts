@@ -388,7 +388,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 			);
 	}
 
-	rejectOffer(jobId) {
+	rejectOffer(contractId) {
 		let dialogConfig = new MatDialogConfig();
 		dialogConfig.disableClose = true;
 		dialogConfig.autoFocus = true;
@@ -405,7 +405,7 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 			data => {
 				// this.confirmResponse(data)
 				if (data == 'yes') {
-					this.ConfirmRejectOffer(jobId);
+					this.ConfirmRejectOffer(contractId);
 				} else if (data == 'no') {
 					// console.log('no');
 				}
@@ -413,9 +413,9 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	ConfirmRejectOffer(jobId) {
+	ConfirmRejectOffer(contractId) {
 		// console.log(jobId);
-		this._httpService.rejectOffer({ jobid: jobId, contractstatus: 'open' })
+		this._httpService.rejectOffer({ contracts_id: contractId })
 			.subscribe(
 				response => {
 					if (response.success) {
@@ -425,18 +425,15 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
 						this.isOffered = false;
 						this.isApplied = false;
 						this.isNotApplied = false;
-						this.helpTxt1 = 'Offer Rejected'
+						this.helpTxt1 = 'Offer Rejected';
 						const snackBarRef = this.snackBar.open('You have Successfully Rejected Job Offer.', 'Close', {
 							duration: 5000,
 						});
-
 						snackBarRef.onAction().subscribe(() => {
 							snackBarRef.dismiss();
 							// console.log('The snack-bar action was triggered!');
 						});
-
 					} else if (!response.success) {
-
 						// console.log(response);
 					}
 				},
