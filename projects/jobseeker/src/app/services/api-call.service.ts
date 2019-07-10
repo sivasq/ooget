@@ -171,6 +171,13 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, {}, { headers: headers, params: params });
 	}
 
+	// Get Single Employers All Jobs List
+	getOffererJobsList(): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'GetContractList');
+		return this.http.post(this._baseUrl, {}, { headers: headers, params: params });
+	}
+
 	// Get Job Details
 	getJobDetails(jobId): Observable<any> {
 		const headers = this.createAuthorizationHeaderFormData();

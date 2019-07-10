@@ -279,7 +279,7 @@ export class JobOffersComponent implements OnInit, OnDestroy {
 	// }
 
 	getMyJobOffersList() {
-		this.busy = this._httpService.getAppliedJobsList()
+		this.busy = this._httpService.getOffererJobsList()
 			.subscribe(
 				response => {
 					if (response.success) {
