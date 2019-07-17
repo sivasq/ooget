@@ -257,7 +257,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 			specializations: [''],
 			working_environment: [''],
 			// Notification Alerts Manage
-			notification: [null],
+			notification: [1],
 			alertswitchedoffdays: [''],
 			notification_off_from: [null],
 			notification_off_to: [null],

@@ -30,9 +30,9 @@ export class AddUserComponent implements OnInit {
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService, private route: ActivatedRoute) {
-		this.buildUserForm();
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 		this.employerId = this.route.snapshot.params['emp_id'];
+		this.buildUserForm();
 		this.getUserRoles();
 		this.getEmployerDetails({ 'employerid': this.employerId });
 	}
@@ -45,7 +45,7 @@ export class AddUserComponent implements OnInit {
 	// Build Employer Add Form
 	buildUserForm(): void {
 		this.UserForm = this.fb.group({
-			companyid: [this.route.snapshot.params['emp_id']],
+			companyid: [this.employerId],
 			name: ['', [Validators.required]],
 			type: ['', [Validators.required]],
 			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],

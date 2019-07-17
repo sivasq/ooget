@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } f
 import { Observable, Subscription } from 'rxjs';
 import { AsyncSubscriber } from '../../../services/async.service';
 import { ConfigService } from '../../../services/config.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MockDataService } from '../../../services/mock-data.service';
 import { UserRole } from '../../../classes/userRole';
 
@@ -25,9 +25,9 @@ export class EditUserComponent implements OnInit {
 	public passwordPatternError;
 
 	public userProfile: any = {
-		username: '',
+		name: '',
 		email: '',
-		role: '',
+		type: '',
 		password: ''
 	}
 
@@ -40,7 +40,7 @@ export class EditUserComponent implements OnInit {
 	// @ViewChild(FormGroupDirective) resetUserUpdateForm;
 	emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber, private urlconfig: ConfigService, private route: ActivatedRoute, private mockDataService: MockDataService) {
+	constructor(public router: Router, private _httpService: ApiCallService, public snackBar: MatSnackBar, private fb: FormBuilder, private asyncSubscriber: AsyncSubscriber, private urlconfig: ConfigService, private route: ActivatedRoute, private mockDataService: MockDataService) {
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
 		this.baseUrl = urlconfig.base_url;
@@ -60,13 +60,13 @@ export class EditUserComponent implements OnInit {
 	// Build Employer Add Form
 	buildUserUpdateForm(): void {
 		this.UserUpdateForm = this.fb.group({
-			supervisorid: [this.route.snapshot.params['userId']],
-			username: ['', [Validators.required]],
-			role: ['', [Validators.required]],
+			user_id: [this.route.snapshot.params['userId']],
+			name: ['', [Validators.required]],
+			type: ['', [Validators.required]],
 			email: ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)]), this.isEmailUnique.bind(this)],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(8)]), this.isPatternMatch.bind(this)],
 			verify: ['', [Validators.required]],
-		})
+		});
 	}
 
 	// Check Password Pattern Match
@@ -157,8 +157,8 @@ export class EditUserComponent implements OnInit {
 					if (response.success) {
 						let userData = response.result;
 						// Profile Tab
-						this.userProfile.username = userData.firstname ? userData.firstname : '';
-						this.userProfile.role = userData.type ? userData.type : '';
+						this.userProfile.name = userData.firstname ? userData.firstname : '';
+						this.userProfile.type = userData.type ? userData.type : '';
 						this.userProfile.email = userData.email ? userData.email : '';
 						this.userProfile.password = userData.password ? userData.password : '';
 						// Documents
@@ -166,9 +166,9 @@ export class EditUserComponent implements OnInit {
 
 						// Patch Form Value
 						this.UserUpdateForm.patchValue({
-							'username': this.userProfile.username,
+							'name': this.userProfile.name,
 							'email': this.userProfile.email,
-							'role': this.userProfile.role,
+							'type': this.userProfile.type,
 							'password': this.userProfile.password,
 							'verify': this.userProfile.password,
 						})
@@ -187,32 +187,23 @@ export class EditUserComponent implements OnInit {
 	UserUpdateSubmit() {
 		if (!this.UserUpdateForm.valid) return false;
 
-		this.busy = this._httpService.updateUserProfile(this.UserUpdateForm.value)
+		this.busy = this._httpService.updateExtraUser(this.UserUpdateForm.value)
 			.subscribe(
 				response => {
 					// Response is success
 					if (response.success) {
-						let profileImage = this.myProfileImageInputVariable.nativeElement;
-
-						if (profileImage.files[0]) {
-							// localStorage.setItem('ogUserName', this.UserUpdateForm.get('username').value);
-							// localStorage.setItem('ogUserEmail', this.UserUpdateForm.get('email').value);
-
-							this.uploadProfileDocs();
-						} else {
-							// localStorage.setItem('ogUserName', this.UserUpdateForm.get('username').value);
-							// localStorage.setItem('ogUserEmail', this.UserUpdateForm.get('email').value);
-							// location.reload();
-							// this.asyncSubscriber.setProfileDetails({ "Image": this.profileImage });
-
-							let snackBarRef = this.snackBar.open('Profile Updated Successfully.', 'Close', {
-								duration: 5000,
-							});
-
-							snackBarRef.onAction().subscribe(() => {
-								snackBarRef.dismiss();
-							});
-						}
+						// Reset form
+						// this.resetUserAddForm.resetForm();
+						// Show Success Snackbar
+						let snackBarRef = this.snackBar.open('User Updated Successfully.', 'Close', {
+							duration: 5000,
+						});
+						// Snackbar action
+						snackBarRef.onAction().subscribe(() => {
+							snackBarRef.dismiss();
+							// console.log('The snack-bar action was triggered!');
+						});
+						this.router.navigate(['employer/settings/listusers']);
 						// Response is failed
 					} else if (!response.success) {
 						// console.log(response);

@@ -166,6 +166,33 @@ export class JobsListComponent implements OnInit {
 			);
 	}
 
+	deleteJob(jobId, index) {
+		this.busy = this._httpService.deleteJob({ 'jobid': jobId })
+			.subscribe(
+				response => {
+					if (response.success) {
+
+						let index = this.jobs_list_pending.findIndex(d => d.id === jobId); // find index in your array
+						this.jobs_list_pending.splice(index, 1); // remove element from array
+
+						let snackBarRef = this.snackBar.open('Job Deleted Successfully.', 'Close', {
+							duration: 5000,
+						});
+						snackBarRef.onAction().subscribe(() => {
+							snackBarRef.dismiss();
+							// console.log('The snack-bar action was triggered!');
+						});
+
+					} else if (!response.success) {
+						// console.log(response);
+					}
+				},
+				error => {
+					// console.log(error);
+				}
+			);
+	}
+
 	ngOnInit() { }
 
 }

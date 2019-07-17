@@ -1,6 +1,6 @@
 <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="inner-sidenav-content transition-2">
 	<!-- Http Progress Bar -->
-	
+
 
 	<!-- Breadcrumb Start -->
 	<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
@@ -31,8 +31,9 @@
 
 						<!-- Profile Pic -->
 						<div fxFlex="100" fxLayout="row" fxLayoutAlign="center center" style="margin-top: 25px;margin-bottom: 25px;">
-							<div class="drop-zone content" (change)="logochange($event)" (click)="imgFileInput.click() " style="cursor: pointer; ">
-								<input hidden type="file" #imgFileInput>
+							<div class="drop-zone content" (change)="logochange($event)">
+								<!-- (click)="imgFileInput.click() " style="cursor: pointer;" -->
+								<!-- <input hidden type="file" #imgFileInput> -->
 								<img style="height:100%; width:100%; border-radius: 50px;" alt="" [src]="profileImage">
 							</div>
 						</div>
@@ -40,9 +41,9 @@
 						<!-- user Name -->
 						<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 							<mat-label>Name of User</mat-label>
-							<input matInput placeholder="Name of User" name="username" autocomplete="off" formControlName="username"
+							<input matInput placeholder="Name of User" name="name" autocomplete="off" formControlName="name"
 							 required>
-							<mat-error *ngIf="UserUpdateForm.get('username').hasError('required')" align="start">
+							<mat-error *ngIf="UserUpdateForm.get('name').hasError('required')" align="start">
 								Name Required
 							</mat-error>
 						</mat-form-field>
@@ -50,11 +51,11 @@
 						<!-- Role Type -->
 						<mat-form-field fxFlex="100" [appearance]="appearance$ | async">
 							<mat-label>Role</mat-label>
-							<mat-select placeholder="Role" name="role" formControlName="role" required>
+							<mat-select placeholder="Role" name="type" formControlName="type" required>
 								<mat-option>--Select User Role--</mat-option>
 								<mat-option *ngFor="let Role of Roles" [value]="Role.RoleValue">{{ Role.RoleView }}</mat-option>
 							</mat-select>
-							<mat-error *ngIf="UserUpdateForm.get('role').hasError('required')" align="start">
+							<mat-error *ngIf="UserUpdateForm.get('type').hasError('required')" align="start">
 								Role Required
 							</mat-error>
 						</mat-form-field>

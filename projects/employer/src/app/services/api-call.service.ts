@@ -133,6 +133,13 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, userDetails, { headers: headers, params: params });
 	}
 
+	// Update Extra User
+	updateExtraUser(userDetails): Observable<any> {
+		const headers = this.createAuthorizationHeaderJson();
+		const params = this.createUrlParams('Users', 'UpdateUser');
+		return this.http.post(this._baseUrl, userDetails, { headers: headers, params: params });
+	}
+
 	// Add New Job
 	addNewJob(JobDetails): Observable<any> {
 		const headers = this.createAuthorizationHeaderFormData();
@@ -262,6 +269,11 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, jobseekerId, { headers: headers, params: params });
 	}
 
+	deleteJob(jobId): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'DeleteJob');
+		return this.http.post(this._baseUrl, jobId, { headers: headers, params: params });
+	}
 
 
 
@@ -429,22 +441,9 @@ export class ApiCallService {
 			.map(res => res)
 	}
 
-	updateUserProfile(employerData): Observable<any> {
-		let userToken = localStorage.getItem('ogToken');
-		let headers = new HttpHeaders(
-			{
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'token': userToken
-			})
-		return this.http.post(this._baseUrl + '/updatesupervisor', employerData, { headers: headers })
-			.map(res => res)
-	}
-
-
 	// Dummy
 	userAdd(employerData): Observable<any> {
-		//var authDatas = JSON.stringify(authData);
+		// var authDatas = JSON.stringify(authData);
 		let userToken = localStorage.getItem('ogToken');
 		let headers = new HttpHeaders(
 			{

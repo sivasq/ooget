@@ -205,6 +205,11 @@
 									<mat-icon>description</mat-icon>
 									<span>View Details</span>
 								</button>
+
+								<button mat-menu-item (click)="deleteJob(job.id, i)" >
+									<mat-icon>description</mat-icon>
+									<span>Delete Job</span>
+								</button>
 							</mat-menu>
 
 							<div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
