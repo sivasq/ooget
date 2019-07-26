@@ -34,6 +34,7 @@ export class JobseekerDetailsComponent implements OnInit, OnDestroy {
 	public isUnderOffered: boolean;
 	public isOfferRejected: boolean;
 	public isUnderContract: boolean;
+	public isApplicationRejected: boolean;
 	public helpTxt;
 
 	gender = ['', 'Male', 'Female'];
@@ -167,22 +168,32 @@ export class JobseekerDetailsComponent implements OnInit, OnDestroy {
 						let isUnderContract = this.applicantDetails.offer_accepted;
 						let isOfferRejected = this.applicantDetails.offer_rejected;
 						let isUnderOffered = this.applicantDetails.offered_on;
+						let isApplicationRejected = this.applicantDetails.application_rejected;
 
 						if (isUnderContract) {
 							this.isUnderContract = true;
 							this.isOfferRejected = false;
 							this.isUnderOffered = false;
+							this.isApplicationRejected = false;
 							this.helpTxt = 'He/She is Contract Signed In for this Job';
 						} else if (isOfferRejected) {
 							this.isUnderContract = false;
 							this.isOfferRejected = true;
 							this.isUnderOffered = false;
+							this.isApplicationRejected = false;
 							this.helpTxt = 'He/she Rejected this Job Offer';
 						} else if (isUnderOffered) {
 							this.isUnderContract = false;
 							this.isOfferRejected = false;
 							this.isUnderOffered = true;
+							this.isApplicationRejected = false;
 							this.helpTxt = 'Offer Sent for this Job';
+						} else if (isApplicationRejected) {
+							this.isUnderContract = false;
+							this.isOfferRejected = false;
+							this.isUnderOffered = false;
+							this.isApplicationRejected = true;
+							this.helpTxt = 'Application Rejected';
 						}
 
 					} else if (!response.success) {
@@ -230,6 +241,7 @@ export class JobseekerDetailsComponent implements OnInit, OnDestroy {
 						this.isUnderContract = false;
 						this.isOfferRejected = false;
 						this.isUnderOffered = true;
+						this.isApplicationRejected = false;
 
 						this.helpTxt = 'Offer Sent for this Job';
 
@@ -242,6 +254,69 @@ export class JobseekerDetailsComponent implements OnInit, OnDestroy {
 						});
 					} else if (!response.success) {
 						let snackBarRef = this.snackBar.open('The Candidate Already Selected For This Job.', 'Close', {
+							duration: 5000,
+						});
+
+						snackBarRef.onAction().subscribe(() => {
+							snackBarRef.dismiss();
+							// console.log('The snack-bar action was triggered!');
+						});
+						// console.log(response);
+					}
+				},
+				error => {
+					// console.log(error);
+				}
+			);
+	}
+
+	rejectApplication(applicationId) {
+		let dialogConfig = new MatDialogConfig();
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+		dialogConfig.data = {
+			boxTitle: 'Confirmation',
+			confirmMsg: '<p>Are You Sure to Reject This Candidate ?</p>',
+			okButtonText: 'Yes',
+			noButtonText: 'No',
+			actionalign: 'center'
+		};
+		let dialogref = this.dialog.open(ConfirmDialogComponent, dialogConfig);
+
+		dialogref.afterClosed().subscribe(
+			data => {
+				// this.confirmResponse(data)
+				if (data == 'yes') {
+					this.confirmRejectApplication();
+				} else if (data == 'no') {
+					// console.log('no');
+				}
+			}
+		);
+	}
+
+	confirmRejectApplication() {
+		// console.log({ jobid: this.empJobId, jobseekerid: this.jobseekerId });
+		this.busy = this._httpService.rejectApplication({ contracts_id: this.contractId })
+			.subscribe(
+				response => {
+					if (response.success) {
+						this.isUnderContract = false;
+						this.isOfferRejected = false;
+						this.isUnderOffered = false;
+						this.isApplicationRejected = true;
+
+						this.helpTxt = 'Application Rejected';
+
+						let snackBarRef = this.snackBar.open('The Candidate Rejected For This Job.', 'Close', {
+							duration: 5000,
+						});
+						snackBarRef.onAction().subscribe(() => {
+							snackBarRef.dismiss();
+							// console.log('The snack-bar action was triggered!');
+						});
+					} else if (!response.success) {
+						let snackBarRef = this.snackBar.open('The Candidate Already Selected/Rejected For This Job.', 'Close', {
 							duration: 5000,
 						});
 

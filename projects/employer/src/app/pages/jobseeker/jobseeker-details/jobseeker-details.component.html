@@ -243,10 +243,16 @@
 						</div>
 
 						<button mat-menu-item (click)="selectApplication(jobSeekerDetails.id)"
-							*ngIf="!isUnderContract && !isOfferRejected && !isUnderOffered">
+							*ngIf="!isUnderContract && !isOfferRejected && !isUnderOffered && !isApplicationRejected">
 							<mat-icon style="color:#057d0f">check_circle</mat-icon>
 							<span>Select Application</span>
 						</button>
+
+						<!-- <button mat-menu-item (click)="rejectApplication(jobSeekerDetails.id)"
+							*ngIf="!isUnderContract && !isOfferRejected && !isUnderOffered">
+							<mat-icon style="color:#b10404">check_circle</mat-icon>
+							<span>Reject Application</span>
+						</button> -->
 
 					</div>
 				</div>

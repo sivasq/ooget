@@ -263,6 +263,12 @@ export class ApiCallService {
 		return this.http.post(this._baseUrl, applicationId, { headers: headers, params: params });
 	}
 
+	rejectApplication(applicationId): Observable<any> {
+		const headers = this.createAuthorizationHeaderFormData();
+		const params = this.createUrlParams('Job', 'ApplicationRejected');
+		return this.http.post(this._baseUrl, applicationId, { headers: headers, params: params });
+	}
+
 	getJobSeekerDetails(jobseekerId): Observable<any> {
 		const headers = this.createAuthorizationHeaderFormData();
 		const params = this.createUrlParams('Jobseeker', 'GetJobseeker');

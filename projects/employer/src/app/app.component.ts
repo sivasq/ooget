@@ -4,7 +4,7 @@ import { NgxRolesService, NgxPermissionsService } from 'ngx-permissions';
 import { AsyncSubscriber } from './services/async.service';
 import { ApiCallService } from './services/api-call.service';
 
-import { Event as RouterEvent } from "@angular/router";
+import { Event as RouterEvent, NavigationEnd, RoutesRecognized } from "@angular/router";
 import { Router } from "@angular/router";
 import { RouteConfigLoadEnd } from "@angular/router";
 import { RouteConfigLoadStart } from "@angular/router";
@@ -43,10 +43,15 @@ export class AppComponent {
 
 		router.events.subscribe(
 			(event: RouterEvent): void => {
+				console.log(event);
 				if (event instanceof RouteConfigLoadStart) {
 					asyncLoadCount++;
 				} else if (event instanceof RouteConfigLoadEnd) {
 					asyncLoadCount--;
+				} else if (event instanceof RoutesRecognized) {
+					asyncLoadCount = 0;
+				} else if (event instanceof NavigationEnd) {
+					asyncLoadCount = 0;
 				}
 
 				// If there is at least one pending asynchronous config load request,

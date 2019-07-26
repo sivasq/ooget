@@ -206,12 +206,12 @@ const MENUITEMS = [
 	// 	type: 'link',
 	// 	icon: 'dashboard'
 	// },
-	{
-		state: '/main/profile',
-		name: 'Profile',
-		type: 'link',
-		icon: 'person',
-	},
+	// {
+	// 	state: '/main/profile',
+	// 	name: 'Profile',
+	// 	type: 'link',
+	// 	icon: 'person',
+	// },
 	{
 		state: '/main/jobs/list',
 		name: 'Jobs Available',
@@ -248,12 +248,6 @@ const MENUITEMS = [
 		type: 'link',
 		icon: 'fingerprint',
 	},
-	// {
-	// 	state: '/main/faq',
-	// 	name: 'FAQ',
-	// 	type: 'link',
-	// 	icon: 'message',
-	// },
 	{
 		state: '/main/reports',
 		name: 'Reports',
@@ -263,12 +257,12 @@ const MENUITEMS = [
 			{ state: '/jstr', name: 'Timesheet Report' },
 		]
 	},
-	// {
-	// 	state: '/admin/faq',
-	// 	name: 'FAQ',
-	// 	type: 'link',
-	// 	icon: 'feedback'
-	// }
+	{
+		state: '/main/faq',
+		name: 'FAQ',
+		type: 'link',
+		icon: 'message',
+	}
 ];
 
 @Injectable()
