@@ -22,7 +22,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE, OWL_D
 import { NgBusyModule } from 'ng-busy';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { AuthGuardService } from '../services/auth-guard.service';
-import { EqualValidator, CompareDirective, AutocompleteDirective } from '../directives/custom-directive.directive';
+import { EqualValidator, CompareDirective, AutocompleteDirective, FocusFirstInvalidFieldDirective } from '../directives/custom-directive.directive';
 import { NgxPrintModule } from 'ngx-print';
 // import { AsyncLocalStorageModule } from 'angular-async-local-storage';
 
@@ -128,7 +128,7 @@ export const MY_NATIVE_FORMATS = {
 		AccordionLinkDirective,
 		AccordionDirective,
 		RosterOffDaysManageComponent,
-		TimesheetListDetailsComponent, AutocompleteDirective
+		TimesheetListDetailsComponent, AutocompleteDirective, FocusFirstInvalidFieldDirective
 	],
 	entryComponents: [
 		TopProfiledialogComponent,
@@ -178,7 +178,7 @@ export const MY_NATIVE_FORMATS = {
 		UniqueMainLocation, SubLocationFilter, DatexPipe, SearchPipe, SafeHtml, AgePipe,
 		AccordionAnchorDirective,
 		AccordionLinkDirective,
-		AccordionDirective, AutocompleteDirective
+		AccordionDirective, AutocompleteDirective, FocusFirstInvalidFieldDirective
 	],
 	providers: [
 		ConfigService,

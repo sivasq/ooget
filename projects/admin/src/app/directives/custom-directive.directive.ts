@@ -1,4 +1,4 @@
-import { Directive, forwardRef, Attribute, Input, OnInit, ElementRef } from '@angular/core';
+import { Directive, forwardRef, Attribute, Input, OnInit, ElementRef, HostListener } from '@angular/core';
 import { Validator, AbstractControl, NG_VALIDATORS, ValidatorFn, FormControl, ValidationErrors } from '@angular/forms';
 
 @Directive({
@@ -99,6 +99,25 @@ export class AutocompleteDirective implements OnInit {
 				this._el.nativeElement.setAttribute('autocomplete', 'new-password');
 				// });
 			}
+		}
+	}
+}
+
+@Directive({
+	selector: '[focusFirstInvalidField]'
+})
+export class FocusFirstInvalidFieldDirective {
+
+	constructor(private el: ElementRef) { }
+
+	@HostListener('submit')
+	onFormSubmit() {
+		const invalidElements = this.el.nativeElement.querySelectorAll('.ng-invalid');
+		if (invalidElements.length > 0) {
+			// console.log(invalidElements[0]);
+
+			// invalidElements[0].focus();
+			(<HTMLInputElement>invalidElements[0]).focus();
 		}
 	}
 }

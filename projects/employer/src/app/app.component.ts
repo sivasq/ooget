@@ -43,7 +43,7 @@ export class AppComponent {
 
 		router.events.subscribe(
 			(event: RouterEvent): void => {
-				console.log(event);
+				// console.log(event);
 				if (event instanceof RouteConfigLoadStart) {
 					asyncLoadCount++;
 				} else if (event instanceof RouteConfigLoadEnd) {

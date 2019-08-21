@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDatepickerInputEvent } from '@angular/material';
+import { Component, OnInit, ElementRef, ViewChild, NgZone, Renderer2 } from '@angular/core';
+import { MatDatepickerInputEvent, MatSelect } from '@angular/material';
 import { MatSnackBar } from '@angular/material';
 import { ApiCallService } from '../../../services/api-call.service';
 import { ActivatedRoute } from '@angular/router';
@@ -42,7 +42,7 @@ export const MY_FORMATS = {
 export class AddJobComponent implements OnInit {
 	public dialogInitialTimeAt = new Date();
 	appearance$: Observable<any>;
-
+	@ViewChild('employerJobForm') employerJobForm: any;
 	public jobDetails: any = {
 		project_name: '',
 		department: '',
@@ -89,9 +89,9 @@ export class AddJobComponent implements OnInit {
 		breaks: [],
 	};
 
-	public workMinEndTime;
-	public breakMinStartTime;
-	public breakMaxEndTime;
+	public workMinEndTime: Date;
+	public breakMinStartTime: Date;
+	public breakMaxEndTime: Date;
 
 	public region: string;
 
@@ -124,7 +124,10 @@ export class AddJobComponent implements OnInit {
 	public WorkingEnvironments: WorkingEnvironment[];
 	public EmploymentTypes: EmploymentType[];
 
-	constructor(private _httpService: ApiCallService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
+	@ViewChild('tabGroup') tabGroup;
+	@ViewChild(MatSelect) mySelect;
+
+	constructor(private ngZone: NgZone, private renderer: Renderer2, private el: ElementRef, private _httpService: ApiCallService, public snackBar: MatSnackBar, private route: ActivatedRoute, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
 		this.dialogInitialTimeAt.setHours(0, 0, 0);
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
 
@@ -184,7 +187,7 @@ export class AddJobComponent implements OnInit {
 			.subscribe(pax => this.maxpax = pax);
 	}
 
-	startTimeChange(event) {
+	startTimeChange(event: { value: { getTime: { (): number; (): number; (): number; }; }; }) {
 		this.workMinEndTime = new Date(event.value.getTime() + 3600000); // + 1 hr in ms
 		this.workMinEndTime.toLocaleDateString();
 
@@ -198,12 +201,12 @@ export class AddJobComponent implements OnInit {
 		this.breakMaxEndTime.toLocaleDateString();
 	}
 
-	endTimeChange(event) {
+	endTimeChange(event: { value: { getTime: () => number; }; }) {
 		this.breakMaxEndTime = new Date(event.value.getTime() - 600000); // - 10 min in ms
 		this.breakMaxEndTime.toLocaleDateString();
 	}
 
-	breakStartTimeChange(event, index) {
+	breakStartTimeChange(event: { value: { getTime: () => number; }; }, index: string | number) {
 		// console.log(event);
 		// console.log(index);
 		const endtime = new Date(event.value.getTime() + 3600000); // + 1 hr in ms
@@ -221,7 +224,7 @@ export class AddJobComponent implements OnInit {
 	// }
 
 	// Check Array Contain Elements
-	isInArray(array, word) {
+	isInArray(array: { includes: (arg0: any) => void; }, word: any) {
 		// console.log(array.indexOf(word));
 		// console.log(array.includes(word));
 		// console.log(array.indexOf(word) > -1);
@@ -230,7 +233,7 @@ export class AddJobComponent implements OnInit {
 	}
 
 	// If Employment Type Change
-	employmenttypeChange(event) {
+	employmenttypeChange(event: number) {
 		// console.log(event);
 		if (event == null) { return false; }
 
@@ -271,7 +274,7 @@ export class AddJobComponent implements OnInit {
 		}
 	}
 
-	getEmployerDetails(employerId) {
+	getEmployerDetails(employerId: { employerid: string; }) {
 		this.busy = this._httpService.getEmployer(employerId)
 			.subscribe(
 				response => {
@@ -288,7 +291,58 @@ export class AddJobComponent implements OnInit {
 			);
 	}
 
+	setFocus(selector: string): void {
+		this.ngZone.runOutsideAngular(() => {
+			setTimeout(() => {
+				this.renderer.selectRootElement('#' + selector).focus();
+			}, 0);
+		});
+	}
+
+	changeTab(tab) {
+		this.tabGroup.selectedIndex = tab;
+	}
+
+	// addNewJob(employerJobData: any, employerJobForm: { resetForm: () => void; }) {
 	addNewJob(employerJobData: any, employerJobForm) {
+		let manetoryFields = [
+			['project_name', 'department', 'employment_type', 'job_name', 'description'],
+			['specializations', 'otherjobspecialization', 'working_environment'],
+			['pax_total', 'grace_period', 'over_time_rounding', 'jobperiodfrom', 'jobperiodto', 'starttime', 'endtime', 'work_days_type'],
+			['breakname'],
+			['postal_code', 'address', 'unit_no', 'region', 'location'],
+			['charge_rate', 'markup_rate', 'markup_in', 'jobseeker_salary', 'markup_amount']
+		];
+
+		for (let tab = 0; tab < manetoryFields.length; tab++) {
+			let breaks = false;
+			if (tab == 3) {
+				if (this.jobDetails.breaks.length > 0) {
+					for (let i = 0; i < this.jobDetails.breaks.length; i++) {
+						if (this.jobDetails.breaks[i].breakname == "" || this.jobDetails.breaks[i].starttime == "" || this.jobDetails.breaks[i].endtime == "") {
+							this.changeTab(tab);
+							breaks = true;
+							break;
+						}
+					}
+				}
+			} else {
+				for (let i = 0; i < manetoryFields[tab].length; i++) {
+					// console.log(employerJobData[manetoryFields[tab][i]])
+					if (typeof employerJobData[manetoryFields[tab][i]] != undefined) {
+						if (employerJobData[manetoryFields[tab][i]] == '') {
+							this.changeTab(tab);
+							// this.setFocus(manetoryFields[tab][i]);
+							// this.mySelect.focused = true;
+							breaks = true;
+							break;
+						}
+					}
+				}
+			}
+			if (breaks) { break; }
+		}
+
 		const companyid = { 'employer_id': this.companyid };
 		employerJobData = Object.assign(employerJobData, companyid);
 
@@ -346,6 +400,8 @@ export class AddJobComponent implements OnInit {
 		const Breaks = { 'break': newBreaks };
 		employerJobData = Object.assign(employerJobData, Breaks);
 
+		if (!employerJobForm.valid) { return false; }
+
 		// console.log(employerJobData);
 		// return false;
 		this._httpService.addNewJob(employerJobData)
@@ -378,16 +434,16 @@ export class AddJobComponent implements OnInit {
 		this.jobDetails.breaks.push({ breakname: '', starttime: '', endtime: '' });
 	}
 
-	removeBreak(index) {
+	removeBreak(index: number) {
 		index = Number(index);
 		this.jobDetails.breaks.splice(index, 1);
 	}
 
-	trackByIndex(index: number, item) {
+	trackByIndex(index: number, item: any) {
 		return index;
 	}
 
-	ArrayToString(dataArray) {
+	ArrayToString(dataArray: { map: (arg0: (e: any) => any) => void; join: (arg0: string) => void; }) {
 		if (isArray(dataArray)) {
 			dataArray.map(function (e) {
 				// return JSON.stringify(e);
@@ -397,17 +453,17 @@ export class AddJobComponent implements OnInit {
 		}
 	}
 
-	stringToArray(dataString) {
-		if (typeof dataString !== 'undefined' && dataString) {
-			if (dataString.includes(',')) {
-				return dataString.split(',').map(Number);
-			} else {
-				return [dataString].map(Number);
-			}
-		} else {
-			return [];
-		}
-	}
+	// stringToArray(dataString: { includes: (arg0: string) => void; split: (arg0: string) => { map: (arg0: NumberConstructor) => void; }; }) {
+	// 	if (typeof dataString !== 'undefined' && dataString) {
+	// 		if (dataString.includes(',')) {
+	// 			return dataString.split(',').map(Number);
+	// 		} else {
+	// 			return [dataString].map(Number);
+	// 		}
+	// 	} else {
+	// 		return [];
+	// 	}
+	// }
 
 	ngOnInit() { }
 }

@@ -54,7 +54,7 @@
 										<mat-label>Employment Type</mat-label>
 										<mat-select placeholder="Employment Type" name="employment_type"
 											(ngModelChange)="employmenttypeChange($event)"
-											[(ngModel)]="jobDetails.employment_type">
+											[(ngModel)]="jobDetails.employment_type" required>
 											<mat-option *ngFor="let EmploymentType of EmploymentTypes"
 												[value]="EmploymentType.id">{{
 												EmploymentType.name }}</mat-option>
@@ -203,8 +203,10 @@
 											<mat-icon class="trigger" [owlDateTimeTrigger]="triggerstarttime">
 												access_time</mat-icon>
 										</a>
-										<owl-date-time [startAt]="(jobDetails.starttime != '' && jobDetails.starttime != undefined &&  jobDetails.starttime != null) ? null : dialogInitialTimeAt" [hour12Timer]="false" [pickerType]="'timer'"
-											[pickerMode]="'dialog'" #triggerstarttime></owl-date-time>
+										<owl-date-time
+											[startAt]="(jobDetails.starttime != '' && jobDetails.starttime != undefined &&  jobDetails.starttime != null) ? null : dialogInitialTimeAt"
+											[hour12Timer]="false" [pickerType]="'timer'" [pickerMode]="'dialog'"
+											#triggerstarttime></owl-date-time>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="100" fxFlex.gt-sm="47" [appearance]="appearance$ | async">
@@ -217,8 +219,10 @@
 											<mat-icon class="trigger" [owlDateTimeTrigger]="triggerendtime">access_time
 											</mat-icon>
 										</a>
-										<owl-date-time [startAt]="(jobDetails.endtime != '' && jobDetails.endtime != undefined &&  jobDetails.endtime != null) ? null : dialogInitialTimeAt" [pickerType]="'timer'" [hour12Timer]="false"
-											[pickerMode]="'dialog'" #triggerendtime></owl-date-time>
+										<owl-date-time
+											[startAt]="(jobDetails.endtime != '' && jobDetails.endtime != undefined &&  jobDetails.endtime != null) ? null : dialogInitialTimeAt"
+											[pickerType]="'timer'" [hour12Timer]="false" [pickerMode]="'dialog'"
+											#triggerendtime></owl-date-time>
 									</mat-form-field>
 
 									<div style="margin-top:15px;" fxFlex="100" fxLayout="row wrap">
@@ -332,8 +336,10 @@
 											<mat-icon class="trigger" [owlDateTimeTrigger]="breakfrompicker">access_time
 											</mat-icon>
 										</a>
-										<owl-date-time [startAt]="(break.starttime != '' && break.starttime != undefined &&  break.starttime != null) ? null : dialogInitialTimeAt" [pickerType]="'timer'" [hour12Timer]="false"
-											[pickerMode]="'dialog'" #breakfrompicker></owl-date-time>
+										<owl-date-time
+											[startAt]="(break.starttime != '' && break.starttime != undefined &&  break.starttime != null) ? null : dialogInitialTimeAt"
+											[pickerType]="'timer'" [hour12Timer]="false" [pickerMode]="'dialog'"
+											#breakfrompicker></owl-date-time>
 									</mat-form-field>
 
 									<mat-form-field fxFlex="25" [appearance]="appearance$ | async">
@@ -346,8 +352,10 @@
 											<mat-icon class="trigger" [owlDateTimeTrigger]="breaktopicker">access_time
 											</mat-icon>
 										</a>
-										<owl-date-time [startAt]="(break.endtime != '' && break.endtime != undefined &&  break.endtime != null) ? null : dialogInitialTimeAt" [pickerType]="'timer'" [hour12Timer]="false"
-											[pickerMode]="'dialog'" #breaktopicker></owl-date-time>
+										<owl-date-time
+											[startAt]="(break.endtime != '' && break.endtime != undefined &&  break.endtime != null) ? null : dialogInitialTimeAt"
+											[pickerType]="'timer'" [hour12Timer]="false" [pickerMode]="'dialog'"
+											#breaktopicker></owl-date-time>
 									</mat-form-field>
 
 									<div fxFlex="10" fxLayoutAlign="end center">
@@ -510,8 +518,7 @@
 						</mat-tab-group>
 
 						<mat-card fxLayout="row" fxLayoutAlign="center stretch" class="action">
-							<button mat-raised-button color="primary" type="submit"
-								[disabled]="!employerJobForm.form.valid">Add New Job</button>
+							<button mat-raised-button color="primary" type="submit">Add New Job</button>
 							<!-- [disabled]="!employerJobForm.form.valid" -->
 						</mat-card>
 					</form>

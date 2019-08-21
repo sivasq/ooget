@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDatepickerInputEvent } from '@angular/material';
+import { Component, OnInit, NgZone, Renderer2, ElementRef, ViewChild } from '@angular/core';
+import { MatDatepickerInputEvent, MatSelect } from '@angular/material';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { MatSnackBar } from '@angular/material';
 import { MatTabHeaderPosition } from '@angular/material';
@@ -108,8 +108,9 @@ export class AddJobComponent implements OnInit {
 
 	// busy Config
 	busy: Subscription;
-
-	constructor(private _httpService: ApiCallService, public dialog: MatDialog, public snackBar: MatSnackBar, private route: ActivatedRoute, public router: Router, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
+	@ViewChild('tabGroup') tabGroup;
+	@ViewChild(MatSelect) mySelect;
+	constructor(private ngZone: NgZone, private renderer: Renderer2, private el: ElementRef, private _httpService: ApiCallService, public dialog: MatDialog, public snackBar: MatSnackBar, private route: ActivatedRoute, public router: Router, private datePipe: DatePipe, private asyncSubscriber: AsyncSubscriber, private mockDataService: MockDataService) {
 		this.dialogInitialTimeAt.setHours(0, 0, 0);
 
 		this.appearance$ = asyncSubscriber.getAppearance.pipe();
@@ -324,7 +325,57 @@ export class AddJobComponent implements OnInit {
 		}
 	}
 
+	setFocus(selector: string): void {
+		this.ngZone.runOutsideAngular(() => {
+			setTimeout(() => {
+				this.renderer.selectRootElement('#' + selector).focus();
+			}, 0);
+		});
+	}
+
+	changeTab(tab) {
+		this.tabGroup.selectedIndex = tab;
+	}
+
 	jobAddToEmployer(employerJobData: any, employerJobForm) {
+
+		let manetoryFields = [
+			['project_name', 'department', 'employment_type', 'job_name', 'description'],
+			['specializations', 'otherjobspecialization', 'working_environment'],
+			['pax_total', 'grace_period', 'over_time_rounding', 'jobperiodfrom', 'jobperiodto', 'starttime', 'endtime', 'work_days_type'],
+			['breakname'],
+			['postal_code', 'address', 'unit_no', 'region', 'location']
+		];
+
+		for (let tab = 0; tab < manetoryFields.length; tab++) {
+			let breaks = false;
+			if (tab == 3) {
+				if (this.jobDetails.breaks.length > 0) {
+					for (let i = 0; i < this.jobDetails.breaks.length; i++) {
+						if (this.jobDetails.breaks[i].breakname == '' || this.jobDetails.breaks[i].starttime == '' || this.jobDetails.breaks[i].endtime == '') {
+							this.changeTab(tab);
+							breaks = true;
+							break;
+						}
+					}
+				}
+			} else {
+				for (let i = 0; i < manetoryFields[tab].length; i++) {
+					// console.log(employerJobData[manetoryFields[tab][i]])
+					if (typeof employerJobData[manetoryFields[tab][i]] != undefined) {
+						if (employerJobData[manetoryFields[tab][i]] == '') {
+							this.changeTab(tab);
+							// this.setFocus(manetoryFields[tab][i]);
+							// this.mySelect.focused = true;
+							breaks = true;
+							break;
+						}
+					}
+				}
+			}
+			if (breaks) { break; }
+		}
+
 		const companyid = { 'employer_id': this.companyid };
 		employerJobData = Object.assign(employerJobData, companyid);
 
@@ -353,14 +404,14 @@ export class AddJobComponent implements OnInit {
 		// let jobspecialization = { "jobspecialization": employerJobData.jobspecialization.specialization };
 		// employerJobData = Object.assign(employerJobData, jobspecialization);
 
-		const autooffer = { "auto_offered": employerJobData.auto_offered == true ? "true" : "false" };
+		const autooffer = { 'auto_offered': employerJobData.auto_offered == true ? 'true' : 'false' };
 		employerJobData = Object.assign(employerJobData, autooffer);
 
-		const autoofferaccept = { "auto_accepted": employerJobData.auto_accepted == true ? "true" : "false" };
+		const autoofferaccept = { 'auto_accepted': employerJobData.auto_accepted == true ? 'true' : 'false' };
 		employerJobData = Object.assign(employerJobData, autoofferaccept);
 
 		if (employerJobData.specializations == 'Others') {
-			const specialization = { "specializations": employerJobData.otherjobspecialization };
+			const specialization = { 'specializations': employerJobData.otherjobspecialization };
 			employerJobData = Object.assign(employerJobData, specialization);
 		}
 
@@ -379,8 +430,10 @@ export class AddJobComponent implements OnInit {
 			}
 		}
 
-		let Breaks = { "break": newBreaks };
+		let Breaks = { 'break': newBreaks };
 		employerJobData = Object.assign(employerJobData, Breaks);
+
+		if (!employerJobForm.valid) { return false; }
 
 		// console.log(employerJobData);
 		this._httpService.addNewJob(employerJobData)
