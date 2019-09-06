@@ -141,6 +141,14 @@ export class JobseekerTimesheetComponent implements OnInit {
 	// 	}, 0);
 	// }
 
+	ConvertToInt(val) {
+		if (val) {
+			return parseFloat(val);
+		} else {
+			return 0;
+		}
+	}
+
 	getSumOfNormalWorkHrs() {
 		if (this.displayDatasource.length === 0) { return ''; }
 		// Hr to Min and total
@@ -159,13 +167,19 @@ export class JobseekerTimesheetComponent implements OnInit {
 
 
 		// get total min
-		let totalMin = this.displayDatasource.map(t => t.jobseeker_normal_working_min).reduce((previous, current) => {
-			return previous + current;
+		// let totalMin = this.displayDatasource.map(t => t.jobseeker_normal_working_min).reduce((previous, current) => {
+		// 	return previous + current;
+		// }, 0);
+
+		// (row.normal_salary_type == 1) ? row.jobseeker_normal_working_min : '0' ;
+		let totalMin = this.displayDatasource.map(t => t).reduce((previous, current) => {
+			return (current.normal_salary_type == 1) ? previous + current.jobseeker_normal_working_min : previous;
 		}, 0);
 
+		return totalMin;
 		// Min to Number
-		let totalMins = (totalMin / 60);
-		return totalMins.toFixed(2);
+		// let totalMins = (totalMin / 60);
+		// return totalMins.toFixed(2);
 	}
 
 	getSumOfOT1point5WorkHrs() {
@@ -182,13 +196,18 @@ export class JobseekerTimesheetComponent implements OnInit {
 		// return hrs;
 
 		// get total min
-		let totalMin = this.displayDatasource.filter(t => t.ot_salary_type == 1 || t.ot_salary_type == 1.5).map(t => t.jobseeker_ot_working_min).reduce((previous, current) => {
-			return previous + current;
+		// let totalMin = this.displayDatasource.filter(t => t.ot_salary_type == 1 || t.ot_salary_type == 1.5).map(t => t.jobseeker_ot_working_min).reduce((previous, current) => {
+		// 	return previous + current;
+		// }, 0);
+
+		let totalMin = this.displayDatasource.map(t => t).reduce((previous, current) => {
+			return (current.ot_salary_type == 1.5) ? (current.normal_salary_type == 1.5) ? previous + (current.jobseeker_normal_working_min + current.jobseeker_ot_working_min) : previous + current.jobseeker_ot_working_min : (current.normal_salary_type == 1.5) ? previous + current.jobseeker_normal_working_min : previous;
 		}, 0);
 
+		return totalMin;
 		// Min to Number
-		let totalMins = (totalMin / 60);
-		return totalMins.toFixed(2);
+		// let totalMins = (totalMin / 60);
+		// return totalMins.toFixed(2);
 	}
 
 	getSumOfOT2WorkHrs() {
@@ -204,13 +223,18 @@ export class JobseekerTimesheetComponent implements OnInit {
 		// // if (hrs == '0' || hrs == '00') return 'Nil';
 		// return hrs;
 
-		let totalMin = this.displayDatasource.filter(t => t.ot_salary_type == 2).map(t => t.jobseeker_ot_working_min).reduce((previous, current) => {
-			return previous + current;
+		// let totalMin = this.displayDatasource.filter(t => t.ot_salary_type == 2).map(t => t.jobseeker_ot_working_min).reduce((previous, current) => {
+		// 	return previous + current;
+		// }, 0);
+
+		let totalMin = this.displayDatasource.map(t => t).reduce((previous, current) => {
+			return (current.ot_salary_type == 2) ? (current.normal_salary_type == 2) ? previous + (current.jobseeker_normal_working_min + current.jobseeker_ot_working_min) : previous + current.jobseeker_ot_working_min : (current.normal_salary_type == 2) ? previous + current.jobseeker_normal_working_min : previous;
 		}, 0);
 
+		return totalMin;
 		// Min to Number
-		let totalMins = (totalMin / 60);
-		return totalMins.toFixed(2);
+		// let totalMins = (totalMin / 60);
+		// return totalMins.toFixed(2);
 	}
 
 	getSumOfTotalWorkHrs() {
@@ -226,16 +250,22 @@ export class JobseekerTimesheetComponent implements OnInit {
 		// // if (hrs == '0' || hrs == '00') return 'Nil';
 		// return hrs;
 
-		let totalNormalMin = this.displayDatasource.map(t => t.jobseeker_normal_working_min).reduce((previous, current) => {
-			return previous + current;
+		// let totalNormalMin = this.displayDatasource.map(t => t.jobseeker_normal_working_min).reduce((previous, current) => {
+		// 	return previous + current;
+		// }, 0);
+
+		// let totalOTMin = this.displayDatasource.map(t => t.jobseeker_ot_working_min).reduce((previous, current) => {
+		// 	return previous + current;
+		// }, 0);
+		// return (totalNormalMin + totalOTMin);
+
+		let totalNormalMin = this.displayDatasource.map(t => t).reduce((previous, current) => {
+			return previous + (current.jobseeker_normal_working_min + current.jobseeker_ot_working_min);
 		}, 0);
 
-		let totalOTMin = this.displayDatasource.map(t => t.jobseeker_ot_working_min).reduce((previous, current) => {
-			return previous + current;
-		}, 0);
-
-		let totalMins = ((totalNormalMin + totalOTMin) / 60);
-		return totalMins.toFixed(2);
+		return totalNormalMin;
+		// let totalMins = ((totalNormalMin + totalOTMin) / 60);
+		// return totalMins.toFixed(2);
 	}
 
 	getSumOfNormalWorkHrSalary() {
@@ -243,29 +273,44 @@ export class JobseekerTimesheetComponent implements OnInit {
 		// return this.timesheets.map(t => Number(t.salary)).reduce((previous, current) => {
 		// 	return previous + current;
 		// }, 0);
-		return this.displayDatasource.map(t => t.salary).reduce((previous, current) => {
-			return Number(previous) + Number(current);
+		// return this.displayDatasource.map(t => t.salary).reduce((previous, current) => {
+		// 	return Number(previous) + Number(current);
+		// }, 0);
+
+		return this.displayDatasource.map(t => t).reduce((previous, current) => {
+			return (current.normal_salary_type == 1) ? Number(previous) + Number(current.salary) : Number(previous);
 		}, 0);
 	}
 
 	getSumOfOT1point5WorkHrSalary() {
 		if (this.displayDatasource.length === 0) { return ''; }
-		return this.displayDatasource.filter(t => t.ot_salary_type == 1.5).map(t => t.ot_salary).reduce((previous, current) => {
-			return Number(previous) + Number(current);
+		// return this.displayDatasource.filter(t => t.ot_salary_type == 1.5).map(t => t.ot_salary).reduce((previous, current) => {
+		// 	return Number(previous) + Number(current);
+		// }, 0);
+
+		return this.displayDatasource.map(t => t).reduce((previous, current) => {
+			return (current.ot_salary_type == 1.5) ? (current.normal_salary_type == 1.5) ? Number(previous) + ((Number(current.salary)) + (Number(current.ot_salary))) : Number(previous) + Number(current.ot_salary) : (current.normal_salary_type == 1.5) ? Number(previous) + Number(current.salary) : Number(previous);
 		}, 0);
 	}
 
 	getSumOfOT2WorkHrSalary() {
 		if (this.displayDatasource.length === 0) { return ''; }
-		return this.displayDatasource.filter(t => t.ot_salary_type == 2).map(t => t.ot_salary).reduce((previous, current) => {
-			return Number(previous) + Number(current);
+		// return this.displayDatasource.filter(t => t.ot_salary_type == 2).map(t => t.ot_salary).reduce((previous, current) => {
+		// 	return Number(previous) + Number(current);
+		// }, 0);
+		return this.displayDatasource.map(t => t).reduce((previous, current) => {
+			return (current.ot_salary_type == 2) ? (current.normal_salary_type == 2) ? Number(previous) + ((Number(current.salary)) + (Number(current.ot_salary))) : Number(previous) + Number(current.ot_salary) : (current.normal_salary_type == 2) ? Number(previous) + Number(current.salary) : Number(previous);
 		}, 0);
 	}
 
 	getSumOfTotalWorkHrSalary() {
 		if (this.displayDatasource.length === 0) { return ''; }
-		return this.displayDatasource.map(t => t.salary_total).reduce((previous, current) => {
-			return Number(previous) + Number(current);
+		// return this.displayDatasource.map(t => t.salary_total).reduce((previous, current) => {
+		// 	return Number(previous) + Number(current);
+		// }, 0);
+
+		return this.displayDatasource.map(t => t).reduce((previous, current) => {
+			return Number(previous) + (Number(current.salary) + Number(current.ot_salary));
 		}, 0);
 	}
 

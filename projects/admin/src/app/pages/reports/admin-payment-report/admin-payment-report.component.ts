@@ -22,7 +22,7 @@ export class AdminPaymentReportComponent implements OnInit {
 	public employeeFilter: string = '';
 	public jobFilter: string = '';
 
-	displayedColumns = ['work_date', 'in_time', 'out_time', 'verified', 'verifiedpunchintime', 'verifiedpunchouttime', 'normalworkhour', 'otworkhour1', 'otworkhour2', 'salarymultiplier', 'totalworkhour', 'jsnormalsalary', 'jsot1salary', 'jsot2salary', 'jstotalsalary', 'empnormalsalary', 'empot1salary', 'empot2salary', 'emptotalsalary', 'invoiceno', 'commission', 'remarks'];
+	displayedColumns = ['work_date', 'in_time', 'out_time', 'verified', 'verifiedpunchintime', 'verifiedpunchouttime', 'normalworkhour', 'otworkhour1', 'otworkhour2', 'totalworkhour', 'jsnormalsalary', 'jsot1salary', 'jsot2salary', 'jstotalsalary', 'empnormalsalary', 'empot1salary', 'empot2salary', 'emptotalsalary', 'invoiceno', 'commission', 'remarks'];
 
 	employerDatas;
 

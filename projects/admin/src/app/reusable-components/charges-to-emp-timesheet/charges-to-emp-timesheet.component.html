@@ -9,7 +9,14 @@
 		<!-- Date -->
 		<ng-container matColumnDef="work_date">
 			<th mat-header-cell *matHeaderCellDef> Date </th>
-			<td mat-cell *matCellDef="let row"> {{row.date | date:'dd/MM/yyyy'}} </td>
+			<td mat-cell *matCellDef="let row">
+				{{row.date | date:'dd/MM/yyyy'}}
+				<span *ngIf="row.holiday == 'P'"
+					style="border-radius: 50px; padding: 1px 4px; font-size: 10px; font-weight: bold; background: red; color: #fff;">P</span>
+				<span *ngIf="row.holiday == 'Y'"
+					style="border-radius: 50px; padding: 1px 4px; font-size: 10px; font-weight: bold; background: yellow; color: #000;">H</span>
+				<span *ngIf="row.holiday == 'N'">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			</td>
 			<td mat-footer-cell *matFooterCellDef></td>
 		</ng-container>
 
@@ -54,63 +61,85 @@
 		<!-- Normal Work hr -->
 		<ng-container matColumnDef="normalworkhour">
 			<th mat-header-cell *matHeaderCellDef> Normal Hr (Mins) </th>
-			<td mat-cell *matCellDef="let row"> {{row.jobseeker_normal_working_min}} </td>
+			<!-- <td mat-cell *matCellDef="let row"> {{row.jobseeker_normal_working_min}} </td> -->
+			<td mat-cell *matCellDef="let row">
+				{{(row.normal_salary_type == 1) ? row.jobseeker_normal_working_min : '0' }}
+			</td>
 			<td mat-footer-cell *matFooterCellDef>{{getSumOfNormalWorkHrs()}}</td>
 		</ng-container>
 
 		<!-- OT Work hr1 -->
 		<ng-container matColumnDef="otworkhour1">
 			<th mat-header-cell *matHeaderCellDef> OT1.5 Hr (Mins) </th>
-			<td mat-cell *matCellDef="let row"> {{(row.ot_salary_type == 1.5) ? row.jobseeker_ot_working_min : '0'}} </td>
+			<!-- <td mat-cell *matCellDef="let row"> {{(row.ot_salary_type == 1.5) ? row.jobseeker_ot_working_min : '0'}}
+			</td> -->
+			<td mat-cell *matCellDef="let row">
+				{{(row.ot_salary_type == 1.5) ? (row.normal_salary_type == 1.5) ? row.jobseeker_normal_working_min + row.jobseeker_ot_working_min : row.jobseeker_ot_working_min : (row.normal_salary_type == 1.5) ? row.jobseeker_normal_working_min : '0'}}
+			</td>
 			<td mat-footer-cell *matFooterCellDef>{{getSumOfOT1point5WorkHrs()}}</td>
 		</ng-container>
 
 		<!-- OT Work hr2 -->
 		<ng-container matColumnDef="otworkhour2">
 			<th mat-header-cell *matHeaderCellDef> OT2 Hr (Mins) </th>
-			<td mat-cell *matCellDef="let row"> {{row.ot_salary_type == 2 ? row.jobseeker_ot_working_min : '0'}} </td>
+			<!-- <td mat-cell *matCellDef="let row"> {{row.ot_salary_type == 2 ? row.jobseeker_ot_working_min : '0'}} </td> -->
+			<td mat-cell *matCellDef="let row">
+				{{(row.ot_salary_type == 2) ? (row.normal_salary_type == 2) ? row.jobseeker_normal_working_min + row.jobseeker_ot_working_min : row.jobseeker_ot_working_min : (row.normal_salary_type == 2) ? row.jobseeker_normal_working_min : '0'}}
+			</td>
 			<td mat-footer-cell *matFooterCellDef>{{getSumOfOT2WorkHrs()}}</td>
 		</ng-container>
 
 		<!-- OT Type -->
-		<ng-container matColumnDef="salarymultiplier">
+		<!-- <ng-container matColumnDef="salarymultiplier">
 			<th mat-header-cell *matHeaderCellDef> OT Type </th>
 			<td mat-cell *matCellDef="let row"> OT {{row.ot_salary_type}} </td>
 			<td mat-footer-cell *matFooterCellDef></td>
-		</ng-container>
+		</ng-container> -->
 
 		<!-- Total Work hr -->
 		<ng-container matColumnDef="totalworkhour">
 			<th mat-header-cell *matHeaderCellDef> Total Hr (Mins) </th>
-			<td mat-cell *matCellDef="let row"> {{row.total_job_min}} </td>
+			<!-- <td mat-cell *matCellDef="let row"> {{row.total_job_min}} </td> -->
+			<td mat-cell *matCellDef="let row"> {{row.jobseeker_normal_working_min + row.jobseeker_ot_working_min}}
+			</td>
 			<td mat-footer-cell *matFooterCellDef>{{getSumOfTotalWorkHrs()}}</td>
 		</ng-container>
 
 		<!-- Normal Work hr Salary -->
 		<ng-container matColumnDef="normalsalary">
 			<th mat-header-cell *matHeaderCellDef> Normal Hr Salary (S$) </th>
-			<td mat-cell *matCellDef="let row"> {{row.employer_charge}} </td>
+			<!-- <td mat-cell *matCellDef="let row"> {{row.employer_charge}} </td> -->
+			<td mat-cell *matCellDef="let row">
+				{{(row.normal_salary_type == 1) ? row.salary : '00' }}
+			</td>
 			<td mat-footer-cell *matFooterCellDef>{{getSumOfNormalWorkHrSalary() | number}}</td>
 		</ng-container>
 
 		<!-- OT1 Work hr Salary -->
 		<ng-container matColumnDef="ot1salary">
 			<th mat-header-cell *matHeaderCellDef> OT1.5 Hr Salary (S$)</th>
-			<td mat-cell *matCellDef="let row"> {{(row.ot_salary_type == 1.5) ? row.employer_ot_charge : 0}} </td>
+			<!-- <td mat-cell *matCellDef="let row"> {{(row.ot_salary_type == 1.5) ? row.employer_ot_charge : 0}} </td> -->
+			<td mat-cell *matCellDef="let row">
+				{{(row.ot_salary_type == 1.5) ? (row.normal_salary_type == 1.5) ? (ConvertToInt(row.salary)) + (ConvertToInt(row.ot_salary)) : (row.ot_salary) : (row.normal_salary_type == 1.5) ? row.salary : '0'}}
+			</td>
 			<td mat-footer-cell *matFooterCellDef>{{getSumOfOT1point5WorkHrSalary() | number}}</td>
 		</ng-container>
 
 		<!-- OT2 Work hr Salary -->
 		<ng-container matColumnDef="ot2salary">
 			<th mat-header-cell *matHeaderCellDef> OT2 Hr Salary (S$)</th>
-			<td mat-cell *matCellDef="let row"> {{row.ot_salary_type == 2 ? row.employer_ot_charge : 0}} </td>
+			<!-- <td mat-cell *matCellDef="let row"> {{row.ot_salary_type == 2 ? row.employer_ot_charge : 0}} </td> -->
+			<td mat-cell *matCellDef="let row">
+				{{(row.ot_salary_type == 2) ? (row.normal_salary_type == 2) ? (ConvertToInt(row.salary)) + (ConvertToInt(row.ot_salary)) : (row.ot_salary) : (row.normal_salary_type == 2) ? row.salary : '0'}}
+			</td>
 			<td mat-footer-cell *matFooterCellDef>{{getSumOfOT2WorkHrSalary() | number}}</td>
 		</ng-container>
 
 		<!-- Total Salary -->
 		<ng-container matColumnDef="totalsalary">
 			<th mat-header-cell *matHeaderCellDef> Total Salary (S$) </th>
-			<td mat-cell *matCellDef="let row"> {{row.employer_total_charge}} </td>
+			<!-- <td mat-cell *matCellDef="let row"> {{row.employer_total_charge}} </td> -->
+			<td mat-cell *matCellDef="let row">{{(ConvertToInt(row.salary)) + (ConvertToInt(row.ot_salary))}}</td>
 			<td mat-footer-cell *matFooterCellDef>{{getSumOfTotalWorkHrSalary() | number}}</td>
 		</ng-container>
 
@@ -127,6 +156,7 @@
 
 	</table>
 
-	<mat-paginator #paginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="pageSize" [pageSizeOptions]="[10, 25, 50, 100, 250]">
+	<mat-paginator #paginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="pageSize"
+		[pageSizeOptions]="[10, 25, 50, 100, 250]">
 	</mat-paginator>
 </div>
